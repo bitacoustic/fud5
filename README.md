@@ -15,6 +15,7 @@ $ git push origin master
 ```
 ## Information:
 **Team members:**
+
 1. Nicu Listana - listana@mail.sfsu.edu
 
 **Version:** 0.0.1
