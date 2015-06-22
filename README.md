@@ -20,10 +20,10 @@ $ git push origin master
 
 **Version:** 0.0.1
 
-**Recent Changes**
+**Recent Changes:**
   - Added README.md
 
-**TO-DO**
+**TO-DO:**
   - Create branches
   - Upload Hello World Android App
 
