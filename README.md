@@ -14,7 +14,7 @@ $ git commit -m "My commit"
 $ git push origin master
 ```
 ## Information:
-**Team members:**
+** Team members: **
 1. Nicu Listana - listana@mail.sfsu.edu
 2. Member - Email
 3. Member - Email
