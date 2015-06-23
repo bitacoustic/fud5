@@ -16,6 +16,18 @@ $ git add .
 $ git commit -m "My commit"
 $ git push origin master
 ```
+
+** Open project in Android Studio **
+1. Ensure your name and e-mail are set up in Git (as in the local software, not GitHub).
+2. Select File > New > Project From Version Control > GitHub.
+3. Enter the project repository URL in the first field:
+    https://github.com/sfsucsc413/t5
+The remaining two fields allow you to specify where the project will be stored locally.
+4. Select the 'Project' (as opposed to 'Android') view to see files such as this file (README.md)
+and the .gitignore files for each folder/directory.
+5. Right click on a directory or individual file in the Project view to commit any changes (select
+Git > Commit Directory/File).
+
 ## Information:
 **Team members:**
 
