@@ -6,11 +6,11 @@
 preferences.
 
 ## Getting started
-**Prerequisites**:
+### Prerequisites
 - Git 2.3.2 or higher
 - Android studio 1.2.1.1 (Canary)
 
-**Instructions**
+### Instructions
 
 ```sh
 $ git clone https://github.com/sfsucsc413/t5.git
@@ -20,7 +20,7 @@ $ git commit -m "My commit"
 $ git push origin master
 ```
 
-**Working with the GitHub repo in Android Studio**
+### Working with the GitHub repo in Android Studio
 
 1. Ensure your name and e-mail are set up in Git (as in the local software, not GitHub).
 2. Select File > New > Project From Version Control > GitHub.
@@ -33,22 +33,23 @@ $ git push origin master
 6. Select VCS > Git > Push to push any commits to the repo branch you're currently working on.
 
 ## Information
-**Team members:**
+### Team members
 
 1. Nicu Listana - listana@mail.sfsu.edu
 2. Eric C. Black - ecblack@mail.sfsu.edu
 3. Alex Brown - abrown@mail.sfsu.edu
 
-**Version:** 0.0.1
+### Version
+0.0.1
 
-**Recent Changes:**
+### Recent Changes
   - Added README.md
 
-**TO-DO:**
+### TO-DO
   - Create branches
   - Upload Hello World Android App
 
-**Terms of use/License**
+### Terms of use/License
   - *Yelp*: https://www.yelp.com/developers/api_terms 
   - *Google Maps*: https://developers.google.com/maps/terms
   - *Android*: https://source.android.com/source/licenses.html
@@ -56,5 +57,5 @@ $ git push origin master
   - *Gradle*: https://gradle.org/license/
   - *SQLite*: https://www.sqlite.org/copyright.html
 
-**References**
+### References
   - *MD Markdown syntax guide*: https://confluence.atlassian.com/display/STASH/Markdown+syntax+guide
