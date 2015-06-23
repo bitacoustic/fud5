@@ -10,7 +10,7 @@ preferences.
 - Git 2.3.2 or higher
 - Android studio 1.2.1.1 (Canary)
 
-** Instructions **
+**Instructions**
 
 ```sh
 $ git clone https://github.com/sfsucsc413/t5.git
@@ -20,7 +20,7 @@ $ git commit -m "My commit"
 $ git push origin master
 ```
 
-** Open project in Android Studio **
+**Open project in Android Studio**
 
 1. Ensure your name and e-mail are set up in Git (as in the local software, not GitHub).
 2. Select File > New > Project From Version Control > GitHub.
