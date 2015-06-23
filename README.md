@@ -17,6 +17,7 @@ $ git push origin master
 **Team members:**
 
 1. Nicu Listana - listana@mail.sfsu.edu
+2. Eric C. Black - ecblack@mail.sfsu.edu
 
 **Version:** 0.0.1
 
