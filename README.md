@@ -1,5 +1,8 @@
 # Team 5
-## App Name:
+## Application:
+**Name**:
+**Purpose**: Suggest a restaurant either nearby or at a specified location according to user's
+preferences.
 ## Getting started:
 **Prerequisites**:
 - Git 2.3.2 or higher
