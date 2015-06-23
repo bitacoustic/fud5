@@ -1,14 +1,17 @@
 # Team 5
-## Application:
+## Application summary
 **Name**:
+
 **Purpose**: Suggest a restaurant either nearby or at a specified location according to user's
 preferences.
-## Getting started:
+
+## Getting started
 **Prerequisites**:
 - Git 2.3.2 or higher
 - Android studio 1.2.1.1 (Canary)
 
 ** Instructions **
+
 ```sh
 $ git clone https://github.com/sfsucsc413/t5.git
 $ cd t5
@@ -18,16 +21,19 @@ $ git push origin master
 ```
 
 ** Open project in Android Studio **
+
 1. Ensure your name and e-mail are set up in Git (as in the local software, not GitHub).
 2. Select File > New > Project From Version Control > GitHub.
 3. Enter the project repository URL in the first field:
-    '''https://github.com/sfsucsc413/t5'''
+    '''
+    https://github.com/sfsucsc413/t5
+    '''
    The remaining two fields allow you to specify where the project will be stored locally.
 4. Select the 'Project' (as opposed to 'Android') view to see files such as this file (README.md) and the .gitignore files for each folder/directory.
 5. Right click on a directory or individual file in the Project view to commit any changes (select Git > Commit Directory/File).
 6. Select VCS > Git > Push to push any commits to the branch on the GitHub repository you're currently working on.
 
-## Information:
+## Information
 **Team members:**
 
 1. Nicu Listana - listana@mail.sfsu.edu
