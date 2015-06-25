@@ -1,4 +1,4 @@
-package com.csc413.team5.team5feedmetentative;
+package com.csc413.team5.fud5;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

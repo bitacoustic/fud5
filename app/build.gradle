@@ -5,8 +5,8 @@ android {
     buildToolsVersion "23.0.0 rc2"
 
     defaultConfig {
-        applicationId "com.csc413.team5.team5feedmetentative"
-        minSdkVersion 9
+        applicationId "com.csc413.team5.fud5"
+        minSdkVersion 19
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"

@@ -1,4 +1,4 @@
-package com.csc413.team5.team5feedmetentative;
+package com.csc413.team5.fud5;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

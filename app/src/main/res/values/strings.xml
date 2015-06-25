@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Team 5 Feed Me (Tentative)</string>
-
+    <string name="app_name">FüD5</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 </resources>
