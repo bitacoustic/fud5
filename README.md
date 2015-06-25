@@ -54,7 +54,7 @@ working on.
 
 ### TO-DO
   - Create branches
-  - Upload Hello World Android App
+  - Legal notice: Google Maps API attribution requirements. See: https://developers.google.com/maps/documentation/android/intro
 
 ### Terms of use/License
   - *Yelp*: https://www.yelp.com/developers/api_terms 
