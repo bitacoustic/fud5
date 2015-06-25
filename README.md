@@ -8,11 +8,14 @@ preferences.
 ## Information
 ### Team members
 
+Team members
+
 1. Nicu Listana - listana@mail.sfsu.edu
 2. Eric C. Black - ecblack@mail.sfsu.edu
 3. Alex Brown - abrown@mail.sfsu.edu
 4. Anthony Wong - awong9@mail.sfsu.edu
 5. David Karapetian - dkarapet@mail.sfsu.edu
+6. Ivan Gonzalez - ivanglez43@gmail.com
 
 ### Version
 0.0.1
