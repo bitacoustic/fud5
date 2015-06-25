@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.csc413.team5.team5feedmetentative" >
+    package="com.csc413.team5.fud5" >
 
     <application
         android:allowBackup="true"
