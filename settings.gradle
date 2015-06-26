@@ -1,1 +1,1 @@
-include ':app', ':restaurantapiwrapper'
+include ':app', ':restaurantapiwrapper', ':appdb'

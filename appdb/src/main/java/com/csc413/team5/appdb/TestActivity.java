@@ -1,34 +1,23 @@
-package com.csc413.team5.fud5;
+package com.csc413.team5.appdb;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
-
-import com.csc413.team5.appdb.dbHelper;
 
 
-public class MainActivity extends AppCompatActivity {
-
-    dbHelper db;
+public class TestActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        db = new dbHelper(this, null, null, 1);
-        TextView dbTitle = (TextView) findViewById(R.id.dbTitle);
-
-        dbTitle.setText(db.getName());
+        setContentView(R.layout.activity_test);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_test, menu);
         return true;
     }
 
