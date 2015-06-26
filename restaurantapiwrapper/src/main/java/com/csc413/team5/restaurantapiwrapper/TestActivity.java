@@ -12,6 +12,12 @@ public class TestActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+
+        /* test */
+        YelpApiKey yelpKey = new YelpApiKey("123", "123", "123", "123");
+        YelpClient yelp = new YelpClient.Builder(yelpKey).term("italian").build();
+        RestaurantList restaurantResults = yelp.getRestaurantList();
+        /* end test */
     }
 
     @Override

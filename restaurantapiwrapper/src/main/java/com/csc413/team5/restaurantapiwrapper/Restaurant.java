@@ -28,55 +28,40 @@ public class Restaurant implements RestaurantInterface {
     Accessible data members
      */
 
-    // unique Yelp ID; can be used for back-end lists
-    protected String id;
-    // if the restaurant is closed, we don't want to display it
-    protected boolean isClosed;
+    private String id;
+    private boolean isClosed;
 
-    protected String name;
+    private String name;
 
-    // address for display; might include cross-streets or other useful information
-    protected String addressDisplay;
-    // address that can be used to map location
-    protected String addressMapable;
+    private String addressDisplay;
+    private String addressMapable;
 
-    // phone number formatted for display
-    protected String phoneDisplay;
-    // phone number number formatted for device's Dialer
-    protected Uri phoneDialable;
+    private String phoneDisplay;
+    private Uri phoneDialable;
 
-    // business image
-    protected Uri imageUrl;
-    protected boolean hasImageUrl;
+    private Uri imageUrl;
+    private boolean hasImageUrl;
 
-    // business's website; preferably the mobile version of the business's website, if available
-    protected Uri businessUrl;
-    protected boolean hasBusinessUrl;
+    private Uri businessUrl;
+    private boolean hasBusinessUrl;
 
-    // distance in *meters* from search location
-    protected double distanceFromSearchLocation;
+    private double distanceFromSearchLocation;
 
-    // list of categories
-    protected ArrayList<Category> categories;
+    private ArrayList<Category> categories;
 
-    protected double rating;
+    private double rating;
+    private Uri ratingImgUrl;
 
-    // we have to use Yelp's star image; do we want small, medium, or large?
-    protected Uri ratingImgUrl;
+    private int reviewCount;
 
-    protected int reviewCount;
+    private boolean hasDeals;
+    private Uri dealsUrl;
 
-    protected boolean hasDeals;
-    // field is only populated if (hasDeals), "" otherwise
-    protected Uri dealsUrl;
+    private Uri seatMeUrl;
+    private boolean hasSeatMeUrl;
 
-    // URL for SeatMe reservation
-    protected Uri seatMeUrl;
-    protected boolean hasSeatMeUrl;
-
-    // URL for Eat24 delivery
-    protected Uri eat24Url;
-    protected boolean hasEat24Url;
+    private Uri eat24Url;
+    private boolean hasEat24Url;
 
     /*
     Hidden data members and structures
@@ -122,120 +107,13 @@ public class Restaurant implements RestaurantInterface {
      * Parses JSON result of Yahoo API query result for one business and stores
      * the encountered values.
      *
-     * @param in  a business in list "businesses" from Yelp API JSON response
-     * @throws IOException if JsonReader object can't be passed
+     * @param in  JsonReader object which is a business in a list of businesses;
+     *            this is passed from RestaurantList as it parses the Yelp API query result
+     * @throws IOException if JsonReader object can't be opened or closed
      */
     public Restaurant(JsonReader in) throws IOException {
         this(); // call default constructor
-        setRestaurant(in);
-    }
 
-
-    /******
-     Getters
-     *******/
-
-    public String getId() {
-        return id;
-    }
-
-    public boolean isClosed() {
-        return isClosed;
-    }
-
-    public String getBusinessName() {
-        return name;
-    }
-
-    public String getAddressDisplay() {
-        return addressDisplay;
-    }
-
-    public String getAddressMapable() {
-        return addressMapable;
-    }
-
-    public String getPhoneDisplay() {
-        return phoneDisplay;
-    }
-
-    public Uri getPhoneDialable() {
-        return phoneDialable;
-    }
-
-    public Uri getImageUrl() {
-        return imageUrl;
-    }
-
-    public boolean hasImageUrl() {
-        return hasImageUrl;
-    }
-
-    public Uri getBusinessUrl() {
-        return businessUrl;
-    }
-
-    public boolean hasBusinessUrl() {
-        return hasBusinessUrl;
-    }
-
-    public double getDistanceFromSearchLocation() {
-        return distanceFromSearchLocation;
-    }
-
-    public ArrayList<Category> getCategories() {
-        return categories;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public Uri getRatingImgUrl() {
-        return ratingImgUrl;
-    }
-
-    public int getReviewCount() {
-        return reviewCount;
-    }
-
-    public boolean hasDeals() {
-        return hasDeals;
-    }
-
-    public Uri getDealsUrl() {
-        return dealsUrl;
-    }
-
-    public Uri getSeatMeUrl() {
-        return seatMeUrl;
-    }
-
-    public boolean hasSeatMeUrl() {
-        return hasSeatMeUrl;
-    }
-
-    public Uri getEat24Url() {
-        return eat24Url;
-    }
-
-    public boolean hasEat24Url() {
-        return hasEat24Url;
-    }
-
-    /******
-     Setters
-     *******/
-
-    /**
-     * Parses JSON result of Yahoo API query result for one business and stores
-     * the encountered values.
-     *
-     * @param in  JsonReader object which is a business in a list of businesses;
-     *            this is passed from RestaurantList as it parses the Yelp API query result
-     * @throws IOException when failed to begin or end object
-     */
-    public void setRestaurant(JsonReader in) throws IOException {
         in.beginObject();
 
         while (in.hasNext()) {
@@ -367,6 +245,128 @@ public class Restaurant implements RestaurantInterface {
         } // else keep default hasBusinessUrl false
 
         in.endObject();
-    } // end setRestaurant()
+    }
 
+
+    /******
+     Getters
+     *******/
+
+    public String getId() {
+        return id;
+    }
+
+    public boolean isClosed() {
+        return isClosed;
+    }
+
+    public String getBusinessName() {
+        return name;
+    }
+
+    public String getAddressDisplay() {
+        return addressDisplay;
+    }
+
+    public String getAddressMapable() {
+        return addressMapable;
+    }
+
+    public String getPhoneDisplay() {
+        return phoneDisplay;
+    }
+
+    public Uri getPhoneDialable() {
+        return phoneDialable;
+    }
+
+    public Uri getImageUrl() {
+        return imageUrl;
+    }
+
+    public boolean hasImageUrl() {
+        return hasImageUrl;
+    }
+
+    public Uri getBusinessUrl() {
+        return businessUrl;
+    }
+
+    public boolean hasBusinessUrl() {
+        return hasBusinessUrl;
+    }
+
+    public double getDistanceFromSearchLocation() {
+        return distanceFromSearchLocation;
+    }
+
+    public ArrayList<Category> getCategories() {
+        return categories;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public Uri getRatingImgUrl() {
+        return ratingImgUrl;
+    }
+
+    public int getReviewCount() {
+        return reviewCount;
+    }
+
+    public boolean hasDeals() {
+        return hasDeals;
+    }
+
+    public Uri getDealsUrl() {
+        return dealsUrl;
+    }
+
+    public Uri getSeatMeUrl() {
+        return seatMeUrl;
+    }
+
+    public boolean hasSeatMeUrl() {
+        return hasSeatMeUrl;
+    }
+
+    public Uri getEat24Url() {
+        return eat24Url;
+    }
+
+    public boolean hasEat24Url() {
+        return hasEat24Url;
+    }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "id='" + id + '\n' +
+                ", isClosed=" + isClosed + '\n' +
+                ", name='" + name + '\n' +
+                ", addressDisplay='" + addressDisplay + '\n' +
+                ", addressMapable='" + addressMapable + '\n' +
+                ", phoneDisplay='" + phoneDisplay + '\n' +
+                ", phoneDialable=" + phoneDialable + '\n' +
+                ", imageUrl=" + imageUrl + '\n' +
+                ", hasImageUrl=" + hasImageUrl + '\n' +
+                ", businessUrl=" + businessUrl + '\n' +
+                ", hasBusinessUrl=" + hasBusinessUrl + '\n' +
+                ", distanceFromSearchLocation=" + distanceFromSearchLocation + '\n' +
+                ", categories=" + categories + '\n' +
+                ", rating=" + rating + '\n' +
+                ", ratingImgUrl=" + ratingImgUrl + '\n' +
+                ", reviewCount=" + reviewCount + '\n' +
+                ", hasDeals=" + hasDeals + '\n' +
+                ", dealsUrl=" + dealsUrl + '\n' +
+                ", seatMeUrl=" + seatMeUrl + '\n' +
+                ", hasSeatMeUrl=" + hasSeatMeUrl + '\n' +
+                ", eat24Url=" + eat24Url + '\n' +
+                ", hasEat24Url=" + hasEat24Url + '\n' +
+                ", mobileUrl=" + mobileUrl + '\n' +
+                ", desktopUrl=" + desktopUrl + '\n' +
+                '}';
+    }
 } // end class

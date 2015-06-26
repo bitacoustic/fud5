@@ -70,6 +70,10 @@ public class RestaurantList implements RestaurantListInterface {
         return restaurants.size();
     }
 
+    public boolean isEmpty() {
+        return (restaurants.size() == 0);
+    }
+
     public MapBounds getMapBounds() {
         return bounds;
     }
@@ -103,9 +107,9 @@ public class RestaurantList implements RestaurantListInterface {
                             while (in.hasNext()) {
                                 String fieldRegionSpan = in.nextName();
                                 if (fieldRegionSpan.equals("latitude_delta")) {
-                                    bounds.setSpanLatitudeDelta(in.nextDouble());
+                                    bounds.spanLatitudeDelta = in.nextDouble();
                                 } else if (fieldRegionSpan.equals("longitude_delta")) {
-                                    bounds.setSpanLongitudeDelta(in.nextDouble());
+                                    bounds.spanLongitudeDelta = in.nextDouble();
                                 } else {
                                     in.skipValue();
                                 }
@@ -116,9 +120,9 @@ public class RestaurantList implements RestaurantListInterface {
                             while (in.hasNext()) {
                                 String fieldRegionCenter = in.nextName();
                                 if (fieldRegionCenter.equals("latitude")) {
-                                    bounds.setCenterLatitude(in.nextDouble());
+                                    bounds.centerLatitude = in.nextDouble();
                                 } else if (fieldRegionCenter.equals("longitude")) {
-                                    bounds.setCenterLongitude(in.nextDouble());
+                                    bounds.centerLongitude = in.nextDouble();
                                 } else {
                                     in.skipValue();
                                 }
@@ -160,14 +164,6 @@ public class RestaurantList implements RestaurantListInterface {
         return null; // TODO
     }
 
-    public void applyYellowList() {
-        // TODO
-    }
-
-    public void applyRedList() {
-        // TODO
-    }
-
     public void sortByDistance() {
         // TODO
     }
@@ -178,5 +174,17 @@ public class RestaurantList implements RestaurantListInterface {
 
     public void promote(String id, int numPlaces) {
         // TODO
+    }
+
+    /**
+     * @return String representation of RestaurantList object
+     */
+    @Override
+    public String toString() {
+        String s = "RestaurantList{\n";
+        for (int i = 0; i < restaurants.size(); i++)
+            s.concat(restaurants.get(i).toString() + "\n");
+        s.concat("}\n");
+        return s;
     }
 }

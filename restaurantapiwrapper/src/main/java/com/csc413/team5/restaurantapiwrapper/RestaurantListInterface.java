@@ -37,6 +37,11 @@ public interface RestaurantListInterface {
     int getSize();
 
     /**
+     * @return true if restaurant list is empty, false otherwise
+     */
+    boolean isEmpty();
+
+    /**
      * Returns a MapBounds object holding suggested bounds of a map which
      * displays the restaurants in the list.
      * <p>
@@ -73,17 +78,6 @@ public interface RestaurantListInterface {
      * @return the Restaurant removed if successful, otherwise null
      */
     Restaurant removeRestaurant(String id);
-
-    /**
-     * Recently YellowListed items are demoted, older YellowListed items are
-     * promoted.
-     */
-    void applyYellowList();
-
-    /**
-     * Removes RedListed restaurants from list.
-     */
-    void applyRedList();
 
     /**
      * Sorts restaurants exclusively by distance from search location.
