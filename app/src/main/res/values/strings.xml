@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">FüD5</string>
     <string name="hello_world">Hello world!</string>
+    <string name="sample_button">Sample Button</string>
+    <string name="button_pressed">Method btnSampleButton() was called.</string>
     <string name="action_settings">Settings</string>
 </resources>
