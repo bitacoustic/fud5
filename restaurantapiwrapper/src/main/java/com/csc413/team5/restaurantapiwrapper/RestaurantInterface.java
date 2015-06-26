@@ -154,4 +154,6 @@ public interface RestaurantInterface {
      * @return true if business delivers through Eat24, false otherwise
      */
     boolean hasEat24Url();
+
+    void setRestaurantName(String new_name);
 }

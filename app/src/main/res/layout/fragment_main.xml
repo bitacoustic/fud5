@@ -5,13 +5,44 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivityFragment">
 
-    <TextView android:text="HAHAHAHHA" android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView" />
-
     <TextView android:text="OK" android:id="@+id/dbTitle" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mc Donald&apos;s"
+        android:id="@+id/mc_donalds"
+        android:layout_below="@+id/dbTitle"
+        android:layout_alignParentStart="true"
+        android:onClick="insertRestaurant"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bob&apos;s Burgers"
+        android:id="@+id/bobs_burgers"
+        android:layout_alignBottom="@+id/mc_donalds"
+        android:layout_toEndOf="@+id/mc_donalds"
+        android:onClick="insertRestaurant"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ALL"
+        android:id="@+id/all_green"
+        android:layout_alignTop="@+id/bobs_burgers"
+        android:layout_toEndOf="@+id/bobs_burgers"
+        android:onClick="showGreenList"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Green list:"
+        android:id="@+id/green_list_text"
+        android:layout_below="@+id/mc_donalds"
         android:layout_alignParentStart="true" />
 
 </RelativeLayout>

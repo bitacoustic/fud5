@@ -4,9 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.csc413.team5.appdb.dbHelper;
+import com.csc413.team5.restaurantapiwrapper.Restaurant;
+
+import java.util.Iterator;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -45,5 +50,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void insertRestaurant(View v) {
+        TextView t = (TextView) findViewById(R.id.green_list_text);
+        Button b = (Button) v;
+        Restaurant r = new Restaurant();
+        r.setRestaurantName((String) b.getText());
+
+        db.insertRestaurantToList(r,1);
+
+        t.append("\n" + r.getBusinessName());
+    }
+
+    public void showGreenList(View v) {
+        TextView t = (TextView) findViewById(R.id.green_list_text);
+
+        t.setText(db.showContents(1));
     }
 }

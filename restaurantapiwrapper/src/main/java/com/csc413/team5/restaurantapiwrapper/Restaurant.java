@@ -369,4 +369,11 @@ public class Restaurant implements RestaurantInterface {
         in.endObject();
     } // end setRestaurant()
 
+
+    // Test method
+    @Override
+    public void setRestaurantName(String new_name) {
+        name = new_name;
+    }
+
 } // end class
