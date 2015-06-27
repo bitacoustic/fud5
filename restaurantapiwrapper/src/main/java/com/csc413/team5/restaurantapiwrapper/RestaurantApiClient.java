@@ -13,7 +13,7 @@ import org.scribe.oauth.OAuthService;
  *
  * @author Eric C. Black
  */
-public class YelpClient {
+public class RestaurantApiClient {
     private final YelpApiKey key; // required
 
     // Search API parameters
@@ -37,7 +37,7 @@ public class YelpClient {
     OAuthService service;
     Token accessToken;
 
-    private YelpClient(Builder builder) {
+    private RestaurantApiClient(Builder builder) {
         this.key = builder.key;
         this.location = builder.location;
         this.term = builder.term;
@@ -230,8 +230,8 @@ public class YelpClient {
             return this;
         }
 
-        public YelpClient build() {
-            return new YelpClient(this);
+        public RestaurantApiClient build() {
+            return new RestaurantApiClient(this);
         }
     }
 }

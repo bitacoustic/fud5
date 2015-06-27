@@ -15,7 +15,7 @@ public class TestActivity extends ActionBarActivity {
 
         /* test */
         YelpApiKey yelpKey = new YelpApiKey("123", "123", "123", "123");
-        YelpClient yelp = new YelpClient.Builder(yelpKey).term("italian").build();
+        RestaurantApiClient yelp = new RestaurantApiClient.Builder(yelpKey).term("italian").build();
         RestaurantList restaurantResults = yelp.getRestaurantList();
         /* end test */
     }

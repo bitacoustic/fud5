@@ -41,7 +41,7 @@ public interface RestaurantInterface {
     String getAddressDisplay();
 
     /**
-     * TODO maybe this should be a latitude, longitude pair instead
+     * TODO maybe this should be a latitude, longitude pair instead (utilize Location API Geocoder)
      * @return address that can be used to map location
      */
     String getAddressMapable();

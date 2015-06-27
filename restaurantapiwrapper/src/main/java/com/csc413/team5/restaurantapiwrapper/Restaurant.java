@@ -28,47 +28,47 @@ public class Restaurant implements RestaurantInterface {
     Accessible data members
      */
 
-    private String id;
-    private boolean isClosed;
+    protected String id;
+    protected boolean isClosed;
 
-    private String name;
+    protected String name;
 
-    private String addressDisplay;
-    private String addressMapable;
+    protected String addressDisplay;
+    protected String addressMapable;
 
-    private String phoneDisplay;
-    private Uri phoneDialable;
+    protected String phoneDisplay;
+    protected Uri phoneDialable;
 
-    private Uri imageUrl;
-    private boolean hasImageUrl;
+    protected Uri imageUrl;
+    protected boolean hasImageUrl;
 
-    private Uri businessUrl;
-    private boolean hasBusinessUrl;
+    protected Uri businessUrl;
+    protected boolean hasBusinessUrl;
 
-    private double distanceFromSearchLocation;
+    protected double distanceFromSearchLocation;
 
-    private ArrayList<Category> categories;
+    protected ArrayList<Category> categories;
 
-    private double rating;
-    private Uri ratingImgUrl;
+    protected double rating;
+    protected Uri ratingImgUrl;
 
-    private int reviewCount;
+    protected int reviewCount;
 
-    private boolean hasDeals;
-    private Uri dealsUrl;
+    protected boolean hasDeals;
+    protected Uri dealsUrl;
 
-    private Uri seatMeUrl;
-    private boolean hasSeatMeUrl;
+    protected Uri seatMeUrl;
+    protected boolean hasSeatMeUrl;
 
-    private Uri eat24Url;
-    private boolean hasEat24Url;
+    protected Uri eat24Url;
+    protected boolean hasEat24Url;
 
     /*
     Hidden data members and structures
      */
 
-    private Uri mobileUrl;
-    private Uri desktopUrl;
+    protected Uri mobileUrl;
+    protected Uri desktopUrl;
 
     /************
      Constructors
