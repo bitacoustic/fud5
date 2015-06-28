@@ -1,5 +1,7 @@
 package com.csc413.team5.restaurantapiwrapper;
 
+import android.location.Location;
+
 /**
  * TODO Description
  * <p>
@@ -15,6 +17,8 @@ public class MapBounds {
     // center position of map bounds
     protected double centerLatitude;
     protected double centerLongitude;
+    // representation of center as Location
+    Location center;
 
     public MapBounds(double spanLatitudeDelta, double spanLongitudeDelta,
                      double centerLatitude, double centerLongitude) {
@@ -22,6 +26,9 @@ public class MapBounds {
         this.spanLongitudeDelta = spanLongitudeDelta;
         this.centerLatitude = centerLatitude;
         this.centerLongitude = centerLongitude;
+        center = new Location("Yelp");
+        center.setLatitude(centerLatitude);
+        center.setLongitude(centerLongitude);
     }
 
     public double getSpanLatitudeDelta() {
@@ -40,10 +47,28 @@ public class MapBounds {
         return centerLongitude;
     }
 
+    /**
+     * @return a {@link Location} object with latitude and longitude of map center
+     */
+    public Location getCenter() {
+        return center;
+    }
+
     public void clear() {
         spanLatitudeDelta = 0.0;
         spanLongitudeDelta = 0.0;
         centerLatitude = 0.0;
         centerLongitude = 0.0;
+    }
+
+    @Override
+    public String toString() {
+        return "MapBounds{" +
+                "spanLatitudeDelta=" + spanLatitudeDelta +
+                ", spanLongitudeDelta=" + spanLongitudeDelta +
+                ", centerLatitude=" + centerLatitude +
+                ", centerLongitude=" + centerLongitude +
+                ", center=" + center +
+                '}';
     }
 }

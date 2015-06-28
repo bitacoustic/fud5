@@ -1,29 +1,15 @@
 package com.csc413.team5.restaurantapiwrapper;
 
-import android.util.JsonReader;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /**
- * A list of Restaurants with suggested map bounds.
- * <p>
- * The list is initially in non-decreasing order by distance in meters from search
- * location. Then the list is modified based on the YellowList (possibly some results
- * demoted or promoted) or RedList (some results removed).
+ * A list of {@link Restaurant} objects with suggested {@link MapBounds}.
  * <p>
  * Created on 6/24/2015.
  *
  * @author Eric C. Black
- *
- * @see    Restaurant
- * @see    MapBounds
  */
-public class RestaurantList implements RestaurantListInterface {
+public class RestaurantList {
     /****************
      Member variables
      ****************/
@@ -40,151 +26,214 @@ public class RestaurantList implements RestaurantListInterface {
      */
     public RestaurantList() {
         restaurants = null;
-        bounds = new MapBounds(0.0, 0.0, 0.0, 0.0);
-    }
-
-    /**
-     * Constructor which parses results of a restaurant API query
-     *
-     * @param encodedInput  an encoded String, e.g. JSON from Yelp API query
-     * @throws IOException if encoded input can't be handled
-     */
-    public RestaurantList(String encodedInput) throws IOException {
-        this(); // call default constructor
-        setRestaurantList(encodedInput);
+        bounds = null;
     }
 
     /******
      Getters
      *******/
 
-    public Restaurant getRestaurant(int index) {
-        return null; // TODO
+    /**
+     * Returns the Restaurant at specified index.
+     *
+     * @param index  get restaurant by index
+     * @return Restaurant at specified index, or null if index is invalid
+     * @throws IndexOutOfBoundsException if index is invalid
+     */
+    public Restaurant getRestaurant(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= restaurants.size())
+            throw new IndexOutOfBoundsException("RestaurantList index out of bounds");
+        else
+            return restaurants.get(index);
     }
 
+    /**
+     * Returns the first Restaurant matching specified ID String.
+     *
+     * @param id  database identifier String, e.g. Yelp ID
+     * @return Restaurant object, or null if restaurant was not found
+     */
     public Restaurant getRestaurant(String id) {
-        return null; // TODO
+        int foundIndex = -1;
+        for (int i = 0; i < restaurants.size(); i++)
+            if (restaurants.get(i).id.equals("id"))
+                foundIndex = i;
+        if (foundIndex > -1)
+            return restaurants.get(foundIndex);
+        else
+            return null;
     }
 
+    /**
+     * @param id a Yelp ID String
+     * @return true if the Restaurant matching the specified Yelp ID was found, false otherwise
+     */
+    public boolean hasRestaurant(String id) {
+        boolean found = false;
+        for (int i = 0; i < restaurants.size(); i++)
+            if (restaurants.get(i).id.equals("id"))
+                found = true;
+        return found;
+    }
+
+    /**
+     * @param r a {@link Restaurant} object
+     * @return true if the Restaurant object was found in the RestaurantList, false otherwise
+     */
+    public boolean hasRestaurant(Restaurant r) {
+        return restaurants.contains(r);
+    }
+
+    /**
+     * @return number of entries in list
+     */
     public int getSize() {
-        return restaurants.size();
+        if (restaurants == null)
+            return 0;
+        else
+            return restaurants.size();
     }
 
+    /**
+     * @return true if restaurant list is empty, false otherwise
+     */
     public boolean isEmpty() {
-        return (restaurants.size() == 0);
+        return (restaurants == null);
     }
 
+    /**
+     * Returns a {@link MapBounds} object holding suggested bounds of a map which
+     * displays the restaurants in the list.
+     * <p>
+     * Example:
+     * <p>
+     * <pre>
+     *     double longitude = myRestaurantList.getMapBounds().getLongitude();
+     * </pre>
+     * @return a {@link MapBounds} object
+     */
     public MapBounds getMapBounds() {
         return bounds;
     }
 
-    /******
-     Setters
-     *******/
-
-    public void setRestaurantList(String encodedInput) throws IOException {
-        // clear existing list data if there is any
-        restaurants.clear();
-        bounds.clear();
-
-        // convert JSON String to InputStream
-        InputStream inStream = new ByteArrayInputStream(encodedInput
-                .getBytes(StandardCharsets.UTF_8));
-        // instantiate JsonReader to parse InputStream
-        JsonReader in = new JsonReader(new InputStreamReader(inStream, "UTF-8"));
-
-        // parse
-        try {
-            in.beginObject();
-            while (in.hasNext()) {
-                String field = in.nextName();
-                if (field.equals("region")) {
-                    in.beginObject();
-                    while (in.hasNext()) {
-                        String fieldRegion = in.nextName();
-                        if (fieldRegion.equals("span")) {
-                            in.beginObject();
-                            while (in.hasNext()) {
-                                String fieldRegionSpan = in.nextName();
-                                if (fieldRegionSpan.equals("latitude_delta")) {
-                                    bounds.spanLatitudeDelta = in.nextDouble();
-                                } else if (fieldRegionSpan.equals("longitude_delta")) {
-                                    bounds.spanLongitudeDelta = in.nextDouble();
-                                } else {
-                                    in.skipValue();
-                                }
-                            }
-                            in.endObject();
-                        } else if (fieldRegion.equals("center")) {
-                            in.beginObject();
-                            while (in.hasNext()) {
-                                String fieldRegionCenter = in.nextName();
-                                if (fieldRegionCenter.equals("latitude")) {
-                                    bounds.centerLatitude = in.nextDouble();
-                                } else if (fieldRegionCenter.equals("longitude")) {
-                                    bounds.centerLongitude = in.nextDouble();
-                                } else {
-                                    in.skipValue();
-                                }
-                            }
-                            in.endObject();
-                        } else {
-                            in.skipValue();
-                        }
-                    }
-                } else if (field.equals("businesses")) {
-                    in.beginArray();
-                    while (in.hasNext()) {
-                        // let the Restaurant constructor parse data per
-                        // business entry
-                        restaurants.add(new Restaurant(in));
-                    }
-                    in.endArray();
-                } else {
-                    in.skipValue();
-                }
-            }
-            in.endObject();
-        } finally {
-            // close JsonReader; this needs to be done regardless of whether
-            // an exception was thrown
-            in.close();
-        } // end try-finally block
-    } // end setRestaurantList()
+    /**
+     * @return whether the RestaurantList has bounds that can be used for mapping
+     */
+    public boolean hasMapBounds() {
+        return (bounds != null);
+    }
 
     /*************
      Other methods
      *************/
 
-    public Restaurant removeRestaurant(int index) {
-        return restaurants.remove(index);
-    }
-
-    public Restaurant removeRestaurant(String id) {
-        return null; // TODO
-    }
-
-    public void sortByDistance() {
-        // TODO
-    }
-
-    public void demote(String id, int numPlaces) {
-        // TODO
-    }
-
-    public void promote(String id, int numPlaces) {
-        // TODO
+    /**
+     * Remove the Restaurant at the specified index.
+     * @param index
+     * @return the Restaurant removed if successful, otherwise null
+     */
+    public Restaurant removeRestaurant(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= restaurants.size())
+            throw new IndexOutOfBoundsException("RestaurantList index out of bounds");
+        else
+            return restaurants.remove(index);
     }
 
     /**
-     * @return String representation of RestaurantList object
+     * Removes a restaurant from the list based on database identifier, e.g. Yelp ID
+     *
+     * @param id  database identifier
+     * @return the Restaurant removed if successful, otherwise null
+     */
+    public Restaurant removeRestaurant(String id) {
+        int removeIndex = -1;
+        for (int i = 0; i < restaurants.size(); i++) {
+            if (restaurants.get(i).id.equals(id))
+                removeIndex = i;
+        }
+        if (removeIndex > -1)
+            return restaurants.remove(removeIndex);
+        else
+            return null;
+    }
+
+    /**
+     * Demotes the specified {@link Restaurant} the specified number of places in the list,
+     * or to the end of the list, whichever is closer to its current position.
+     *
+     * @param id         database identifier String
+     * @param numPlaces  an integer number of indices
+     * @return the demoted Restaurant if it was found, otherwise null
+     */
+    public Restaurant demote(String id, int numPlaces) {
+        int foundIndex = -1;
+        int targetIndex;
+
+        for (int i = 0; i < restaurants.size(); i++)
+            if (restaurants.get(i).id.equals(id))
+                foundIndex = i;
+
+        if (foundIndex < 0)
+            return null;
+
+        Restaurant pickedRestaurant = restaurants.get(foundIndex);
+        restaurants.remove(foundIndex);
+
+        targetIndex = foundIndex + numPlaces;
+        if (targetIndex >= restaurants.size())
+            restaurants.add(pickedRestaurant);
+        else
+            restaurants.add(targetIndex, pickedRestaurant);
+
+        return pickedRestaurant;
+    }
+
+    /**
+     * Promotes the specified {@link Restaurant} the specified number of places in the list,
+     * or to the beginning of the list, whichever is closer to its current position.
+     *
+     * @param id         database identifier String
+     * @param numPlaces  an integer number of indices
+     * @return the promoted Restaurant if it was found, otherwise null
+     */
+    public Restaurant promote(String id, int numPlaces) {
+        int foundIndex = -1;
+        int targetIndex;
+
+        for (int i = 0; i < restaurants.size(); i++)
+            if (restaurants.get(i).id.equals(id))
+                foundIndex = i;
+
+        if (foundIndex < 0)
+            return null;
+
+        Restaurant pickedRestaurant = restaurants.get(foundIndex);
+        restaurants.remove(foundIndex);
+
+        targetIndex = foundIndex - numPlaces;
+        if (targetIndex < 0)
+            restaurants.add(0, pickedRestaurant);
+        else
+            restaurants.add(targetIndex, pickedRestaurant);
+
+        return pickedRestaurant;
+    }
+
+    /**
+     * Trims the capacity of the underlying ArrayList to be the list's current size.
+     */
+    public void trimToSize() {
+        restaurants.trimToSize();
+    }
+
+    /**
+     * @return String representation of RestaurantList object.
      */
     @Override
     public String toString() {
-        String s = "RestaurantList{\n";
-        for (int i = 0; i < restaurants.size(); i++)
-            s.concat(restaurants.get(i).toString() + "\n");
-        s.concat("}\n");
-        return s;
+        return "\nRestaurantList{" +
+                "\nbounds=" + bounds +
+                ",\nrestaurants=\n" + restaurants +
+                '}';
     }
 }

@@ -1,9 +1,9 @@
 package com.csc413.team5.restaurantapiwrapper;
 
 /**
- * A Yelp API key. Members are inaccessible
+ * A Yelp API key. All parameters are required.
  * <p>
- * Created on $(DATE).
+ * Created on 6/25/2015.
  *
  * @author Eric C. Black
  */
@@ -35,5 +35,10 @@ public class YelpApiKey {
 
     public String getTokenSecret() {
         return tokenSecret;
+    }
+
+    @Override
+    public String toString() {
+        return "YelpApiKey{}: contents hidden";
     }
 }
