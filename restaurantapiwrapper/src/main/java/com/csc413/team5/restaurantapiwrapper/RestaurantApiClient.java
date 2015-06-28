@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 /**
- * TODO Description
+ * A client wrapper for Yelp. Create a new instance for each call.
  * <p>
  * Usage examples:
  * <p>Perform a search with multiple results: All parameters are optional, but it is recommended

@@ -3,7 +3,8 @@ package com.csc413.team5.restaurantapiwrapper;
 import android.location.Location;
 
 /**
- * TODO Description
+ * Suggested map boundaries for mapping results of an API query. Span refers to the suggested
+ * length and width of the map centered on {@link #center}.
  * <p>
  * Created on 6/24/2015.
  *
