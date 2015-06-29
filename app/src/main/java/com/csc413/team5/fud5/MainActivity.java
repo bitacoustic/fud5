@@ -1,5 +1,7 @@
 package com.csc413.team5.fud5;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,6 +25,8 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.List;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     protected GoogleApiClient mGoogleApiClient; // client for Google API requests
     protected Location mLastLocation; // stores latitude, longitude of device's last known location
+    protected Address mLastLocationAddress; // representation of lat,long as address
 
 
     @Override
@@ -74,9 +79,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public void onConnected(Bundle bundle) {
-        // BEGIN TEST CODE
+        // --------------------------------BEGIN TEST CODE ----------------------------------------
 
-        // call LocationServices API, stores result in mLastLocation
+        // BEGIN call LocationServices API, store result
         // TODO I think this can happen any time in this Context, say, after a button onClick()
         // as long as the connection with Google Play services has been established
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
@@ -84,12 +89,32 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         // display the results of the location query
         dbTitle.append("\n\nLocation as of onConnected() is: latitude=" + mLastLocation.getLatitude()
                 + ", longitude=" + mLastLocation.getLongitude());
+        // END call LocationServices API, store result
 
-        // call a background task to perform a Yelp search and display the results
+
+        // BEGIN get approximate address from location
+        Geocoder geocoder;
+        List<Address> addresses = null;
+        geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            // the last parameter specifies max locations turn return; we just need 1
+            addresses = geocoder
+                    .getFromLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude(), 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mLastLocationAddress = addresses.get(0);
+        String thisAddress = RestaurantApiClient.addressToString(mLastLocationAddress);
+        dbTitle.append("\nGeocoder approximated location as: " + thisAddress);
+        // END get approximate address from location
+
+
+        // BEGIN call a background task to perform a Yelp search and display the results
         YelpAsyncTask yelpTask = new YelpAsyncTask(); // see YelpAsyncTask below
         yelpTask.execute();
+        // END call a background task to perform a Yelp search and display the results
 
-        // END TEST CODE
+        // ---------------------------------END TEST CODE -----------------------------------------
     }
 
     /**
@@ -100,12 +125,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         @Override
         protected String doInBackground(String... params)  {
-            // perform the search
-            // TODO we need a mechanism to get an approximate address from the device's location
-            // to send as the location parameter below
+            // perform the search; use the latitude, longitude and approximate address we
+            // obtained earlier
+            //
+            // note that appropriate exception handling is required
             try {
                 searchResults = new RestaurantApiClient.Builder(yelpKey)
-                        .location("1600 Holloway Ave, San Francisco, CA")
+                        .location(RestaurantApiClient.addressToString(mLastLocationAddress))
                         .cll(mLastLocation)
                         .limit(20)
                         .categoryFilter("foodtrucks,restaurants")
