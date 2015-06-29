@@ -199,14 +199,103 @@ public class Restaurant {
 
     /**
      * Returns distance in *meters* from search location. If no latitude and longitude
-     *     were provided in the request, then it will be the center of the most
-     *     accurate part of the supplied address (e.g. the center of the city).
+     *     were provided in the request, the distance will likely not be supplied and this
+     *     field will have its default value of -1.0. In that case, use
+     *     {@link #getDistanceFromLocation} instead.
      *
      * @return distance in meters from search location; this value is *negative* if
      *         the information was not provided by Yelp
      */
     public double getDistanceFromSearchLocation() {
         return distanceFromSearchLocation;
+    }
+
+    /**
+     * Returns distance from search location with the specified unit of measure. Units of measure
+     * allowed are:
+     * <ul>
+     *     <li>DistanceUnit.METERS
+     *     <li>DistanceUnit.KILOMETERS
+     *     <li>DistanceUnit.FEET
+     *     <li>DistanceUnit.MILES
+     * </ul>
+     * <p>
+     * If no latitude and longitude were provided in the request, the distance will likely not be
+     * supplied and this field will have its default value of -1.0. In that case, use
+     * {@link #getDistanceFromLocation} instead.
+     *
+     * @return distance in meters from search location; this value is *negative* if
+     *         the information was not provided by Yelp
+     */
+    public double getDistanceFromSearchLocation(DistanceUnit units) {
+        switch (units) {
+            case METERS:
+                return distanceFromSearchLocation;
+            case KILOMETERS:
+                return distanceFromSearchLocation * 1000;
+            case FEET:
+                return distanceFromSearchLocation * 3.28084;
+            case MILES:
+                return distanceFromSearchLocation * 0.000621371;
+            default:
+                return -1.0;
+        }
+    }
+
+    /**
+     * Returns a distance in *meters* from the location passed as a parameter to this
+     * Restaurant. This only utilizes latitude and longitude, not altitude information, and
+     * is approximate to ~ 10 meters.
+     *
+     * @param origin location to evaluate in terms of the Restaurant's location
+     * @return the distance in meters from origin to this Restaurant
+     */
+    public double getDistanceFromLocation(Location origin) {
+        return getDistanceFromLocation(origin, DistanceUnit.METERS);
+    }
+
+    /**
+     * Returns a distance from the location passed as a parameter to this
+     * Restaurant, using the specified unit of measure. Units of measure allowed are:
+     * <ul>
+     *     <li>DistanceUnit.METERS
+     *     <li>DistanceUnit.KILOMETERS
+     *     <li>DistanceUnit.FEET
+     *     <li>DistanceUnit.MILES
+     * </ul>
+     * <p>
+     * This only utilizes latitude and longitude, not altitude information, and
+     * is approximate to ~ 10 meters.
+     *
+     * @param origin location to evaluate in terms of the Restaurant's location
+     * @return the distance in meters from origin to this Restaurant
+     */
+    public double getDistanceFromLocation(Location origin, DistanceUnit units) {
+        double distance;
+
+        if (addressMapable == null)
+            return -1.0;
+        double span_latitude =
+                Math.abs(addressMapable.getLatitude() - origin.getLatitude());
+        double span_longitude =
+                Math.abs(getAddressMapable().getLongitude() - origin.getLongitude()) * 111111
+                        * Math.cos(span_latitude);
+        span_latitude *= 111111;
+
+        distance = Math.sqrt(Math.pow(span_latitude, 2) + Math.pow(span_longitude, 2));
+
+        switch (units) {
+            case METERS:
+                return distance;
+            case KILOMETERS:
+                return distance * 1000;
+            case FEET:
+                return distance * 3.28084;
+            case MILES:
+                return distance * 0.000621371;
+            default:
+                return -1.0;
+        }
     }
 
     /**

@@ -139,11 +139,12 @@ public class RestaurantApiClient {
 
         // add parameters
         request.addQuerystringParameter("location", location);
-        if (cll != null)
-            request.addQuerystringParameter("cll", Double.toString(cll.getLatitude())
-                    + "," + Double.toString(cll.getLongitude()));
+        if (!term.equals(""))
+            request.addQuerystringParameter("term", term);
         if (limit > 0)
             request.addQuerystringParameter("limit", String.valueOf(limit));
+        if (offset >= 0)
+            request.addQuerystringParameter("offset", String.valueOf(offset));
         if (sort >= 0)
             request.addQuerystringParameter("sort", String.valueOf(sort));
         if (!categoryFilter.equals(""))
@@ -152,6 +153,9 @@ public class RestaurantApiClient {
             request.addQuerystringParameter("radius_filter", String.valueOf(radiusFilter));
         if (dealsFilter)
             request.addQuerystringParameter("deals_filter", "true");
+        if (cll != null)
+            request.addQuerystringParameter("cll", Double.toString(cll.getLatitude())
+                    + "," + Double.toString(cll.getLongitude()));
 
         // perform the Yelp API call
         resultString = sendRequestAndGetResponse(request);

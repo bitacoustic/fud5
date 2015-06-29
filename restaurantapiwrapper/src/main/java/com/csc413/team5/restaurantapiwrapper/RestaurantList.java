@@ -65,6 +65,20 @@ public class RestaurantList {
     }
 
     /**
+     * Alias for {@link #getRestaurant(int)}
+     */
+    public Restaurant get(int index) {
+        return getRestaurant(index);
+    }
+
+    /**
+     * Alias for {@link #getRestaurant(String)}
+     */
+    public Restaurant get(String id) {
+        return getRestaurant(id);
+    }
+
+    /**
      * @param id a Yelp ID String
      * @return true if the Restaurant matching the specified Yelp ID was found, false otherwise
      */
