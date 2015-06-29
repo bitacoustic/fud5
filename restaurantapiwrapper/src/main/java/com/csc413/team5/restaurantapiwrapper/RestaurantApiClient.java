@@ -398,7 +398,7 @@ public class RestaurantApiClient {
 
 
     /**
-     * Enumerated search type for a Yelp API query.
+     * Enumerated search type for a Yelp API query, used to signal the proper request format.
      */
     private enum YelpQueryType {
         SEARCH, BUSINESS, PHONE_SEARCH
