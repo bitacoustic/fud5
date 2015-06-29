@@ -1,7 +1,10 @@
 package com.csc413.team5.restaurantapiwrapper;
 
+import android.location.Location;
+
 /**
- * TODO Description
+ * Suggested map boundaries for mapping results of an API query. Span refers to the suggested
+ * length and width of the map centered on {@link #center}.
  * <p>
  * Created on 6/24/2015.
  *
@@ -9,19 +12,24 @@ package com.csc413.team5.restaurantapiwrapper;
  */
 public class MapBounds {
     // span of suggested map bounds encompassing restaurant results
-    private double spanLatitudeDelta;
-    private double spanLongitudeDelta;
+    protected double spanLatitudeDelta;
+    protected double spanLongitudeDelta;
 
     // center position of map bounds
-    private double centerLatitude;
-    private double centerLongitude;
+    protected double centerLatitude;
+    protected double centerLongitude;
+    // representation of center as Location
+    Location center;
 
     public MapBounds(double spanLatitudeDelta, double spanLongitudeDelta,
                      double centerLatitude, double centerLongitude) {
-        this.setSpanLatitudeDelta(spanLatitudeDelta);
-        this.setSpanLongitudeDelta(spanLongitudeDelta);
-        this.setCenterLatitude(centerLatitude);
-        this.setCenterLongitude(centerLongitude);
+        this.spanLatitudeDelta = spanLatitudeDelta;
+        this.spanLongitudeDelta = spanLongitudeDelta;
+        this.centerLatitude = centerLatitude;
+        this.centerLongitude = centerLongitude;
+        center = new Location("Yelp");
+        center.setLatitude(centerLatitude);
+        center.setLongitude(centerLongitude);
     }
 
     public double getSpanLatitudeDelta() {
@@ -40,20 +48,11 @@ public class MapBounds {
         return centerLongitude;
     }
 
-    public void setSpanLatitudeDelta(double spanLatitudeDelta) {
-        this.spanLatitudeDelta = spanLatitudeDelta;
-    }
-
-    public void setSpanLongitudeDelta(double spanLongitudeDelta) {
-        this.spanLongitudeDelta = spanLongitudeDelta;
-    }
-
-    public void setCenterLatitude(double centerLatitude) {
-        this.centerLatitude = centerLatitude;
-    }
-
-    public void setCenterLongitude(double centerLongitude) {
-        this.centerLongitude = centerLongitude;
+    /**
+     * @return a {@link Location} object with latitude and longitude of map center
+     */
+    public Location getCenter() {
+        return center;
     }
 
     public void clear() {
@@ -61,5 +60,16 @@ public class MapBounds {
         spanLongitudeDelta = 0.0;
         centerLatitude = 0.0;
         centerLongitude = 0.0;
+    }
+
+    @Override
+    public String toString() {
+        return "MapBounds{" +
+                "spanLatitudeDelta=" + spanLatitudeDelta +
+                ", spanLongitudeDelta=" + spanLongitudeDelta +
+                ", centerLatitude=" + centerLatitude +
+                ", centerLongitude=" + centerLongitude +
+                ", center=" + center +
+                '}';
     }
 }
