@@ -1,5 +1,6 @@
 package com.csc413.team5.restaurantapiwrapper;
 
+import android.location.Address;
 import android.location.Location;
 import android.net.Uri;
 import android.util.JsonReader;
@@ -104,6 +105,24 @@ public class RestaurantApiClient {
     }
 
     /**
+     * Returns a one-line String representation of an {@link Address} appropriate for the
+     * RestaurantApiClient {@link #location} parameter. This method is declared static so
+     * that it cna be used prior to the API call.
+     * @param address  an {@link Address} object
+     * @return a one-line String representation of the Address object
+     */
+    public static String addressToString(Address address) {
+        StringBuilder result = new StringBuilder("");
+        for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+            if (address.getAddressLine(i).compareTo("") != 0)
+                result.append(address.getAddressLine(i));
+            if (i < address.getMaxAddressLineIndex() - 1)
+                result.append(", ");
+        }
+        return result.toString();
+    }
+
+    /**
      * Returns a {@link RestaurantList} object using any of the following parameters passed
      * to {@link com.csc413.team5.restaurantapiwrapper.RestaurantApiClient.Builder}:
      * <ul>
@@ -130,8 +149,8 @@ public class RestaurantApiClient {
      * </ul>
      *
      * @return a {@link RestaurantList} object containing the results of the search
-     * @throws IOException
-     * @throws JSONException
+     * @throws IOException   if JSON text can't be parsed into JSONObject or JSONArray
+     * @throws JSONException if JSONObject or JSONArray encountered a problem
      */
     public RestaurantList getRestaurantList() throws IOException, JSONException {
         String resultString;
@@ -168,8 +187,8 @@ public class RestaurantApiClient {
 
     /**
      * @return a {@link Restaurant} object matching the specified {@link #id}.
-     * @throws IOException
-     * @throws JSONException
+     * @throws IOException   if JSON text can't be parsed into JSONObject or JSONArray
+     * @throws JSONException if JSONObject or JSONArray encountered a problem
      */
     public Restaurant getRestaurantByYelpID() throws IOException, JSONException {
         String resultString;
@@ -252,8 +271,8 @@ public class RestaurantApiClient {
      * the encountered values.
      *
      * @param jsonString  a String containing the JSON-encoded result of a Yelp API query
-     * @throws IOException if JsonReader object can't be opened or closed
-     * @throws JSONException if JSONObject can't be initialized
+     * @throws IOException   if JSON text can't be parsed into JSONObject or JSONArray
+     * @throws JSONException if JSONObject or JSONArray encountered a problem
      */
     public Restaurant constructRestaurant(String jsonString) throws IOException, JSONException {
         Restaurant r = new Restaurant();
