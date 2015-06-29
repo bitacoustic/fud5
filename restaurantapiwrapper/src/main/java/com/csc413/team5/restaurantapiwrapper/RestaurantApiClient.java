@@ -400,7 +400,7 @@ public class RestaurantApiClient {
     /**
      * Enumerated search type for a Yelp API query.
      */
-    public enum YelpQueryType {
+    private enum YelpQueryType {
         SEARCH, BUSINESS, PHONE_SEARCH
     }
 
@@ -496,6 +496,23 @@ public class RestaurantApiClient {
 
         public RestaurantApiClient build() {
             return new RestaurantApiClient(this);
+        }
+
+        @Override
+        public String toString() {
+            return "Builder{" +
+                    "key=(hidden)" +
+                    ", location='" + location + '\'' +
+                    ", cll=" + cll +
+                    ", term='" + term + '\'' +
+                    ", limit=" + limit +
+                    ", offset=" + offset +
+                    ", sort=" + sort +
+                    ", categoryFilter='" + categoryFilter + '\'' +
+                    ", radiusFilter=" + radiusFilter +
+                    ", dealsFilter=" + dealsFilter +
+                    ", id='" + id + '\'' +
+                    '}';
         }
     }
 }
