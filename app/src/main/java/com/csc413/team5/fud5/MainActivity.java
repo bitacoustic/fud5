@@ -2,6 +2,7 @@ package com.csc413.team5.fud5;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,9 +11,6 @@ import android.widget.TextView;
 
 import com.csc413.team5.appdb.dbHelper;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
-
-import java.util.Iterator;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         db = new dbHelper(this, null, null, 1);
         TextView dbTitle = (TextView) findViewById(R.id.dbTitle);
+        TextView dbColumns = (TextView) findViewById(R.id.dbColumns);
 
         dbTitle.setText(db.getName());
     }
@@ -52,20 +51,25 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void insertRestaurant(View v) {
-        TextView t = (TextView) findViewById(R.id.green_list_text);
+    public void insertGreenRestaurant(View v) {
         Button b = (Button) v;
         Restaurant r = new Restaurant();
-        r.setRestaurantName((String) b.getText());
-
+        r.setRestaurantName(b.getTag().toString());
         db.insertRestaurantToList(r,1);
-
-        t.append("\n" + r.getBusinessName());
     }
 
-    public void showGreenList(View v) {
-        TextView t = (TextView) findViewById(R.id.green_list_text);
+    public void insertRedRestaurant(View v) {
+        Button b = (Button) v;
+        Restaurant r = new Restaurant();
+        r.setRestaurantName(b.getTag().toString());
+        db.insertRestaurantToList(r,3);
+    }
 
-        t.setText(db.showContents(1));
+    public void showBothList(View v) {
+        TextView t1 = (TextView) findViewById(R.id.green_list);
+        TextView t2 = (TextView) findViewById(R.id.red_list);
+
+        t1.setText("Hello");
+        t2.setText("World");
     }
 }

@@ -5,44 +5,95 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivityFragment">
 
-    <TextView android:text="OK" android:id="@+id/dbTitle" android:layout_width="wrap_content"
+    <TextView android:text="dbPath" android:id="@+id/dbPath" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true" />
+
+    <TextView android:text="dbTitle" android:id="@+id/dbTitle" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dbPath"/>
+
+    <TextView android:text="dbColumns" android:id="@+id/dbColumns" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dbTitle" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mc Donald&apos;s"
-        android:id="@+id/mc_donalds"
-        android:layout_below="@+id/dbTitle"
+        android:text="GREEN Mc Donald&apos;s"
+        android:id="@+id/green_mc_donalds"
+        android:onClick="insertGreenRestaurant"
+        android:layout_below="@+id/dbColumns"
         android:layout_alignParentStart="true"
-        android:onClick="insertRestaurant"/>
+        android:tag="mc_donalds"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bob&apos;s Burgers"
-        android:id="@+id/bobs_burgers"
-        android:layout_alignBottom="@+id/mc_donalds"
-        android:layout_toEndOf="@+id/mc_donalds"
-        android:onClick="insertRestaurant"/>
+        android:text="GREEN Bob&apos;s Burgers"
+        android:id="@+id/green_bobs_burgers"
+        android:onClick="insertGreenRestaurant"
+        android:layout_below="@+id/green_mc_donalds"
+        android:layout_alignParentLeft="true"
+        android:tag="bobs_burgers"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ALL"
-        android:id="@+id/all_green"
-        android:layout_alignTop="@+id/bobs_burgers"
-        android:layout_toEndOf="@+id/bobs_burgers"
-        android:onClick="showGreenList"/>
+        android:text="RED Mc Donald&apos;s"
+        android:id="@+id/red_mc_donalds"
+        android:onClick="insertRedRestaurant"
+        android:layout_below="@+id/green_bobs_burgers"
+        android:layout_alignParentStart="true"
+        android:tag="mc_donalds"/>
 
-
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Green list:"
-        android:id="@+id/green_list_text"
-        android:layout_below="@+id/mc_donalds"
-        android:layout_alignParentStart="true" />
+        android:text="RED Bob&apos;s Burgers"
+        android:id="@+id/red_bobs_burgers"
+        android:onClick="insertRedRestaurant"
+        android:layout_below="@+id/red_mc_donalds"
+        android:layout_alignParentLeft="true"
+        android:tag="bobs_burgers"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SHOW BOTH"
+        android:id="@+id/show_both"
+        android:onClick="showBothList"
+        android:layout_below="@+id/red_bobs_burgers"
+        android:layout_alignParentLeft="true" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/show_both">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="20dp"
+            android:background="#ffeeee"
+            android:id="@+id/group"
+            android:layout_height="match_parent">
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Green List"
+                android:id="@+id/green_list"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:background="#eeeeff"
+            android:layout_height="match_parent">
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Red List"
+                android:id="@+id/red_list"/>
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>
