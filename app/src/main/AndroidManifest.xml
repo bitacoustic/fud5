@@ -6,7 +6,7 @@
                   - Google Maps: download map tiles -->
     <uses-permission android:name="android.permission.INTERNET"/>
 
-    <!-- Used by the Google Play Services Location API -->
+    <!-- Used by the Google Play Services Location API, Google Maps -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
@@ -17,6 +17,14 @@
          useful but it's specified as a required setting -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
+    <!-- Google Maps: requirement for OpenGL ES version 2 -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
+
+    <!-- TODO: Google Maps API key
+     do we really want to put it here? See:
+     https://developers.google.com/maps/documentation/android/signup -->
 
     <application
         android:allowBackup="true"
