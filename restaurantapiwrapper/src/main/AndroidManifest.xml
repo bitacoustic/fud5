@@ -3,8 +3,12 @@
     package="com.csc413.team5.restaurantapiwrapper" >
 
     <!--
-    <uses-permission android:name="android.permission.INTERNET"/>
+    Since this module is marked as a library we don't need to (can't) run any activities
+    on it. In addition, it doesn't need any permissions (uses permissions of calling app).
+    -->
 
+    <!--
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:label="@string/app_name" >
@@ -12,12 +16,12 @@
             android:name=".TestActivity"
             android:label="@string/app_name" >
 
-            <!--Installs the app twice need to delete-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
     -->
