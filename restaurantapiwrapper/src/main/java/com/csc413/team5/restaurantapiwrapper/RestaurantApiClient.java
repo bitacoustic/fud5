@@ -3,6 +3,7 @@ package com.csc413.team5.restaurantapiwrapper;
 import android.location.Location;
 import android.net.Uri;
 import android.util.JsonReader;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,6 +52,8 @@ import java.util.ArrayList;
  * @author Eric C. Black
  */
 public class RestaurantApiClient {
+    private static final String TAG = "RestaurantApiClient";
+
     private final YelpApiKey key; // required
 
     // Search API parameters
@@ -392,7 +395,10 @@ public class RestaurantApiClient {
      */
     private String sendRequestAndGetResponse(OAuthRequest request) {
         this.service.signRequest(this.accessToken, request);
+        Log.i(TAG, "Sending request URL: " + request.getCompleteUrl());
+        Log.i(TAG, "Sending request via: " + request.toString());
         Response response = request.send();
+        Log.i(TAG, "Received response: " + response.getMessage());
         return response.getBody();
     }
 
@@ -495,6 +501,7 @@ public class RestaurantApiClient {
         }
 
         public RestaurantApiClient build() {
+            Log.i(TAG, "Built RestaurantApiClient: " + this.toString());
             return new RestaurantApiClient(this);
         }
 
