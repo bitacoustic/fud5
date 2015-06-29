@@ -1,14 +1,16 @@
 # Team 5
 ## Application summary
-**Name**:
+**Name**: FüD5
 
 **Purpose**: Suggest a restaurant either nearby or at a specified location according to user's
-preferences.
+preferences. Learn from user's response to previous suggestions to progressively provide a
+qualitatively better result.
+
+## Getting started
+See wiki: https://github.com/sfsucsc413/t5/wiki
 
 ## Information
 ### Team members
-
-Team members
 
 1. Nicu Listana - listana@mail.sfsu.edu
 2. Eric C. Black - ecblack@mail.sfsu.edu
@@ -21,7 +23,7 @@ Team members
 0.0.1
 
 ### Recent Changes
-  - Moved internal information (contact, local setup guide) to wiki. - Eric
+  - Added README.md
 
 ### TO-DO
   - Create branches
