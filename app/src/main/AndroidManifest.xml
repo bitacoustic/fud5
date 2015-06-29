@@ -2,8 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.csc413.team5.fud5" >
 
+    <!-- Used by: - Yelp API (Scribe): send OAuth request and get response
+                  - Google Maps: download map tiles -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <!-- Used by the Google Play Services Location API -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <!-- Used by Google Maps -->
+    <!-- check connection status in order to determine whether data can be downloaded -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- cache map tile data in the device's external storage data; doesn't sound that
+         useful but it's specified as a required setting -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
 
     <application
         android:allowBackup="true"
