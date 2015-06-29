@@ -1,6 +1,5 @@
 package com.csc413.team5.appdb;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,36 +8,38 @@ import android.util.Log;
 
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
+    // Database info
     private static final String TAG = "DATABASE";
-
-    /*Private Data members*/
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME ="fudfive.db";
 
-    // Table
+    // Table info
     private static final String GREEN_RESTAURANTS_TABLE_NAME = "greenRestaurants";
     private static final String YELLOW_RESTAURANTS_TABLE_NAME = "yellowRestaurants";
     private static final String RED_RESTAURANTS_TABLE_NAME = "redRestaurants";
 
-    // Columns
+    // Column info
     private static final String RESTAURANT_ID_COLUMN = "RESTAURANT_ID";
     private static final String TIMESTAMP_COLUMN = "DATE_ADDED";
 
 
-    // Helpers
+    // SQL Syntax Helper variables
     private static final String TEXTTYPE = " TEXT";
     private static final String DATETYPE = " DATETIME";
     private static final String COMMA_SEP = ", ";
     private static final String DEFAULT_FLAG = " DEFAULT";
 
-
+    // Creates an instance of SQLiteDatabase
     public dbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
+    // Generates tables
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Initialize queries
@@ -61,12 +62,10 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
         for (String sqlQueries : listQueries) {
             db.execSQL(sqlQueries);
         }
-
-//        db.execSQL(createGreenList);
     }
 
-    @Override
     // DANGER ZONE, don't call this method yet. Not sure what does.
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + GREEN_RESTAURANTS_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + YELLOW_RESTAURANTS_TABLE_NAME);
@@ -74,45 +73,150 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
         onCreate(db);
     }
 
+    // Main insertion method
     @Override
-    public boolean insertRestaurantToList(Restaurant new_restaurant,int listClass) {
+    public void rawInsertRestaurantToList(Restaurant my_restaurant, int listClass) {
+        if (listClass == 1) { // inserting to yellow list
+            if (!isRestaurantInGreenList(my_restaurant)) { // record not in green list
+                if (isRestaurantInYellowList(my_restaurant)) { // record found, but in yellow
+                    migrateRestaurantListItem(my_restaurant,2,1);  // migrate it from yellow to green
+                    Log.i("List migration", "Yellow -> Green");
+                } else if (isRestaurantInRedList(my_restaurant)) { // record found, but in red
+                    migrateRestaurantListItem(my_restaurant, 3, 1);    // migrate it from red to green
+                    Log.i("List migration", "Red -> Green");
+                } else {    // record not found anywhere, create new record in green list
+                    insertRestaurantToList(my_restaurant, 1);  // insert restaurant to green list
+                    Log.i("GREEN LIST", "Added new record");
+                }
+            } // end if
+            else {    // record is already in green list
+                deleteRestaurantFromGreenList(my_restaurant); // delete previous record
+                insertRestaurantToList(my_restaurant, 1); // insert restaurant to green list
+                Log.i("GREEN LIST", "Updated record");
+            } // end else
+        } /* end else inserting to green list*/
+
+        else if (listClass == 2) { // inserting to yellow list
+            if (!isRestaurantInYellowList(my_restaurant)) { // record not in yellow list
+                if (isRestaurantInGreenList(my_restaurant)) { // record found, but in green
+                    migrateRestaurantListItem(my_restaurant,1,2);  // migrate it from green to yellow
+                    Log.i("List migration", "Green -> Yellow");
+                } else if (isRestaurantInRedList(my_restaurant)) { // record found, but in red
+                    migrateRestaurantListItem(my_restaurant, 3, 2);    // migrate it from red to yellow
+                    Log.i("List migration", "Red -> Green");
+                } else {    // record not found anywhere, create new record in yellow list
+                    insertRestaurantToList(my_restaurant, 2);  // insert restaurant to yellow list
+                    Log.i("YELLOW LIST", "Added new record");
+                }
+            } // end if
+            else {    // record is already in yellow list
+                deleteRestaurantFromGreenList(my_restaurant); // delete previous record
+                insertRestaurantToList(my_restaurant, 2); // insert restaurant to yellow list
+                Log.i("YELLOW LIST", "Updated record");
+            } // end else
+        } /* end else inserting to yellow list*/
+
+        else { // inserting to red list
+            // if record not in red list
+            if (!isRestaurantInRedList(my_restaurant)) {
+                if (isRestaurantInGreenList(my_restaurant)) { // record found, but in green
+                    migrateRestaurantListItem(my_restaurant,1,3);  // migrate it from green to red
+                    Log.i("List migration", "Green -> Red");
+                } else if (isRestaurantInYellowList(my_restaurant)) { // record found, but in yellow
+                    migrateRestaurantListItem(my_restaurant, 2, 3);    // migrate it from yellow to red
+                    Log.i("List migration", "Yellow -> Red");
+                } else {    // record not found anywhere, create new record in red list
+                    insertRestaurantToList(my_restaurant, 3);
+                    Log.i("RED LIST", "Added new record"); // insert restaurant to red list
+                }
+            } // end if
+            else {    // else record is already in red list
+                deleteRestaurantFromGreenList(my_restaurant); // delete previous record
+                insertRestaurantToList(my_restaurant, 3); // insert restaurant to red list
+                Log.i("RED LIST", "Updated record");
+            } // end else
+        } /* end else inserting to red list*/
+    }
+
+    // private insertion helper method
+    // used by both rawInsertRestaurantToList and migrateRestaurantListItem methods
+    private boolean insertRestaurantToList(Restaurant new_restaurant,int listClass) {
+        // TODO: Find a way to throw an error if there's an error in insertion
         SQLiteDatabase db = getWritableDatabase();
 
         if (listClass == 1) {
             db.execSQL("INSERT INTO " + GREEN_RESTAURANTS_TABLE_NAME + "(" +
                     RESTAURANT_ID_COLUMN + ") " + "VALUES(" +
                     "\"" + new_restaurant.getBusinessName() + "\"" + ");");
-            Log.i("GREEN LIST:", new_restaurant.getBusinessName());
+            db.close();
+            return true;
         }
 
         else if (listClass == 2) {
             db.execSQL("INSERT INTO " + YELLOW_RESTAURANTS_TABLE_NAME + "(" +
                     RESTAURANT_ID_COLUMN + ") " + "VALUES(" +
-                    "\""+ new_restaurant.getBusinessName() + "\"" + ");");
-            Log.i("YELLOW LIST:", new_restaurant.getBusinessName());
+                    "\"" + new_restaurant.getBusinessName() + "\"" + ");");
+            Log.i("YELLOW LIST:", "Added new record");
+            db.close();
+            return true;
         }
         else {
             db.execSQL("INSERT INTO " + RED_RESTAURANTS_TABLE_NAME + "(" +
                     RESTAURANT_ID_COLUMN + ") " + "VALUES(" +
                     "\"" + new_restaurant.getBusinessName() + "\"" + ");");
             Log.i("RED LIST:", new_restaurant.getBusinessName());
+            db.close();
+            return true;
         }
-        return true;
     }
 
+    @Override
+    public List<String> getRestaurantNamesFromList(int listClass) {
+        SQLiteDatabase db = getWritableDatabase();
+        List<String> restaurantNames = new ArrayList<>();
+
+        String query;
+
+        if (listClass == 1) {   // green
+            query = "SELECT * FROM " + GREEN_RESTAURANTS_TABLE_NAME;
+        } else if (listClass == 2) {    // yellow
+            query = "SELECT * FROM " + YELLOW_RESTAURANTS_TABLE_NAME;
+        } else if (listClass == 3){ // red
+            query = "SELECT * FROM " + RED_RESTAURANTS_TABLE_NAME;
+        } else {
+            Log.d("Error", "listClassificationError");
+            return null;
+        }
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                restaurantNames.add(cursor.getString(0));   // get first column value
+            } while (cursor.moveToNext());  // repeat until no more value
+        }
+
+        // TODO: Catch when there is no item in a list
+
+        cursor.close();
+        db.close();
+        return restaurantNames;
+    }
+
+    // Helper class that uses delete and insert methods to migrate records
     @Override
     public boolean migrateRestaurantListItem(Restaurant my_restaurant, int fromList, int toList) {
         // green to yellow
         if (fromList == 1 && toList == 2) {
             deleteRestaurantFromGreenList(my_restaurant); // delete from green
-            insertRestaurantToList(my_restaurant,2); // insert to yellow
+            insertRestaurantToList(my_restaurant, 2); // insert to yellow
             return true;
         }
 
         // green to red
         else if (fromList == 1 && toList == 3) {
             deleteRestaurantFromGreenList(my_restaurant); // delete from green
-            insertRestaurantToList(my_restaurant,3);    // insert to red
+            insertRestaurantToList(my_restaurant, 3);    // insert to red
             return true;
         }
 
@@ -126,25 +230,25 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
         // yellow to red
         else if (fromList == 2 && toList == 3) {
             deleteRestaurantFromYellowList(my_restaurant); // delete from yellow
-            insertRestaurantToList(my_restaurant,3);    // insert to green
+            insertRestaurantToList(my_restaurant, 3);    // insert to green
             return true;
         }
 
         // red to green
         else if (fromList == 3 && toList == 1) {
             deleteRestaurantFromRedList(my_restaurant); // delete from red
-            insertRestaurantToList(my_restaurant,1);    // insert to green
+            insertRestaurantToList(my_restaurant, 1);    // insert to green
             return true;
         }
         // red to yellow
         else if (fromList == 3 && toList == 2) {
             deleteRestaurantFromRedList(my_restaurant); // delete from red
-            insertRestaurantToList(my_restaurant,2); // insert to yellow;
+            insertRestaurantToList(my_restaurant, 2); // insert to yellow;
             return true;
         }
         else {
-        // something went wrong
-            Log.d("Error:", "switchRestaurantList()");
+        // Wrong from and to bounds
+            Log.d("Error:", "listOutOfBoundsError");
             return false;
         }
     }
@@ -152,24 +256,37 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
     @Override
     public boolean deleteRestaurantFromGreenList(Restaurant my_restaurant) {
         SQLiteDatabase db = getWritableDatabase();
-        return db.delete(GREEN_RESTAURANTS_TABLE_NAME, RESTAURANT_ID_COLUMN + "=" + my_restaurant.getBusinessName(), null) > 0;
+
+        boolean isDeleteSuccess = (db.delete(GREEN_RESTAURANTS_TABLE_NAME, RESTAURANT_ID_COLUMN
+                + "=" + my_restaurant.getBusinessName(), null) > 0);
+        db.close();
+        return isDeleteSuccess;
     }
 
     @Override
     public boolean deleteRestaurantFromYellowList(Restaurant my_restaurant) {
         SQLiteDatabase db = getWritableDatabase();
-        return db.delete(YELLOW_RESTAURANTS_TABLE_NAME, RESTAURANT_ID_COLUMN + "=" + my_restaurant.getBusinessName(), null) > 0;
+
+        boolean isDeleteSuccess = (db.delete(YELLOW_RESTAURANTS_TABLE_NAME, RESTAURANT_ID_COLUMN
+                + "=" + my_restaurant.getBusinessName(), null) > 0);
+        db.close();
+        return isDeleteSuccess;
     }
 
     @Override
     public boolean deleteRestaurantFromRedList(Restaurant my_restaurant) {
         SQLiteDatabase db = getWritableDatabase();
-        return db.delete(RED_RESTAURANTS_TABLE_NAME, RESTAURANT_ID_COLUMN + "=" + my_restaurant.getBusinessName(), null) > 0;
+
+        boolean isDeleteSuccess = (db.delete(RED_RESTAURANTS_TABLE_NAME, RESTAURANT_ID_COLUMN
+                + "=" + my_restaurant.getBusinessName(), null) > 0);
+
+        db.close();
+        return isDeleteSuccess;
     }
 
     @Override
-    public int getRestaurantList(Restaurant my_restaurant) {
-        int whichList = 0;
+    public int getRestaurantListColor(Restaurant my_restaurant) {
+        int whichList;
         if (    isRestaurantInGreenList(my_restaurant) &&
                 !isRestaurantInYellowList(my_restaurant) &&
                 !isRestaurantInRedList(my_restaurant)) {
@@ -187,9 +304,11 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
             // red
             whichList = 3;
         } else {
-            // something went wrong
-            whichList = 0;
-            Log.d("Error:", "getRestaurantList");
+            whichList = -1;
+            // a record must be in two or more places
+            Log.d("Error", "listCollisionError");
+            // a record does not exist
+            Log.d("Error", "recordNotFoundError");
         }
         return whichList;
     }
@@ -207,6 +326,7 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
         if (cursor.getCount() <= 0) {   // not in the list
             cursor.close();
             db.close();
+            Log.d("Error", "ItemNotFoundError");
             return false;
         }
 
@@ -226,6 +346,7 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
 
         if (cursor.getCount() <= 0) { // not in list
             cursor.close();
+            Log.d("Error", "ItemNotFoundError");
             return false;
         }
 
@@ -245,6 +366,7 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
         if (cursor.getCount() <= 0) {   // not in list
             cursor.close();
             db.close();
+            Log.d("Error", "ItemNotFoundError");
             return false;
         }
 
@@ -254,27 +376,18 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
     }
 
     @Override
-    public ArrayList<String> showListContents(int listClassification) {
-        return null;
+    public boolean isDbExist(Context context) {
+        File dbFile = context.getDatabasePath(DATABASE_NAME);
+        return dbFile.exists();
     }
 
     @Override
-    public boolean checkDbExist(String path) {
-        return false;
-    }
-
-    @Override
-    public String showContents(int listClassification) {
-        return null;
-    }
-
-    @Override
-    public String getName() {
+    public String getDbName() {
         return DATABASE_NAME;
     }
 
     @Override
-    public String getDBPath() {
-        return "dummy path";
+    public String getDBPath(Context context) {
+        return context.getDatabasePath(DATABASE_NAME).toString();
     }
 }
