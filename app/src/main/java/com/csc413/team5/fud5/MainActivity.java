@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
         dbTitle.append(db.getDbName());
         dbPath.append(db.getDbPath(this));
-        // test
     }
 
 
