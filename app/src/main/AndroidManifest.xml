@@ -3,7 +3,7 @@
     package="com.csc413.team5.fud5" >
 
     <!-- Used by the Google Play Services Location API -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -18,6 +18,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".GreenListActivity"
+            android:label="@string/title_activity_green_list"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.csc413.team5.fud5.MainActivity" />
         </activity>
     </application>
 

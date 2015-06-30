@@ -1,5 +1,6 @@
 package com.csc413.team5.fud5;
 
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,9 +24,10 @@ public class MainActivity extends AppCompatActivity {
 
         db = new dbHelper(this, null, null, 1);
         TextView dbTitle = (TextView) findViewById(R.id.dbTitle);
-        TextView dbColumns = (TextView) findViewById(R.id.dbColumns);
+        TextView dbPath = (TextView) findViewById(R.id.dbPath);
 
-        dbTitle.setText(db.getName());
+        dbTitle.setText(db.getDbName());
+        dbPath.setText(db.getDBPath(this));
     }
 
 
@@ -51,25 +53,17 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void insertGreenRestaurant(View v) {
-        Button b = (Button) v;
-        Restaurant r = new Restaurant();
-        r.setRestaurantName(b.getTag().toString());
-        db.insertRestaurantToList(r,1);
+    public void createRecord(View v) {
+        DialogFragment newFragment = new dbColorDialogFragment();
+        newFragment.show(getFragmentManager(), "quiz");
     }
 
-    public void insertRedRestaurant(View v) {
-        Button b = (Button) v;
-        Restaurant r = new Restaurant();
-        r.setRestaurantName(b.getTag().toString());
-        db.insertRestaurantToList(r,3);
+    public void readRecord(View v) {
     }
 
-    public void showBothList(View v) {
-        TextView t1 = (TextView) findViewById(R.id.green_list);
-        TextView t2 = (TextView) findViewById(R.id.red_list);
+    public void updateRecord(View v) {
+    }
 
-        t1.setText("Hello");
-        t2.setText("World");
+    public void deleteRecord(View v) {
     }
 }
