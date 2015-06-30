@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" android:layout_height="match_parent">
+    android:layout_width="fill_parent" android:layout_height="fill_parent">
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="300dp"
-        android:id="@+id/red_group"
+        android:layout_height="fill_parent"
+        android:id="@+id/yellow_group"
         android:layout_above="@+id/backToMenu">
         <LinearLayout
             android:orientation="vertical"
@@ -16,7 +16,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Restaurant_id"
-                android:id="@+id/restaurant_id"/>
+                android:id="@+id/yellow_restaurant_id_text"/>
         </LinearLayout>
         <LinearLayout
             android:layout_weight="1"
@@ -27,13 +27,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Timestamp"
-                android:id="@+id/timestamp"/>
-
+                android:id="@+id/yelow_restarant_timestamp_text"/>
         </LinearLayout>
     </LinearLayout>
-
-    <Button android:layout_height="wrap_content" android:layout_width="fill_parent"
-        android:id="@+id/backToMenu" android:text="Back to Menu"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
 </RelativeLayout>

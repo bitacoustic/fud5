@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class GenericDbInfoFragment extends Fragment {
+public class YellowListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_db_info, container, false);
+        return inflater.inflate(R.layout.fragment_yellow_list, container, false);
     }
 }

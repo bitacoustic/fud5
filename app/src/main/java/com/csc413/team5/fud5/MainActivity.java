@@ -3,11 +3,9 @@ package com.csc413.team5.fud5;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.csc413.team5.appdb.dbHelper;
@@ -26,8 +24,9 @@ public class MainActivity extends AppCompatActivity {
         TextView dbTitle = (TextView) findViewById(R.id.dbTitle);
         TextView dbPath = (TextView) findViewById(R.id.dbPath);
 
-        dbTitle.setText(db.getDbName());
-        dbPath.setText(db.getDBPath(this));
+
+        dbTitle.append(db.getDbName());
+        dbPath.append(db.getDbPath(this));
     }
 
 
@@ -54,11 +53,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createRecord(View v) {
-        DialogFragment newFragment = new dbColorDialogFragment();
-        newFragment.show(getFragmentManager(), "quiz");
+//        DialogFragment createDialog = new dbColorDialogFragment();
+//        createDialog.show(getFragmentManager(), "colorSelect");
     }
 
     public void readRecord(View v) {
+        DialogFragment readDialog = new dbColorDialogFragment();
+        readDialog.show(getFragmentManager(), "readDialog");
     }
 
     public void updateRecord(View v) {

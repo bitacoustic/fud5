@@ -27,6 +27,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.csc413.team5.fud5.MainActivity" />
         </activity>
+        <activity
+            android:name=".YellowListActivity"
+            android:label="@string/title_activity_yellow_list"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.csc413.team5.fud5.MainActivity" />
+        </activity>
+        <activity
+            android:name=".RedListActivity"
+            android:label="@string/title_activity_red_list"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.csc413.team5.fud5.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

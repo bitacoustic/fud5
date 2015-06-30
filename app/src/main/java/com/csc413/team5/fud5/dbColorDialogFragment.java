@@ -26,11 +26,11 @@ public class dbColorDialogFragment extends DialogFragment {
                 .setItems(R.array.db_colors_array, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (which == 1) {
+                        if (which == 0) {
                             onGreenList();
-                        } else if (which == 2) {
+                        } else if (which == 1) {
                             onYellowList();
-                        } else {
+                        } else if (which == 2){
                             onRedList();
                         }
                     }
@@ -44,12 +44,12 @@ public class dbColorDialogFragment extends DialogFragment {
     }
 
     private void onYellowList() {
-        Intent intent  = new Intent(getActivity(), GreenListActivity.class);
+        Intent intent  = new Intent(getActivity(), YellowListActivity.class);
         startActivity(intent);
     }
 
     private void onRedList() {
-        Intent intent  = new Intent(getActivity(), GreenListActivity.class);
+        Intent intent  = new Intent(getActivity(), RedListActivity.class);
         startActivity(intent);
     }
 }

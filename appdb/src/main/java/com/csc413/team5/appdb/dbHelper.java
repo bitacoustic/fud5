@@ -382,12 +382,51 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
     }
 
     @Override
+    public boolean isTableEmpty(int listClass) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        String query = "";
+
+        if (listClass == 1) {   // green
+            query = "SELECT * FROM " + GREEN_RESTAURANTS_TABLE_NAME;
+        } else if (listClass == 2) {    // yellow
+            query = "SELECT * FROM " + YELLOW_RESTAURANTS_TABLE_NAME;
+        } else if (listClass == 3){ // red
+            query = "SELECT * FROM " + RED_RESTAURANTS_TABLE_NAME;
+        } else {
+            Log.d("Error", "listClassificationError");
+        }
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        cursor.moveToFirst();
+        if (cursor.getInt(0) == 0) {
+                cursor.close();
+                return true;
+        } else {
+            cursor.close();
+            return false;
+        }
+    }
+
+    @Override
     public String getDbName() {
         return DATABASE_NAME;
     }
 
     @Override
-    public String getDBPath(Context context) {
+    public String getDbTableName(int listClass) {
+        if (listClass == 1) {
+            return GREEN_RESTAURANTS_TABLE_NAME;
+        } else if (listClass == 2) {
+            return YELLOW_RESTAURANTS_TABLE_NAME;
+        } else {
+            return RED_RESTAURANTS_TABLE_NAME;
+        }
+    }
+
+    @Override
+    public String getDbPath(Context context) {
         return context.getDatabasePath(DATABASE_NAME).toString();
     }
 }

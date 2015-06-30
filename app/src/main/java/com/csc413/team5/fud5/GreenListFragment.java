@@ -10,6 +10,6 @@ public class GreenListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.green_list_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_green_list, container, false);
     }
 }

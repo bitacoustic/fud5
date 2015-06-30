@@ -7,17 +7,14 @@
 
     <TextView android:text="dbPath: " android:id="@+id/dbPath" android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:gravity="center_horizontal" />
+        android:layout_alignParentStart="true" />
 
     <TextView android:text="dbTitle: " android:id="@+id/dbTitle" android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dbPath"
-        android:gravity="center_horizontal" />
+        android:layout_below="@id/dbPath" />
 
     <TextView android:text="dbTable: " android:id="@+id/dbTableTitle" android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dbTitle"
-        android:gravity="center_horizontal" />
+        android:layout_below="@id/dbTitle" />
 
 </RelativeLayout>

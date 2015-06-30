@@ -132,13 +132,30 @@ public interface dbHelperInterface {
      * @see Context
      */
     boolean isDbExist(Context context);
+
+    /**
+     * Checks if a table in a database has an item
+     * @param listClass the current context that the end-user is in
+     * <ol>
+     *  <li>Inserts to green list.</li>
+     *  <li>Inserts to yellow list.</li>
+     *  <li>Inserts to red list.</li>
+     * </ol>
+     * @return if the designated table is empty, true
+     * @see Context
+     */
+    boolean isTableEmpty(int listClass);
+
     /**
      * @return The database name
      */
     String getDbName();
+
     /**
      * @param context the current context that the end-user is in
      * @return The database path
      */
-    String getDBPath(Context context);
+    String getDbPath(Context context);
+
+    String getDbTableName(int listClass);
 }
