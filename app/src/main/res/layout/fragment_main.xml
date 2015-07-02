@@ -16,7 +16,7 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/restaurantInput"
         android:layout_below="@+id/dbTitle"
         android:layout_alignParentStart="true"
         android:hint="Restaurant ID" />
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:text="CREATE RECORD"
         android:id="@+id/create_record_button"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/restaurantInput"
         android:layout_alignParentStart="true"
         android:onClick="createRecord"/>
 

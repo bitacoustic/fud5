@@ -31,11 +31,11 @@ public class YellowListActivity extends AppCompatActivity {
         /* display DB contents */
         TextView restaurantIDEntries = (TextView) findViewById(R.id.yellow_restaurant_id_text);
 
-        if (!db.isTableEmpty(2)) {  // if db is not empty
+//        if (!db.isTableEmpty(2)) {  // if db is not empty
             for (int i = 0; i < db.getRestaurantNamesFromList(1).size(); i++) {
                 restaurantIDEntries.append("\n" + db.getRestaurantNamesFromList(2).get(i));
             }
-        }
+//        }
     }
 
     @Override

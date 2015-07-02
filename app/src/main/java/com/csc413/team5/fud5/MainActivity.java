@@ -1,6 +1,5 @@
 package com.csc413.team5.fud5;
 
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -9,11 +8,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.csc413.team5.appdb.dbHelper;
-import com.csc413.team5.restaurantapiwrapper.Restaurant;
 
 public class MainActivity extends AppCompatActivity {
 
-    dbHelper db;
+    private dbHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +19,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         db = new dbHelper(this, null, null, 1);
+        db.getWritableDatabase();
+
         TextView dbTitle = (TextView) findViewById(R.id.dbTitle);
         TextView dbPath = (TextView) findViewById(R.id.dbPath);
-
 
         dbTitle.append(db.getDbName());
         dbPath.append(db.getDbPath(this));
@@ -53,18 +52,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createRecord(View v) {
-//        DialogFragment createDialog = new dbColorDialogFragment();
-//        createDialog.show(getFragmentManager(), "colorSelect");
+        dbColorDialogFragment createDialog = dbColorDialogFragment.newInstance(1);
+        createDialog.show(getFragmentManager(), "createDialog");
     }
 
     public void readRecord(View v) {
-        DialogFragment readDialog = new dbColorDialogFragment();
+        dbColorDialogFragment readDialog = dbColorDialogFragment.newInstance(2);
         readDialog.show(getFragmentManager(), "readDialog");
     }
 
     public void updateRecord(View v) {
+        dbColorDialogFragment updateDialog = dbColorDialogFragment.newInstance(3);
+        updateDialog.show(getFragmentManager(), "updateDialog");
     }
 
     public void deleteRecord(View v) {
+        dbColorDialogFragment deleteDialog = dbColorDialogFragment.newInstance(4);
+        deleteDialog.show(getFragmentManager(), "deleteDialog");
     }
 }

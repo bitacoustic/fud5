@@ -62,8 +62,6 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
         for (String sqlQueries : listQueries) {
             db.execSQL(sqlQueries);
         }
-
-        db.close();
     }
 
     // DANGER ZONE, don't call this method yet. Not sure what does.
@@ -73,7 +71,6 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
         db.execSQL("DROP TABLE IF EXISTS " + YELLOW_RESTAURANTS_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + RED_RESTAURANTS_TABLE_NAME);
         onCreate(db);
-        db.close();
     }
 
     // Main insertion method
@@ -385,9 +382,38 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
     }
 
     @Override
-    public boolean isTableEmpty(int listClass) {
+    public boolean isTableExist(int listClass) {
+        String query = "";
         SQLiteDatabase db = getWritableDatabase();
 
+        if (listClass == 1) {   // green
+            query = "SELECT 1 FROM sqlite_master WHERE type=\'table\' AND name =\'" +
+                    GREEN_RESTAURANTS_TABLE_NAME+"\'";
+        } else if (listClass == 2) {    // yellow
+            query = "SELECT 1 FROM sqlite_master WHERE type=\'table\' AND name =\'" +
+                    YELLOW_RESTAURANTS_TABLE_NAME+"\'";
+        } else if (listClass == 3){ // red
+            query = "SELECT 1 FROM sqlite_master WHERE type=\'table\' AND name =\'" +
+                    RED_RESTAURANTS_TABLE_NAME+"\'";
+        } else {
+            Log.d("Error", "listClassificationError");
+        }
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (!cursor.moveToFirst()) {
+            return false;
+        }
+
+        int count = cursor.getInt(0);
+        cursor.close();
+        db.close();
+        return count > 0;   // exists if > 0
+    }
+
+    @Override
+    public boolean isTableEmpty(int listClass) {
+        SQLiteDatabase db = getWritableDatabase();
         String query = "";
 
         if (listClass == 1) {   // green
@@ -403,13 +429,13 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
         Cursor cursor = db.rawQuery(query, null);
 
         cursor.moveToFirst();
-        if (cursor.getInt(0) == 0) {
-            cursor.close();
-            return true;
-        } else {
-            cursor.close();
-            return false;
-        }
+
+        int count = cursor.getInt(0);
+
+        cursor.close();
+        db.close();
+
+        return count == 0;   // not empty if != 0
     }
 
     @Override

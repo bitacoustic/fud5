@@ -134,15 +134,26 @@ public interface dbHelperInterface {
     boolean isDbExist(Context context);
 
     /**
+     * Checks if a table in the database exists
+     * @param listClass the current context that the end-user is in
+     * <ol>
+     *  <li>The green list.</li>
+     *  <li>The to yellow list.</li>
+     *  <li>The to red list.</li>
+     * </ol>
+     * @return if the designated table is empty, true
+     */
+    boolean isTableExist(int listClass);
+
+    /**
      * Checks if a table in a database has an item
      * @param listClass the current context that the end-user is in
      * <ol>
-     *  <li>Inserts to green list.</li>
-     *  <li>Inserts to yellow list.</li>
-     *  <li>Inserts to red list.</li>
+     *  <li>The green list.</li>
+     *  <li>The yellow list.</li>
+     *  <li>The red list.</li>
      * </ol>
      * @return if the designated table is empty, true
-     * @see Context
      */
     boolean isTableEmpty(int listClass);
 

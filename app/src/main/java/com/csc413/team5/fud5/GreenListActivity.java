@@ -32,11 +32,13 @@ public class GreenListActivity extends AppCompatActivity {
         /* display DB contents */
         TextView restaurantIDEntries = (TextView) findViewById(R.id.green_restaurant_id_text);
 
-        if (!db.isTableEmpty(1)) { // if db is not empty
+        if (db.isTableExist(1) && !db.isTableEmpty(1)) { // if db exists and is not empty
             for (int i = 0; i < db.getRestaurantNamesFromList(1).size(); i++) {
                 restaurantIDEntries.append("\n" + db.getRestaurantNamesFromList(1).get(i));
             }
         }
+        restaurantIDEntries.append("\n" + "Exists: " + db.isTableExist(1));
+        restaurantIDEntries.append("\n" + "Empty: " + db.isTableEmpty(1));
     }
 
     @Override
