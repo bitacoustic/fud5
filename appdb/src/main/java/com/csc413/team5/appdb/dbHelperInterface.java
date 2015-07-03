@@ -84,17 +84,19 @@ public interface dbHelperInterface {
      ***************/
 
     /**
-     * Gets the list color where a restaurant belongs to
+     * Checks whether a restaurant belongs only in a designated list
      * @param my_restaurant a restaurant
-     * @return a number which corresponds to a list. "-1" if record is found in more than 1 place or not found.
+     * @param listClass
      * <ol>
      *  <li>The green list.</li>
      *  <li>The yellow list.</li>
      *  <li>The red list.</li>
      * </ol>
+     * @return if the restaurant is only in the designated list, true
      * @see Restaurant
      */
-    int getRestaurantListColor(Restaurant my_restaurant);
+    boolean isRestaurantInList(Restaurant my_restaurant, int listClass);
+
     /**
      * Checks whether a restaurant belongs in a designated list
      * @param my_restaurant a restaurant
@@ -107,7 +109,20 @@ public interface dbHelperInterface {
      * @return if the restaurant is in the designated list, true
      * @see Restaurant
      */
-    boolean isRestaurantInList(Restaurant my_restaurant, int listClass);
+    boolean isRestaurantOnlyInList(Restaurant my_restaurant, int listClass);
+
+    /**
+     * Gets the list color where a restaurant belongs to
+     * @param my_restaurant a restaurant
+     * @return a number which corresponds to a list. "-1" if record is found in more than 1 place or not found.
+     * <ol>
+     *  <li>The green list.</li>
+     *  <li>The yellow list.</li>
+     *  <li>The red list.</li>
+     * </ol>
+     * @see Restaurant
+     */
+    int getRestaurantListColor(Restaurant my_restaurant);
 
     /**
      * Checks if the database exists

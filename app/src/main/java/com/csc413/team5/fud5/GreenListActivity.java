@@ -38,6 +38,8 @@ public class GreenListActivity extends AppCompatActivity {
                 restaurantIDEntries.append("\n" + db.getRestaurantNamesFromList(1).get(i));
             }
         }
+
+        restaurantIDEntries.append("\n" + "---TABLE INFO---");
         restaurantIDEntries.append("\n" + "Exists: " + db.isTableExist(1));
         restaurantIDEntries.append("\n" + "Empty: " + db.isTableEmpty(1));
     }

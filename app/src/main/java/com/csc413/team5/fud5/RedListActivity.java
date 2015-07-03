@@ -32,11 +32,14 @@ public class RedListActivity extends AppCompatActivity {
         TextView restaurantIDEntries = (TextView) findViewById(R.id.red_restaurant_id_text);
 
 
-        if (!db.isTableEmpty(3)) {  // if db is not empty
-            for (int i = 0; i < db.getRestaurantNamesFromList(1).size(); i++) {
+        if (db.isTableExist(3) && !db.isTableEmpty(3)) { // if db exists and is not empty
+            for (int i = 0; i < db.getRestaurantNamesFromList(3).size(); i++) {
                 restaurantIDEntries.append("\n" + db.getRestaurantNamesFromList(3).get(i));
             }
         }
+        restaurantIDEntries.append("\n" + "---TABLE INFO---");
+        restaurantIDEntries.append("\n" + "Exists: " + db.isTableExist(3));
+        restaurantIDEntries.append("\n" + "Empty: " + db.isTableEmpty(3));
     }
 
     @Override

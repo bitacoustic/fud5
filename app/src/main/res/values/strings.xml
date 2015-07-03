@@ -6,4 +6,5 @@
     <string name="title_activity_green_list">GreenListActivity</string>
     <string name="title_activity_yellow_list">YellowListActivity</string>
     <string name="title_activity_red_list">RedListActivity</string>
+    <string name="yellow">Yellow</string>
 </resources>

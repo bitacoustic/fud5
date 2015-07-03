@@ -43,24 +43,48 @@ public class dbColorDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == 0) {
                             switch (dSetting) {
-                                case 1: insertToGreenList(restaurantInput); break;
-                                case 2: viewGreenList(); break;
-                                case 3: migrateToGreenList(restaurantInput); break;
-                                case 4: deleteFromGreenList(restaurantInput); break;
+                                case 1:
+                                    insertToGreenList(restaurantInput);
+                                    break;
+                                case 2:
+                                    viewGreenList();
+                                    break;
+                                case 3:
+                                    migrateToGreenList(restaurantInput, 2); // yellow -> green
+                                    break;
+                                case 4:
+                                    deleteFromGreenList(restaurantInput);
+                                    break;
                             }
                         } else if (which == 1) {
                             switch (dSetting) {
-                                case 1: insertToYellowList(restaurantInput); break;
-                                case 2: viewYellowList(); break;
-                                case 3: migrateToYellowList(restaurantInput); break;
-                                case 4: deleteFromYellowList(restaurantInput); break;
+                                case 1:
+                                    insertToYellowList(restaurantInput);
+                                    break;
+                                case 2:
+                                    viewYellowList();
+                                    break;
+                                case 3:
+                                    migrateToYellowList(restaurantInput, 1); // green -> yellow
+                                    break;
+                                case 4:
+                                    deleteFromYellowList(restaurantInput);
+                                    break;
                             }
-                        } else if (which == 2){
+                        } else if (which == 2) {
                             switch (dSetting) {
-                                case 1: insertToRedList(restaurantInput); break;
-                                case 2: viewRedList(); break;
-                                case 3: migrateToRedList(restaurantInput); break;
-                                case 4: deleteFromRedList(restaurantInput); break;
+                                case 1:
+                                    insertToRedList(restaurantInput);
+                                    break;
+                                case 2:
+                                    viewRedList();
+                                    break;
+                                case 3:
+                                    migrateToRedList(restaurantInput, 1); // green -> red
+                                    break;
+                                case 4:
+                                    deleteFromRedList(restaurantInput);
+                                    break;
                             }
                         }
                     }
@@ -76,10 +100,6 @@ public class dbColorDialogFragment extends DialogFragment {
         Restaurant r = new Restaurant();
         r.setRestaurantName(inputText);
 
-//        db.isRestaurantInList(r); Y
-//        db.getRestaurantListColor(r); Y
-
-        // TODO CHECK SQL QUERIES TO SEE WHAT'S WRONG
         db.rawInsertRestaurantToList(r, 1);
         CharSequence text = "Inserted " + inputText + " to green list.";
         Toast toast = Toast.makeText(context, text, duration);
@@ -90,15 +110,26 @@ public class dbColorDialogFragment extends DialogFragment {
     }
     private void insertToYellowList(String inputText) {
         Context context = this.getActivity().getApplicationContext();
-        CharSequence text = "Inserted " + inputText + " to yellow list.";
         int duration = Toast.LENGTH_SHORT;
+
+        Restaurant r = new Restaurant();
+        r.setRestaurantName(inputText);
+
+        db.rawInsertRestaurantToList(r, 2);
+        CharSequence text = "Inserted " + inputText + " to yellow list.";
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
     private void insertToRedList(String inputText) {
         Context context = this.getActivity().getApplicationContext();
-        CharSequence text = "Inserted " + inputText + " to red list.";
         int duration = Toast.LENGTH_SHORT;
+
+        Restaurant r = new Restaurant();
+        r.setRestaurantName(inputText);
+
+        db.rawInsertRestaurantToList(r, 3);
+
+        CharSequence text = "Inserted " + inputText + " to red list.";
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
@@ -120,26 +151,71 @@ public class dbColorDialogFragment extends DialogFragment {
     }
 
     // Update
-    private void migrateToGreenList(String inputText) {
+    private void migrateToGreenList(String inputText, int fromList) {
         Context context = this.getActivity().getApplicationContext();
-        CharSequence text = "Migrated " + inputText + " to green list.";
         int duration = Toast.LENGTH_SHORT;
+
+        Restaurant r = new Restaurant();
+        r.setRestaurantName(inputText);
+
+        CharSequence text;
+
+        if (fromList == 2) {    // from yellow
+             text = "Delete " + inputText + " in yellow list: " + db.deleteRestaurantFromList(r, 2) +
+                    "\nInsert " + inputText + " to green list: " + db.insertRestaurantToList(r, 1);
+        } else if (fromList == 3){    // from red
+            text = "Delete " + inputText + " in red list: " + db.deleteRestaurantFromList(r, 3) +
+                    "\nInsert " + inputText + " to green list: " + db.insertRestaurantToList(r, 1);
+        } else {
+            text = "No migration happened for " + inputText;
+        }
+
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
 
-    private void migrateToYellowList(String inputText) {
+    private void migrateToYellowList(String inputText, int fromList) {
         Context context = this.getActivity().getApplicationContext();
-        CharSequence text = "Migrated " + inputText + " to yellow list.";
         int duration = Toast.LENGTH_SHORT;
+
+        Restaurant r = new Restaurant();
+        r.setRestaurantName(inputText);
+
+        CharSequence text;
+
+        if (fromList == 1) {    // from green
+            text = "Delete " + inputText + " in green list: " + db.deleteRestaurantFromList(r, 1) +
+                    "\nInsert " + inputText + " to yellow list: " + db.insertRestaurantToList(r, 2);
+        } else if (fromList == 3){    // from red
+            text = "Delete " + inputText + " in red list: " + db.deleteRestaurantFromList(r, 3) +
+                    "\nInsert " + inputText + " to yellow list: " + db.insertRestaurantToList(r, 2);
+        } else {
+            text = "No migration happened for " + inputText;
+        }
+
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
 
-    private void migrateToRedList(String inputText) {
+    private void migrateToRedList(String inputText, int fromList) {
         Context context = this.getActivity().getApplicationContext();
-        CharSequence text = "Migrated " + inputText + " to red list.";
         int duration = Toast.LENGTH_SHORT;
+
+        Restaurant r = new Restaurant();
+        r.setRestaurantName(inputText);
+
+        CharSequence text;
+
+        if (fromList == 1) {    // from green
+            text = "Delete " + inputText + " from green list: " + db.deleteRestaurantFromList(r, 1) +
+                    "\nInsert " + inputText + " to red list: " + db.insertRestaurantToList(r, 3);
+        } else if (fromList == 2){  // from yellow
+            text = "Delete " + inputText + " from yellow list: " + db.deleteRestaurantFromList(r, 1) +
+                    "\nInsert " + inputText + " to red list: " + db.insertRestaurantToList(r, 2);
+        } else {
+            text = "No migration happened for " + inputText;
+        }
+
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
@@ -147,15 +223,24 @@ public class dbColorDialogFragment extends DialogFragment {
     // Delete
     private void deleteFromGreenList(String inputText) {
         Context context = this.getActivity().getApplicationContext();
-        CharSequence text = "Deleted " + inputText + " from green list.";
+
+        Restaurant r = new Restaurant();
+        r.setRestaurantName(inputText);
+
+        CharSequence text = "Delete: " + inputText + " from green list = " + db.deleteRestaurantFromList(r, 1);
         int duration = Toast.LENGTH_SHORT;
+
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
 
     private void deleteFromYellowList(String inputText) {
         Context context = this.getActivity().getApplicationContext();
-        CharSequence text = "Deleted " + inputText + " from yellow list.";
+
+        Restaurant r = new Restaurant();
+        r.setRestaurantName(inputText);
+
+        CharSequence text = "Delete: " + inputText + " from yellow list = " + db.deleteRestaurantFromList(r, 2);
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
@@ -163,7 +248,11 @@ public class dbColorDialogFragment extends DialogFragment {
 
     private void deleteFromRedList(String inputText) {
         Context context = this.getActivity().getApplicationContext();
-        CharSequence text = "Deleted " + inputText + " from red list.";
+
+        Restaurant r = new Restaurant();
+        r.setRestaurantName(inputText);
+
+        CharSequence text = "Delete: " + inputText + " from red list = " + db.deleteRestaurantFromList(r, 3);
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
