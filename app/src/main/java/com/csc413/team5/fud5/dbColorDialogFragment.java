@@ -9,11 +9,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.csc413.team5.appdb.dbHelper;
+import com.csc413.team5.restaurantapiwrapper.Restaurant;
+
 public class dbColorDialogFragment extends DialogFragment {
-    int dSetting;
+    private int dSetting;
+    dbHelper db;
 
     public static dbColorDialogFragment newInstance(int dialogSetting) {
         dbColorDialogFragment dbDialog = new dbColorDialogFragment();
@@ -27,6 +30,8 @@ public class dbColorDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstance) {
+        db = new dbHelper(this.getActivity(), null, null, 1);
+
         dSetting = getArguments().getInt("dialogSetting");
         EditText inputText = (EditText) this.getActivity().findViewById(R.id.restaurantInput);
         final String restaurantInput = inputText.getText().toString();
@@ -66,13 +71,22 @@ public class dbColorDialogFragment extends DialogFragment {
     // Create
     private void insertToGreenList(String inputText) {
         Context context = this.getActivity().getApplicationContext();
-        CharSequence text = "Inserted " + inputText + " to green list.";
         int duration = Toast.LENGTH_SHORT;
+
+        Restaurant r = new Restaurant();
+        r.setRestaurantName(inputText);
+
+//        db.isRestaurantInList(r); Y
+//        db.getRestaurantListColor(r); Y
+
+        // TODO CHECK SQL QUERIES TO SEE WHAT'S WRONG
+        db.rawInsertRestaurantToList(r, 1);
+        CharSequence text = "Inserted " + inputText + " to green list.";
         Toast toast = Toast.makeText(context, text, duration);
 
-
-
         toast.show();
+
+        Log.i("Insert", "Clicked");
     }
     private void insertToYellowList(String inputText) {
         Context context = this.getActivity().getApplicationContext();

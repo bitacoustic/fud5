@@ -77,11 +77,11 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
     @Override
     public void rawInsertRestaurantToList(Restaurant my_restaurant, int listClass) {
         if (listClass == 1) { // inserting to yellow list
-            if (!isRestaurantInGreenList(my_restaurant)) { // record not in green list
-                if (isRestaurantInYellowList(my_restaurant)) { // record found, but in yellow
+            if (!isRestaurantInList(my_restaurant, 1)) { // record not in green list
+                if (isRestaurantInList(my_restaurant, 2)) { // record found, but in yellow
                     migrateRestaurantListItem(my_restaurant,2,1);  // migrate it from yellow to green
                     Log.i("List migration", "Yellow -> Green");
-                } else if (isRestaurantInRedList(my_restaurant)) { // record found, but in red
+                } else if (isRestaurantInList(my_restaurant, 3)) { // record found, but in red
                     migrateRestaurantListItem(my_restaurant, 3, 1);    // migrate it from red to green
                     Log.i("List migration", "Red -> Green");
                 } else {    // record not found anywhere, create new record in green list
@@ -90,18 +90,18 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
                 }
             } // end if
             else {    // record is already in green list
-                deleteRestaurantFromGreenList(my_restaurant); // delete previous record
+                deleteRestaurantFromList(my_restaurant, 1); // delete previous record
                 insertRestaurantToList(my_restaurant, 1); // insert restaurant to green list
                 Log.i("GREEN LIST", "Updated record");
             } // end else
         } /* end else inserting to green list*/
 
         else if (listClass == 2) { // inserting to yellow list
-            if (!isRestaurantInYellowList(my_restaurant)) { // record not in yellow list
-                if (isRestaurantInGreenList(my_restaurant)) { // record found, but in green
+            if (!isRestaurantInList(my_restaurant, 2)) { // record not in yellow list
+                if (isRestaurantInList(my_restaurant, 1)) { // record found, but in green
                     migrateRestaurantListItem(my_restaurant,1,2);  // migrate it from green to yellow
                     Log.i("List migration", "Green -> Yellow");
-                } else if (isRestaurantInRedList(my_restaurant)) { // record found, but in red
+                } else if (isRestaurantInList(my_restaurant, 3)) { // record found, but in red
                     migrateRestaurantListItem(my_restaurant, 3, 2);    // migrate it from red to yellow
                     Log.i("List migration", "Red -> Green");
                 } else {    // record not found anywhere, create new record in yellow list
@@ -110,7 +110,7 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
                 }
             } // end if
             else {    // record is already in yellow list
-                deleteRestaurantFromGreenList(my_restaurant); // delete previous record
+                deleteRestaurantFromList(my_restaurant, 2); // delete previous record
                 insertRestaurantToList(my_restaurant, 2); // insert restaurant to yellow list
                 Log.i("YELLOW LIST", "Updated record");
             } // end else
@@ -118,11 +118,11 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
 
         else { // inserting to red list
             // if record not in red list
-            if (!isRestaurantInRedList(my_restaurant)) {
-                if (isRestaurantInGreenList(my_restaurant)) { // record found, but in green
+            if (!isRestaurantInList(my_restaurant, 3)) {
+                if (isRestaurantInList(my_restaurant, 1)) { // record found, but in green
                     migrateRestaurantListItem(my_restaurant,1,3);  // migrate it from green to red
                     Log.i("List migration", "Green -> Red");
-                } else if (isRestaurantInYellowList(my_restaurant)) { // record found, but in yellow
+                } else if (isRestaurantInList(my_restaurant, 2)) { // record found, but in yellow
                     migrateRestaurantListItem(my_restaurant, 2, 3);    // migrate it from yellow to red
                     Log.i("List migration", "Yellow -> Red");
                 } else {    // record not found anywhere, create new record in red list
@@ -131,7 +131,7 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
                 }
             } // end if
             else {    // else record is already in red list
-                deleteRestaurantFromGreenList(my_restaurant); // delete previous record
+                deleteRestaurantFromList(my_restaurant, 3); // delete previous record
                 insertRestaurantToList(my_restaurant, 3); // insert restaurant to red list
                 Log.i("RED LIST", "Updated record");
             } // end else
@@ -208,41 +208,41 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
     public boolean migrateRestaurantListItem(Restaurant my_restaurant, int fromList, int toList) {
         // green to yellow
         if (fromList == 1 && toList == 2) {
-            deleteRestaurantFromGreenList(my_restaurant); // delete from green
+            deleteRestaurantFromList(my_restaurant, 1); // delete from green
             insertRestaurantToList(my_restaurant, 2); // insert to yellow
             return true;
         }
 
         // green to red
         else if (fromList == 1 && toList == 3) {
-            deleteRestaurantFromGreenList(my_restaurant); // delete from green
+            deleteRestaurantFromList(my_restaurant, 1); // delete from green
             insertRestaurantToList(my_restaurant, 3);    // insert to red
             return true;
         }
 
         // yellow to green
         else if (fromList == 2 && toList == 1) {
-            deleteRestaurantFromYellowList(my_restaurant); // delete from yellow
+            deleteRestaurantFromList(my_restaurant, 2); // delete from yellow
             insertRestaurantToList(my_restaurant, 1); // insert to green
             return true;
         }
 
         // yellow to red
         else if (fromList == 2 && toList == 3) {
-            deleteRestaurantFromYellowList(my_restaurant); // delete from yellow
+            deleteRestaurantFromList(my_restaurant, 2); // delete from yellow
             insertRestaurantToList(my_restaurant, 3);    // insert to green
             return true;
         }
 
         // red to green
         else if (fromList == 3 && toList == 1) {
-            deleteRestaurantFromRedList(my_restaurant); // delete from red
+            deleteRestaurantFromList(my_restaurant,3); // delete from red
             insertRestaurantToList(my_restaurant, 1);    // insert to green
             return true;
         }
         // red to yellow
         else if (fromList == 3 && toList == 2) {
-            deleteRestaurantFromRedList(my_restaurant); // delete from red
+            deleteRestaurantFromList(my_restaurant, 3); // delete from red
             insertRestaurantToList(my_restaurant, 2); // insert to yellow;
             return true;
         }
@@ -254,31 +254,24 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
     }
 
     @Override
-    public boolean deleteRestaurantFromGreenList(Restaurant my_restaurant) {
+    public boolean deleteRestaurantFromList(Restaurant my_restaurant, int listClass) {
         SQLiteDatabase db = getWritableDatabase();
 
-        boolean isDeleteSuccess = (db.delete(GREEN_RESTAURANTS_TABLE_NAME, RESTAURANT_ID_COLUMN
-                + "=" + my_restaurant.getBusinessName(), null) > 0);
-        db.close();
-        return isDeleteSuccess;
-    }
+        boolean isDeleteSuccess;
 
-    @Override
-    public boolean deleteRestaurantFromYellowList(Restaurant my_restaurant) {
-        SQLiteDatabase db = getWritableDatabase();
-
-        boolean isDeleteSuccess = (db.delete(YELLOW_RESTAURANTS_TABLE_NAME, RESTAURANT_ID_COLUMN
-                + "=" + my_restaurant.getBusinessName(), null) > 0);
-        db.close();
-        return isDeleteSuccess;
-    }
-
-    @Override
-    public boolean deleteRestaurantFromRedList(Restaurant my_restaurant) {
-        SQLiteDatabase db = getWritableDatabase();
-
-        boolean isDeleteSuccess = (db.delete(RED_RESTAURANTS_TABLE_NAME, RESTAURANT_ID_COLUMN
-                + "=" + my_restaurant.getBusinessName(), null) > 0);
+        if (listClass == 1) {
+            isDeleteSuccess = (db.delete(GREEN_RESTAURANTS_TABLE_NAME, RESTAURANT_ID_COLUMN
+                    + "=" + my_restaurant.getBusinessName(), null) > 0);
+        } else if (listClass == 2) {
+            isDeleteSuccess = (db.delete(YELLOW_RESTAURANTS_TABLE_NAME, RESTAURANT_ID_COLUMN
+                    + "=" + my_restaurant.getBusinessName(), null) > 0);
+        } else if (listClass == 3) {
+            isDeleteSuccess = (db.delete(RED_RESTAURANTS_TABLE_NAME, RESTAURANT_ID_COLUMN
+                    + "=" + my_restaurant.getBusinessName(), null) > 0);
+        } else {
+            isDeleteSuccess = false;
+            Log.i("ERROR", "listClassificationError");
+        }
 
         db.close();
         return isDeleteSuccess;
@@ -287,20 +280,20 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
     @Override
     public int getRestaurantListColor(Restaurant my_restaurant) {
         int whichList;
-        if (    isRestaurantInGreenList(my_restaurant) &&
-                !isRestaurantInYellowList(my_restaurant) &&
-                !isRestaurantInRedList(my_restaurant)) {
+        if (    isRestaurantInList(my_restaurant, 1) &&
+                !isRestaurantInList(my_restaurant, 2) &&
+                !isRestaurantInList(my_restaurant, 3)) {
             // green
             whichList = 1;
 
-        } else if ( !isRestaurantInGreenList(my_restaurant) &&
-                    isRestaurantInYellowList(my_restaurant) &&
-                    !isRestaurantInRedList(my_restaurant)) {
+        } else if ( !isRestaurantInList(my_restaurant, 1) &&
+                    isRestaurantInList(my_restaurant, 2) &&
+                    !isRestaurantInList(my_restaurant, 3)) {
             // yellow
             whichList = 2;
-        } else if ( !isRestaurantInGreenList(my_restaurant) &&
-                    !isRestaurantInYellowList(my_restaurant) &&
-                    isRestaurantInRedList(my_restaurant)) {
+        } else if ( !isRestaurantInList(my_restaurant, 1) &&
+                    !isRestaurantInList(my_restaurant, 2) &&
+                    isRestaurantInList(my_restaurant, 3)) {
             // red
             whichList = 3;
         } else {
@@ -314,65 +307,39 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
     }
 
     @Override
-    public boolean isRestaurantInGreenList(Restaurant my_restaurant) {
+    public boolean isRestaurantInList(Restaurant my_restaurant, int listClass) {
         SQLiteDatabase db = getWritableDatabase();
+        String query = "";
 
-        String query = "SELECT EXISTS(SELECT 1 FROM " + GREEN_RESTAURANTS_TABLE_NAME +
-                " WHERE " + RESTAURANT_ID_COLUMN + "=\"" + my_restaurant.getBusinessName() +
-                "\"" + "LIMIT 1);";
+        if (listClass == 1) {
+            query = "SELECT EXISTS(SELECT 1 FROM " + GREEN_RESTAURANTS_TABLE_NAME +
+                    " WHERE " + RESTAURANT_ID_COLUMN + "=\"" + my_restaurant.getBusinessName() +
+                    "\");";
+        } else if (listClass == 2) {
+            query = "SELECT EXISTS(SELECT 1 FROM " + YELLOW_RESTAURANTS_TABLE_NAME +
+                    " WHERE " + RESTAURANT_ID_COLUMN + "=\"" + my_restaurant.getBusinessName() +
+                    "\");";
+        } else if (listClass == 3) {
+            query = "SELECT EXISTS(SELECT 1 FROM " + RED_RESTAURANTS_TABLE_NAME +
+                    " WHERE " + RESTAURANT_ID_COLUMN + "=\"" + my_restaurant.getBusinessName() +
+                    "\");";
+        } else {
+            Log.d("Error", "listClassificationError");
+        }
 
         Cursor cursor = db.rawQuery(query, null);
 
-        if (cursor.getCount() <= 0) {   // not in the list
+        cursor.moveToFirst();
+
+        if (cursor.getInt(0) > 0) {
             cursor.close();
             db.close();
-            Log.d("Error", "ItemNotFoundError");
-            return false;
-        }
-
-        cursor.close();
-        db.close();
-        return true;       // in list
-    }
-
-    @Override
-    public boolean isRestaurantInYellowList(Restaurant my_restaurant) {
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT EXISTS(SELECT 1 FROM " + YELLOW_RESTAURANTS_TABLE_NAME +
-                " WHERE " + RESTAURANT_ID_COLUMN + "=\"" + my_restaurant.getBusinessName() +
-                "\"" + "LIMIT 1);";
-
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor.getCount() <= 0) { // not in list
-            cursor.close();
-            Log.d("Error", "ItemNotFoundError");
-            return false;
-        }
-
-        cursor.close();
-        db.close();
-        return true;    // in list
-    }
-
-    @Override
-    public boolean isRestaurantInRedList(Restaurant my_restaurant) {
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT EXISTS(SELECT 1 FROM " + RED_RESTAURANTS_TABLE_NAME +
-                " WHERE " + RESTAURANT_ID_COLUMN + "=\"" + my_restaurant.getBusinessName() +
-                "\"" + "LIMIT 1);";
-
-        Cursor cursor = db.rawQuery(query, null);
-        if (cursor.getCount() <= 0) {   // not in list
+            return true;
+        } else {
             cursor.close();
             db.close();
-            Log.d("Error", "ItemNotFoundError");
             return false;
         }
-
-        cursor.close();
-        db.close();
-        return true;    // in list
     }
 
     @Override
@@ -452,6 +419,11 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
         } else {
             return RED_RESTAURANTS_TABLE_NAME;
         }
+    }
+
+    @Override
+    public String gimmeFive(Restaurant r) {
+        return r.getBusinessName();
     }
 
     @Override

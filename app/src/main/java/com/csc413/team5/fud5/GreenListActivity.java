@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.csc413.team5.appdb.dbHelper;
+import com.csc413.team5.restaurantapiwrapper.Restaurant;
 
 
 public class GreenListActivity extends AppCompatActivity {

@@ -65,26 +65,18 @@ public interface dbHelperInterface {
 
     /* db_delete code */
     /**
-     * Deletes a restaurant from the green list
-     * @param my_restaurant a restaurant to delete from a list
+     * Deletes a restaurant from a designated list
+     * @param my_restaurant a restaurant to delete from a designated list
+     * @param listClass
+     * <ol>
+     *  <li>The green list.</li>
+     *  <li>The yellow list.</li>
+     *  <li>The red list.</li>
+     * </ol>
      * @return if deletion was successful, true
      * @see Restaurant
      */
-    boolean deleteRestaurantFromGreenList(Restaurant my_restaurant);
-    /**
-     * Deletes a restaurant from the yellow list
-     * @param my_restaurant  a restaurant to delete from a list
-     * @return if deletion was successful, true
-     * @see Restaurant
-     */
-    boolean deleteRestaurantFromYellowList(Restaurant my_restaurant);
-    /**
-     * Deletes a restaurant from the red list
-     * @param my_restaurant  a restaurant to delete from a list
-     * @return if deletion was successful, true
-     * @see Restaurant
-     */
-    boolean deleteRestaurantFromRedList(Restaurant my_restaurant);
+    boolean deleteRestaurantFromList(Restaurant my_restaurant, int listClass);
     /* end db_delete code*/
 
     /****************
@@ -104,26 +96,18 @@ public interface dbHelperInterface {
      */
     int getRestaurantListColor(Restaurant my_restaurant);
     /**
-     * Checks whether a restaurant belongs to the green list
+     * Checks whether a restaurant belongs in a designated list
      * @param my_restaurant a restaurant
-     * @return if the restaurant is in the green list, true
+     * @param listClass
+     * <ol>
+     *  <li>The green list.</li>
+     *  <li>The yellow list.</li>
+     *  <li>The red list.</li>
+     * </ol>
+     * @return if the restaurant is in the designated list, true
      * @see Restaurant
      */
-    boolean isRestaurantInGreenList(Restaurant my_restaurant);
-    /**
-     * Checks whether a restaurant belongs to the yellow list
-     * @param my_restaurant  a restaurant
-     * @return if the restaurant is in the yellow list, true
-     * @see Restaurant
-     */
-    boolean isRestaurantInYellowList(Restaurant my_restaurant);
-    /**
-     * Checks whether a restaurant belongs to the green list
-     * @param my_restaurant  a restaurant
-     * @return if the restaurant is in the red list, true
-     * @see Restaurant
-     */
-    boolean isRestaurantInRedList(Restaurant my_restaurant);
+    boolean isRestaurantInList(Restaurant my_restaurant, int listClass);
 
     /**
      * Checks if the database exists
@@ -169,4 +153,6 @@ public interface dbHelperInterface {
     String getDbPath(Context context);
 
     String getDbTableName(int listClass);
+
+    String gimmeFive(Restaurant r);
 }
