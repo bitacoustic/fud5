@@ -161,11 +161,9 @@ public class dbColorDialogFragment extends DialogFragment {
         CharSequence text;
 
         if (fromList == 2) {    // from yellow
-             text = "Delete " + inputText + " in yellow list: " + db.deleteRestaurantFromList(r, 2) +
-                    "\nInsert " + inputText + " to green list: " + db.insertRestaurantToList(r, 1);
+            text = "Migrated " + inputText + " from yellow to green migration: " + db.migrateRestaurantListItem(r, 2, 1);
         } else if (fromList == 3){    // from red
-            text = "Delete " + inputText + " in red list: " + db.deleteRestaurantFromList(r, 3) +
-                    "\nInsert " + inputText + " to green list: " + db.insertRestaurantToList(r, 1);
+            text = "Migrated " + inputText + " from red to green migration: " + db.migrateRestaurantListItem(r, 3, 1);
         } else {
             text = "No migration happened for " + inputText;
         }
@@ -184,11 +182,9 @@ public class dbColorDialogFragment extends DialogFragment {
         CharSequence text;
 
         if (fromList == 1) {    // from green
-            text = "Delete " + inputText + " in green list: " + db.deleteRestaurantFromList(r, 1) +
-                    "\nInsert " + inputText + " to yellow list: " + db.insertRestaurantToList(r, 2);
+            text = "Migrated " + inputText + " from green to yellow migration: " + db.migrateRestaurantListItem(r, 1, 2);
         } else if (fromList == 3){    // from red
-            text = "Delete " + inputText + " in red list: " + db.deleteRestaurantFromList(r, 3) +
-                    "\nInsert " + inputText + " to yellow list: " + db.insertRestaurantToList(r, 2);
+            text = "Migrated " + inputText + " from green to yellow migration: " + db.migrateRestaurantListItem(r, 3, 2);
         } else {
             text = "No migration happened for " + inputText;
         }
@@ -207,11 +203,9 @@ public class dbColorDialogFragment extends DialogFragment {
         CharSequence text;
 
         if (fromList == 1) {    // from green
-            text = "Delete " + inputText + " from green list: " + db.deleteRestaurantFromList(r, 1) +
-                    "\nInsert " + inputText + " to red list: " + db.insertRestaurantToList(r, 3);
+            text = "Migrated " + inputText + " from green to red migration: " + db.migrateRestaurantListItem(r, 1, 3);
         } else if (fromList == 2){  // from yellow
-            text = "Delete " + inputText + " from yellow list: " + db.deleteRestaurantFromList(r, 1) +
-                    "\nInsert " + inputText + " to red list: " + db.insertRestaurantToList(r, 2);
+            text = "Migrated " + inputText + " from yellow to red migration: " + db.migrateRestaurantListItem(r, 1, 2);
         } else {
             text = "No migration happened for " + inputText;
         }
