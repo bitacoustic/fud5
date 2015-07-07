@@ -12,13 +12,14 @@ import java.util.ListIterator;
  * An ordered list of {@link Restaurant} objects with suggested {@link MapBounds} which would
  * encompass all Restaurants in the list.
  * <p>
- * Implements {@link java.util.List}.
+ * Implements most of the methods from {@link java.util.List} except those returning a generic
+ * type (since RestaurantList only holds Restaurant objects).
  * <p>
  * Created on 6/24/2015.
  *
  * @author Eric C. Black
  */
-public class RestaurantList<T> implements List<T> {
+public class RestaurantList {
      /* Member variables */
 
     protected ArrayList<Restaurant> restaurants;
@@ -67,13 +68,6 @@ public class RestaurantList<T> implements List<T> {
             return restaurants.get(foundIndex);
         else
             return null;
-    }
-
-    /**
-     * Alias for {@link #getRestaurant(int)}
-     */
-    public T get(int index) {
-        return (T)getRestaurant(index);
     }
 
     /**
@@ -508,21 +502,6 @@ public class RestaurantList<T> implements List<T> {
         return restaurants.listIterator(location);
     }
 
-
-    /**
-     * Removes the {@link Restaurant} object at the specified location from this
-     * {@link RestaurantList}.
-     *
-     * @param location the index of the {@link Restaurant} object to remove.
-     * @return the removed {@link Restaurant} object.
-     * @throws UnsupportedOperationException if removing from this {@link RestaurantList} is not
-     *                                       supported.
-     * @throws IndexOutOfBoundsException     if {@code location < 0 || location >= size()}
-     */
-    public T remove(int location) {
-        return (T)restaurants.remove(location);
-    }
-
     /**
      * Removes the first occurrence of the specified object from this {@link RestaurantList}.
      * A match is contingent only on the {@link Restaurant#id} field.
@@ -633,23 +612,7 @@ public class RestaurantList<T> implements List<T> {
         return restaurants.toArray();
     }
 
-    /**
-     * Returns an array containing all elements contained in this {@code List}. If the
-     * specified array is large enough to hold the elements, the specified array
-     * is used, otherwise an array of the same type is created. If the specified
-     * array is used and is larger than this {@code List}, the array element following
-     * the collection elements is set to null.
-     *
-     * @param array the array.
-     * @return an array of the elements from this {@code List}.
-     * @throws ArrayStoreException if the type of an element in this {@code List} cannot be stored
-     *                             in the type of the specified array.
-     */
-    @NonNull
-    @Override
-    public <T1> T1[] toArray(T1[] array) {
-        return null;
-    }
+
 
 
     /**
