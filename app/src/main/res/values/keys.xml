@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- TODO This file should be gitignored in the final build! -->
+<resources>
+    <string name="yelp_consumer_key">sWPs2_89U1RiZL-o-LLeZA</string>
+    <string name="yelp_consumer_secret">U_NnZXEAb8P6zGx3BJqyVeqgX4s</string>
+    <string name="yelp_token">4nRwOtwwHhW_qkOjQbWt81urCRs-j0SD</string>
+    <string name="yelp_token_secret">Wst-gZU788EnQJtVGBvfG6yiNFw</string>
+    <string name="locu_key">4d2ae2223a06890a067daddd697440b989a1ec10</string>
+</resources>

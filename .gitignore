@@ -6,8 +6,9 @@
 /build
 /captures
 
-/.idea/copyright/profiles_settings.xml
-/.idea/gradle.xml
+# /.idea/copyright/profiles_settings.xml
+# /.idea/gradle.xml
+.idea
 /app/app.iml
 /appdb/appdb.iml
 /restaurantapiwrapper/restaurantapiwrapper.iml
