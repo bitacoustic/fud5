@@ -469,6 +469,12 @@ public class Restaurant {
     }
 
 
+    // TODO
+    // TEST to get current version of db code to work
+    public void setRestaurantName(String name) {
+        this.name = name;
+    }
+
 
     /**
      * @return a String representation of a Restaurant object

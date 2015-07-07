@@ -370,10 +370,12 @@ public class RestaurantList {
      * @param collection the collection of {@link Restaurant} objects.
      * @return {@code true} if this {@link RestaurantList} is modified, {@code false} otherwise
      * (i.e. if the passed collection was empty).
-     * @throws UnsupportedOperationException if adding to this {@link RestaurantList} is not supported.
+     * @throws UnsupportedOperationException if adding to this {@link RestaurantList} is not
+     *                                       supported.
      * @throws ClassCastException            if the class of an object is inappropriate for this
      *                                       {@link RestaurantList}.
-     * @throws IllegalArgumentException      if an object cannot be added to this {@link RestaurantList}.
+     * @throws IllegalArgumentException      if an object cannot be added to this
+     *                                       {@link RestaurantList}.
      */
     public boolean addAll(Collection collection) {
         boolean modified = false;
@@ -506,18 +508,32 @@ public class RestaurantList {
      * Removes the first occurrence of the specified object from this {@link RestaurantList}.
      * A match is contingent only on the {@link Restaurant#id} field.
      *
-     * @param object the object to remove.
+     * @param r the {@link Restaurant} to remove.
      * @return true if this {@link RestaurantList} was modified by this operation, false
      * otherwise.
-     * @throws UnsupportedOperationException if removing from this {@link RestaurantList} is not supported.
+     * @throws UnsupportedOperationException if removing from this {@link RestaurantList} is
+     *                                       not supported.
      */
-    public boolean remove(Object object) {
+    public boolean remove(Restaurant r) {
         int size = restaurants.size();
-        removeRestaurant(((Restaurant)object).id);
+        removeRestaurant(r.id);
         if (restaurants.size() == size - 1)
             return true;
         else
             return false;
+    }
+
+    /**
+     * Removes the first occurrence of the specified object from this {@link RestaurantList}.
+     * A match is contingent only on the {@link Restaurant#id} field.
+     *
+     * @param index the index of the {@link Restaurant} to remove.
+     * @return the {@link Restaurant} removed
+     * @throws UnsupportedOperationException if removing from this {@link RestaurantList} is
+     *                                       not supported.
+     */
+    public Restaurant remove(int index) {
+        return restaurants.remove(index);
     }
 
     /**
@@ -553,10 +569,12 @@ public class RestaurantList {
      * @param location the index at which to put the specified object.
      * @param object   the object to insert.
      * @return the previous element at the index.
-     * @throws UnsupportedOperationException if replacing elements in this {@link RestaurantList} is not supported.
+     * @throws UnsupportedOperationException if replacing elements in this {@link RestaurantList}
+     *                                       is not supported.
      * @throws ClassCastException            if the class of an object is inappropriate for this
      *                                       {@link RestaurantList}.
-     * @throws IllegalArgumentException      if an object cannot be added to this {@link RestaurantList}.
+     * @throws IllegalArgumentException      if an object cannot be added to this
+     *                                       {@link RestaurantList}.
      * @throws IndexOutOfBoundsException     if {@code location < 0 || location >= size()}
      */
     public Object set(int location, Object object) {
