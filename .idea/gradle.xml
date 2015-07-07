@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/appdb" />
+            <option value="$PROJECT_DIR$/appdbtest" />
             <option value="$PROJECT_DIR$/restaurantapiwrapper" />
           </set>
         </option>
