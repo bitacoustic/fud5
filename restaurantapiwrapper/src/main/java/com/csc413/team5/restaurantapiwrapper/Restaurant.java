@@ -1,9 +1,8 @@
 package com.csc413.team5.restaurantapiwrapper;
 
+import android.location.Location;
 import android.net.Uri;
-import android.util.JsonReader;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -19,91 +18,73 @@ import java.util.ArrayList;
  *
  * @author Eric C. Black
  */
-public class Restaurant implements RestaurantInterface {
+public class Restaurant {
     /****************
      Member variables
      ****************/
 
     /*
-    Accessible data members
+    Data members
      */
 
-    // unique Yelp ID; can be used for back-end lists
     protected String id;
-    // if the restaurant is closed, we don't want to display it
     protected boolean isClosed;
 
     protected String name;
 
-    // address for display; might include cross-streets or other useful information
     protected String addressDisplay;
-    // address that can be used to map location
-    protected String addressMapable;
+    protected Location addressMapable;
 
-    // phone number formatted for display
     protected String phoneDisplay;
-    // phone number number formatted for device's Dialer
     protected Uri phoneDialable;
 
-    // business image
     protected Uri imageUrl;
     protected boolean hasImageUrl;
 
-    // business's website; preferably the mobile version of the business's website, if available
     protected Uri businessUrl;
     protected boolean hasBusinessUrl;
+    protected Uri mobileUrl;
+    protected boolean hasMobileUrl;
 
-    // distance in *meters* from search location
     protected double distanceFromSearchLocation;
 
-    // list of categories
-    protected ArrayList<Category> categories;
+    protected ArrayList<YelpCategory> categories;
 
     protected double rating;
-
-    // we have to use Yelp's star image; do we want small, medium, or large?
     protected Uri ratingImgUrl;
 
     protected int reviewCount;
 
     protected boolean hasDeals;
-    // field is only populated if (hasDeals), "" otherwise
     protected Uri dealsUrl;
 
-    // URL for SeatMe reservation
     protected Uri seatMeUrl;
     protected boolean hasSeatMeUrl;
 
-    // URL for Eat24 delivery
     protected Uri eat24Url;
     protected boolean hasEat24Url;
-
-    /*
-    Hidden data members and structures
-     */
-
-    private Uri mobileUrl;
-    private Uri desktopUrl;
 
     /************
      Constructors
      ************/
 
     /**
-     * Construct a restaurant with empty/null values. Must use setRestaurant() to parse
-     * JSON and populate the member variables with actual data.
+     * Constructs a restaurant with empty/null values. Use {@link RestaurantApiClient} to
+     * set data via API(s).
      */
     public Restaurant() {
         id = "";
         isClosed = true;
         name = "";
         addressDisplay = "";
-        addressMapable = "";
+        addressMapable = null;
         phoneDisplay = "";
         phoneDialable = null;
         imageUrl = null;
         hasImageUrl = false;
         businessUrl = null;
+        mobileUrl = null;
+        hasMobileUrl = false;
         hasBusinessUrl = false;
         distanceFromSearchLocation = -1.0;
         categories = null;
@@ -118,262 +99,341 @@ public class Restaurant implements RestaurantInterface {
         hasEat24Url = false;
     }
 
-    /**
-     * Parses JSON result of Yahoo API query result for one business and stores
-     * the encountered values.
-     *
-     * @param in  a business in list "businesses" from Yelp API JSON response
-     * @throws IOException if JsonReader object can't be passed
-     */
-    public Restaurant(JsonReader in) throws IOException {
-        this(); // call default constructor
-        setRestaurant(in);
-    }
-
-
     /******
      Getters
      *******/
 
+    /**
+     * @return unique Yelp ID; can be used for back-end lists
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * If the restaurant is permanently closed, we don't want to display it.
+     * @return true if the restaurant is *permanently* closed, otherwise false
+     */
     public boolean isClosed() {
         return isClosed;
     }
 
+    /**
+     * @return the name of the business
+     */
     public String getBusinessName() {
         return name;
     }
 
+    /**
+     * @return address for display; might include cross-streets or other useful information
+     */
     public String getAddressDisplay() {
         return addressDisplay;
     }
 
-    public String getAddressMapable() {
+    /**
+     * @return {@link android.location.Location} coordinate of restaurant
+     */
+    public Location getAddressMapable() {
         return addressMapable;
     }
 
+    /**
+     * @return phone number formatted for display
+     */
     public String getPhoneDisplay() {
         return phoneDisplay;
     }
 
+    /**
+     * Returns phone number number formatted for device's Dialer
+     *
+     * @return a URI, if there is a phone number for this business, null otherwise
+     */
     public Uri getPhoneDialable() {
         return phoneDialable;
     }
 
+    /**
+     * @return URI for the business image
+     */
     public Uri getImageUrl() {
         return imageUrl;
     }
 
+    /**
+     * @return true if business has an image URL, false otherwise
+     */
     public boolean hasImageUrl() {
         return hasImageUrl;
     }
 
+    /**
+     * @return URI for the business's website
+     */
     public Uri getBusinessUrl() {
         return businessUrl;
     }
 
+    /**
+     * @return true if business has a website, false otherwise
+     */
     public boolean hasBusinessUrl() {
         return hasBusinessUrl;
     }
 
+    /**
+     * @return URI for the business's mobile website
+     */
+    public Uri getMobileUrl() {
+        return mobileUrl;
+    }
+
+    /**
+     * @return true if business has a mobile website, false otherwise
+     */
+    public boolean hasMobileUrl() {
+        return hasMobileUrl;
+    }
+
+    /**
+     * Returns distance in *meters* from search location. If no latitude and longitude
+     *     were provided in the request, the distance will likely not be supplied and this
+     *     field will have its default value of -1.0. In that case, use
+     *     {@link #getDistanceFromLocation} instead.
+     *
+     * @return distance in meters from search location; this value is *negative* if
+     *         the information was not provided by Yelp
+     */
     public double getDistanceFromSearchLocation() {
         return distanceFromSearchLocation;
     }
 
-    public ArrayList<Category> getCategories() {
+    /**
+     * Returns distance from search location with the specified unit of measure. Units of measure
+     * allowed are:
+     * <ul>
+     *     <li>DistanceUnit.METERS
+     *     <li>DistanceUnit.KILOMETERS
+     *     <li>DistanceUnit.FEET
+     *     <li>DistanceUnit.MILES
+     * </ul>
+     * <p>
+     * If no latitude and longitude were provided in the request, the distance will likely not be
+     * supplied and this field will have its default value of -1.0. In that case, use
+     * {@link #getDistanceFromLocation} instead.
+     *
+     * @return distance in meters from search location; this value is *negative* if
+     *         the information was not provided by Yelp
+     */
+    public double getDistanceFromSearchLocation(DistanceUnit units) {
+        switch (units) {
+            case METERS:
+                return distanceFromSearchLocation;
+            case KILOMETERS:
+                return distanceFromSearchLocation * 1000;
+            case FEET:
+                return distanceFromSearchLocation * 3.28084;
+            case MILES:
+                return distanceFromSearchLocation * 0.000621371;
+            default:
+                return -1.0;
+        }
+    }
+
+    /**
+     * Returns a distance in *meters* from the location passed as a parameter to this
+     * Restaurant. This only utilizes latitude and longitude, not altitude information, and
+     * is approximate to ~ 10 meters.
+     *
+     * @param origin location to evaluate in terms of the Restaurant's location
+     * @return the distance in meters from origin to this Restaurant
+     */
+    public double getDistanceFromLocation(Location origin) {
+        return getDistanceFromLocation(origin, DistanceUnit.METERS);
+    }
+
+    /**
+     * Returns a distance from the location passed as a parameter to this
+     * Restaurant, using the specified unit of measure. Units of measure allowed are:
+     * <ul>
+     *     <li>DistanceUnit.METERS
+     *     <li>DistanceUnit.KILOMETERS
+     *     <li>DistanceUnit.FEET
+     *     <li>DistanceUnit.MILES
+     * </ul>
+     * <p>
+     * This only utilizes latitude and longitude, not altitude information, and
+     * is approximate to ~ 10 meters.
+     *
+     * @param origin location to evaluate in terms of the Restaurant's location
+     * @return the distance in meters from origin to this Restaurant
+     */
+    public double getDistanceFromLocation(Location origin, DistanceUnit units) {
+        double distance;
+
+        if (addressMapable == null)
+            return -1.0;
+        double span_latitude =
+                Math.abs(addressMapable.getLatitude() - origin.getLatitude());
+        double span_longitude =
+                Math.abs(getAddressMapable().getLongitude() - origin.getLongitude()) * 111111
+                        * Math.cos(span_latitude);
+        span_latitude *= 111111;
+
+        distance = Math.sqrt(Math.pow(span_latitude, 2) + Math.pow(span_longitude, 2));
+
+        switch (units) {
+            case METERS:
+                return distance;
+            case KILOMETERS:
+                return distance * 1000;
+            case FEET:
+                return distance * 3.28084;
+            case MILES:
+                return distance * 0.000621371;
+            default:
+                return -1.0;
+        }
+    }
+
+    /**
+     * Returns a list of {@link YelpCategory} objects under which the location falls. Categories
+     * are pairs of name and category_list alias, e.g. {"Asian Fusion", "asian_fusion"}.
+     *
+     * @return a list of categories under which the location falls
+     */
+    public ArrayList<YelpCategory> getCategories() {
         return categories;
     }
 
+    /**
+     * @return the number of Yelp categories assigned to this Restaurant
+     */
+    public int numCategories() {
+        return categories.size();
+    }
+
+    /**
+     * Returns an individual {@link YelpCategory}.
+     *
+     * @param index of the YelpCategory to return
+     * @return the {@link YelpCategory} at the specified index
+     * @throws IndexOutOfBoundsException if index is out of range
+     */
+    public YelpCategory getCategory(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= categories.size())
+            throw new IndexOutOfBoundsException("categories index out of range");
+        else
+            return categories.get(index);
+    }
+
+    /**
+     * Yelp: Returns a restaurant rating on a 5-star scale.
+     *
+     * @return restaurant rating from set {1, 1.5, 2, 2.5, 3, 3.4, 4, 4.5, 5} or
+     *         a *negative value* if the information was not provided by Yelp
+     */
     public double getRating() {
         return rating;
     }
 
+    /**
+     * Yelp: Returns the URI of the Yelp rating image corresponding to the Yelp rating.
+     * <p>According to Yelp API display requirements: "You always need to display our aggregate star
+     * rating graphics and the number of reviews on which they're based."</p>
+     *
+     * @return URI of rating image
+     */
     public Uri getRatingImgUrl() {
         return ratingImgUrl;
     }
 
+    /**
+     * Yelp: Returns the number of Yelp reviews about this location.
+     * <p>According to Yelp API display requirements: "You always need to display our aggregate star
+     * rating graphics and the number of reviews on which they're based."</p>
+     *
+     * @return the number of Yelp reviews about this location, or a *negative* number
+     *         if this information was not provided by Yelp
+     */
     public int getReviewCount() {
         return reviewCount;
     }
 
+    /**
+     * @return true if the restaurant has special deals going on right now, false otherwise
+     */
     public boolean hasDeals() {
         return hasDeals;
     }
 
+    /**
+     * @return URI for ongoing deals; null if there are none
+     */
     public Uri getDealsUrl() {
         return dealsUrl;
     }
 
+    /**
+     * @return URI for making a SeatMe reservation
+     */
     public Uri getSeatMeUrl() {
         return seatMeUrl;
     }
 
+    /**
+     * @return true if business takes reservations through SeatMe, false otherwise
+     */
     public boolean hasSeatMeUrl() {
         return hasSeatMeUrl;
     }
 
+    /**
+     * @return URI for Eat24 delivery
+     */
     public Uri getEat24Url() {
         return eat24Url;
     }
 
+    /**
+     * @return true if business delivers through Eat24, false otherwise
+     */
     public boolean hasEat24Url() {
         return hasEat24Url;
     }
 
-    /******
-     Setters
-     *******/
-
     /**
-     * Parses JSON result of Yahoo API query result for one business and stores
-     * the encountered values.
-     *
-     * @param in  JsonReader object which is a business in a list of businesses;
-     *            this is passed from RestaurantList as it parses the Yelp API query result
-     * @throws IOException when failed to begin or end object
+     * @return a String representation of a Restaurant object
      */
-    public void setRestaurant(JsonReader in) throws IOException {
-        in.beginObject();
-
-        while (in.hasNext()) {
-            String field = in.nextName();
-            switch (field) {
-                case "id":
-                    id = in.nextString();
-                    break;
-                case "is_closed":
-                    isClosed = in.nextBoolean();
-                    break;
-                case "name":
-                    name = in.nextString();
-                    break;
-                case "location":
-                    // parse sub-fields of field "location"
-                    in.beginObject();
-                    while (in.hasNext()) {
-                        String fieldNested = in.nextName();
-                        if (fieldNested.equals("display_address")) {
-                            addressDisplay = in.nextString();
-                        } else if (fieldNested.equals("address")) {
-                            addressMapable = in.nextString();
-                        } else {
-                            in.skipValue();
-                        }
-                    }
-                    in.endObject();
-                    break;
-                case "display_phone":
-                    phoneDisplay = in.nextString();
-                    break;
-                case "phone":
-                    String phoneText = in.nextString();
-                    if (phoneText.charAt(0) == '+')
-                        phoneText = phoneText.substring(1);
-                    if (!phoneText.equals(""))
-                        phoneDialable = Uri.parse("tel:" + phoneText);
-                    else
-                        phoneDialable = null;
-                    break;
-                case "image_url":
-                    String imageUrlText = in.nextString();
-                    if ("".equals(imageUrlText) || imageUrlText == null) {
-                        imageUrl = null;
-                        hasImageUrl = false;
-                    } else {
-                        imageUrl = Uri.parse(imageUrlText);
-                        hasImageUrl = true;
-                    }
-                    break;
-                case "url":
-                    String businessUrlText = in.nextString();
-                    if ("".equals(businessUrlText) || businessUrlText == null)
-                        desktopUrl = null;
-                    else
-                        desktopUrl = Uri.parse(in.nextString());
-                    break;
-                case "mobile_url":
-                    String mobileUrlText = in.nextString();
-                    if ("".equals(mobileUrlText) || mobileUrlText == null)
-                        mobileUrl = null;
-                    else
-                        mobileUrl = Uri.parse(in.nextString());
-                    break;
-                case "distance":
-                    distanceFromSearchLocation = in.nextDouble();
-                    break;
-                case "categories":
-                    in.beginArray();
-                    while (in.hasNext()) {
-                        in.beginArray();
-                        while (in.hasNext()) {
-                            String newName = in.nextString();
-                            String newAlias = in.nextString();
-                            categories.add(new Category(newName, newAlias));
-                        }
-                        in.endArray();
-                    }
-                    in.endArray();
-                    break;
-                case "rating":
-                    rating = in.nextDouble();
-                    break;
-                case "rating_img_url":
-                    ratingImgUrl = Uri.parse(in.nextString());
-                    break;
-                case "review_count":
-                    reviewCount = (int) in.nextDouble();
-                    break;
-                case "deals":
-                    // parse sub-fields of field "deals"
-                    in.beginObject();
-                    while (in.hasNext()) {
-                        String fieldNested = in.nextName();
-                        if (fieldNested.equals("deals_url")) {
-                            dealsUrl = Uri.parse(in.nextString());
-                            hasDeals = true;
-                        } else {
-                            in.skipValue();
-                        }
-                    }
-                    in.endObject();
-                    break;
-                case "reservation_url":
-                    seatMeUrl = Uri.parse(in.nextString());
-                    hasSeatMeUrl = true;
-                    break;
-                case "eat24_url":
-                    eat24Url = Uri.parse(in.nextString());
-                    hasEat24Url = true;
-                default:
-                    in.skipValue();
-                    break;
-            } // end switch
-        } // end while
-
-        /*
-        extrapolate a single business URL in the case that one or more are
-        available; if there is a standard (desktop) URL and a mobile URL, give preference
-        to the mobile one, otherwise set business URL to the standard one
-        */
-        if (desktopUrl != null) {
-            if (mobileUrl != null)
-                businessUrl = mobileUrl;
-            else
-                businessUrl = desktopUrl;
-            hasBusinessUrl = true;
-        } // else keep default hasBusinessUrl false
-
-        in.endObject();
-    } // end setRestaurant()
-
-
-    // Test method
     @Override
-    public void setRestaurantName(String new_name) {
-        name = new_name;
+    public String toString() {
+        return "\nRestaurant{" +
+                "\nid='" + id + "'" +
+                ",\nisClosed=" + isClosed +
+                ",\nname='" + name + "'" +
+                ",\naddressDisplay='" + addressDisplay + "'" +
+                ",\naddressMapable='" + addressMapable + "'" +
+                ",\nphoneDisplay='" + phoneDisplay + "'" +
+                ",\nphoneDialable=" + phoneDialable +
+                ",\nimageUrl=" + imageUrl +
+                ",\nhasImageUrl=" + hasImageUrl +
+                ",\nbusinessUrl=" + businessUrl +
+                ",\nhasBusinessUrl=" + hasBusinessUrl +
+                ",\nmobileUrl=" + mobileUrl +
+                ",\nhasMobileUrl=" + hasMobileUrl +
+                ",\ndistanceFromSearchLocation=" + distanceFromSearchLocation +
+                ",\ncategories=" + categories +
+                ",\nrating=" + rating +
+                ",\nratingImgUrl=" + ratingImgUrl +
+                ",\nreviewCount=" + reviewCount +
+                ",\ndealsUrl=" + dealsUrl +
+                ",\nhasDeals=" + hasDeals +
+                ",\nseatMeUrl=" + seatMeUrl +
+                ",\nhasSeatMeUrl=" + hasSeatMeUrl +
+                ",\neat24Url=" + eat24Url +
+                ",\nhasEat24Url=" + hasEat24Url +
+                "}";
     }
-
 } // end class
