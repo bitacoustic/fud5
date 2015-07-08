@@ -1,5 +1,7 @@
 package com.csc413.team5.restaurantapiwrapper;
 
+import java.util.ArrayList;
+
 /**
  * Model for the open hours of a venue on a particular day.
  * <p>
@@ -8,51 +10,26 @@ package com.csc413.team5.restaurantapiwrapper;
  * @author Eric C. Black
  */
 public class OpenHoursDay {
-    protected TimeOfDay open;
-    protected TimeOfDay close;
+    protected ArrayList<OpenHoursRange> openHoursDay;
 
-
-
-    /* Constructors */
     public OpenHoursDay() {
-        this.open = null;
-        this.close = null;
+        this.openHoursDay = null;
     }
 
-    public OpenHoursDay(double open, double close) {
-        this.open = new TimeOfDay(open);
-        this.close = new TimeOfDay(close);
+    public boolean hasHours() {
+        return (openHoursDay != null);
     }
 
-
-
-    /* Getters */
-    public TimeOfDay getOpen() {
-        return open;
+    public ArrayList<OpenHoursRange> getAllHours() {
+        return openHoursDay;
     }
 
-    public TimeOfDay getClose() {
-        return close;
-    }
-
-
-
-    /* Setters */
-    public void setOpen(TimeOfDay open) {
-        this.open = open;
-    }
-
-    public void setClose(TimeOfDay close) {
-        this.close = close;
-    }
-
-    public void setFromLocuRange(String range) {
-        String[] hoursArray = range.split(" - ");
-        String[] openArray = hoursArray[0].split(":");
-        String[] closeArray = hoursArray[1].split(":");
-        this.open.time = Double.parseDouble(openArray[0])
-                + Double.parseDouble(openArray[1]) / 60;
-        this.close.time = Double.parseDouble(closeArray[0])
-                + Double.parseDouble(closeArray[1]) / 60;
+    public OpenHoursRange getHours(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= openHoursDay.size()) {
+            throw new IndexOutOfBoundsException("invalid index");
+        }
+        else {
+            return openHoursDay.get(index);
+        }
     }
 }

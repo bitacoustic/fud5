@@ -22,9 +22,9 @@ public class LMenuSubSection {
         return subSectionName;
     }
 
-    public LMenuContent getContent(int index) {
+    public LMenuContent getContent(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= contents.size())
-            return null;
+            throw new IndexOutOfBoundsException("invalid content index");
         else
             return contents.get(index);
     }

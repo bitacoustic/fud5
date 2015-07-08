@@ -83,6 +83,12 @@ public class TimeOfDay {
 
 
     /* Getters */
+
+    /**
+     * Returns representation of this time of day as a String in 12-hour format, e.g.
+     * "1:35PM".
+     * @return representation of this time of day as a String in 12-hour format
+     */
     public String to12HrString() {
         return string12;
     }

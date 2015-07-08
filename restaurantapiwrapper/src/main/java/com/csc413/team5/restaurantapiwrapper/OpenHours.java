@@ -23,6 +23,17 @@ public class OpenHours<DayOfWeek, OpenHoursDay> extends HashMap {
         put(com.csc413.team5.restaurantapiwrapper.DayOfWeek.SUNDAY, null);
     }
 
+    public boolean hasOpenHours() {
+        boolean hasOpenHours = false;
+        for ( Object key : this.keySet() ) {
+            if (key != null) {
+                hasOpenHours = true;
+                break;
+            }
+        }
+        return hasOpenHours;
+    }
+
     /**
      * Returns the number of elements in this map.
      *

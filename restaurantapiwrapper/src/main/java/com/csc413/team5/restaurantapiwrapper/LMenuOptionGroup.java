@@ -28,9 +28,9 @@ public class LMenuOptionGroup {
         return text;
     }
 
-    public LMenuOption getMenuOption(int index) {
+    public LMenuOption getMenuOption(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= options.size())
-            return null;
+            throw new IndexOutOfBoundsException("invalid menu option index");
         else
             return options.get(index);
     }

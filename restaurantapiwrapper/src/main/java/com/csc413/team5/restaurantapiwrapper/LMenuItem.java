@@ -34,9 +34,9 @@ public class LMenuItem extends LMenuContent {
         return price;
     }
 
-    public LMenuOptionGroup getOptionGroup(int index) {
+    public LMenuOptionGroup getOptionGroup(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= optionGroups.size())
-            return null;
+            throw new IndexOutOfBoundsException();
         else
             return optionGroups.get(index);
     }

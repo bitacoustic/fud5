@@ -155,13 +155,27 @@ public class LocuExtension {
             r.locuMenus = new LMenus();
             // TODO finish this
         }
+
         if (in.has("open_hours")) {
+            JSONObject inHours = null;
+
             try {
-                JSONObject inHours = in.getJSONObject("open_hours");
+                inHours = in.getJSONObject("open_hours");
+                OpenHours newHours = new OpenHours();
+
+                // get the open hours for each day
+                JSONArray inHoursNames = inHours.names();
+                for (int i = 0; i < inHoursNames.length(); i++) {
+                    JSONArray dayHours = inHours.getJSONArray(inHoursNames.getString(i));
+                    if (dayHours.length() > 0) {
+
+                    }
+                }
                 r.hours.clear();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
         }
 
     }

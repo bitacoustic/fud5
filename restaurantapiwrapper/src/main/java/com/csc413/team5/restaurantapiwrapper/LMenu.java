@@ -21,9 +21,9 @@ public class LMenu {
         return currencySymbol;
     }
 
-    public LMenuSection getSection(int index) {
+    public LMenuSection getSection(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= sections.size())
-            return null;
+            throw new IndexOutOfBoundsException("invalid index");
         else
             return sections.get(index);
     }

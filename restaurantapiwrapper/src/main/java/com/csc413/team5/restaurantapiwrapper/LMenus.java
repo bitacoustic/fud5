@@ -16,9 +16,9 @@ public class LMenus {
         this.menus = new ArrayList<>();
     }
 
-    public LMenu getMenu(int index) {
+    public LMenu getMenu(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= menus.size())
-            return null;
+            throw new IndexOutOfBoundsException("invalid menu index");
         else
             return menus.get(index);
     }
