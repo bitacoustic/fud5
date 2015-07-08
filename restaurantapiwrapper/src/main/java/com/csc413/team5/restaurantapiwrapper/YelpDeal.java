@@ -2,6 +2,9 @@ package com.csc413.team5.restaurantapiwrapper;
 
 import android.net.Uri;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Representation of a Yelp Deal as an object.
  * <p>
@@ -64,10 +67,42 @@ public class YelpDeal {
     }
 
     /**
+     * @return the deal start time as Date
+     */
+    public Date getDealStartDate() {
+        return new java.util.Date((long)dealStartTime * 1000);
+    }
+
+    /**
+     * @return the deal end time as Calendar
+     */
+    public Calendar getDealStartCalendar() {
+        Calendar c =  Calendar.getInstance();
+        c.setTimeInMillis((long)dealStartTime * 1000);
+        return c;
+    }
+
+    /**
      * @return the deal end time as Unix timestamp
      */
     public int getDealEndTime() {
         return dealEndTime;
+    }
+
+    /**
+     * @return the deal end time as Date
+     */
+    public Date getDealEndDate() {
+        return new java.util.Date((long)dealEndTime * 1000);
+    }
+
+    /**
+     * @return the deal end time as Calendar
+     */
+    public Calendar getDealEndCalendar() {
+        Calendar c =  Calendar.getInstance();
+        c.setTimeInMillis((long)dealEndTime * 1000);
+        return c;
     }
 
     /**

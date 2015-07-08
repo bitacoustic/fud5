@@ -19,7 +19,7 @@ public class TimeOfDay {
     protected String string24;
 
     public TimeOfDay(double time) {
-        this.time = time;
+        setTime(time);
     }
 
     public TimeOfDay() {
@@ -118,7 +118,7 @@ public class TimeOfDay {
         double fractional = time % 1;
         int hour = (int) (time - fractional);
         int minute = (int) (fractional * 60);
-        return hour + ":" + minute;
+        return hour + ":" + String.format("%02d", minute);
     }
 
     /**
@@ -181,5 +181,15 @@ public class TimeOfDay {
         if (m == 1)
             hour += 12;
         return hour + minute;
+    }
+
+
+    @Override
+    public String toString() {
+        return "TimeOfDay{" +
+                "time=" + time +
+                ", string12='" + string12 + '\'' +
+                ", string24='" + string24 + '\'' +
+                '}';
     }
 }

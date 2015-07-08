@@ -63,7 +63,7 @@ public class Restaurant {
 
     // Locu
     protected String locuId;
-    protected LMenus locuMenus;
+    protected Menus locuMenus;
 
     // Locu or Factual
     protected OpenHours hours;
@@ -136,7 +136,8 @@ public class Restaurant {
     }
 
     /**
-     * @return an Address object representing the location of the Restaurant, or null
+     * @return an Address object representing the location of the Restaurant (including physical
+     *         address, latitude & longitude, and business phone number), or null
      *         if the information is not available
      */
     public Address getAddress() {
@@ -154,6 +155,13 @@ public class Restaurant {
      * @return {@link android.location.Location} coordinate of restaurant
      */
     public Location getAddressMapable() {
+        return addressMapable;
+    }
+
+    /**
+     * @return {@link android.location.Location} coordinate of restaurant
+     */
+    public Location getLocation() {
         return addressMapable;
     }
 
@@ -452,7 +460,7 @@ public class Restaurant {
         return locuId;
     }
 
-    public LMenus getLocuMenus() {
+    public Menus getLocuMenus() {
         return locuMenus;
     }
 

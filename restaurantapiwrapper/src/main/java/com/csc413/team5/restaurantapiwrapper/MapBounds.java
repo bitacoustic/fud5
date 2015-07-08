@@ -32,18 +32,34 @@ public class MapBounds {
         center.setLongitude(centerLongitude);
     }
 
+    /**
+     * Returns the height of the suggested map.
+     * @return the height of the suggested map
+     */
     public double getSpanLatitudeDelta() {
         return spanLatitudeDelta;
     }
 
+    /**
+     * Returns the width of the suggested map.
+     * @return the width of the suggested map
+     */
     public double getSpanLongitudeDelta() {
         return spanLongitudeDelta;
     }
 
+    /**
+     * Returns the y coordinate of the center of the suggested map.
+     * @return the y coordinate of the center of the suggested map
+     */
     public double getCenterLatitude() {
         return centerLatitude;
     }
 
+    /**
+     * Returns the x coordinate of the center of the suggested map.
+     * @return the x coordinate of the center of the suggested map
+     */
     public double getCenterLongitude() {
         return centerLongitude;
     }
@@ -55,6 +71,9 @@ public class MapBounds {
         return center;
     }
 
+    /**
+     * Sets all data values in this MapBounds to 0.0
+     */
     public void clear() {
         spanLatitudeDelta = 0.0;
         spanLongitudeDelta = 0.0;

@@ -1,7 +1,11 @@
 package com.csc413.team5.restaurantapiwrapper;
 
 /**
- * Created by EricC on 7/7/2015.
+ * Representation of a range of open hours, e.g. "5:00PM - 9:00PM"
+ * <p>
+ * Created on 7/7/2015.
+ *
+ * @author Eric C. Black
  */
 public class OpenHoursRange {
     protected TimeOfDay open;
@@ -18,6 +22,10 @@ public class OpenHoursRange {
     public OpenHoursRange(double open, double close) {
         this.open = new TimeOfDay(open);
         this.close = new TimeOfDay(close);
+    }
+
+    public OpenHoursRange(String range) {
+        setFromLocuRange(range);
     }
 
 
@@ -43,12 +51,21 @@ public class OpenHoursRange {
     }
 
     public void setFromLocuRange(String range) {
-        String[] hoursArray = range.split(" - ");
+        String[] hoursArray = range.trim().split(" - ");
         String[] openArray = hoursArray[0].split(":");
         String[] closeArray = hoursArray[1].split(":");
-        this.open.time = Double.parseDouble(openArray[0])
-                + Double.parseDouble(openArray[1]) / 60;
-        this.close.time = Double.parseDouble(closeArray[0])
-                + Double.parseDouble(closeArray[1]) / 60;
+        this.open = new TimeOfDay(Double.parseDouble(openArray[0])
+                + (Double.parseDouble(openArray[1]) / 60));
+        this.close = new TimeOfDay(Double.parseDouble(closeArray[0])
+                + (Double.parseDouble(closeArray[1]) / 60));
+    }
+
+
+    @Override
+    public String toString() {
+        return "OpenHoursRange{" +
+                "open=" + open.to12HrString() +
+                ", close=" + close.to12HrString() +
+                '}';
     }
 }

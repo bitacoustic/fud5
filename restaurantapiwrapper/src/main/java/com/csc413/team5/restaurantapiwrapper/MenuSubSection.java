@@ -3,17 +3,17 @@ package com.csc413.team5.restaurantapiwrapper;
 import java.util.ArrayList;
 
 /**
- * TODO description
+ * A subsection of a {@link MenuSection}.
  * <p>
  * Created on 7/3/2015.
  *
  * @author Eric C. Black
  */
-public class LMenuSubSection {
+public class MenuSubSection {
     protected String subSectionName;
-    protected ArrayList<LMenuContent> contents;
+    protected ArrayList<MenuContent> contents;
 
-    public LMenuSubSection(String subSectionName) {
+    public MenuSubSection(String subSectionName) {
         this.subSectionName = subSectionName;
         this.contents = new ArrayList<>();
     }
@@ -22,7 +22,7 @@ public class LMenuSubSection {
         return subSectionName;
     }
 
-    public LMenuContent getContent(int index) throws IndexOutOfBoundsException {
+    public MenuContent getContent(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= contents.size())
             throw new IndexOutOfBoundsException("invalid content index");
         else
@@ -31,7 +31,7 @@ public class LMenuSubSection {
 
     @Override
     public String toString() {
-        return "LMenuSubSection{" +
+        return "MenuSubSection{" +
                 "\nsubSectionName='" + subSectionName + '\'' +
                 ",\n contents=" + contents +
                 "\n}";

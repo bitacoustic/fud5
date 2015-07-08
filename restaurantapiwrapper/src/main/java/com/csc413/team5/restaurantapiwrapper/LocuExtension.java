@@ -10,8 +10,8 @@ import org.scribe.model.Response;
 import org.scribe.model.Verb;
 
 /**
- * Locu extension for {@link RestaurantApiClient}; WARNING: not yet fully implemented -- I've
- * uploaded this so the module 'RestaurantTest' works.
+ * Locu extension for {@link RestaurantApiClient}; WARNING: not yet fully implemented -- currently
+ * only obtains open hours, if available.
  * <p>
  * Created on 7/2/2015.
  *
@@ -20,7 +20,6 @@ import org.scribe.model.Verb;
 public class LocuExtension {
     private static final String TAG = "LocuExtension";
     private final LocuApiKey key;
-
 
     public LocuExtension(LocuApiKey key) {
         this.key = key;
@@ -33,18 +32,22 @@ public class LocuExtension {
      *     <li>Open hours
      *     <li>Restaurant menu
      * </ul>
-     * <p>The Restaurant will be updated in place to reflect the additional information.
+     * <p>The Restaurant will be updated in place to reflect the additional information. Returns
+     * the unique Locu ID if a match was found, or an empty String ("") if a match was not found,
+     * as in {@link #getLocuId(Restaurant)}
      * @param r a Restaurant object
-     * @return the Restaurant
+     * @return a String containing the unique Locu ID of the match, or "" if a match was not
+     *         found
      */
-    public Restaurant update(Restaurant r) {
+    public String update(Restaurant r) {
         String id = getLocuId(r);
         if (id.compareTo("") == 0) // match not found
-            return r;              // don't update Restaurant
+            return id;              // don't update Restaurant
 
+        r.locuId = id;
         updateFromMatchedLocuId(r, id);
 
-        return r;
+        return id;
     }
 
     /**
@@ -103,7 +106,8 @@ public class LocuExtension {
 
     /**
      * Parse information about a Locu venue and add it to the Restaurant. If the ID is not
-     * found in the Locu database the Restaurant will not be updated.
+     * found in the Locu database the Restaurant will not be updated. Any exceptions are
+     * handled within the method; as such, if any input or
      * @param r   {@link Restaurant}
      * @param id  a Locu venue ID
      */
@@ -152,31 +156,69 @@ public class LocuExtension {
      */
     private void updateFromMatchedLocuIdHelper(JSONObject in, Restaurant r) {
         if (in.has("menus")) {
-            r.locuMenus = new LMenus();
-            // TODO finish this
-        }
-
-        if (in.has("open_hours")) {
-            JSONObject inHours = null;
+            JSONArray inMenus = null;
+            Menus menus = null;
 
             try {
-                inHours = in.getJSONObject("open_hours");
-                OpenHours newHours = new OpenHours();
-
-                // get the open hours for each day
-                JSONArray inHoursNames = inHours.names();
-                for (int i = 0; i < inHoursNames.length(); i++) {
-                    JSONArray dayHours = inHours.getJSONArray(inHoursNames.getString(i));
-                    if (dayHours.length() > 0) {
-
-                    }
+                inMenus = in.getJSONArray("menus");
+                menus = new Menus();
+                for (int i = 0; i < inMenus.length(); i++) {
+                    JSONObject inMenusEach = inMenus.getJSONObject(i);
+                    menus.add(updateMenuHelper(inMenusEach, menus, r));
                 }
-                r.hours.clear();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-        }
+            if (menus != null)
+                r.locuMenus = menus;
+        } // end if (in.has("menus"))
 
+        if (in.has("open_hours")) {
+            JSONObject inHours = null;
+            OpenHours newHours = null;
+
+            try {
+                inHours = in.getJSONObject("open_hours");
+
+                // get the open hours for each day
+                JSONArray inHoursNames = inHours.names(); // get days of the week
+
+                newHours = new OpenHours();
+
+                for (int i = 0; i < inHoursNames.length(); i++) { // for each day
+                    String thisDay = inHoursNames.getString(i);
+                    JSONArray inHoursThisDay = inHours.getJSONArray(thisDay); // array of open hours
+                                                                          // ranges for this day
+                    OpenHoursPerDay openHoursThisDay = new OpenHoursPerDay();
+
+                    // if exists at least one entry for this day, add each entry to the day's
+                    // open hours
+                    if (inHoursThisDay.length() > 0)
+                        for (int j = 0; j < inHoursThisDay.length(); j++)
+                            openHoursThisDay.add(new OpenHoursRange(inHoursThisDay.getString(j)));
+
+                    newHours.put(DayOfWeek.fromString(thisDay), openHoursThisDay);
+                } // end for (int i...)
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            if (newHours != null)
+                r.hours = newHours;
+        } // end if (in.has("open_hours"))
+
+    } // end updateFromMatchedLocuIdHelper()
+
+    /**
+     * Helper for updateFromMatchedLocuIdHelper()
+     * @param in     single menu in "menus" field of Locu venue detail as JSONObject
+     * @return menu  a {@link Menus} objection, that is, a collection of menus for a restaurant
+     * @param r      a Restaurant
+     */
+    private Menu updateMenuHelper(JSONObject in, Menus menus, Restaurant r) {
+        return new Menu("test", "$");
     }
+
+
 }

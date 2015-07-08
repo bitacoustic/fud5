@@ -24,7 +24,7 @@ public class RestaurantTestActivity extends ActionBarActivity {
     private TextView callOutput;
     private Restaurant someRestaurant;
     private RestaurantList someRestaurantList;
-    private String testString;
+    private String locuId;
     private MapBounds testMapBounds;
 
     @Override
@@ -60,7 +60,7 @@ public class RestaurantTestActivity extends ActionBarActivity {
             // change id field to test different businesses
 
             RestaurantApiClient rClient = new RestaurantApiClient.Builder(yelpKey)
-                    .id("squat-and-gobble-san-francisco-2").build();
+                    .id("new-tsing-tao-restaurant-san-francisco").build();
             try {
                 someRestaurant = rClient.getRestaurantByYelpID();
             } catch (IOException e) {
@@ -82,7 +82,12 @@ public class RestaurantTestActivity extends ActionBarActivity {
             LocuApiKey locuKey = new LocuApiKey(getApplicationContext().getResources()
                     .getString(R.string.locu_key));
             LocuExtension locu = new LocuExtension(locuKey);
-            testString = locu.getLocuId(someRestaurant);
+
+            // attempt a match for the restaurant in Locu and update its information if found;
+            // the locu ID will be returned if a match was found, otherwise locuId's contents
+            // will be "" (match not found)
+            locuId = locu.update(someRestaurant);
+
 
             //
 
@@ -106,17 +111,20 @@ public class RestaurantTestActivity extends ActionBarActivity {
         }
 
         protected void onPostExecute(String result) {
-            callOutput.append("\nResult of Yelp ID request:\n");
+            callOutput.append("Attempt at Locu match for " + someRestaurant.getBusinessName()
+                    + ":\n");
+            if (locuId.compareTo("") == 0)
+                callOutput.append("No match found.");
+            else
+                callOutput.append("Matched Locu ID: " + locuId);
+
+            callOutput.append("\n\nResult of Yelp ID request with Locu information if a" +
+                    "match was found :\n");
             if (someRestaurant == null)
                 callOutput.append("null Restaurant()\n");
             else
                 callOutput.append(someRestaurant.toString());
 
-            callOutput.append("\n\nAttempt at Locu match:\n");
-            if (testString.compareTo("") == 0)
-                callOutput.append("No match found.");
-            else
-                callOutput.append("Matched Locu ID: " + testString);
 
             callOutput.append("\n\nResult of search request:\n");
             if (someRestaurantList == null)

@@ -1,16 +1,16 @@
 package com.csc413.team5.restaurantapiwrapper;
 
 /**
- * TODO Description
+ * Text which may appear in sequence with {@link Menu} items.
  * <p>
  * Created on 7/3/2015.
  *
  * @author Eric C. Black
  */
-public class LMenuSectionText extends LMenuContent {
+public class MenuSectionText extends MenuContent {
     protected String text;
 
-    public LMenuSectionText(String text) {
+    public MenuSectionText(String text) {
         this.text = text;
     }
 
@@ -20,7 +20,7 @@ public class LMenuSectionText extends LMenuContent {
 
     @Override
     public String toString() {
-        return "LMenuSectionText{" +
+        return "MenuSectionText{" +
                 "text='" + text + '\'' +
                 '}';
     }

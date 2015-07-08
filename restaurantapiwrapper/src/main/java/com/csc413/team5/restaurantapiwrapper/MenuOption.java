@@ -1,17 +1,17 @@
 package com.csc413.team5.restaurantapiwrapper;
 
 /**
- * TODO Description
+ * An individual option which falls under a {@link MenuOptionGroup}.
  * <p>
  * Created on 7/3/2015.
  *
  * @author Eric C. Black
  */
-public class LMenuOption {
+public class MenuOption {
     protected String name;
     protected String price;
 
-    public LMenuOption(String name, String price) {
+    public MenuOption(String name, String price) {
         this.name = name;
         this.price = price;
     }
@@ -26,7 +26,7 @@ public class LMenuOption {
 
     @Override
     public String toString() {
-        return "LMenuOption{" +
+        return "MenuOption{" +
                 "name='" + name + '\'' +
                 ", price='" + price + '\'' +
                 '}';

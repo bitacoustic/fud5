@@ -3,19 +3,19 @@ package com.csc413.team5.restaurantapiwrapper;
 import java.util.ArrayList;
 
 /**
- * TODO description
+ * An item on a {@link Menu}, which is listed under a {@link MenuSubSection}.
  * <p>
  * Created on 7/3/2015.
  *
  * @author Eric C. Black
  */
-public class LMenuItem extends LMenuContent {
+public class MenuItem extends MenuContent {
     protected String name;
     protected String description;
     protected String price;
-    protected ArrayList<LMenuOptionGroup> optionGroups;
+    protected ArrayList<MenuOptionGroup> optionGroups;
 
-    public LMenuItem(String name, String description, String price) {
+    public MenuItem(String name, String description, String price) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -34,7 +34,7 @@ public class LMenuItem extends LMenuContent {
         return price;
     }
 
-    public LMenuOptionGroup getOptionGroup(int index) throws IndexOutOfBoundsException {
+    public MenuOptionGroup getOptionGroup(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= optionGroups.size())
             throw new IndexOutOfBoundsException();
         else
@@ -43,7 +43,7 @@ public class LMenuItem extends LMenuContent {
 
     @Override
     public String toString() {
-        return "LMenuItem{" +
+        return "MenuItem{" +
                 "\nname='" + name + '\'' +
                 ",\ndescription='" + description + '\'' +
                 ",\nprice='" + price + '\'' +

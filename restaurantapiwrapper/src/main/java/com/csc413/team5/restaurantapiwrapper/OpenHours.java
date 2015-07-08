@@ -2,25 +2,28 @@ package com.csc413.team5.restaurantapiwrapper;
 
 import java.util.HashMap;
 
+import static com.csc413.team5.restaurantapiwrapper.DayOfWeek.*;
+
 /**
- * TODO Description
+ * Representation of the open hours for an entire week, holding {@link OpenHoursPerDay} for each
+ * day of the week.
  * <p>
  * Created on 7/3/2015.
  *
  * @author Eric C. Black
  */
-public class OpenHours<DayOfWeek, OpenHoursDay> extends HashMap {
+public class OpenHours<DayOfWeek, OpenHoursPerDay> extends HashMap {
     /**
      * Constructs open hours with all days of week set to null (closed).
      */
     public OpenHours() {
-        put(com.csc413.team5.restaurantapiwrapper.DayOfWeek.MONDAY, null);
-        put(com.csc413.team5.restaurantapiwrapper.DayOfWeek.TUESDAY, null);
-        put(com.csc413.team5.restaurantapiwrapper.DayOfWeek.WEDNESDAY, null);
-        put(com.csc413.team5.restaurantapiwrapper.DayOfWeek.THURSDAY, null);
-        put(com.csc413.team5.restaurantapiwrapper.DayOfWeek.FRIDAY, null);
-        put(com.csc413.team5.restaurantapiwrapper.DayOfWeek.SATURDAY, null);
-        put(com.csc413.team5.restaurantapiwrapper.DayOfWeek.SUNDAY, null);
+        put(MONDAY, null);
+        put(TUESDAY, null);
+        put(WEDNESDAY, null);
+        put(THURSDAY, null);
+        put(FRIDAY, null);
+        put(SATURDAY, null);
+        put(SUNDAY, null);
     }
 
     public boolean hasOpenHours() {
@@ -52,13 +55,13 @@ public class OpenHours<DayOfWeek, OpenHoursDay> extends HashMap {
      */
     @Override
     public void clear() {
-        put(com.csc413.team5.restaurantapiwrapper.DayOfWeek.MONDAY, null);
-        put(com.csc413.team5.restaurantapiwrapper.DayOfWeek.TUESDAY, null);
-        put(com.csc413.team5.restaurantapiwrapper.DayOfWeek.WEDNESDAY, null);
-        put(com.csc413.team5.restaurantapiwrapper.DayOfWeek.THURSDAY, null);
-        put(com.csc413.team5.restaurantapiwrapper.DayOfWeek.FRIDAY, null);
-        put(com.csc413.team5.restaurantapiwrapper.DayOfWeek.SATURDAY, null);
-        put(com.csc413.team5.restaurantapiwrapper.DayOfWeek.SUNDAY, null);
+        put(MONDAY, null);
+        put(TUESDAY, null);
+        put(WEDNESDAY, null);
+        put(THURSDAY, null);
+        put(FRIDAY, null);
+        put(SATURDAY, null);
+        put(SUNDAY, null);
     }
 
     /**
@@ -76,7 +79,7 @@ public class OpenHours<DayOfWeek, OpenHoursDay> extends HashMap {
     }
 
     /**
-     * Returns the {@link OpenHoursDay} value of specified {@link DayOfWeek}, which may be
+     * Returns the {@link OpenHoursPerDay} value of specified {@link DayOfWeek}, which may be
      * null if the venue is not open on that day.
      *
      * @param key a {@link DayOfWeek}.
@@ -89,10 +92,10 @@ public class OpenHours<DayOfWeek, OpenHoursDay> extends HashMap {
     }
 
     /**
-     * Maps the specified {@link OpenHoursDay} to the specified {@link DayOfWeek}.
+     * Maps the specified {@link OpenHoursPerDay} to the specified {@link DayOfWeek}.
      *
      * @param key   a {@link DayOfWeek}
-     * @param value an {@link OpenHoursDay}
+     * @param value an {@link OpenHoursPerDay}
      * @return the value of any previous mapping with the specified {@link DayOfWeek} or
      * {@code null} if there was no such mapping.
      */

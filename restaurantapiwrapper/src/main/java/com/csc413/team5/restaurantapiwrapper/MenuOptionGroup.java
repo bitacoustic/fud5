@@ -3,18 +3,18 @@ package com.csc413.team5.restaurantapiwrapper;
 import java.util.ArrayList;
 
 /**
- * TODO Description
+ * A category of {@link MenuOption}s for a given {@link MenuItem}.
  * <p>
  * Created on 7/3/2015.
  *
  * @author Eric C. Black
  */
-public class LMenuOptionGroup {
+public class MenuOptionGroup {
     protected String type;
     protected String text;
-    protected ArrayList<LMenuOption> options;
+    protected ArrayList<MenuOption> options;
 
-    public LMenuOptionGroup(String type, String text) {
+    public MenuOptionGroup(String type, String text) {
         this.type = type;
         this.text = text;
         this.options = new ArrayList<>();
@@ -28,7 +28,7 @@ public class LMenuOptionGroup {
         return text;
     }
 
-    public LMenuOption getMenuOption(int index) throws IndexOutOfBoundsException {
+    public MenuOption getMenuOption(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= options.size())
             throw new IndexOutOfBoundsException("invalid menu option index");
         else
@@ -37,7 +37,7 @@ public class LMenuOptionGroup {
 
     @Override
     public String toString() {
-        return "LMenuOptionGroup{" +
+        return "MenuOptionGroup{" +
                 "type='" + type + '\'' +
                 ", text='" + text + '\'' +
                 ", options=" + options +
