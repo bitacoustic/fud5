@@ -9,30 +9,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity extends AppCompatActivity
-        implements AskToUseLocationFragment.NoticeDialogListener {
+public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
-    @Override
-    protected void onStart() {
-        // tell the Android OS to open the dialog after 3 seconds (= 3000 milliseconds)
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                askToUseLocation();
-            }
-        }, 3000);
-
-        super.onStart();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -53,24 +37,5 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    // Dialog AskToUseLocationFragment
-
-    public void askToUseLocation() {
-        DialogFragment dialogAskToUseLocation = new AskToUseLocationFragment();
-        dialogAskToUseLocation.show(getFragmentManager(), "askToUseLocation");
-    }
-
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
-        Log.i(TAG, "User agreed to use location services.");
-        // TODO save user choice and proceed to the next screen
-    }
-
-    @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
-        Log.i(TAG, "User did not agree to use location services.");
-        // TODO save user choice and proceed to the next screen
     }
 }
