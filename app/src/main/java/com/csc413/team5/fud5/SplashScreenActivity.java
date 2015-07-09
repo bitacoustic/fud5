@@ -46,6 +46,7 @@ public class SplashScreenActivity extends Activity implements AskToUseLocationFr
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         // TODO save user choice and proceed to the next screen
+        finish();   // removes this activity from the back stack
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
