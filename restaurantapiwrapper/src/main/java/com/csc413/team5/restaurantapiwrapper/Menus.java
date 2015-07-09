@@ -1,5 +1,6 @@
 package com.csc413.team5.restaurantapiwrapper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author Eric C. Black
  */
-public class Menus<Menu> extends ArrayList<Menu> {
+public class Menus<Menu> extends ArrayList<Menu> implements Serializable {
 
     public Menu getMenu(int index) throws IndexOutOfBoundsException {
         return get(index);

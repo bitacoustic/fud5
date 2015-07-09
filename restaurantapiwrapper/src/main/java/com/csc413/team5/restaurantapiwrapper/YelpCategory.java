@@ -1,5 +1,7 @@
 package com.csc413.team5.restaurantapiwrapper;
 
+import java.io.Serializable;
+
 /**
  * A Yelp category consisting of display name and alias used for the category filter in an
  * API request.
@@ -8,7 +10,7 @@ package com.csc413.team5.restaurantapiwrapper;
  *
  * @author Eric C. Black
  */
-public class YelpCategory {
+public class YelpCategory implements Serializable {
     private String name;
     private String alias;
 

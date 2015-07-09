@@ -1,5 +1,6 @@
 package com.csc413.team5.restaurantapiwrapper;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import static com.csc413.team5.restaurantapiwrapper.DayOfWeek.*;
@@ -12,7 +13,7 @@ import static com.csc413.team5.restaurantapiwrapper.DayOfWeek.*;
  *
  * @author Eric C. Black
  */
-public class OpenHours<DayOfWeek, OpenHoursPerDay> extends HashMap {
+public class OpenHours<DayOfWeek, OpenHoursPerDay> extends HashMap implements Serializable {
     /**
      * Constructs open hours with all days of week set to null (closed).
      */

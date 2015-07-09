@@ -2,6 +2,7 @@ package com.csc413.team5.restaurantapiwrapper;
 
 import android.net.Uri;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -12,7 +13,7 @@ import java.util.Date;
  *
  * @author Eric C. Black
  */
-public class YelpDeal {
+public class YelpDeal implements Serializable {
     protected String id;
     protected String title;
     protected String whatYouGet;

@@ -4,6 +4,7 @@ import android.location.Address;
 import android.location.Location;
 import android.net.Uri;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -19,7 +20,7 @@ import java.util.ArrayList;
  *
  * @author Eric C. Black
  */
-public class Restaurant {
+public class Restaurant implements Serializable {
     /* Member variables */
 
     // Yelp

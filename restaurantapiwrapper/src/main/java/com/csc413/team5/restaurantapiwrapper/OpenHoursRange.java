@@ -1,5 +1,7 @@
 package com.csc413.team5.restaurantapiwrapper;
 
+import java.io.Serializable;
+
 /**
  * Representation of a range of open hours, e.g. "5:00PM - 9:00PM"
  * <p>
@@ -7,7 +9,7 @@ package com.csc413.team5.restaurantapiwrapper;
  *
  * @author Eric C. Black
  */
-public class OpenHoursRange {
+public class OpenHoursRange implements Serializable {
     protected TimeOfDay open;
     protected TimeOfDay close;
 

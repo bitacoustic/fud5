@@ -1,5 +1,6 @@
 package com.csc413.team5.restaurantapiwrapper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author Eric C. Black
  */
-public class MenuSubSection {
+public class MenuSubSection implements Serializable {
     protected String subSectionName;
     protected ArrayList<MenuContent> contents;
 

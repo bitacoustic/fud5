@@ -1,5 +1,6 @@
 package com.csc413.team5.restaurantapiwrapper;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,7 +14,7 @@ import java.util.GregorianCalendar;
  *
  * @author Eric C. Black
  */
-public class TimeOfDay {
+public class TimeOfDay implements Serializable {
     protected double time;
     protected String string12;
     protected String string24;

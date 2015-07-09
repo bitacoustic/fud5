@@ -2,6 +2,7 @@ package com.csc413.team5.restaurantapiwrapper;
 
 import android.support.annotation.NonNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -19,7 +20,7 @@ import java.util.ListIterator;
  *
  * @author Eric C. Black
  */
-public class RestaurantList {
+public class RestaurantList implements Serializable {
      /* Member variables */
 
     protected ArrayList<Restaurant> restaurants;

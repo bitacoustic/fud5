@@ -1,5 +1,7 @@
 package com.csc413.team5.restaurantapiwrapper;
 
+import java.io.Serializable;
+
 /**
  * Text which may appear in sequence with {@link Menu} items.
  * <p>
@@ -7,7 +9,7 @@ package com.csc413.team5.restaurantapiwrapper;
  *
  * @author Eric C. Black
  */
-public class MenuSectionText extends MenuContent {
+public class MenuSectionText extends MenuContent implements Serializable {
     protected String text;
 
     public MenuSectionText(String text) {

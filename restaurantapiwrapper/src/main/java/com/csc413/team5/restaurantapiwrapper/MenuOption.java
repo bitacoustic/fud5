@@ -1,5 +1,7 @@
 package com.csc413.team5.restaurantapiwrapper;
 
+import java.io.Serializable;
+
 /**
  * An individual option which falls under a {@link MenuOptionGroup}.
  * <p>
@@ -7,7 +9,7 @@ package com.csc413.team5.restaurantapiwrapper;
  *
  * @author Eric C. Black
  */
-public class MenuOption {
+public class MenuOption implements Serializable {
     protected String name;
     protected String price;
 

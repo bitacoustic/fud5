@@ -2,6 +2,8 @@ package com.csc413.team5.restaurantapiwrapper;
 
 import android.location.Location;
 
+import java.io.Serializable;
+
 /**
  * Suggested map boundaries for mapping results of an API query. Span refers to the suggested
  * length and width of the map centered on {@link #center}.
@@ -10,7 +12,7 @@ import android.location.Location;
  *
  * @author Eric C. Black
  */
-public class MapBounds {
+public class MapBounds implements Serializable {
     // span of suggested map bounds encompassing restaurant results
     protected double spanLatitudeDelta;
     protected double spanLongitudeDelta;

@@ -1,5 +1,6 @@
 package com.csc413.team5.restaurantapiwrapper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  *
  * @author Eric C. Black
  */
-public class Menu {
+public class Menu implements Serializable {
     protected String menuName;
     protected String currencySymbol;
     protected ArrayList<MenuSection> sections;
