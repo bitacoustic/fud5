@@ -1,15 +1,11 @@
 .gradle
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
 .DS_Store
 /build
 /captures
 
-# /.idea/copyright/profiles_settings.xml
-# /.idea/gradle.xml
 .idea
 /app/app.iml
 /appdb/appdb.iml
 /restaurantapiwrapper/restaurantapiwrapper.iml
-/.idea/misc.xml
+/restauranttest/restauranttest.iml
