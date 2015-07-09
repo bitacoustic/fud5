@@ -19,7 +19,5 @@ public class UserPreferencesActivity extends AppCompatActivity {
     public void OnEULAButtonClick(View v) {
         DialogFragment eulaDialog = EulaDialogFragment.newInstance(false);
         eulaDialog.show(getFragmentManager(), "EULA");
-
-        Log.i("asdasd","cool");
     }
 }
