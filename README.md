@@ -18,7 +18,7 @@ See wiki: https://github.com/sfsucsc413/t5/wiki
 4. Anthony Wong - awong9@mail.sfsu.edu
 5. David Karapetian - dkarapet@mail.sfsu.edu
 6. Ivan Gonzalez - ivanglez43@gmail.com
-
+7. Jagatdeep Anand - jagatdeep.anand@gmail.com
 ### Version
 0.0.1
 
