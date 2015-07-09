@@ -164,7 +164,9 @@ public class LocuExtension {
                 menus = new Menus();
                 for (int i = 0; i < inMenus.length(); i++) {
                     JSONObject inMenusEach = inMenus.getJSONObject(i);
-                    menus.add(updateMenuHelper(inMenusEach, menus, r));
+                    Menu newMenu = updateMenuHelper(inMenusEach, menus, r);
+                    if (newMenu != null)
+                        menus.add(newMenu);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -217,7 +219,26 @@ public class LocuExtension {
      * @param r      a Restaurant
      */
     private Menu updateMenuHelper(JSONObject in, Menus menus, Restaurant r) {
-        return new Menu("test", "$");
+        Menu newMenu = null;
+        try {
+            String menuName = "";
+            String currencySymbol = "";
+            if (in.has("menu_name"))
+                menuName = in.getString("menu_name");
+            if (in.has("currency_symbol"))
+                currencySymbol = in.getString("currency_symbol");
+            if (in.has("sections")) {
+
+            }
+            newMenu = new Menu(menuName, currencySymbol);
+
+        } catch (JSONException e) {
+            newMenu = null; // if there was an error with menu creation, just clear the menu
+            e.printStackTrace();
+        }
+
+        return newMenu;
+
     }
 
 

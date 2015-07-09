@@ -37,6 +37,10 @@ public class Menu implements Serializable {
             return sections.get(index);
     }
 
+    public ArrayList<MenuSection> getSections() {
+        return sections;
+    }
+
     /**
      * @return a printable representation of this object.
      */
