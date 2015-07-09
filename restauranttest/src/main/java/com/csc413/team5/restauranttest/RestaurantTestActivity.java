@@ -21,7 +21,7 @@ import java.io.IOException;
 
 
 public class RestaurantTestActivity extends ActionBarActivity {
-    private TextView callOutput;
+    private TextView output;
     private Restaurant someRestaurant;
     private RestaurantList someRestaurantList;
     private String locuId;
@@ -33,8 +33,8 @@ public class RestaurantTestActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         setTitle("Yelp API Test");
 
-        callOutput = (TextView) findViewById(R.id.api_out);
-        callOutput.setText("Initiating call ... \n\n");
+        output = (TextView) findViewById(R.id.api_out);
+        output.setText("Initiating call ... \n\n");
 
         YelpAsyncTask task = new YelpAsyncTask();
         task.execute();
@@ -111,37 +111,48 @@ public class RestaurantTestActivity extends ActionBarActivity {
         }
 
         protected void onPostExecute(String result) {
-            callOutput.append("Attempt at Locu match for " + someRestaurant.getBusinessName()
-                    + ":\n");
-            if (locuId.compareTo("") == 0)
-                callOutput.append("No match found.");
-            else
-                callOutput.append("Matched Locu ID: " + locuId);
+            output.append("-----------------------------------------------------\n" +
+                            "YELP BUSINESS SEARCH, ATTEMPT TO MATCH VENUE WITH " +
+                            "LOCU AND PULL ADDITIONAL DATA\n" +
+                            "-----------------------------------------------------\n\n"
+            );
+            output.append("Queried Yelp for: " + someRestaurant.getBusinessName() + '\n');
 
-            callOutput.append("\n\nResult of Yelp ID request with Locu information if a" +
+            output.append("Attempted Locu match: "+ ":\n");
+            if (locuId.compareTo("") == 0)
+                output.append("No match found.");
+            else
+                output.append("Matched Locu ID: " + locuId);
+
+
+            output.append("\n\nResult of Yelp business search request with Locu information if a " +
                     "match was found :\n");
             if (someRestaurant == null)
-                callOutput.append("null Restaurant()\n");
+                output.append("null Restaurant()\n");
             else
-                callOutput.append(someRestaurant.toString());
+                output.append(someRestaurant.toString());
 
 
-            callOutput.append("\n\nResult of search request:\n");
+            output.append("\n\n-----------------------------------------------------\n" +
+                            "YELP SEARCH FOR BUSINESSES AROUND A PARTICULAR LOCATION\n" +
+                            "-----------------------------------------------------\n\n"
+            );
+            output.append("\n\nResult of search request:\n");
             if (someRestaurantList == null)
-                callOutput.append("null RestaurantList()\n");
+                output.append("null RestaurantList()\n");
             else {
-                callOutput.append("RestaurantList size: " + someRestaurantList.size());
-                callOutput.append("\nMap bounds after query: " + testMapBounds);
+                output.append("RestaurantList size: " + someRestaurantList.size());
+                output.append("\nMap bounds after query: " + testMapBounds);
                 int rListMid = someRestaurantList.size() / 2;
                 someRestaurantList.remove(rListMid);
-                callOutput.append("\nRemoved 1 record. RestaurantList size: "
+                output.append("\nRemoved 1 record. RestaurantList size: "
                         + someRestaurantList.size());
                 someRestaurantList.add(someRestaurant);
-                callOutput.append("\nAdded 1 record. RestaurantList size: "
+                output.append("\nAdded 1 record. RestaurantList size: "
                         + someRestaurantList.size());
-                callOutput.append("\n\nThe contents of the" +
+                output.append("\n\nThe contents of the" +
                         "RestaurantList is now:");
-                callOutput.append(someRestaurantList.toString());
+                output.append(someRestaurantList.toString());
             }
         }
     }
