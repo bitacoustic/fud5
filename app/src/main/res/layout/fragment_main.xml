@@ -17,14 +17,4 @@
         android:textSize="48dp"
         android:textColor="#FFFFFF" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="(API LOGOS)"
-        android:id="@+id/textView2"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="42dp"
-        android:textColor="#FFFFFF" />
 </RelativeLayout>
