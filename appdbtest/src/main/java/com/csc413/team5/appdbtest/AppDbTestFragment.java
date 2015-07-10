@@ -1,18 +1,17 @@
-package com.csc413.team5.fud5;
+package com.csc413.team5.appdbtest;
 
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 /**
- * A placeholder fragment containing a simple view.
+ * Created by niculistana on 7/6/15.
  */
-public class MainActivityFragment extends Fragment {
+public class AppDbTestFragment extends Fragment {
 
-    public MainActivityFragment() {
+    public AppDbTestFragment() {
     }
 
     @Override

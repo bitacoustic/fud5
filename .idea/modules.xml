@@ -3,6 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/appdb/appdb.iml" filepath="$PROJECT_DIR$/appdb/appdb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/appdbtest/appdbtest.iml" filepath="$PROJECT_DIR$/appdbtest/appdbtest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/restaurantapiwrapper/restaurantapiwrapper.iml" filepath="$PROJECT_DIR$/restaurantapiwrapper/restaurantapiwrapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/restauranttest/restauranttest.iml" filepath="$PROJECT_DIR$/restauranttest/restauranttest.iml" />
       <module fileurl="file://$PROJECT_DIR$/t5.iml" filepath="$PROJECT_DIR$/t5.iml" />
     </modules>
   </component>
