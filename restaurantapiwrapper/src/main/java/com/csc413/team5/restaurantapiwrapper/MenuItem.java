@@ -16,6 +16,13 @@ public class MenuItem extends MenuContent implements Serializable {
     protected String price;
     protected ArrayList<MenuOptionGroup> optionGroups;
 
+    public MenuItem() {
+        this.name = "";
+        this.description = "";
+        this.price = "";
+        this.optionGroups = new ArrayList<>();
+    }
+
     public MenuItem(String name, String description, String price) {
         this.name = name;
         this.description = description;
@@ -42,13 +49,21 @@ public class MenuItem extends MenuContent implements Serializable {
             return optionGroups.get(index);
     }
 
+    public void addOptionGroup(MenuOptionGroup mog) {
+        optionGroups.add(mog);
+    }
+
+    public void removeOptionGroup(MenuOptionGroup mog) {
+        optionGroups.remove(mog);
+    }
+
     @Override
     public String toString() {
         return "MenuItem{" +
-                "\nname='" + name + '\'' +
-                ",\ndescription='" + description + '\'' +
-                ",\nprice='" + price + '\'' +
-                ",\noptionGroups=" + optionGroups +
+                " name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price='" + price + '\'' +
+                ", optionGroups=" + optionGroups +
                 "\n}";
     }
 }

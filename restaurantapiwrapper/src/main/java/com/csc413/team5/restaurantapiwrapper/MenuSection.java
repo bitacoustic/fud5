@@ -10,25 +10,37 @@ import java.util.ArrayList;
  *
  * @author Eric C. Black
  */
-public class MenuSection implements Serializable {
+public class MenuSection<MenuSubSection> extends ArrayList<MenuSubSection>
+        implements Serializable {
     protected String sectionName;
-    protected ArrayList<MenuSubSection> subsections;
 
-    public MenuSection(String sectionName, ArrayList<MenuSubSection> subsections) {
+    public MenuSection() {
+        super();
+        this.sectionName = "";
+    }
+
+
+    public MenuSection(String sectionName) {
+        super();
         this.sectionName = sectionName;
-        this.subsections = new ArrayList<>();
     }
 
     public String getSectionName() {
         return sectionName;
     }
 
-    public MenuSubSection getSubsection(int index) throws IndexOutOfBoundsException {
-        if (index < 0 || index >= subsections.size())
-            throw new IndexOutOfBoundsException("invalid subsection index");
-        else
-            return subsections.get(index);
+    public MenuSubSection getSubSection(int index) {
+        return get(index);
     }
+
+    public void addSubSection(MenuSubSection mss) {
+        add(mss);
+    }
+
+    public void removeSubSection(int index) {
+        remove(index);
+    }
+
 
     /**
      * @return a printable representation of this object.
@@ -37,7 +49,7 @@ public class MenuSection implements Serializable {
     public String toString() {
         return "MenuSection {" +
                 "\nsectionName='" + sectionName + '\'' +
-                ",\n subsections=" + subsections +
+                ",\n subsections=" + super.toString() +
                 "\n}";
     }
 }

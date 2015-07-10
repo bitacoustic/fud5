@@ -162,9 +162,11 @@ public class LocuExtension {
             try {
                 inMenus = in.getJSONArray("menus");
                 menus = new Menus();
+
+                // parse each menu
                 for (int i = 0; i < inMenus.length(); i++) {
                     JSONObject inMenusEach = inMenus.getJSONObject(i);
-                    Menu newMenu = updateMenuHelper(inMenusEach, menus, r);
+                    Menu newMenu = updateMenuHelper(inMenusEach); // employ helper
                     if (newMenu != null)
                         menus.add(newMenu);
                 }
@@ -215,10 +217,8 @@ public class LocuExtension {
     /**
      * Helper for updateFromMatchedLocuIdHelper()
      * @param in     single menu in "menus" field of Locu venue detail as JSONObject
-     * @return menu  a {@link Menus} objection, that is, a collection of menus for a restaurant
-     * @param r      a Restaurant
      */
-    private Menu updateMenuHelper(JSONObject in, Menus menus, Restaurant r) {
+    private Menu updateMenuHelper(JSONObject in) {
         Menu newMenu = null;
         try {
             String menuName = "";
@@ -227,18 +227,102 @@ public class LocuExtension {
                 menuName = in.getString("menu_name");
             if (in.has("currency_symbol"))
                 currencySymbol = in.getString("currency_symbol");
-            if (in.has("sections")) {
 
-            }
             newMenu = new Menu(menuName, currencySymbol);
 
-        } catch (JSONException e) {
+            if (in.has("sections")) {
+                JSONArray inSections = in.getJSONArray("sections");
+
+                // parse each section of this menu
+                for (int i = 0; i < inSections.length(); i++) {
+                    JSONObject inSectionsEach = inSections.getJSONObject(i);
+
+                    MenuSection newMS = new MenuSection();
+                    if (inSectionsEach.has("section_name"))
+                        newMS.sectionName = inSectionsEach.getString("section_name");
+
+                    // parse each subsection of this menu
+                    JSONArray inSubSections = inSectionsEach.getJSONArray("subsections");
+
+                    for (int j = 0; j < inSubSections.length(); j++) {
+                        JSONObject inSubSectionsEach = inSubSections.getJSONObject(j);
+
+                        MenuSubSection newMSS = new MenuSubSection(inSubSectionsEach
+                                .getString("subsection_name"));
+
+                        // parse subsection content (could be either MenuSectionText or MenuItem)
+
+                        JSONArray inSubSectionContents = inSubSectionsEach.getJSONArray("contents");
+                        for (int k = 0; k < inSubSectionContents.length(); k++) {
+                            JSONObject inSubSectionContentsEach =
+                                    inSubSectionContents.getJSONObject(k);
+                            // employ helper
+                            newMSS.add(updateContentHelper(inSubSectionContentsEach));
+                        }
+                        newMS.add(newMSS);
+
+                    } // end for each subsection (j)
+
+
+                    newMenu.addMenuSection(newMS);
+
+                } // end for each section (i)
+            }
+
+        } catch(JSONException e) {
             newMenu = null; // if there was an error with menu creation, just clear the menu
             e.printStackTrace();
         }
 
         return newMenu;
+    } // end updateMenuHelper
 
+    /**
+     * Helper for updateMenuHelper()
+     * @param in a JSONObject representing either a MenuSectionText or MenuItem
+     * @return MenuSectionText extends MenuContent, or MenuItem extends MenuContent
+     */
+    private MenuContent updateContentHelper(JSONObject in) {
+        MenuContent mc = null;
+        try {
+            String type = in.getString("type");
+            switch (type) {
+                case "SECTION_TEXT":
+                    if (in.has("text"))
+                        mc = new MenuSectionText(in.getString("text"));
+                case "ITEM":
+                    JSONArray inNames = in.names();
+                    MenuItem newMenuItem = new MenuItem();
+
+                    for (int i = 0; i < inNames.length(); i++) {
+                        switch (inNames.getString(i)) {
+                            case "name":
+                                newMenuItem.name = in.getString("name");
+                                break;
+                            case "description":
+                                newMenuItem.description = in.getString("description");
+                                break;
+                            case "price":
+                                newMenuItem.price = in.getString("price");
+                                break;
+                            case "option_groups":
+                                // parse
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    mc = newMenuItem;
+                    break;
+                default:
+                    break;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return mc;
     }
 
 

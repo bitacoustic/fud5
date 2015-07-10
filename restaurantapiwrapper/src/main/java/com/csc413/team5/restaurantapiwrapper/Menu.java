@@ -11,15 +11,14 @@ import java.util.ArrayList;
  *
  * @author Eric C. Black
  */
-public class Menu implements Serializable {
+public class Menu<MenuSection> extends ArrayList<MenuSection> implements Serializable {
     protected String menuName;
     protected String currencySymbol;
-    protected ArrayList<MenuSection> sections;
 
     public Menu(String menuName, String currencySymbol) {
+        super();
         this.menuName = menuName;
         this.currencySymbol = currencySymbol;
-        this.sections = new ArrayList<>();
     }
 
     public String getMenuName() {
@@ -30,15 +29,12 @@ public class Menu implements Serializable {
         return currencySymbol;
     }
 
-    public MenuSection getSection(int index) throws IndexOutOfBoundsException {
-        if (index < 0 || index >= sections.size())
-            throw new IndexOutOfBoundsException("invalid index");
-        else
-            return sections.get(index);
+    public MenuSection getSection(int index) {
+        return get(index);
     }
 
-    public ArrayList<MenuSection> getSections() {
-        return sections;
+    public void addMenuSection(MenuSection m) {
+        add(m);
     }
 
     /**
@@ -49,7 +45,7 @@ public class Menu implements Serializable {
         return "Menu {" +
                 "\nmenuName='" + menuName + '\'' +
                 ",\n currencySymbol='" + currencySymbol + '\'' +
-                ",\n sections=" + sections +
+                ",\n sections=" + super.toString() +
                 "\n}";
     }
 }

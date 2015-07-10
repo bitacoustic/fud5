@@ -10,31 +10,31 @@ import java.util.ArrayList;
  *
  * @author Eric C. Black
  */
-public class MenuSubSection implements Serializable {
+public class MenuSubSection<MenuContent> extends ArrayList<MenuContent> implements Serializable {
     protected String subSectionName;
-    protected ArrayList<MenuContent> contents;
 
     public MenuSubSection(String subSectionName) {
+        super();
         this.subSectionName = subSectionName;
-        this.contents = new ArrayList<>();
     }
 
     public String getSubSectionName() {
         return subSectionName;
     }
 
-    public MenuContent getContent(int index) throws IndexOutOfBoundsException {
-        if (index < 0 || index >= contents.size())
-            throw new IndexOutOfBoundsException("invalid content index");
-        else
-            return contents.get(index);
+    public MenuContent getContent(int index) {
+        return get(index);
+    }
+
+    public void addContent(MenuContent mc) {
+        add(mc);
     }
 
     @Override
     public String toString() {
         return "MenuSubSection{" +
                 "\nsubSectionName='" + subSectionName + '\'' +
-                ",\n contents=" + contents +
+                ",\n contents=" + super.toString() +
                 "\n}";
     }
 }
