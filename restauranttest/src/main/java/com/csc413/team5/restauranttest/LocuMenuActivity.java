@@ -1,9 +1,9 @@
 package com.csc413.team5.restauranttest;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +15,7 @@ import com.csc413.team5.restaurantapiwrapper.LocuApiKey;
 import com.csc413.team5.restaurantapiwrapper.LocuExtension;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
 
-public class LocuMenuActivity extends ActionBarActivity
+public class LocuMenuActivity extends Activity
         implements MenuNotFoundFragment.MenuNotFoundDialogListener {
     DisplayMenuTask displayMenu;
     LocuApiKey locuKey;

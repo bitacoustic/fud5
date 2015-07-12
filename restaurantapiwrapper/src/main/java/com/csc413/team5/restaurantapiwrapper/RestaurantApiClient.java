@@ -3,7 +3,6 @@ package com.csc413.team5.restaurantapiwrapper;
 import android.location.Address;
 import android.location.Location;
 import android.net.Uri;
-import android.util.JsonReader;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -141,7 +140,6 @@ public class RestaurantApiClient {
      */
     public RestaurantList getRestaurantList() throws IOException, JSONException {
         String resultString;
-        JsonReader resultJson;
 
         // create OAuth request
         OAuthRequest request = createOAuthRequest(YelpQueryType.SEARCH);

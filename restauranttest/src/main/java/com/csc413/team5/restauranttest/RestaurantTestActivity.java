@@ -47,13 +47,13 @@ public class RestaurantTestActivity extends ActionBarActivity {
         protected String doInBackground(String... params)  {
             // Construct a YelpApiKey from Resource strings
             String consumerKey = getApplicationContext().getResources()
-                    .getString(R.string.yelp_consumer_key);;
+                    .getString(R.string.yelp_consumer_key);
             String consumerSecret = getApplicationContext().getResources()
-                    .getString(R.string.yelp_consumer_secret);;
+                    .getString(R.string.yelp_consumer_secret);
             String tokenKey = getApplicationContext().getResources()
-                    .getString(R.string.yelp_token);;
+                    .getString(R.string.yelp_token);
             String tokenSecret = getApplicationContext().getResources()
-                    .getString(R.string.yelp_token_secret);;
+                    .getString(R.string.yelp_token_secret);
             YelpApiKey yelpKey = new YelpApiKey(consumerKey, consumerSecret, tokenKey, tokenSecret);
 
             // search for an individual business by Yelp ID

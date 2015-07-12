@@ -123,24 +123,23 @@ public class LocuExtension {
         JSONObject in;
         try {
             in = new JSONObject(response.getBody());
-            if (in != null) {
-                JSONArray inNames = in.names();
-                for (int i = 0; i < inNames.length(); i++) {
-                    switch (inNames.getString(i)) {
-                        case "not_found":
-                            JSONArray inNotFound = in.getJSONArray("not_found");
-                            if (inNotFound.length() > 0)
-                                return; // id not found; don't update Restaurant
-                            break;
-                        case "objects":
-                            JSONArray inObjects = in.getJSONArray("objects");
-                            JSONObject inObjectsVenue = inObjects.getJSONObject(0);
-                            updateFromMatchedLocuIdHelper(inObjectsVenue, r);
-                        default:
-                            break;
-                    } // end switch
-                } // end if
-            } // end try
+
+            JSONArray inNames = in.names();
+            for (int i = 0; i < inNames.length(); i++) {
+                switch (inNames.getString(i)) {
+                    case "not_found":
+                        JSONArray inNotFound = in.getJSONArray("not_found");
+                        if (inNotFound.length() > 0)
+                            return; // id not found; don't update Restaurant
+                        break;
+                    case "objects":
+                        JSONArray inObjects = in.getJSONArray("objects");
+                        JSONObject inObjectsVenue = inObjects.getJSONObject(0);
+                        updateFromMatchedLocuIdHelper(inObjectsVenue, r);
+                    default:
+                        break;
+                } // end switch
+            } // end if
         } catch (JSONException e) {
             e.printStackTrace();
             return; // JSON exception; don't update Restaurant
