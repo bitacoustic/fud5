@@ -1,12 +1,11 @@
-# Default Android Studio gitignores
 .gradle
 /local.properties
 .DS_Store
 /build
 /captures
-#/.idea/workspace.xml
-#/.idea/libraries
 
-# New gitignores
-# all of .idea refers to local settings
 .idea
+/app/app.iml
+/appdb/appdb.iml
+/restaurantapiwrapper/restaurantapiwrapper.iml
+/restauranttest/restauranttest.iml

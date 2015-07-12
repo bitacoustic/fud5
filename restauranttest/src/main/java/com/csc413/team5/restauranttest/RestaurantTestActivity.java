@@ -7,7 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.csc413.team5.restaurantapiwrapper.ParameterRangeException;
+import com.csc413.team5.restaurantapiwrapper.LocuApiKey;
+import com.csc413.team5.restaurantapiwrapper.LocuExtension;
+import com.csc413.team5.restaurantapiwrapper.MapBounds;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
 import com.csc413.team5.restaurantapiwrapper.RestaurantApiClient;
 import com.csc413.team5.restaurantapiwrapper.RestaurantList;
@@ -19,9 +21,11 @@ import java.io.IOException;
 
 
 public class RestaurantTestActivity extends ActionBarActivity {
-    private TextView callOutput;
+    private TextView output;
     private Restaurant someRestaurant;
     private RestaurantList someRestaurantList;
+    private String locuId;
+    private MapBounds testMapBounds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +33,8 @@ public class RestaurantTestActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         setTitle("Yelp API Test");
 
-        callOutput = (TextView) findViewById(R.id.api_out);
-        callOutput.setText("Initiating call ... \n\n");
+        output = (TextView) findViewById(R.id.api_out);
+        output.setText("Initiating call ... \n\n");
 
         YelpAsyncTask task = new YelpAsyncTask();
         task.execute();
@@ -56,7 +60,7 @@ public class RestaurantTestActivity extends ActionBarActivity {
             // change id field to test different businesses
 
             RestaurantApiClient rClient = new RestaurantApiClient.Builder(yelpKey)
-                    .id("proper-food-san-francisco-6").build();
+                    .id("new-tsing-tao-restaurant-san-francisco").build();
             try {
                 someRestaurant = rClient.getRestaurantByYelpID();
             } catch (IOException e) {
@@ -65,17 +69,38 @@ public class RestaurantTestActivity extends ActionBarActivity {
                 e.printStackTrace();
             }
 
+
+            /*
+            FactualApiKey factualKey = new FactualApiKey("", "");
+            FactualExtension factual = new FactualExtension(factualKey);
+            String fResult = factual.match(someRestaurant);
+
+            callOutput.append("\n\n" + fResult);
+            */
+
+            // WARNING: Locu functionality isn't yet fully implemented
+            LocuApiKey locuKey = new LocuApiKey(getApplicationContext().getResources()
+                    .getString(R.string.locu_key));
+            LocuExtension locu = new LocuExtension(locuKey);
+
+            // attempt a match for the restaurant in Locu and update its information if found;
+            // the locu ID will be returned if a match was found, otherwise locuId's contents
+            // will be "" (match not found)
+            locuId = locu.update(someRestaurant);
+
+
             //
 
             try {
-                rClient = new RestaurantApiClient.Builder(yelpKey).location("Pacifica, CA")
-                        .categoryFilter("foodtrucks,restaurants")
-                        .term("burgers")
-                        .radiusFilter(15000)
+                rClient = new RestaurantApiClient.Builder(yelpKey).location("Hayward, CA")
+                        //.categoryFilter("foodtrucks,restaurants")
+                        .term("seafood")
+                        //.radiusFilter(15000)
                         .build();
                 someRestaurantList = rClient.getRestaurantList();
-            } catch (ParameterRangeException e) {
-                e.printStackTrace();
+                testMapBounds = someRestaurantList.getMapBounds();
+            //} catch (ParameterRangeException e) {
+            //    e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -86,17 +111,49 @@ public class RestaurantTestActivity extends ActionBarActivity {
         }
 
         protected void onPostExecute(String result) {
-            callOutput.append("\nResult of Yelp ID request:\n");
-            if (someRestaurant == null)
-                callOutput.append("null Restaurant()\n");
-            else
-                callOutput.append(someRestaurant.toString());
+            output.append("-----------------------------------------------------\n" +
+                            "YELP BUSINESS SEARCH, ATTEMPT TO MATCH VENUE WITH " +
+                            "LOCU AND PULL ADDITIONAL DATA\n" +
+                            "-----------------------------------------------------\n\n"
+            );
+            output.append("Queried Yelp for: " + someRestaurant.getBusinessName() + '\n');
 
-            callOutput.append("\n\nResult of search request:\n");
-            if (someRestaurantList == null)
-                callOutput.append("null RestaurantList()\n");
+            output.append("Attempted Locu match: "+ ":\n");
+            if (locuId.compareTo("") == 0)
+                output.append("No match found.");
             else
-                callOutput.append(someRestaurantList.toString());
+                output.append("Matched Locu ID: " + locuId);
+
+
+            output.append("\n\nResult of Yelp business search request with Locu information if a " +
+                    "match was found :\n");
+            if (someRestaurant == null)
+                output.append("null Restaurant()\n");
+            else
+                output.append(someRestaurant.toString());
+
+
+            output.append("\n\n-----------------------------------------------------\n" +
+                            "YELP SEARCH FOR BUSINESSES AROUND A PARTICULAR LOCATION\n" +
+                            "-----------------------------------------------------\n\n"
+            );
+            output.append("\n\nResult of search request:\n");
+            if (someRestaurantList == null)
+                output.append("null RestaurantList()\n");
+            else {
+                output.append("RestaurantList size: " + someRestaurantList.size());
+                output.append("\nMap bounds after query: " + testMapBounds);
+                int rListMid = someRestaurantList.size() / 2;
+                someRestaurantList.remove(rListMid);
+                output.append("\nRemoved 1 record. RestaurantList size: "
+                        + someRestaurantList.size());
+                someRestaurantList.add(someRestaurant);
+                output.append("\nAdded 1 record. RestaurantList size: "
+                        + someRestaurantList.size());
+                output.append("\n\nThe contents of the" +
+                        "RestaurantList is now:");
+                output.append(someRestaurantList.toString());
+            }
         }
     }
 

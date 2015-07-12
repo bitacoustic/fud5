@@ -1,8 +1,10 @@
 package com.csc413.team5.restaurantapiwrapper;
 
+import android.location.Address;
 import android.location.Location;
 import android.net.Uri;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -18,20 +20,16 @@ import java.util.ArrayList;
  *
  * @author Eric C. Black
  */
-public class Restaurant {
-    /****************
-     Member variables
-     ****************/
+public class Restaurant implements Serializable {
+    /* Member variables */
 
-    /*
-    Data members
-     */
-
+    // Yelp
     protected String id;
     protected boolean isClosed;
 
     protected String name;
 
+    protected Address address;
     protected String addressDisplay;
     protected Location addressMapable;
 
@@ -55,8 +53,8 @@ public class Restaurant {
 
     protected int reviewCount;
 
+    protected ArrayList<YelpDeal> yelpDeals;
     protected boolean hasDeals;
-    protected Uri dealsUrl;
 
     protected Uri seatMeUrl;
     protected boolean hasSeatMeUrl;
@@ -64,9 +62,18 @@ public class Restaurant {
     protected Uri eat24Url;
     protected boolean hasEat24Url;
 
-    /************
-     Constructors
-     ************/
+    // Locu
+    protected String locuId;
+    protected Menus locuMenus;
+    protected String locuName;
+
+    // Locu or Factual
+    protected OpenHours hours;
+    protected boolean hasHours;
+
+
+
+    /* Constructors */
 
     /**
      * Constructs a restaurant with empty/null values. Use {@link RestaurantApiClient} to
@@ -76,6 +83,7 @@ public class Restaurant {
         id = "";
         isClosed = true;
         name = "";
+        address = null;
         addressDisplay = "";
         addressMapable = null;
         phoneDisplay = "";
@@ -91,17 +99,22 @@ public class Restaurant {
         rating = -1.0;
         ratingImgUrl = null;
         reviewCount = -1;
+        yelpDeals = null;
         hasDeals = false;
-        dealsUrl = null;
         seatMeUrl = null;
         hasSeatMeUrl = false;
         eat24Url = null;
         hasEat24Url = false;
+        locuId = "";
+        locuMenus = null;
+        locuName = "";
+        hours = new OpenHours();
+        hasHours = false;
     }
 
-    /******
-     Getters
-     *******/
+
+
+    /* Getters */
 
     /**
      * @return unique Yelp ID; can be used for back-end lists
@@ -126,6 +139,15 @@ public class Restaurant {
     }
 
     /**
+     * @return an Address object representing the location of the Restaurant (including physical
+     *         address, latitude & longitude, and business phone number), or null
+     *         if the information is not available
+     */
+    public Address getAddress() {
+        return address;
+    }
+
+    /**
      * @return address for display; might include cross-streets or other useful information
      */
     public String getAddressDisplay() {
@@ -136,6 +158,13 @@ public class Restaurant {
      * @return {@link android.location.Location} coordinate of restaurant
      */
     public Location getAddressMapable() {
+        return addressMapable;
+    }
+
+    /**
+     * @return {@link android.location.Location} coordinate of restaurant
+     */
+    public Location getLocation() {
         return addressMapable;
     }
 
@@ -163,6 +192,7 @@ public class Restaurant {
     }
 
     /**
+     * Returns whether business has an image URL
      * @return true if business has an image URL, false otherwise
      */
     public boolean hasImageUrl() {
@@ -170,6 +200,7 @@ public class Restaurant {
     }
 
     /**
+     * Returns URI for the business's website
      * @return URI for the business's website
      */
     public Uri getBusinessUrl() {
@@ -177,6 +208,7 @@ public class Restaurant {
     }
 
     /**
+     * Returns whether business has a website
      * @return true if business has a website, false otherwise
      */
     public boolean hasBusinessUrl() {
@@ -184,6 +216,7 @@ public class Restaurant {
     }
 
     /**
+     * Returns URI for the business's mobile website
      * @return URI for the business's mobile website
      */
     public Uri getMobileUrl() {
@@ -191,6 +224,7 @@ public class Restaurant {
     }
 
     /**
+     * Returns whether business has a mobile website
      * @return true if business has a mobile website, false otherwise
      */
     public boolean hasMobileUrl() {
@@ -309,10 +343,25 @@ public class Restaurant {
     }
 
     /**
+     * Returns the number of Yelp categories assigned to this Restaurant
      * @return the number of Yelp categories assigned to this Restaurant
      */
     public int numCategories() {
-        return categories.size();
+        if (categories != null)
+            return categories.size();
+        else
+            return 0;
+    }
+
+    /**
+     * Returns whether the Restaurant has been assigned a category
+     * @return true if the Restaurant has been assigned a category, false otherwise
+     */
+    public boolean hasCategories() {
+        if (categories == null)
+            return false;
+        else
+            return true;
     }
 
     /**
@@ -363,6 +412,28 @@ public class Restaurant {
     }
 
     /**
+     * Returns ongoing Yelp Deals.
+     * @return an ArrayList of {@link YelpDeal} objects, or null if there are no deals;
+     *         check for empty list first using {@link #hasDeals()}
+     */
+    public ArrayList<YelpDeal> getYelpDeals() {
+        return yelpDeals;
+    }
+
+
+    /**
+     * Returns the number of Yelp deals offered by this Restaurant
+     * @return the number of Yelp deals offered by this Restaurant
+     */
+    public int numDeals() {
+        if (yelpDeals != null)
+            return yelpDeals.size();
+        else
+            return 0;
+    }
+
+    /**
+     * Returns whether the restaurant has special deals going on right now
      * @return true if the restaurant has special deals going on right now, false otherwise
      */
     public boolean hasDeals() {
@@ -370,13 +441,7 @@ public class Restaurant {
     }
 
     /**
-     * @return URI for ongoing deals; null if there are none
-     */
-    public Uri getDealsUrl() {
-        return dealsUrl;
-    }
-
-    /**
+     * URI for making a SeatMe reservation
      * @return URI for making a SeatMe reservation
      */
     public Uri getSeatMeUrl() {
@@ -384,6 +449,7 @@ public class Restaurant {
     }
 
     /**
+     * Returns if business takes reservations through SeatMe
      * @return true if business takes reservations through SeatMe, false otherwise
      */
     public boolean hasSeatMeUrl() {
@@ -391,6 +457,7 @@ public class Restaurant {
     }
 
     /**
+     * URI for Eat24 delivery
      * @return URI for Eat24 delivery
      */
     public Uri getEat24Url() {
@@ -398,25 +465,90 @@ public class Restaurant {
     }
 
     /**
+     * Returns whether business delivers through Eat24
      * @return true if business delivers through Eat24, false otherwise
      */
     public boolean hasEat24Url() {
         return hasEat24Url;
     }
 
+
+    /**
+     * Returns the matching Locu ID if the {@link LocuExtension} was used
+     *         and successfully found a match; otherwise ""
+     * @return the matching Locu ID for the Restaurant, if the {@link LocuExtension} was used
+     *         and successfully found a match; otherwise ""
+     */
+    public String getLocuId() {
+        return locuId;
+    }
+
+    /**
+     * Returns {@link Menus} for the restaurant obtained through Locu if the {@link LocuExtension}
+     * was used on the Restaurant and a menu was available, otherwise null.
+     * @return a {@link Menus} object or null if this information is unavailable
+     */
+    public Menus getLocuMenus() {
+        return locuMenus;
+    }
+
+    /**
+     * Returns whether the Restaurant contains Locu {@linnk Menus} information.
+     * @return true if the Restaurant contains Locu {@linnk Menus} information, otherwise false
+     */
+    public boolean hasLocuMenus() {
+        return (locuMenus != null);
+    }
+
+    /**
+     * Returns the name of this Restaurant if the Lcou Extension was used and a match was found.
+     * @return a String containing the name of this Restaurant according to Locu, or "" if this
+     *         information is unavailable
+     */
+    public String getLocuName () {
+        return locuName;
+    }
+
+    /**
+     * Returns the OpenHours for this Restaurant if this information was obtained through Locu
+     * or Factual.
+     * @return an {@link OpenHours} object or null if this information is unavailable
+     */
+    public OpenHours getHours() {
+        return hours;
+    }
+
+    /**
+     * Returns whether this Restaurant object contains {@link OpenHours} information
+     * @return true if this Restaurant object contains {@link OpenHours} information, otherwise
+     *         false
+     */
+    public boolean hasHours() {
+        return hasHours;
+    }
+
+
+    // TODO
+    // TEST to get current version of db code to work
+    public void setRestaurantName(String name) {
+        this.name = name;
+    }
+
+
     /**
      * @return a String representation of a Restaurant object
      */
     @Override
     public String toString() {
-        return "\nRestaurant{" +
+        return "\n------------\nRestaurant{" +
                 "\nid='" + id + "'" +
                 ",\nisClosed=" + isClosed +
-                ",\nname='" + name + "'" +
-                ",\naddressDisplay='" + addressDisplay + "'" +
-                ",\naddressMapable='" + addressMapable + "'" +
-                ",\nphoneDisplay='" + phoneDisplay + "'" +
-                ",\nphoneDialable=" + phoneDialable +
+                ",\nname='" + name +
+                "',\naddress=" + address +
+                ",\naddressDisplay='" + addressDisplay +
+                "',\naddressMapable='" + addressMapable +
+                "',\nphoneDisplay='" + phoneDisplay +
+                "',\nphoneDialable=" + phoneDialable +
                 ",\nimageUrl=" + imageUrl +
                 ",\nhasImageUrl=" + hasImageUrl +
                 ",\nbusinessUrl=" + businessUrl +
@@ -428,12 +560,17 @@ public class Restaurant {
                 ",\nrating=" + rating +
                 ",\nratingImgUrl=" + ratingImgUrl +
                 ",\nreviewCount=" + reviewCount +
-                ",\ndealsUrl=" + dealsUrl +
+                ",\nyelpDeals=" + yelpDeals +
                 ",\nhasDeals=" + hasDeals +
                 ",\nseatMeUrl=" + seatMeUrl +
                 ",\nhasSeatMeUrl=" + hasSeatMeUrl +
                 ",\neat24Url=" + eat24Url +
                 ",\nhasEat24Url=" + hasEat24Url +
+                ",\nlocuId='" + locuId +
+                "',\nlocuMenus=" + locuMenus +
+                ",\nhours=" + hours +
+                ",\nhasHours=" + hasHours +
                 "}";
     }
+
 } // end class

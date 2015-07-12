@@ -37,8 +37,11 @@ public class YelpApiKey {
         return tokenSecret;
     }
 
+    /**
+     * @return String representation of a YelpApiKey object.
+     */
     @Override
     public String toString() {
-        return "YelpApiKey{}: contents hidden";
+        return "YelpApiKey{(hidden)}";
     }
 }
