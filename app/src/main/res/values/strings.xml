@@ -59,4 +59,13 @@
     <string name="title_activity_green_list">GreenListActivity</string>
     <string name="title_activity_yellow_list">YellowListActivity</string>
     <string name="title_activity_red_list">RedListActivity</string>
+
+    <!-- MenuNotFoundFragment dialog -->
+    <string name="dialog_menu_not_found_text">
+        No menu is available for this restaurant :(
+    </string>
+    <string name="dialog_menu_not_found_ok_button">Ok</string>
+
+    <!-- DisplayRestaurantMenusFragment dialog -->
+    <string name="rmenus_restaurant_name"/>
 </resources>
