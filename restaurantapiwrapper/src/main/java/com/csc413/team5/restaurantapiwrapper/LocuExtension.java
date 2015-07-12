@@ -212,6 +212,14 @@ public class LocuExtension {
                 r.hours = newHours;
         } // end if (in.has("open_hours"))
 
+        if (in.has("name")) {
+            try {
+                r.locuName = in.getString("name");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
     } // end updateFromMatchedLocuIdHelper()
 
     /**
@@ -286,37 +294,34 @@ public class LocuExtension {
         MenuContent mc = null;
         try {
             String type = in.getString("type");
-            switch (type) {
-                case "SECTION_TEXT":
-                    if (in.has("text"))
-                        mc = new MenuSectionText(in.getString("text"));
-                case "ITEM":
-                    JSONArray inNames = in.names();
-                    MenuItem newMenuItem = new MenuItem();
+            if (type.equals("SECTION_TEXT")) {
+                if (in.has("text"))
+                    mc = new MenuSectionText(in.getString("text"));
 
-                    for (int i = 0; i < inNames.length(); i++) {
-                        switch (inNames.getString(i)) {
-                            case "name":
-                                newMenuItem.name = in.getString("name");
-                                break;
-                            case "description":
-                                newMenuItem.description = in.getString("description");
-                                break;
-                            case "price":
-                                newMenuItem.price = in.getString("price");
-                                break;
-                            case "option_groups":
-                                // parse
-                                break;
-                            default:
-                                break;
-                        }
+            } else if (type.equals("ITEM")) {
+                JSONArray inNames = in.names();
+                MenuItem newMenuItem = new MenuItem();
+
+                for (int i = 0; i < inNames.length(); i++) {
+                    switch (inNames.getString(i)) {
+                        case "name":
+                            newMenuItem.name = in.getString("name");
+                            break;
+                        case "description":
+                            newMenuItem.description = in.getString("description");
+                            break;
+                        case "price":
+                            newMenuItem.price = in.getString("price");
+                            break;
+                        case "option_groups":
+                            // parse
+                            break;
+                        default:
+                            break;
                     }
+                }
 
-                    mc = newMenuItem;
-                    break;
-                default:
-                    break;
+                mc = newMenuItem;
             }
         } catch (JSONException e) {
             e.printStackTrace();

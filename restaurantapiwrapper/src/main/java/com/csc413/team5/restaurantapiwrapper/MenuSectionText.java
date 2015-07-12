@@ -12,6 +12,10 @@ import java.io.Serializable;
 public class MenuSectionText extends MenuContent implements Serializable {
     protected String text;
 
+    public MenuSectionText() {
+        this.text = "";
+    }
+
     public MenuSectionText(String text) {
         this.text = text;
     }

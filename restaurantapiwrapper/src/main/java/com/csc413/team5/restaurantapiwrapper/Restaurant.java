@@ -65,6 +65,7 @@ public class Restaurant implements Serializable {
     // Locu
     protected String locuId;
     protected Menus locuMenus;
+    protected String locuName;
 
     // Locu or Factual
     protected OpenHours hours;
@@ -106,6 +107,7 @@ public class Restaurant implements Serializable {
         hasEat24Url = false;
         locuId = "";
         locuMenus = null;
+        locuName = "";
         hours = new OpenHours();
         hasHours = false;
     }
@@ -190,6 +192,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * Returns whether business has an image URL
      * @return true if business has an image URL, false otherwise
      */
     public boolean hasImageUrl() {
@@ -197,6 +200,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * Returns URI for the business's website
      * @return URI for the business's website
      */
     public Uri getBusinessUrl() {
@@ -204,6 +208,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * Returns whether business has a website
      * @return true if business has a website, false otherwise
      */
     public boolean hasBusinessUrl() {
@@ -211,6 +216,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * Returns URI for the business's mobile website
      * @return URI for the business's mobile website
      */
     public Uri getMobileUrl() {
@@ -218,6 +224,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * Returns whether business has a mobile website
      * @return true if business has a mobile website, false otherwise
      */
     public boolean hasMobileUrl() {
@@ -336,6 +343,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * Returns the number of Yelp categories assigned to this Restaurant
      * @return the number of Yelp categories assigned to this Restaurant
      */
     public int numCategories() {
@@ -346,6 +354,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * Returns whether the Restaurant has been assigned a category
      * @return true if the Restaurant has been assigned a category, false otherwise
      */
     public boolean hasCategories() {
@@ -403,6 +412,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * Returns ongoing Yelp Deals.
      * @return an ArrayList of {@link YelpDeal} objects, or null if there are no deals;
      *         check for empty list first using {@link #hasDeals()}
      */
@@ -412,6 +422,7 @@ public class Restaurant implements Serializable {
 
 
     /**
+     * Returns the number of Yelp deals offered by this Restaurant
      * @return the number of Yelp deals offered by this Restaurant
      */
     public int numDeals() {
@@ -422,6 +433,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * Returns whether the restaurant has special deals going on right now
      * @return true if the restaurant has special deals going on right now, false otherwise
      */
     public boolean hasDeals() {
@@ -429,6 +441,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * URI for making a SeatMe reservation
      * @return URI for making a SeatMe reservation
      */
     public Uri getSeatMeUrl() {
@@ -436,6 +449,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * Returns if business takes reservations through SeatMe
      * @return true if business takes reservations through SeatMe, false otherwise
      */
     public boolean hasSeatMeUrl() {
@@ -443,6 +457,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * URI for Eat24 delivery
      * @return URI for Eat24 delivery
      */
     public Uri getEat24Url() {
@@ -450,6 +465,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * Returns whether business delivers through Eat24
      * @return true if business delivers through Eat24, false otherwise
      */
     public boolean hasEat24Url() {
@@ -457,22 +473,56 @@ public class Restaurant implements Serializable {
     }
 
 
+    /**
+     * Returns the matching Locu ID if the {@link LocuExtension} was used
+     *         and successfully found a match; otherwise ""
+     * @return the matching Locu ID for the Restaurant, if the {@link LocuExtension} was used
+     *         and successfully found a match; otherwise ""
+     */
     public String getLocuId() {
         return locuId;
     }
 
+    /**
+     * Returns {@link Menus} for the restaurant obtained through Locu if the {@link LocuExtension}
+     * was used on the Restaurant and a menu was available, otherwise null.
+     * @return a {@link Menus} object or null if this information is unavailable
+     */
     public Menus getLocuMenus() {
         return locuMenus;
     }
 
+    /**
+     * Returns whether the Restaurant contains Locu {@linnk Menus} information.
+     * @return true if the Restaurant contains Locu {@linnk Menus} information, otherwise false
+     */
     public boolean hasLocuMenus() {
         return (locuMenus != null);
     }
 
+    /**
+     * Returns the name of this Restaurant if the Lcou Extension was used and a match was found.
+     * @return a String containing the name of this Restaurant according to Locu, or "" if this
+     *         information is unavailable
+     */
+    public String getLocuName () {
+        return locuName;
+    }
+
+    /**
+     * Returns the OpenHours for this Restaurant if this information was obtained through Locu
+     * or Factual.
+     * @return an {@link OpenHours} object or null if this information is unavailable
+     */
     public OpenHours getHours() {
         return hours;
     }
 
+    /**
+     * Returns whether this Restaurant object contains {@link OpenHours} information
+     * @return true if this Restaurant object contains {@link OpenHours} information, otherwise
+     *         false
+     */
     public boolean hasHours() {
         return hasHours;
     }
