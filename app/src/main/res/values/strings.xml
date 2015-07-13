@@ -82,7 +82,7 @@
     <!-- Settings UI -->
     <string name="settings_ui_title_general">General</string>
     <string name="settings_ui_title_misc">Miscellaneous Info</string>
-    <string name="settings_ui_title_dev_playground">Dev playground</string>
+    <string name="settings_ui_title_dev_playground">Dev Playground</string>
     <string name="settings_ui_title_red_list">Red List</string>
     <string name="settings_ui_button_food_settings">Food settings</string>
     <string name="settings_ui_button_app_settings">App Settings</string>

@@ -70,5 +70,6 @@ public class SplashScreenActivity extends Activity implements AskToUseLocationFr
         finish();   // removes this activity from the back stack
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        overridePendingTransition(0,0);
     }
 }
