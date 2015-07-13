@@ -3,9 +3,3 @@
 .DS_Store
 /build
 /captures
-
-.idea
-/app/app.iml
-/appdb/appdb.iml
-/restaurantapiwrapper/restaurantapiwrapper.iml
-/restauranttest/restauranttest.iml
