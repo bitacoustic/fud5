@@ -126,5 +126,6 @@ public class SplashScreenActivity extends Activity
         finish();   // removes this activity from the back stack
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        overridePendingTransition(0,0);
     }
 }
