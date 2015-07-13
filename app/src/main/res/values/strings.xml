@@ -79,5 +79,19 @@
     <string name="display_menu_by_id_info_text">
         Note that not all venues have menus. A Locu ID is comprised of 20 alphanumeric characters.
     </string>
+    <!-- Settings UI -->
+    <string name="settings_ui_title_general">General</string>
+    <string name="settings_ui_title_misc">Miscellaneous Info</string>
+    <string name="settings_ui_title_dev_playground">Dev playground</string>
+    <string name="settings_ui_title_red_list">Red List</string>
+    <string name="settings_ui_button_food_settings">Food settings</string>
+    <string name="settings_ui_button_app_settings">App Settings</string>
+    <string name="settings_ui_button_eula">End User License Agreement</string>
+    <string name="settings_ui_button_app_info">App Information</string>
+    <string name="settings_ui_button_db_test">Database Test</string>
+    <string name="settings_ui_button_yelp_test">Yelp Test</string>
+    <string name="settings_ui_button_locu_test">Locu Test</string>
+    <string name="settings_ui_button_google_map_test">Google Map Test</string>
+    <string name="settings_ui_button_reset_red_list">Red List Test</string>
 
 </resources>

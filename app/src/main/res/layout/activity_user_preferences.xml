@@ -1,6 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -21,20 +24,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="General"
+                android:text="@string/settings_ui_title_general"
                 android:id="@+id/general_settings"/>
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Food Preferences"
+                android:text="@string/settings_ui_button_food_settings"
                 android:id="@+id/food_preferences"
                 android:onClick="showFoodSettings"/>
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="App Settings"
+                android:text="@string/settings_ui_button_app_settings"
                 android:id="@+id/app_settings"
                 android:onClick="showAppSettings"/>
 
@@ -42,21 +45,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_below="@id/app_settings"
-                android:text="Miscellaneous Information"
+                android:text="@string/settings_ui_title_misc"
                 android:id="@+id/miscellaneous_info"/>
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="EULA"
+                android:text="@string/settings_ui_button_eula"
                 android:id="@+id/eula_button"
                 android:onClick="showEULA"/>
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="App information"
+                android:text="@string/settings_ui_button_app_info"
                 android:id="@+id/app_info_button"
                 android:onClick="showAppInfo"/>
 
@@ -64,36 +66,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Dev Playground"
+                android:text="@string/settings_ui_title_dev_playground"
                 android:id="@+id/dev_playground" />
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Test DB"
+                android:text="@string/settings_ui_button_db_test"
                 android:id="@+id/test_db"
-                android:layout_below="@+id/dev_playground"
-                android:layout_alignParentStart="true"
                 android:onClick="showDbTest"/>
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Test Yelp"
+                android:text="@string/settings_ui_button_yelp_test"
                 android:id="@+id/test_yelp"
                 android:onClick="showYelpTest"/>
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Test Locu"
+                android:text="@string/settings_ui_button_locu_test"
                 android:id="@+id/test_locu"
                 android:onClick="showLocuTest"/>
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Test Google Map"
+                android:text="@string/settings_ui_button_google_map_test"
                 android:id="@+id/test_map"
                 android:onClick="showMapTest"/>
 
@@ -101,16 +101,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Red List"
+                android:text="@string/settings_ui_title_red_list"
                 android:id="@+id/red_list" />
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Reset Red List"
+                android:text="@string/settings_ui_button_reset_red_list"
                 android:id="@+id/reset_red_list"
                 android:onClick="resetRedList"/>
         </LinearLayout>
-
     </ScrollView>
-</RelativeLayout>
+</LinearLayout>

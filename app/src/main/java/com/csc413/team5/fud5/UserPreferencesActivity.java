@@ -38,8 +38,8 @@ public class UserPreferencesActivity extends AppCompatActivity {
     }
 
     public void showEULA(View v) {
-//        DialogFragment eulaDialog = EulaDialogFragment.newInstance(false);
-//        eulaDialog.show(getFragmentManager(), "EULA");
+        DialogFragment eulaDialog = EulaDialogFragment.newInstance(false);
+        eulaDialog.show(getFragmentManager(), "EULA");
 
         CharSequence text = "Showing EULA";
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
