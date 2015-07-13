@@ -1,16 +1,26 @@
 package com.csc413.team5.fud5;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 
 /**
- * A dialog providing the end-user license agreement. If EulaDialogFragment has argument
- * hasAgreedToEula = false, the EULA has not been agreed to yet.
+ * A dialog providing the end-user license agreement.
+ * <p>
+ * If EulaDialogFragment has argumenthasAgreedToEula = false, the EULA has not been agreed to yet:
+ * set button to "I agree" and display the dialog the first time the app runs. If true, the EULA
+ * is available from the user preference/search page: button says "OK" (or perhaps hidden
+ * altogether).
  * <p>
  * Created by Eric on 7/8/2015.
  *
@@ -18,6 +28,7 @@ import android.widget.Button;
  */
 public class EulaDialogFragment extends DialogFragment {
     boolean mHasAgreedToEula;
+    boolean mIsFirstRun;
 
     public static EulaDialogFragment newInstance(boolean hasAgreedToEula) {
         EulaDialogFragment f = new EulaDialogFragment();
@@ -35,6 +46,19 @@ public class EulaDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         // load the argument
         mHasAgreedToEula = getArguments().getBoolean("hasAgreedToEula");
+        mIsFirstRun = !mHasAgreedToEula; // flag if this is app's first run
+    }
+
+    /**
+     * @param savedInstanceState The last saved instance state of the Fragment,
+     *                           or null if this is a freshly created Fragment.
+     * @return Return a new Dialog instance to be displayed by the Fragment.
+     */
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        return dialog;
     }
 
     /**
@@ -72,14 +96,45 @@ public class EulaDialogFragment extends DialogFragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // return to the calling activity; if it's the first time user has run the
-                // app, a return should signal that the user has agreed to the EULA
+                // TODO if it's the first time user has run the app, a return should signal that
+                // the user has agreed to the EULA
 
-                // ((FragmentDialog)getActivity()).showDialog(); -- doesn't work, deprecated?
-                getActivity(); // TODO does this work?
+                getDialog().dismiss(); // return to the calling activity
+
             }
         });
 
         return v;
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+
+        if (mIsFirstRun) {
+            LocationManager lm = (LocationManager) getActivity().getApplicationContext()
+                    .getSystemService(Context.LOCATION_SERVICE);
+            boolean gpsEnabled = false;
+            boolean networkEnabled = false;
+
+            // check whether GPS and network providers are enabled
+            try {
+                gpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            } catch (Exception e) { }
+
+            try {
+                networkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            } catch (Exception e) { }
+
+            // only show dialog if location services are not enabled
+            if (!gpsEnabled && !networkEnabled) {
+                DialogFragment dialogAskToUseLocation = new AskToUseLocationFragment();
+                dialogAskToUseLocation.show(getFragmentManager(), "askToUseLocation");
+            } else {
+                getActivity().finish();   // removes this activity from the back stack
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+            }
+        }
     }
 }

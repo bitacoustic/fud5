@@ -85,7 +85,6 @@ public class DisplayRestaurantMenusFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         return dialog;
     }
 
@@ -108,7 +107,7 @@ public class DisplayRestaurantMenusFragment extends DialogFragment {
         for (int i = 0; i < menus.size(); i++) {
             Menu menu = (Menu) menus.getMenu(i);
 
-            // top dvider line
+            // top divider line
             ImageView dividerTop = new ImageView(v.getContext());
             LinearLayout.LayoutParams paramsDivider = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT, 5);
@@ -143,30 +142,35 @@ public class DisplayRestaurantMenusFragment extends DialogFragment {
             for (int j = 0; j < menu.size(); j++) {
                 MenuSection menuSection = (MenuSection) menu.getSection(j);
 
-                TextView tvEachSection = new TextView(v.getContext());
-                LinearLayout.LayoutParams paramsSection = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT );
-                paramsSection.setMargins(25, 50, 25, 5);
-                tvEachSection.setTextSize(18);
-                tvEachSection.setTextColor(Color.DKGRAY);
-                tvEachSection.setLayoutParams(paramsSection);
-                tvEachSection.setText(menuSection.getSectionName());
-                linearLayoutMenu.addView(tvEachSection);
+                // display section name if it is non-empty
+                if (menuSection.getSectionName().compareTo("") != 0) {
+                    TextView tvEachSection = new TextView(v.getContext());
+                    LinearLayout.LayoutParams paramsSection = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT );
+                    paramsSection.setMargins(25, 50, 25, 5);
+                    tvEachSection.setTextSize(18);
+                    tvEachSection.setTextColor(Color.DKGRAY);
+                    tvEachSection.setLayoutParams(paramsSection);
+                    tvEachSection.setText(menuSection.getSectionName());
+                    linearLayoutMenu.addView(tvEachSection);
 
-                // divider
-                ImageView sectionDivider = new ImageView(v.getContext());
-                LinearLayout.LayoutParams paramsSectionDivider = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, 5);
-                paramsSectionDivider.setMargins(20, 0, 20, 5);
-                sectionDivider.setBackgroundColor(Color.DKGRAY);
-                sectionDivider.setLayoutParams(paramsSectionDivider);
-                linearLayoutMenu.addView(sectionDivider);
+                    // divider
+                    ImageView sectionDivider = new ImageView(v.getContext());
+                    LinearLayout.LayoutParams paramsSectionDivider = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT, 5);
+                    paramsSectionDivider.setMargins(20, 0, 20, 5);
+                    sectionDivider.setBackgroundColor(Color.DKGRAY);
+                    sectionDivider.setLayoutParams(paramsSectionDivider);
+                    linearLayoutMenu.addView(sectionDivider);
+                }
+
 
                 // menu subsection (description)
                 for (int k = 0; k < menuSection.size(); k++) {
                     MenuSubSection menuSubSection = (MenuSubSection) menuSection.getSubSection(k);
 
+                    // display sub-section name if it is non-empty
                     if (menuSubSection.getSubSectionName().compareTo("") != 0) {
                         TextView tvEachSubSection = new TextView(v.getContext());
                         LinearLayout.LayoutParams paramsSubSection = new LinearLayout.LayoutParams(
@@ -255,11 +259,9 @@ public class DisplayRestaurantMenusFragment extends DialogFragment {
                                 tvEachItemDescription.setText(thisItem.getDescription());
                                 linearLayoutMenu.addView(tvEachItemDescription);
                             }
-
-
-
                         } // end if (menuContent.getClass().equals(MenuItem.class))
 
+                        // menu section text (inline with menu items)
                         else if (menuContent.getClass().equals(MenuSectionText.class)) {
                             TextView tvEachSectionText = new TextView(v.getContext());
                             LinearLayout.LayoutParams paramsContent =
@@ -273,10 +275,11 @@ public class DisplayRestaurantMenusFragment extends DialogFragment {
                                     ((MenuSectionText)menuContent).getText() );
                             linearLayoutMenu.addView(tvEachSectionText);
                         }
-                    }
-                }
-            }
-        }
+
+                    } // end for each menu content (item / section text)
+                } // end for each sub section
+            } // end for each section
+        } // end for each menu
 
         return v;
     }

@@ -17,7 +17,6 @@ import com.csc413.team5.restaurantapiwrapper.Restaurant;
 
 public class LocuMenuTestActivity extends Activity
         implements MenuNotFoundFragment.MenuNotFoundDialogListener {
-    DisplayMenuTask displayMenu;
     LocuApiKey locuKey;
     Restaurant r;
     TextView txtDebug;

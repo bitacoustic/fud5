@@ -24,7 +24,7 @@ public class AskToUseLocationFragment extends DialogFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // Send the positive button event back to the host activity
-                                mListener.onDialogPositiveClick(AskToUseLocationFragment.this);
+                                mListener.onLocationDialogPositiveClick(AskToUseLocationFragment.this);
                             }
                         })
                 .setNegativeButton(R.string.dialog_ask_to_use_location_disagree_button,
@@ -33,7 +33,7 @@ public class AskToUseLocationFragment extends DialogFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // Send the negative button event back to the host activity
-                                mListener.onDialogNegativeClick(AskToUseLocationFragment.this);
+                                mListener.onLocationDialogNegativeClick(AskToUseLocationFragment.this);
                             }
                         });
         //return super.onCreateDialog(savedInstanceState);
@@ -41,8 +41,8 @@ public class AskToUseLocationFragment extends DialogFragment {
     }
 
     public interface NoticeDialogListener {
-        void onDialogPositiveClick(DialogFragment dialog);
-        void onDialogNegativeClick(DialogFragment dialog);
+        void onLocationDialogPositiveClick(DialogFragment dialog);
+        void onLocationDialogNegativeClick(DialogFragment dialog);
 
         // Use this instance of the interface to deliver action events
     }

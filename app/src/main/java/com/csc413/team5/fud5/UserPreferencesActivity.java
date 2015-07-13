@@ -1,10 +1,8 @@
 package com.csc413.team5.fud5;
 
 import android.app.DialogFragment;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
 
@@ -17,7 +15,10 @@ public class UserPreferencesActivity extends AppCompatActivity {
     }
 
     public void OnEULAButtonClick(View v) {
-        DialogFragment eulaDialog = EulaDialogFragment.newInstance(false);
+        // TODO read stored data for a boolean hasAgreedToEula
+        // pass parameter "hasAgreedToEula"=true since this activity is only accessible after
+        // agreeing to the EULA
+        DialogFragment eulaDialog = EulaDialogFragment.newInstance(true);
         eulaDialog.show(getFragmentManager(), "EULA");
     }
 }

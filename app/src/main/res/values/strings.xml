@@ -12,7 +12,8 @@
     <string name="dialog_ask_to_use_location_body">
         Fud5 uses this feature to give you localized restaurant recommendations. This will help all
         apps on your phone determine the device\'s location. Anonymous location data may be sent
-        to Google even when no apps are running. You can activate this feature later.
+        to Google even when no apps are running. You can activate this feature later.\n\nIf
+        you press \"Yes\", you will be taken to Android Location Settings.
     </string>
     <string name="dialog_ask_to_use_location_agree_button">Yes plz</string>
     <string name="dialog_ask_to_use_location_disagree_button">Maybe later</string>
@@ -20,33 +21,34 @@
     <!-- EulaFragment dialog -->
     <string name="dialog_eula_title">End User License Agreement</string>
     <string name="dialog_eula_text">
-        Placeholder for an end-user license agreement. By clicking "Agree" you agree to
-        the terms of almighty lorem ipsum.\n\n
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce non turpis viverra,
+        By pressing the \"I Agree\" button when this End-User License Agreement (EULA) is presented
+        the first time you run this application (FüD5), you agree to the terms listed below. If
+        you do not agree, exit and uninstall the application.\n\nPlaceholder text\n\nLorem
+        ipsum dolor sit amet, consectetur adipiscing elit. Fusce non turpis viverra,
         eleifend ligula id, tristique dui. Morbi quis lorem et metus porttitor tempus vel ac
         sapien. Nullam ac elementum dui. In hac habitasse platea dictumst. Aenean posuere
         ipsum leo, hendrerit molestie massa maximus vitae. Praesent bibendum est quis
         fringilla placerat. Duis rhoncus bibendum libero quis varius. Phasellus semper nisl
         lacus, in iaculis quam commodo et. Pellentesque non lacus at odio ultrices pharetra
-        vitae non purus.\n\n
-        Pellentesque congue enim nisi. Fusce dui libero, vulputate vel tellus et, tincidunt
-        imperdiet ante. Interdum et malesuada fames ac ante ipsum primis in faucibus.
+        vitae non purus.\n\n Pellentesque congue enim nisi. Fusce dui libero, vulputate vel tellus
+        et, tincidunt imperdiet ante. Interdum et malesuada fames ac ante ipsum primis in faucibus.
         Vestibulum ultricies tortor pharetra odio rutrum finibus. Maecenas commodo lectus urna,
         vitae sagittis arcu laoreet ut. Mauris est justo, lacinia at ante eget, tristique
         aliquam metus. Proin tellus ligula, varius vitae cursus at, lacinia nec metus. In
         fermentum odio eu ornare tristique. Etiam rhoncus finibus lectus. Duis massa ex,
         fermentum sit amet tristique eget, sodales non dolor. Sed arcu nibh, egestas in nisl
         eu, sollicitudin mollis odio. Cras quis tempus leo. Nunc consequat a magna ac tempor.
-        Pellentesque vitae maximus ligula, a scelerisque erat.\n\n
-        Mauris tristique, eros vitae rutrum convallis, libero neque pellentesque nibh, a rutrum
+        Pellentesque vitae maximus ligula, a scelerisque erat.\n\nMauris tristique, eros vitae
+        rutrum convallis, libero neque pellentesque nibh, a rutrum
         mi elit pretium purus. In hac habitasse platea dictumst. Maecenas vestibulum velit id
         pretium vestibulum. Nunc ac tempus turpis. Nam lectus nisl, posuere sit amet placerat id,
         posuere a risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer iaculis
         sem quis venenatis eleifend. Donec euismod eros a aliquet suscipit. In rhoncus erat nec
         lectus lobortis imperdiet. Praesent a nisl sed arcu dapibus egestas. Praesent sed ante
         ullamcorper, aliquam arcu id, egestas enim. Praesent facilisis justo sit amet diam
-        elementum, at porttitor orci venenatis.\n\n
-        Also, by agreeing to these terms, we own your soul in perpetuity.
+        elementum, at porttitor orci venenatis.\n\nYou shall not use this application to engage
+        in nuclear warfare or facilitate others
+        carrying out such activity.
     </string>
     <string name="dialog_eula_button_agree">I agree</string>
     <string name="dialog_eula_button_ok">Ok</string>
