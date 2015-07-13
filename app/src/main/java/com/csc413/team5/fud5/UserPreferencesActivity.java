@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.csc413.team5.appdbtest.AppDbTestActivity;
+import com.csc413.team5.restauranttest.RestaurantTestActivity;
+
 
 public class UserPreferencesActivity extends AppCompatActivity {
 
@@ -14,7 +17,6 @@ public class UserPreferencesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_preferences);
-
     }
 
     public void showFoodSettings(View v) {
@@ -31,7 +33,7 @@ public class UserPreferencesActivity extends AppCompatActivity {
 //        DialogFragment eulaDialog = EulaDialogFragment.newInstance(false);
 //        eulaDialog.show(getFragmentManager(), "EULA");
 
-        CharSequence text = "Showing App Settings";
+        CharSequence text = "Showing App Settings...";
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
 
         toast.show();
@@ -41,7 +43,7 @@ public class UserPreferencesActivity extends AppCompatActivity {
         DialogFragment eulaDialog = EulaDialogFragment.newInstance(true);
         eulaDialog.show(getFragmentManager(), "EULA");
 
-        CharSequence text = "Showing EULA";
+        CharSequence text = "Showing EULA...";
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
 
         toast.show();
@@ -51,28 +53,27 @@ public class UserPreferencesActivity extends AppCompatActivity {
 //        DialogFragment eulaDialog = EulaDialogFragment.newInstance(false);
 //        eulaDialog.show(getFragmentManager(), "EULA");
 
-        CharSequence text = "Showing app info";
+        CharSequence text = "Showing app info...";
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
 
         toast.show();
     }
 
     public void showDbTest(View view){
-//        Intent intent = new Intent(this, UserPreferencesActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, AppDbTestActivity.class);
+        startActivity(intent);
 
-        CharSequence text = "Testing database";
+        CharSequence text = "Testing database...";
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
 
         toast.show();
     }
 
     public void showYelpTest(View view){
-//        Intent intent = new Intent(this, UserPreferencesActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, RestaurantTestActivity.class);
+        startActivity(intent);
 
-        CharSequence text = "Testing Yelp integration";
-
+        CharSequence text = "Testing Yelp integration...";
 
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
 
@@ -80,8 +81,8 @@ public class UserPreferencesActivity extends AppCompatActivity {
     }
 
     public void showLocuTest(View view){
-//        Intent intent = new Intent(this, UserPreferencesActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, LocuMenuTestActivity.class);
+        startActivity(intent);
 
         CharSequence text = "Testing Locu integration...";
 
