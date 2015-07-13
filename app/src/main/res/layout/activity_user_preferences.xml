@@ -7,34 +7,110 @@
     tools:context="com.csc413.team5.fud5.UserPreferencesActivity">
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/scrollView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:id="@+id/main_scroll_view">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Miscellaneous Information"
-            android:id="@+id/miscellaneous_info" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="General"
+                android:id="@+id/general_settings"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Food Preferences"
+                android:id="@+id/food_preferences"
+                android:onClick="showFoodSettings"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="App Settings"
+                android:id="@+id/app_settings"
+                android:onClick="showAppSettings"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_below="@id/app_settings"
+                android:text="Miscellaneous Information"
+                android:id="@+id/miscellaneous_info"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="EULA"
+                android:id="@+id/eula_button"
+                android:onClick="showEULA"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="App information"
+                android:id="@+id/app_info_button"
+                android:onClick="showAppInfo"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Dev Playground"
+                android:id="@+id/dev_playground" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Test DB"
+                android:id="@+id/test_db"
+                android:layout_below="@+id/dev_playground"
+                android:layout_alignParentStart="true"
+                android:onClick="showDbTest"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Test Yelp"
+                android:id="@+id/test_yelp"
+                android:onClick="showYelpTest"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Test Locu"
+                android:id="@+id/test_locu"
+                android:onClick="showLocuTest"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Test Google Map"
+                android:id="@+id/test_map"
+                android:onClick="showMapTest"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Red List"
+                android:id="@+id/red_list" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Reset Red List"
+                android:id="@+id/reset_red_list"
+                android:onClick="resetRedList"/>
+        </LinearLayout>
+
     </ScrollView>
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="EULA"
-        android:id="@+id/eula_button"
-        android:layout_below="@+id/scrollView"
-        android:layout_alignParentStart="true"
-        android:onClick="OnEULAButtonClick"/>
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="App information"
-        android:id="@+id/app_info_button"
-        android:layout_below="@+id/eula_button"
-        android:layout_alignParentStart="true"/>
 </RelativeLayout>
