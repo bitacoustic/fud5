@@ -45,7 +45,7 @@ public class SplashScreenActivity extends Activity
         handler.postDelayed(new Runnable() {
             public void run() {
                 if (!mhasAgreedToEula)
-                    showEula(); // also checks on dismiss if location services enabled
+                    checkEulaAndLocation(); // also checks on dismiss if location services enabled
                 else {
                     askToUseLocation(); // only prompts if GPS/network location services not enabled
                 }
@@ -53,25 +53,30 @@ public class SplashScreenActivity extends Activity
         }, waitTime);
     }
 
-    /*@Override
+    @Override
     protected void onStart() {
         super.onStart();
-    }*/
+    }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        openMainActivity();
+        //openMainActivity();
+        checkEulaAndLocation();
     }
 
     /**
-     * if EULA hasn't been agreed to (first run) display dialog
+     * if EULA hasn't been agreed to (first run) display dialog; on dismiss, eula dialog checks
+     * whether location has been turned on if the user just agreed to the terms of service
      */
-    public void showEula() {
+    public void checkEulaAndLocation() {
         if (!mhasAgreedToEula) {
             DialogFragment eulaDialog = EulaDialogFragment.newInstance(false);
             eulaDialog.setCancelable(false);
             eulaDialog.show(getFragmentManager(), "EULA");
+        }
+        else {
+            askToUseLocation();
         }
     }
 
@@ -102,6 +107,11 @@ public class SplashScreenActivity extends Activity
         } else { // otherwise just open main activity
             openMainActivity();
         }
+    }
+
+    public void setHasAgreedToEula(Boolean hasAgreed) {
+        // TODO save user choice
+        mhasAgreedToEula = true;
     }
 
     @Override

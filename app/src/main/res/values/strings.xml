@@ -70,17 +70,17 @@
 
     <!-- DisplayRestaurantMenusFragment dialog -->
     <string name="rmenus_restaurant_name"/>
-
     <string name="title_activity_locu_menu">LocuMenuActivity</string>
-
     <string name="locu_search_id">64e0307ca073dccb5666</string>
 
 
     <!-- LocuMenuTestActivity -->
+    <string name="title_locu_menu_test_activity">Locu Menu Test</string>
     <string name="locu_menu_debug_text"> </string>
     <string name="display_menu_by_id_info_text">
         Note that not all venues have menus. A Locu ID is comprised of 20 alphanumeric characters.
     </string>
+
     <!-- Settings UI -->
     <string name="settings_ui_title_general">General</string>
     <string name="settings_ui_title_misc">Miscellaneous Info</string>

@@ -89,15 +89,17 @@ public class EulaDialogFragment extends DialogFragment {
 
         // If user hasn't agreed to terms of service, set button text to "I agree".
         // This will be the case if user is starting the app for the first time.
-        if (!mHasAgreedToEula)
+        if (mIsFirstRun)
             button.setText(R.string.dialog_eula_button_agree);
 
         // watch for button click
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO if it's the first time user has run the app, a return should signal that
-                // the user has agreed to the EULA
+                // if it's the first time user has run the app or if they have not previously
+                // agreed to the EULA, button click signals that the user has agreed
+                if (mIsFirstRun)
+                    ((SplashScreenActivity)getActivity()).setHasAgreedToEula(true);
 
                 getDialog().dismiss(); // return to the calling activity
 

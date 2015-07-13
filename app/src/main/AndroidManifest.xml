@@ -58,6 +58,15 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
+            android:name=".LocuMenuTestActivity"
+            android:screenOrientation="nosensor"
+            android:label="@string/title_locu_menu_test_activity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <!--<activity
             android:name=".GreenListActivity"
             android:label="@string/title_activity_green_list"
             android:parentActivityName=".MainActivity" >
@@ -80,7 +89,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.csc413.team5.fud5.MainActivity" />
-        </activity>
+        </activity>-->
     </application>
 
 </manifest>
