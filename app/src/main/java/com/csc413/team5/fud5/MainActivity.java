@@ -5,16 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 
 public class MainActivity extends AppCompatActivity {
 
-
-    public void btnFuDPlz(View v){
-        Intent intent = new Intent(this, ResultPageActivity.class);
-        startActivity(intent);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
 
     private void showUserPreferencesMenu(){
         Intent intent = new Intent(this, UserPreferencesActivity.class);
