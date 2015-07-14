@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.csc413.team5.restaurantapiwrapper.LocuApiKey;
@@ -17,20 +18,25 @@ import com.csc413.team5.restaurantapiwrapper.Restaurant;
 
 public class LocuMenuTestActivity extends Activity
         implements MenuNotFoundFragment.MenuNotFoundDialogListener {
-    LocuApiKey locuKey;
-    Restaurant r;
-    TextView txtDebug;
+    LocuApiKey mLocuKey;
+    Restaurant mRestaurant;
+    TextView mTxtDebug;
+
+    private ProgressBar mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locu_menu_test);
 
-            txtDebug = (TextView) findViewById(R.id.textViewDebug);
+        mTxtDebug = (TextView) findViewById(R.id.textViewDebug);
 
         // create a LocuApiKey to pass to the LocuExtension
-        locuKey = new LocuApiKey(getApplicationContext().getResources()
+        mLocuKey = new LocuApiKey(getApplicationContext().getResources()
                 .getString(R.string.locu_key));
+
+        mProgress = (ProgressBar) findViewById(R.id.progressBarLocuMenuTest);
+        mProgress.setVisibility(View.INVISIBLE);
 
         // define what happens on button click: display menus for the respective restaurant
 
@@ -38,7 +44,7 @@ public class LocuMenuTestActivity extends Activity
         btnNewTsingTao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DisplayMenuTask().execute("64e0307ca073dccb5666");
+                displayMenu("64e0307ca073dccb5666");
             }
         });
 
@@ -46,7 +52,7 @@ public class LocuMenuTestActivity extends Activity
         btnChevys.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DisplayMenuTask().execute("c44a1b13d0ae6261985a");
+                displayMenu("c44a1b13d0ae6261985a");
             }
         });
 
@@ -54,7 +60,7 @@ public class LocuMenuTestActivity extends Activity
         btnNetties.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DisplayMenuTask().execute("47339afd5e4f01cbe13e");
+                displayMenu("47339afd5e4f01cbe13e");
             }
         });
 
@@ -62,7 +68,7 @@ public class LocuMenuTestActivity extends Activity
         btnCheesecake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DisplayMenuTask().execute("255493eca6ae926b2b5c");
+                displayMenu("255493eca6ae926b2b5c");
             }
         });
 
@@ -77,12 +83,10 @@ public class LocuMenuTestActivity extends Activity
                 String searchId = editTextLocuSearchId.getText().toString().trim().toLowerCase();
 
                 if (searchId.length() == 20) {
-                    new DisplayMenuTask().execute(searchId);
-                }
-
-                else
-                    txtDebug.setText("Locu ID must be 20 characters. " + searchId.length()
-                        + " characters were entered.");
+                    displayMenu(searchId);
+                } else
+                    mTxtDebug.setText("Locu ID must be 20 characters. " + searchId.length()
+                            + " characters were entered.");
             }
         });
     }
@@ -109,6 +113,12 @@ public class LocuMenuTestActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
+    public void displayMenu(String id) {
+        mProgress.setVisibility(View.VISIBLE);
+        mTxtDebug.setText("Querying Locu ...");
+        new DisplayMenuTask().execute(id);
+    }
+
     private class DisplayMenuTask extends AsyncTask<String, String, Restaurant> {
 
         /**
@@ -127,11 +137,10 @@ public class LocuMenuTestActivity extends Activity
          */
         @Override
         protected Restaurant doInBackground(String... params) {
-            r = new Restaurant(); // contains only default parameters
-            LocuExtension locu = new LocuExtension(locuKey);
-            locu.updateFromMatchedLocuId(r, params[0]);
-
-            return r;
+            mRestaurant = new Restaurant(); // contains only default parameters
+            LocuExtension locu = new LocuExtension(mLocuKey);
+            locu.updateFromMatchedLocuId(mRestaurant, params[0]);
+            return mRestaurant;
         }
 
         /**
@@ -150,8 +159,8 @@ public class LocuMenuTestActivity extends Activity
             // show the corresponding dialog for displaying the menu or telling user that
             // a menu was not found
 
-            if (r.hasLocuMenus()) {
-                txtDebug.setText("Loading menu...");
+            if (mRestaurant.hasLocuMenus()) {
+                mTxtDebug.setText("Loading menu...");
                 // create an instance of DisplayRestaurantMenusFragment with the restaurant
                 // result of doInBackground() as an argument
                 DialogFragment displayRestaurantMenus = DisplayRestaurantMenusFragment
@@ -159,10 +168,13 @@ public class LocuMenuTestActivity extends Activity
                 displayRestaurantMenus.show(getFragmentManager(), "menus");
             }
             else {
-                txtDebug.setText("No menus are available for the specified ID.");
+                mTxtDebug.setText("No menus are available for the specified ID.");
                 DialogFragment menuNotFoundDialog = new MenuNotFoundFragment();
                 menuNotFoundDialog.show(getFragmentManager(), "menuNotFound");
             }
+
+            mProgress.setVisibility(View.INVISIBLE);
+
         }
 
 
@@ -172,7 +184,7 @@ public class LocuMenuTestActivity extends Activity
 
     @Override
     public void onMenuNotFoundPositiveClick(DialogFragment dialog) {
-        txtDebug.setText("");
+        mTxtDebug.setText("");
     }
 }
 
