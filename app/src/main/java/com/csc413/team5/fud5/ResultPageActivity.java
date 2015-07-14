@@ -4,6 +4,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 
 public class ResultPageActivity extends ActionBarActivity {
@@ -11,7 +12,9 @@ public class ResultPageActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //this.requestWindowFeature(activity_result_pag.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_result_page);
+
     }
 
 

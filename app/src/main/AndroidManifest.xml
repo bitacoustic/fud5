@@ -103,7 +103,8 @@
         -->
         <activity
             android:name=".ResultPageActivity"
-            android:label="@string/title_activity_result_page" >
+            android:label="@string/title_activity_result_page"
+            >
         </activity>
     </application>
 
