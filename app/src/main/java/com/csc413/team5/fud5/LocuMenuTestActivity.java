@@ -174,7 +174,7 @@ public class LocuMenuTestActivity extends Activity
             }
 
             mProgress.setVisibility(View.INVISIBLE);
-
+            mTxtDebug.setText("");
         }
 
 
