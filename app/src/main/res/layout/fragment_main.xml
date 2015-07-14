@@ -16,4 +16,16 @@
         android:textSize="48dp"
         android:textColor="#FFFFFF" />
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnFuDPlz"
+        android:src="@drawable/fudplz"
+        android:scaleType="fitCenter"
+        android:background="@null"
+        android:layout_below="@+id/textView"
+        android:layout_alignEnd="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:onClick="btnFuDPlz" />
+
 </RelativeLayout>

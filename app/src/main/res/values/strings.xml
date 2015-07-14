@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">FüD5</string>
     <string name="hello_world">Hello world!</string>
+    <string name="how_about">How about...</string>
     <string name="action_settings">Settings</string>
 
     <string name="sample_button">Sample Button</string>
@@ -95,5 +96,6 @@
     <string name="settings_ui_button_locu_test">Locu Test</string>
     <string name="settings_ui_button_google_map_test">Google Map Test</string>
     <string name="settings_ui_button_reset_red_list">Red List Test</string>
+    <string name="title_activity_result_page">ResultPageActivity</string>
 
 </resources>
