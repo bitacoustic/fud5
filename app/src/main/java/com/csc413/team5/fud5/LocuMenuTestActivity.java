@@ -26,7 +26,7 @@ public class LocuMenuTestActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locu_menu_test);
 
-        txtDebug = (TextView) findViewById(R.id.textViewDebug);
+            txtDebug = (TextView) findViewById(R.id.textViewDebug);
 
         // create a LocuApiKey to pass to the LocuExtension
         locuKey = new LocuApiKey(getApplicationContext().getResources()

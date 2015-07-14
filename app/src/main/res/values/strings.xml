@@ -82,6 +82,10 @@
         Note that not all venues have menus. A Locu ID is comprised of 20 alphanumeric characters.
     </string>
 
+    <!-- RestaurantTest -->
+    <string name="title_restaurant_test_activity">RestaurantTest</string>
+    <string name="api_call_result">(loading)</string>
+
     <!-- Settings UI -->
     <string name="settings_ui_title_general">General</string>
     <string name="settings_ui_title_misc">Miscellaneous Info</string>

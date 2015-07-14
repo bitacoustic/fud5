@@ -67,7 +67,7 @@ public class UserPreferencesActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
 
         toast.show();
-    }
+    }*/
 
     public void showYelpTest(View view){
         Intent intent = new Intent(this, RestaurantTestActivity.class);
@@ -78,7 +78,7 @@ public class UserPreferencesActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
 
         toast.show();
-    } */
+    }
 
     public void showLocuTest(View view){
         Intent intent = new Intent(this, LocuMenuTestActivity.class);
