@@ -103,4 +103,12 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"/>
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarLocuMenuTest"
+        style="@android:style/Widget.ProgressBar"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>
