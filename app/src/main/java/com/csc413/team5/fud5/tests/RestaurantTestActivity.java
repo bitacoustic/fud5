@@ -1,4 +1,4 @@
-package com.csc413.team5.fud5;
+package com.csc413.team5.fud5.tests;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.csc413.team5.fud5.R;
 import com.csc413.team5.restaurantapiwrapper.LocuApiKey;
 import com.csc413.team5.restaurantapiwrapper.LocuExtension;
 import com.csc413.team5.restaurantapiwrapper.MapBounds;

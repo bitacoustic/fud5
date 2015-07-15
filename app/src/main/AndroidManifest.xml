@@ -58,7 +58,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".RestaurantTestActivity"
+            android:name=".tests.RestaurantTestActivity"
             android:screenOrientation="nosensor"
             android:label="@string/title_restaurant_test_activity"
             android:parentActivityName=".MainActivity">
@@ -67,7 +67,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".LocuMenuTestActivity"
+            android:name=".tests.LocuMenuTestActivity"
             android:label="@string/title_locu_menu_test_activity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="nosensor" >

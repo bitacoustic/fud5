@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.csc413.team5.appdbtest.AppDbTestActivity;
+import com.csc413.team5.fud5.tests.LocuMenuTestActivity;
+import com.csc413.team5.fud5.tests.RestaurantTestActivity;
 import com.csc413.team5.fud5.userpreferences.ModifyRedListDialogFragment;
 
 

@@ -1,4 +1,4 @@
-package com.csc413.team5.fud5;
+package com.csc413.team5.fud5.tests;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.csc413.team5.fud5.DisplayRestaurantMenusFragment;
+import com.csc413.team5.fud5.MenuNotFoundFragment;
+import com.csc413.team5.fud5.R;
 import com.csc413.team5.restaurantapiwrapper.LocuApiKey;
 import com.csc413.team5.restaurantapiwrapper.LocuExtension;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
