@@ -112,7 +112,7 @@ public class SplashScreenActivity extends Activity
         startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
 
         // and proceed to the next screen
-        //openMainActivity();
+        // openMainActivity();
     }
 
     @Override
