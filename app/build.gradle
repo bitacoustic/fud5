@@ -31,5 +31,4 @@ dependencies {
     compile project(':restaurantapiwrapper')
     compile project(':appdb')
     compile project(':appdbtest')
-    compile project(':restauranttest')
 }
