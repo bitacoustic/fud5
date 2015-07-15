@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 public class ResultPageActivityFragment extends Fragment {
 
     public ResultPageActivityFragment() {
+
     }
 
     @Override

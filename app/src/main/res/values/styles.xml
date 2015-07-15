@@ -10,6 +10,10 @@
         <item name="android:windowBackground">@null</item>
     </style>
 
+    <style name="noActionBar" parent="android:Theme.NoTitleBar">
+    </style>
+
+
     <!-- Backward-compatible version of ?android:attr/buttonBarStyle -->
     <style name="ButtonBar">
         <item name="android:paddingLeft">2dp</item>
@@ -21,5 +25,6 @@
 
     <!-- Backward-compatible version of ?android:attr/buttonBarButtonStyle -->
     <style name="ButtonBarButton" />
+
 
 </resources>

@@ -5,16 +5,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import com.google.android.gms.maps.GoogleMap;
 
 
-public class ResultPageActivity extends ActionBarActivity {
+public class ResultPageActivity extends MapsActivity{
+
+    //private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //this.requestWindowFeature(activity_result_pag.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_result_page);
-
+        //mMap.setMyLocationEnabled(true);
     }
 
 
@@ -39,4 +41,7 @@ public class ResultPageActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }
