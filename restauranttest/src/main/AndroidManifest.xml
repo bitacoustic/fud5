@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.csc413.team5.restauranttest" >
 
+    <!--
+    Since this module is marked as a library we don't need to (can't) run any activities
+    on it. In addition, it doesn't need any permissions (uses permissions of calling app).
+    -->
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -26,11 +31,6 @@
             android:name=".LocuMenuActivity"
             android:label="@string/title_activity_locu_menu"
             android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

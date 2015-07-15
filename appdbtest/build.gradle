@@ -1,11 +1,11 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 22
     buildToolsVersion "23.0.0 rc2"
 
     defaultConfig {
-        applicationId "com.csc413.team5.appdbtest"
+//        applicationId "com.csc413.team5.appdbtest"
         minSdkVersion 19
         targetSdkVersion 22
         versionCode 1

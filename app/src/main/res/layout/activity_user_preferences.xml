@@ -110,6 +110,13 @@
                 android:text="@string/settings_ui_button_reset_red_list"
                 android:id="@+id/reset_red_list"
                 android:onClick="resetRedList"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_ui_button_modify_red_list"
+                android:id="@+id/modify_red_list"
+                android:onClick="modifyRedList"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

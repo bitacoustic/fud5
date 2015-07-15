@@ -7,8 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-//import com.csc413.team5.appdbtest.AppDbTestActivity;
-//import com.csc413.team5.restauranttest.RestaurantTestActivity;
+import com.csc413.team5.appdbtest.AppDbTestActivity;
+import com.csc413.team5.fud5.userpreferences.ModifyRedListDialogFragment;
+import com.csc413.team5.restauranttest.RestaurantTestActivity;
 
 
 public class UserPreferencesActivity extends AppCompatActivity {
@@ -59,7 +60,7 @@ public class UserPreferencesActivity extends AppCompatActivity {
         toast.show();
     }
 
-   /* public void showDbTest(View view){
+    public void showDbTest(View view){
         Intent intent = new Intent(this, AppDbTestActivity.class);
         startActivity(intent);
 
@@ -67,7 +68,7 @@ public class UserPreferencesActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
 
         toast.show();
-    }*/
+    }
 
     public void showYelpTest(View view){
         Intent intent = new Intent(this, RestaurantTestActivity.class);
@@ -106,6 +107,16 @@ public class UserPreferencesActivity extends AppCompatActivity {
 //        startActivity(intent);
 
         CharSequence text = "Successfully reset red list.";
+
+        Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    public void modifyRedList(View view) {
+        DialogFragment modifyRedListDialog = ModifyRedListDialogFragment.newInstance();
+        modifyRedListDialog.show(getFragmentManager(), "red_list");
+
+        CharSequence text = "Modifying red list...";
 
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
         toast.show();
