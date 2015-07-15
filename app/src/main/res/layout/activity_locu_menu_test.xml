@@ -9,7 +9,7 @@
                 tools:context="com.csc413.team5.restauranttest.LocuMenuActivity">
 
     <TextView
-        android:text="Display preset menu"
+        android:text="Display preset menu\n(uses a Locu API call each time)"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textViewDisplayPresetTitle"
@@ -17,7 +17,8 @@
         android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"/>
+        android:layout_marginTop="0dp"
+        android:gravity="center_horizontal"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -58,14 +59,15 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Display menu by Locu ID"
+        android:text="Display menu by Locu ID\n(uses 2 API calls: 1 for match, 1 for data)"
         android:id="@+id/textView2"
         android:textSize="16dp"
         android:textStyle="bold"
         android:layout_below="@+id/buttonCheesecake"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"/>
+        android:layout_marginTop="12dp"
+        android:gravity="center_horizontal"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -107,7 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progressBarLocuMenuTest"
-        style="@android:style/Widget.ProgressBar"
+        style="@android:style/Widget.ProgressBar.Small"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"/>
 

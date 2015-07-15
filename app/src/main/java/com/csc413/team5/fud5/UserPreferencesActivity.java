@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import com.csc413.team5.appdbtest.AppDbTestActivity;
 import com.csc413.team5.fud5.userpreferences.ModifyRedListDialogFragment;
-import com.csc413.team5.restauranttest.RestaurantTestActivity;
 
 
 public class UserPreferencesActivity extends AppCompatActivity {

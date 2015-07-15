@@ -113,7 +113,7 @@ public class RestaurantTestActivity extends ActionBarActivity {
         protected void onPostExecute(String result) {
             output.append("-----------------------------------------------------\n" +
                             "YELP BUSINESS SEARCH, ATTEMPT TO MATCH VENUE WITH " +
-                            "LOCU AND PULL ADDITIONAL DATA\n" +
+                            "LOCU AND PULL ADDITIONAL DATA (MENU AND OPEN HOURS)\n" +
                             "-----------------------------------------------------\n\n"
             );
             output.append("Queried Yelp for: " + someRestaurant.getBusinessName() + '\n');
@@ -135,23 +135,16 @@ public class RestaurantTestActivity extends ActionBarActivity {
 
             output.append("\n\n-----------------------------------------------------\n" +
                             "YELP SEARCH FOR BUSINESSES AROUND A PARTICULAR LOCATION\n" +
-                            "-----------------------------------------------------\n\n"
+                            "-----------------------------------------------------"
             );
+
             output.append("\n\nResult of search request:\n");
             if (someRestaurantList == null)
                 output.append("null RestaurantList()\n");
             else {
                 output.append("RestaurantList size: " + someRestaurantList.size());
-                output.append("\nMap bounds after query: " + testMapBounds);
-                int rListMid = someRestaurantList.size() / 2;
-                someRestaurantList.remove(rListMid);
-                output.append("\nRemoved 1 record. RestaurantList size: "
-                        + someRestaurantList.size());
-                someRestaurantList.add(someRestaurant);
-                output.append("\nAdded 1 record. RestaurantList size: "
-                        + someRestaurantList.size());
                 output.append("\n\nThe contents of the" +
-                        "RestaurantList is now:");
+                        "RestaurantList are:");
                 output.append(someRestaurantList.toString());
             }
         }
