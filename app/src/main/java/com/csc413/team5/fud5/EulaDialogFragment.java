@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -89,16 +88,13 @@ public class EulaDialogFragment extends DialogFragment {
 
         // If user hasn't agreed to terms of service, set button text to "I agree".
         // This will be the case if user is starting the app for the first time.
-        if (!mHasAgreedToEula)
+        if (mIsFirstRun)
             button.setText(R.string.dialog_eula_button_agree);
 
         // watch for button click
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO if it's the first time user has run the app, a return should signal that
-                // the user has agreed to the EULA
-
                 getDialog().dismiss(); // return to the calling activity
 
             }
@@ -112,6 +108,10 @@ public class EulaDialogFragment extends DialogFragment {
         super.onDismiss(dialog);
 
         if (mIsFirstRun) {
+            ((SplashScreenActivity)getActivity()).setHasAgreedToEula(true);
+            // if it's the first time user has run the app or if they have not previously
+            // agreed to the EULA, button click signals that the user has agreed
+
             LocationManager lm = (LocationManager) getActivity().getApplicationContext()
                     .getSystemService(Context.LOCATION_SERVICE);
             boolean gpsEnabled = false;
@@ -131,9 +131,8 @@ public class EulaDialogFragment extends DialogFragment {
                 DialogFragment dialogAskToUseLocation = new AskToUseLocationFragment();
                 dialogAskToUseLocation.show(getFragmentManager(), "askToUseLocation");
             } else {
-                getActivity().finish();   // removes this activity from the back stack
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
+                ((SplashScreenActivity)getActivity()).openMainActivity();
+
             }
         }
     }
