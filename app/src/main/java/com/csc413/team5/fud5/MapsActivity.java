@@ -1,8 +1,10 @@
 package com.csc413.team5.fud5;
 
+
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -40,7 +42,7 @@ public class MapsActivity extends FragmentActivity {
      * stopped or paused), {@link #onCreate(Bundle)} may not be called again so we should call this
      * method in {@link #onResume()} to guarantee that it will be called.
      */
-    private void setUpMapIfNeeded() {
+    void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
@@ -55,12 +57,20 @@ public class MapsActivity extends FragmentActivity {
 
     /**
      * This is where we can add markers or lines, add listeners or move the camera. In this case, we
-     * just add a marker near Africa.
+     * just add a marker near SFSU.
      * <p>
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
+        LatLng sfsu = new LatLng(37.722039, -122.476640);
+
         mMap.setMyLocationEnabled(true);
-        mMap.addMarker(new MarkerOptions().position(new LatLng(37.722039, -122.476640)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sfsu, 13));
+
+        mMap.addMarker(new MarkerOptions()
+                .position(sfsu)
+                .title("School"));
+
+        mMap.getMaxZoomLevel();
     }
 }

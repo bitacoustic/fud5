@@ -1,22 +1,24 @@
 package com.csc413.team5.fud5;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
-import com.google.android.gms.maps.GoogleMap;
 
 
-public class ResultPageActivity extends MapsActivity{
+public class ResultPageActivity extends ActionBarActivity {
 
-    //private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_page);
-        //mMap.setMyLocationEnabled(true);
+    }
+
+    protected void onResume() {
+        super.onResume();
     }
 
 
@@ -26,6 +28,7 @@ public class ResultPageActivity extends MapsActivity{
         getMenuInflater().inflate(R.menu.menu_result_page, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -41,7 +44,6 @@ public class ResultPageActivity extends MapsActivity{
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
 }
