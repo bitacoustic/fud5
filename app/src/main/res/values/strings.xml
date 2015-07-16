@@ -115,5 +115,6 @@
 
     <!--Uncategorized-->
     <string name="title_activity_result_page">ResultPageActivity</string>
+    <string name="title_activity_maps_test">Map</string>
 
 </resources>

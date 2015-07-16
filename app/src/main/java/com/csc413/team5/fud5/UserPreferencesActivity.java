@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.csc413.team5.appdbtest.AppDbTestActivity;
 import com.csc413.team5.fud5.tests.LocuMenuTestActivity;
+import com.csc413.team5.fud5.tests.MapsTestActivity;
 import com.csc413.team5.fud5.tests.RestaurantTestActivity;
 import com.csc413.team5.fud5.userpreferences.ModifyRedListDialogFragment;
 
@@ -94,8 +95,8 @@ public class UserPreferencesActivity extends AppCompatActivity {
     }
 
     public void showMapTest(View view){
-//        Intent intent = new Intent(this, UserPreferencesActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, MapsTestActivity.class);
+        startActivity(intent);
 
         CharSequence text = "Testing Google Maps integration...";
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
