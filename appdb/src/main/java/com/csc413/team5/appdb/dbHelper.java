@@ -282,6 +282,28 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
         return isDeleteSuccess;
     }
 
+    @Override
+    public boolean wipeRestaurantList(Restaurant my_restaurant, int listClass) {
+        SQLiteDatabase db = getWritableDatabase();
+        if (listClass == 1) {
+            db.execSQL("DELETE * FROM " + GREEN_RESTAURANTS_TABLE_NAME + ";");
+            db.close();
+            return true;
+        } else if (listClass == 2) {
+            db.execSQL("DELETE * FROM " + YELLOW_RESTAURANTS_TABLE_NAME + ";");
+            db.close();
+            return true;
+        } else if (listClass == 3) {
+            db.execSQL("DELETE * FROM " + RED_RESTAURANTS_TABLE_NAME + ";");
+            db.close();
+            return true;
+        } else {
+            // Wrong listClass
+            Log.d("Error:", "listOutOfBoundsError");
+            db.close();
+            return false;
+        }
+    }
 
     @Override
     public boolean isRestaurantInList(Restaurant my_restaurant, int listClass) {
@@ -470,11 +492,6 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
         } else {
             return RED_RESTAURANTS_TABLE_NAME;
         }
-    }
-
-    @Override
-    public String gimmeFive(Restaurant r) {
-        return r.getBusinessName();
     }
 
     @Override
