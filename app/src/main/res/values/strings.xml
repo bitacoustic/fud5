@@ -23,7 +23,7 @@
     <string name="dialog_eula_title">End User License Agreement</string>
     <string name="dialog_eula_text">
 
-        FUD5 1.0 
+        FUD5 1.0
         Copyright (c) 2015 Eric,Jagatdeep,Ivan,Alex, Nicu,Anthony,David
         *** END USER LICENSE AGREEMENT ***
         IMPORTANT: PLEASE READ THIS LICENSE CAREFULLY BEFORE USING THIS SOFTWARE.
@@ -90,26 +90,7 @@ THIS SOFTWARE AND THE ACCOMPANYING FILES ARE SOLD "AS IS" AND WITHOUT WARRANTIES
 5. CONSENT OF USE OF DATA
 
 You agree that Eric,Jagatdeep,Ivan,Alex, Nicu,Anthony,David may collect and use information gathered in any manner as part of the product support services provided to you, if any, related to FUD5 1.0.Eric,Jagatdeep,Ivan,Alex, Nicu,Anthony,David may also use this information to provide notices to you which may be of use or interest to you.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </string>
+</string>
     <string name="dialog_eula_button_agree">I agree</string>
     <string name="dialog_eula_button_ok">Ok</string>
 
