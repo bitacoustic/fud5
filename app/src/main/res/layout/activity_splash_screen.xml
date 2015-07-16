@@ -8,12 +8,12 @@
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
 
-    <!--<ImageView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/imageView"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:src="@drawable/fud5logo"-->
-        <!--android:paddingLeft="50dp"-->
-        <!--android:paddingRight="50dp" />-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_gravity="center"
+        android:src="@drawable/fud5logo"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"/>
 </FrameLayout>
