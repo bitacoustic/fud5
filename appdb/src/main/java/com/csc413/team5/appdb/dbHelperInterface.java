@@ -77,6 +77,21 @@ public interface dbHelperInterface {
      * @see Restaurant
      */
     boolean deleteRestaurantFromList(Restaurant my_restaurant, int listClass);
+
+    /**
+     * Wipes a restaurant from a designated list
+     *
+     * @param my_restaurant a restaurant to delete from a designated list
+     * @param listClass     <ol>
+     *                      <li>The green list.</li>
+     *                      <li>The yellow list.</li>
+     *                      <li>The red list.</li>
+     *                      </ol>
+     * @return if deletion was successful, true
+     * @see Restaurant
+     */
+    boolean wipeRestaurantList(Restaurant my_restaurant, int listClass);
+
     /* end db_delete code*/
 
     /****************
@@ -168,6 +183,4 @@ public interface dbHelperInterface {
     String getDbPath(Context context);
 
     String getDbTableName(int listClass);
-
-    String gimmeFive(Restaurant r);
 }
