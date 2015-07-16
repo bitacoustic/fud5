@@ -103,7 +103,7 @@
         -->
         <activity
             android:name=".ResultPageActivity"
-            android:label="@string/title_activity_result_page" ></activity>
+            android:label="@string/title_activity_result_page"/>
         <activity
             android:name=".tests.MapsTestActivity"
             android:label="@string/title_activity_maps_test"
@@ -112,6 +112,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".tests.RestaurantSelectorTestActivity"
+            android:label="@string/title_activity_restaurant_selector_test">
         </activity>
     </application>
 

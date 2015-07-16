@@ -97,6 +97,13 @@
                 android:id="@+id/test_map"
                 android:onClick="showMapTest"/>
 
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_ui_button_selector_test"
+                android:id="@+id/test_selector"
+                android:onClick="showSelectorTest"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

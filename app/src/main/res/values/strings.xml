@@ -99,6 +99,7 @@
     <string name="settings_ui_button_yelp_test">Yelp Test</string>
     <string name="settings_ui_button_locu_test">Locu Test</string>
     <string name="settings_ui_button_google_map_test">Google Map Test</string>
+    <string name="settings_ui_button_selector_test">Restaurant Selector Test</string>
     <string name="settings_ui_button_reset_red_list">Clear red list</string>
     <string name="dialog_food_preferences_message">Food Preferences</string>
     <string name="settings_ui_button_modify_red_list">Modify red list</string>
@@ -116,5 +117,6 @@
     <!--Uncategorized-->
     <string name="title_activity_result_page">ResultPageActivity</string>
     <string name="title_activity_maps_test">Map</string>
+    <string name="title_activity_restaurant_selector_test">RestaurantSelectorTestActivity</string>
 
 </resources>
