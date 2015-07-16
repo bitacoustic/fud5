@@ -4,6 +4,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
 import com.csc413.team5.fud5.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -61,6 +62,16 @@ public class MapsTestActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(37.722039, -122.476640)).title("SFSU"));
+        LatLng sfsu = new LatLng(37.722039, -122.476640); //test latitude longitude
+
+        mMap.setMyLocationEnabled(true);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sfsu, 13));//sets the view
+
+        mMap.addMarker(new MarkerOptions()
+                .position(sfsu)
+                .title("School"));
+
+        //mMap.getMaxZoomLevel();
     }
 }

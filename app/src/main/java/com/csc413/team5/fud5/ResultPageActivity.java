@@ -1,20 +1,32 @@
 package com.csc413.team5.fud5;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.Toast;
+
+import com.csc413.team5.fud5.tests.MapsTestActivity;
 
 
-public class ResultPageActivity extends ActionBarActivity {
+public class ResultPageActivity extends AppCompatActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_page);
+        Intent intent = new Intent(this, MapsTestActivity.class);
+        startActivity(intent);
+//        String text = "Hope this works";
+//        Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+
+        //toast.show();
+
     }
 
     protected void onResume() {

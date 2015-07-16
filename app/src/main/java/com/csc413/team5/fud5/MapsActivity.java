@@ -71,6 +71,6 @@ public class MapsActivity extends FragmentActivity {
                 .position(sfsu)
                 .title("School"));
 
-        mMap.getMaxZoomLevel();
+        //mMap.getMaxZoomLevel();
     }
 }
