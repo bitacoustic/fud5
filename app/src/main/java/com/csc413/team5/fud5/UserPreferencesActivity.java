@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.csc413.team5.appdbtest.AppDbTestActivity;
 import com.csc413.team5.fud5.tests.LocuMenuTestActivity;
 import com.csc413.team5.fud5.tests.MapsTestActivity;
+import com.csc413.team5.fud5.tests.RestaurantSelectorTestActivity;
 import com.csc413.team5.fud5.tests.RestaurantTestActivity;
 import com.csc413.team5.fud5.userpreferences.ModifyRedListDialogFragment;
 
@@ -99,6 +100,16 @@ public class UserPreferencesActivity extends AppCompatActivity {
         startActivity(intent);
 
         CharSequence text = "Testing Google Maps integration...";
+        Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
+
+        toast.show();
+    }
+
+    public void showSelectorTest(View view) {
+        Intent intent = new Intent(this, RestaurantSelectorTestActivity.class);
+        startActivity(intent);
+
+        CharSequence text = "Testing selector...";
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
 
         toast.show();
