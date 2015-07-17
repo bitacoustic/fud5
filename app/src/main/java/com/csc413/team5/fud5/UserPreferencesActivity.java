@@ -12,6 +12,7 @@ import com.csc413.team5.fud5.tests.LocuMenuTestActivity;
 import com.csc413.team5.fud5.tests.MapsTestActivity;
 import com.csc413.team5.fud5.tests.RestaurantSelectorTestActivity;
 import com.csc413.team5.fud5.tests.RestaurantTestActivity;
+import com.csc413.team5.fud5.userpreferences.ApplicationSettingsFragment;
 import com.csc413.team5.fud5.userpreferences.ModifyRedListDialogFragment;
 
 
@@ -34,8 +35,8 @@ public class UserPreferencesActivity extends AppCompatActivity {
     }
 
     public void showAppSettings(View v) {
-//        DialogFragment eulaDialog = EulaDialogFragment.newInstance(false);
-//        eulaDialog.show(getFragmentManager(), "EULA");
+        DialogFragment appSettings = ApplicationSettingsFragment.newInstance();
+        appSettings.show(getFragmentManager(), "AppSettings");
 
         CharSequence text = "Showing App Settings...";
         Toast toast = Toast.makeText(this, text, Toast.LENGTH_SHORT);
