@@ -40,7 +40,6 @@
         android:layout_height="200dp"
         android:id="@+id/map"
         tools:context="com.csc413.team5.fud5.MapsActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
 

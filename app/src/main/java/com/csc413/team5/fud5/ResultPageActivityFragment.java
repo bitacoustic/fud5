@@ -12,9 +12,7 @@ import android.view.ViewGroup;
  */
 public class ResultPageActivityFragment extends Fragment {
 
-    public ResultPageActivityFragment() {
 
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

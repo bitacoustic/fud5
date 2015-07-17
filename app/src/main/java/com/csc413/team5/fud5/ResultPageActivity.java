@@ -25,14 +25,9 @@ public class ResultPageActivity extends FragmentActivity implements OnMapReadyCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_page);
 
-        MapFragment mMapFragment = MapFragment.newInstance();
-        FragmentTransaction fragmentTransaction =
-                getFragmentManager().beginTransaction();
-        fragmentTransaction.add(R.id.map, mMapFragment);
-        fragmentTransaction.commit();
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.fragment);
+                .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
