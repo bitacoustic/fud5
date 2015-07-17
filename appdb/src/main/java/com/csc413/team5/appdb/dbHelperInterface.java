@@ -81,7 +81,6 @@ public interface dbHelperInterface {
     /**
      * Wipes a restaurant from a designated list
      *
-     * @param my_restaurant a restaurant to delete from a designated list
      * @param listClass     <ol>
      *                      <li>The green list.</li>
      *                      <li>The yellow list.</li>
@@ -90,7 +89,7 @@ public interface dbHelperInterface {
      * @return if deletion was successful, true
      * @see Restaurant
      */
-    boolean wipeRestaurantList(Restaurant my_restaurant, int listClass);
+    boolean wipeRestaurantList(int listClass);
 
     /* end db_delete code*/
 

@@ -283,18 +283,18 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
     }
 
     @Override
-    public boolean wipeRestaurantList(Restaurant my_restaurant, int listClass) {
+    public boolean wipeRestaurantList(int listClass) {
         SQLiteDatabase db = getWritableDatabase();
         if (listClass == 1) {
-            db.execSQL("DELETE * FROM " + GREEN_RESTAURANTS_TABLE_NAME + ";");
+            db.execSQL("DELETE FROM " + GREEN_RESTAURANTS_TABLE_NAME + ";");
             db.close();
             return true;
         } else if (listClass == 2) {
-            db.execSQL("DELETE * FROM " + YELLOW_RESTAURANTS_TABLE_NAME + ";");
+            db.execSQL("DELETE FROM " + YELLOW_RESTAURANTS_TABLE_NAME + ";");
             db.close();
             return true;
         } else if (listClass == 3) {
-            db.execSQL("DELETE * FROM " + RED_RESTAURANTS_TABLE_NAME + ";");
+            db.execSQL("DELETE FROM " + RED_RESTAURANTS_TABLE_NAME + ";");
             db.close();
             return true;
         } else {
