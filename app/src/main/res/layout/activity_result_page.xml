@@ -4,3 +4,4 @@
     tools:layout="@layout/fragment_result_page" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/FullscreenTheme"/>
+
