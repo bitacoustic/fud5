@@ -84,9 +84,17 @@
         feed
     </string>
 
+    <!-- ApplicationSetetingsFragment -->
+    <string name="dialog_app_settings_user_settings_checkbox">User Settings</string>
+    <string name="dialog_app_settings_restaurant_history_checkbox">Restaurant History</string>
+    <string name="dialog_app_settings_user_settings_text">Checking this box and pressing \"Reset\" will set your preferred restaurant search options to application defaults. You may need to agree to the End-User License Agreement again on application restart.</string>
+    <string name="dialog_app_settings_restaurant_history_text">This application remembers restaurants when you choose \"Let\'s go!\", \"Maybe later\", or \"Never\". By checking this box and pressing \"Reset\" all of this data will be erased.</string>
+    <string name="dialog_app_settings_reset_checked_items_button">Reset checked items</string>
+
     <!--Uncategorized-->
     <string name="title_activity_result_page">ResultPageActivity</string>
     <string name="title_activity_maps_test">Map</string>
     <string name="title_activity_restaurant_selector_test">RestaurantSelectorTestActivity</string>
+    <string name="title_activity_application_settings">ApplicationSettingsActivity</string>
 
 </resources>
