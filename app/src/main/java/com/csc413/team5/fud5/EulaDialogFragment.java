@@ -4,6 +4,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * A dialog providing the end-user license agreement.
@@ -26,26 +30,23 @@ import android.widget.Button;
  * @author Eric C. Black
  */
 public class EulaDialogFragment extends DialogFragment {
-    boolean mHasAgreedToEula;
-    boolean mIsFirstRun;
+    public static final String PREFS_FILE = "UserSettings";
+    private SharedPreferences userSettings;
+    private SharedPreferences.Editor userSettingsEditor;
 
-    public static EulaDialogFragment newInstance(boolean hasAgreedToEula) {
-        EulaDialogFragment f = new EulaDialogFragment();
+    private static final String EULA_PREFIX = "eula_";
+    private String eulaKey;
 
-        // Supply boolean input as an argument
-        Bundle args = new Bundle();
-        args.putBoolean("hasAgreedToEula", hasAgreedToEula);
-        f.setArguments(args);
+    TextView mTxtEulaBody;
 
-        return f;
+    public static EulaDialogFragment newInstance() {
+        return new EulaDialogFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        // load the argument
-        mHasAgreedToEula = getArguments().getBoolean("hasAgreedToEula");
-        mIsFirstRun = !mHasAgreedToEula; // flag if this is app's first run
     }
 
     /**
@@ -86,10 +87,43 @@ public class EulaDialogFragment extends DialogFragment {
 
         Button button = (Button)v.findViewById(R.id.dialogEulaButton);
 
+        // load user preferences
+        userSettings = getActivity().getSharedPreferences(PREFS_FILE, 0);
+        // create a user settings editor for use in this activity
+        userSettingsEditor = userSettings.edit();
+
+        int versionCode;
+        try {
+            versionCode = getActivity().getPackageManager().getPackageInfo(getActivity()
+                    .getPackageName(), 0).versionCode;
+            eulaKey = EULA_PREFIX + versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            eulaKey = null;
+        }
+
+        String versionName;
+        try {
+            versionName = getActivity().getPackageManager().getPackageInfo(getActivity()
+                    .getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            versionName = "";
+        }
+
+        if (eulaKey != null && !userSettings.getBoolean(eulaKey, false))
+            userSettingsEditor.putBoolean("hasAgreedToEula", false).commit();
+
         // If user hasn't agreed to terms of service, set button text to "I agree".
         // This will be the case if user is starting the app for the first time.
-        if (mIsFirstRun)
+        if (!userSettings.getBoolean("hasAgreedToEula", false))
             button.setText(R.string.dialog_eula_button_agree);
+
+        mTxtEulaBody = (TextView) v.findViewById(R.id.dialogEulaText);
+
+        mTxtEulaBody.setText(
+                getActivity().getApplicationContext().getResources()
+                        .getString(R.string.app_name) + " " + versionName
+                        + getActivity().getApplicationContext().getResources()
+                        .getString(R.string.dialog_eula_text));
 
         // watch for button click
         button.setOnClickListener(new View.OnClickListener() {
@@ -107,8 +141,10 @@ public class EulaDialogFragment extends DialogFragment {
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
 
-        if (mIsFirstRun) {
-            ((SplashScreenActivity)getActivity()).setHasAgreedToEula(true);
+        if (!userSettings.getBoolean("hasAgreedToEula", false)) {
+            userSettingsEditor.putBoolean("hasAgreedToEula", true)
+                    .putBoolean(eulaKey, true)
+                    .commit();
             // if it's the first time user has run the app or if they have not previously
             // agreed to the EULA, button click signals that the user has agreed
 
@@ -131,8 +167,9 @@ public class EulaDialogFragment extends DialogFragment {
                 DialogFragment dialogAskToUseLocation = new AskToUseLocationFragment();
                 dialogAskToUseLocation.show(getFragmentManager(), "askToUseLocation");
             } else {
-                ((SplashScreenActivity)getActivity()).openMainActivity();
-
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(0, 0);
             }
         }
     }

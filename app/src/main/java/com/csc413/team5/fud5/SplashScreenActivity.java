@@ -15,7 +15,6 @@ import static android.view.WindowManager.LayoutParams;
 public class SplashScreenActivity extends Activity
         implements AskToUseLocationFragment.NoticeDialogListener {
     private long mStartLoadTime;
-    protected boolean mhasAgreedToEula;
 
     private Handler mHandler;
     private Runnable mRunAfterWait;
@@ -46,7 +45,7 @@ public class SplashScreenActivity extends Activity
         mHandler = new Handler();
         mRunAfterWait = new Runnable() {
             public void run() {
-                if (!mhasAgreedToEula)
+                if (!userSettings.getBoolean("hasAgreedToEula", false))
                     checkEulaAndLocation(); // also checks on dismiss if location services enabled
                 else
                     askToUseLocation(); // only prompts if GPS/network location services not enabled
@@ -57,9 +56,6 @@ public class SplashScreenActivity extends Activity
 
         // load user preferences
         userSettings = getSharedPreferences(PREFS_FILE, 0);
-        // read the preference file's field "hasAgreedToEula"; if the field doesn't exist,
-        // default to "false"
-        mhasAgreedToEula = userSettings.getBoolean("hasAgreedToEula", false);
         // create a user settings editor for use in this activity
         userSettingsEditor = userSettings.edit();
     }
@@ -131,8 +127,8 @@ public class SplashScreenActivity extends Activity
      * whether location has been turned on if the user just agreed to the terms of service
      */
     public void checkEulaAndLocation() {
-        if (!mhasAgreedToEula) {
-            DialogFragment eulaDialog = EulaDialogFragment.newInstance(mhasAgreedToEula);
+        if (!userSettings.getBoolean("hasAgreedToEula", false)) {
+            DialogFragment eulaDialog = EulaDialogFragment.newInstance();
             eulaDialog.setCancelable(false);
             eulaDialog.show(getFragmentManager(), "EULA");
         }
@@ -168,13 +164,6 @@ public class SplashScreenActivity extends Activity
         } else { // otherwise just open main activity
             openMainActivity();
         }
-    }
-
-    public void setHasAgreedToEula(Boolean hasAgreed) {
-        // save to persistent user settings; note that in other situations multiple edits can be
-        // chained together before the final commit
-        mhasAgreedToEula = hasAgreed;
-        userSettingsEditor.putBoolean("hasAgreedToEula", hasAgreed).commit();
     }
 
     @Override
