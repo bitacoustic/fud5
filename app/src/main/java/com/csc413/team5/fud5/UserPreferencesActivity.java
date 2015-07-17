@@ -25,7 +25,7 @@ public class UserPreferencesActivity extends AppCompatActivity {
     }
 
     public void showFoodSettings(View v) {
-//        DialogFragment eulaDialog = EulaDialogFragment.newInstance(false);
+//        DialogFragment eulaDialog = EulaDialogFragment.newInstance();
 //        eulaDialog.show(getFragmentManager(), "EULA");
 
         CharSequence text = "Showing Food Settings";
@@ -45,7 +45,7 @@ public class UserPreferencesActivity extends AppCompatActivity {
     }
 
     public void showEULA(View v) {
-        DialogFragment eulaDialog = EulaDialogFragment.newInstance(true);
+        DialogFragment eulaDialog = EulaDialogFragment.newInstance();
         eulaDialog.show(getFragmentManager(), "EULA");
 
         CharSequence text = "Showing EULA...";
