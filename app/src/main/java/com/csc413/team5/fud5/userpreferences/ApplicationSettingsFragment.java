@@ -18,9 +18,10 @@ import com.csc413.team5.appdb.dbHelper;
 import com.csc413.team5.fud5.R;
 
 /**
- * TODO Description
+ * Resets user settings (clears the SharedPreferences file "UserSettings") and/or restaurant
+ * history (wipes the green, yellow, and red lists).
  * <p/>
- * Created on $(DATE).
+ * Created on 7/16/2015.
  *
  * @author Eric C. Black
  */
@@ -88,7 +89,8 @@ public class ApplicationSettingsFragment extends DialogFragment {
         mBtnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetAppSettings();
+                if (isUserSettingsChecked || isRestaurantHistoryChecked)
+                    resetAppSettings();
             }
         });
 
