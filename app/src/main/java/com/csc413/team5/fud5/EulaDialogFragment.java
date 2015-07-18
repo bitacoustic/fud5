@@ -24,10 +24,6 @@ import android.widget.TextView;
  * set button to "I agree" and display the dialog the first time the app runs. If true, the EULA
  * is available from the user preference/search page: button says "OK" (or perhaps hidden
  * altogether).
- * <p>
- * Created by Eric on 7/8/2015.
- *
- * @author Eric C. Black
  */
 public class EulaDialogFragment extends DialogFragment {
     public static final String PREFS_FILE = "UserSettings";
