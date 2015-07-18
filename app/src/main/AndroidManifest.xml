@@ -123,10 +123,22 @@
         </activity>
 
         <!-- End of test activity-->
+        
+        <!-- Test in here for now -->
         <activity
             android:name=".tests.RestaurantSelectorTestActivity"
             android:label="@string/title_activity_restaurant_selector_test">
         </activity>
+        <!-- End of test activity -->
+        
+        <!-- Test in here for now -->
+        <activity
+            android:name=".tests.SharedPreferencesTestActivity"
+            android:label="@string/title_activity_shared_preferences_test"
+            android:parentActivityName=".UserPreferencesActivity"
+            android:screenOrientation="nosensor">
+        </activity>
+        <!-- End of test activity -->
     </application>
 
 </manifest>
