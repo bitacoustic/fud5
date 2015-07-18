@@ -56,6 +56,10 @@
     <string name="title_restaurant_test_activity">RestaurantTest</string>
     <string name="api_call_result">(loading)</string>
 
+    <!-- SharedPreferencesTest -->
+    <string name="title_activity_shared_preferences_test">SharedPreferencesTestActivity</string>
+    <string name="settings_ui_button_shared_preferences_test">Display shared preferences</string>
+
     <!-- Settings UI -->
     <string name="settings_ui_title_general">General</string>
     <string name="settings_ui_title_misc">Miscellaneous Info</string>
@@ -84,7 +88,7 @@
         feed
     </string>
 
-    <!-- ApplicationSetetingsFragment -->
+    <!-- ApplicationSettingsFragment -->
     <string name="dialog_app_settings_user_settings_checkbox">User Settings</string>
     <string name="dialog_app_settings_restaurant_history_checkbox">Restaurant History</string>
     <string name="dialog_app_settings_user_settings_text">Checking this box and pressing \"Reset\" will set your preferred restaurant search options to application defaults. You may need to agree to the End-User License Agreement again on application restart.</string>
