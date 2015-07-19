@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Reset Application"
+        android:text="@string/activity_application_settings_reset_application_text"
         android:id="@+id/txtViewAppSettingsTitle"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"/>
@@ -20,7 +20,7 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dialog_app_settings_user_settings_checkbox"
+        android:text="@string/activity_application_settings_user_settings_checkbox"
         android:id="@+id/checkBoxAppSettingsUser"
         android:layout_below="@+id/txtViewAppSettingsTitle"
         android:layout_alignParentStart="true"
@@ -30,7 +30,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dialog_app_settings_user_settings_text"
+        android:text="@string/activity_application_settings_user_settings_caption"
         android:id="@+id/textViewAppSettingsUser"
         android:layout_below="@+id/checkBoxAppSettingsUser"
         android:layout_alignParentStart="true"
@@ -40,7 +40,7 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dialog_app_settings_restaurant_history_checkbox"
+        android:text="@string/activity_application_settings_restaurant_history_checkbox"
         android:id="@+id/checkBoxAppSettingsRestaurant"
         android:layout_below="@+id/textViewAppSettingsUser"
         android:layout_alignParentStart="true"
@@ -51,7 +51,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dialog_app_settings_restaurant_history_text"
+        android:text="@string/activity_application_settings_restaurant_history_caption"
         android:id="@+id/textViewAppSettingsRestaurant"
         android:layout_below="@+id/checkBoxAppSettingsRestaurant"
         android:layout_alignParentStart="true"
@@ -61,11 +61,31 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dialog_app_settings_reset_checked_items_button"
+        android:text="@string/activity_application_settings_reset_checked_items_button"
         android:id="@+id/buttonAppSettingsReset"
         android:layout_below="@+id/textViewAppSettingsRestaurant"
         android:layout_marginTop="15dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/activity_application_settings_manage_services_text"
+        android:id="@+id/textView5"
+        android:layout_below="@+id/buttonAppSettingsReset"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="25dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/activity_application_settings_location_services_button_text"
+        android:id="@+id/buttonManageLocationServices"
+        android:layout_below="@+id/textView5"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/buttonAppSettingsReset"/>
 
 </RelativeLayout>
