@@ -53,8 +53,10 @@ public class ApplicationSettingsFragment extends DialogFragment {
                 .activity_application_settings_negative_button_text);
 
         StringBuilder message = new StringBuilder(areYouSureYouWantToResset);
+        message.append(" ");
+
         if (mIsUserSettingsChecked && mIsRestaurantHistoryChecked)
-            message.append(userSettings + "&" + restaurantHistory + "?");
+            message.append(userSettings + " & " + restaurantHistory + "?");
         else if (mIsUserSettingsChecked)
             message.append(userSettings + "?");
         else if (mIsRestaurantHistoryChecked)
