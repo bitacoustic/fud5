@@ -49,9 +49,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
-
     private void showUserPreferencesMenu(){
         Intent intent = new Intent(this, UserPreferencesActivity.class);
         startActivity(intent);
