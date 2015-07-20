@@ -14,6 +14,14 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
+    <!--TODO:
+        -pull restaurant name
+        -pull star rating
+        -picture?
+        -address
+        -green/yellow/red buttons
+        -back to main button
+    -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,12 +45,12 @@
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:id="@+id/map"
         tools:context="com.csc413.team5.fud5.MapsActivity"
+        android:name="com.google.android.gms.maps.MapFragment"
         android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
-
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>
