@@ -25,7 +25,7 @@ public class ResultPageActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps_test);
+        setContentView(R.layout.fragment_result_page);
         setUpMapIfNeeded();
     }
 
@@ -43,17 +43,17 @@ public class ResultPageActivity extends FragmentActivity {
     }
 
     private void setUpMap() {
-        //mMap.addMarker(new MarkerOptions().position(new LatLng(37.722039, -122.476640)).title("SFSU"));
-        LatLng sfsu = new LatLng(37.722039, -122.476640); //test latitude longitude
+
+        LatLng sfsu = new LatLng(37.782458, -122.392828); //test latitude longitude
 
         mMap.setMyLocationEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sfsu, 13));//sets the view
 
         mMap.addMarker(new MarkerOptions()
                 .position(sfsu)
-                .title("School"));
+                .title("New Location"));
 
-        //mMap.getMaxZoomLevel();
+
     }
 
     protected void onResume() {
