@@ -24,7 +24,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
+            android:label="@string/main_title"
             android:screenOrientation="nosensor">
 
         </activity>
@@ -107,7 +107,7 @@
         -->
         <activity
             android:name=".ResultPageActivity"
-            android:label="@string/title_activity_result_page" />
+            android:label="@string/how_about" />
         <activity
             android:name=".tests.MapsTestActivity"
             android:label="@string/title_activity_maps_test"

@@ -7,7 +7,9 @@
 
     <color name="Green">#008000</color>
     <color name="Red">#FF0000</color>
-    <color name="Purple">#330033</color>
-    <color name="Gold">#ffcc33</color>
+    <!-- SFSU Colors
+    the lighter colors from http://logo.sfsu.edu/color -->
+    <color name="Purple">#43428A</color>
+    <color name="Gold">#ECCD7F</color>
 
 </resources>
