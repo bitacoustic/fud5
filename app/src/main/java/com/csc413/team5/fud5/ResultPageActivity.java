@@ -18,7 +18,7 @@ public class ResultPageActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps_test);
+        setContentView(R.layout.fragment_result_page);
         setUpMapIfNeeded();
     }
 /*
