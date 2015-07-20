@@ -5,8 +5,10 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.csc413.team5.fud5.R;
+import com.csc413.team5.fud5.utils.ToastUtil;
 
 public class FoodPreferencesDialogFragment extends DialogFragment {
 
@@ -17,13 +19,13 @@ public class FoodPreferencesDialogFragment extends DialogFragment {
     private double search_radius;
 
 
-    static FoodPreferencesDialogFragment newInstance(boolean isLocationServices, double minumumStarRating,
+    public static FoodPreferencesDialogFragment newInstance(boolean isLocationServices, double minimumStarRating,
                                                      boolean isLocationSearch, double searchRadius) {
         FoodPreferencesDialogFragment foodPreferences = new FoodPreferencesDialogFragment();
 
         Bundle args = new Bundle();
         args.putBoolean("location_services", isLocationServices);
-        args.putDouble("minimum_star_rating", minumumStarRating);
+        args.putDouble("minimum_star_rating", minimumStarRating);
         args.putBoolean("location_search", isLocationSearch);
         args.putDouble("search_radius", searchRadius);
 
@@ -33,14 +35,7 @@ public class FoodPreferencesDialogFragment extends DialogFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // Initializes arguments to SQL table default values
-        // TODO Call SQL to grab default food preferences
-        this.getArguments().getBoolean("location_services", true);
-        this.getArguments().getDouble("minimum_star_rating", 3.5);
-        this.getArguments().getBoolean("location_search", true);
-        this.getArguments().getDouble("search_radius", .5);
-
-        // Assigns retrieved SQL table default values to local member variables
+        // Assigns retrieved SharedPreferences default values to local member variables
         location_services = this.getArguments().getBoolean("location_services");
         minimum_star_rating = this.getArguments().getDouble("minimum_star_rating");
         location_search = this.getArguments().getBoolean("location_search");
@@ -52,18 +47,43 @@ public class FoodPreferencesDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        /* Build AlertDialog */
+        // Instantiate alert dialog
+        final AlertDialog ad = new AlertDialog.Builder(this.getActivity())
+        // Show title
+        .setTitle(R.string.dialog_food_preferences_title)
+        // Show message
+        .setMessage(R.string.dialog_food_preferences_message)
 
-        builder.setMessage(R.string.dialog_food_preferences_message);
 
-        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+        .setPositiveButton(R.string.generic_save_text, new DialogInterface.OnClickListener() {
             @Override
-            public void onCancel(DialogInterface dialog) {
-                // TODO: New settings won't be saved
+            public void onClick(DialogInterface dialog, int which) {
+                ToastUtil.showShortToast(getActivity(), "Settings saved.");
             }
-        });
+        })
 
-        builder.create();
-        return super.onCreateDialog(savedInstanceState);
+        .setNegativeButton(R.string.generic_cancel_text, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                ToastUtil.showShortToast(getActivity(), "Confirm cancel");
+            }
+        })
+
+        // create alert dialog
+        .create();
+
+        /* End Build AlertDialog */
+        ad.setCanceledOnTouchOutside(true);
+
+        return ad;
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        // Confirm cancellation
+        CancelDialogFragment cancelDialog = new CancelDialogFragment();
+        cancelDialog.show(getFragmentManager(), "Cancel Confirmation");
     }
 }

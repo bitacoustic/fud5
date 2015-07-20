@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/settings_ui_title_general"
+                android:text="@string/settings_ui_text_general"
                 android:id="@+id/general_settings"/>
 
             <Button
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/settings_ui_title_misc"
+                android:text="@string/settings_ui_text_misc"
                 android:id="@+id/miscellaneous_info"/>
 
             <Button
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/settings_ui_title_dev_playground"
+                android:text="@string/settings_ui_text_dev_playground"
                 android:id="@+id/dev_playground" />
 
             <Button
@@ -115,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/settings_ui_title_red_list"
+                android:text="@string/settings_ui_text_red_list"
                 android:id="@+id/red_list" />
 
             <Button
