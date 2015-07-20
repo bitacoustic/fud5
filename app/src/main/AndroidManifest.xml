@@ -7,7 +7,7 @@
     <!-- Used by the Google Play Services Location API -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+ The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but are recommended.
     -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -62,6 +62,19 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
+            android:name=".userpreferences.ApplicationSettingsActivity"
+            android:label="@string/title_activity_application_settings"
+            android:parentActivityName=".UserPreferencesActivity"
+            android:screenOrientation="nosensor">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserPreferencesActivity" />
+        </activity>
+
+        <!-- BEGIN TEST ACTIVITIES -->
+        <!-- These are to be excluded from the public release -->
+        <!-- Don't add any activities that are part of the actual app in this section -->
+        <activity
             android:name=".tests.RestaurantTestActivity"
             android:label="@string/title_restaurant_test_activity"
             android:parentActivityName=".MainActivity"
@@ -79,32 +92,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <!--
-        <activity
-            android:name=".GreenListActivity"
-            android:label="@string/title_activity_green_list"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.csc413.team5.fud5.MainActivity" />
-        </activity>
-        <activity
-            android:name=".YellowListActivity"
-            android:label="@string/title_activity_yellow_list"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.csc413.team5.fud5.MainActivity" />
-        </activity>
-        <activity
-            android:name=".RedListActivity"
-            android:label="@string/title_activity_red_list"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.csc413.team5.fud5.MainActivity" />
-        </activity>
-        -->
         <activity
             android:name=".ResultPageActivity"
             android:label="@string/how_about"
@@ -126,6 +113,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UserPreferencesActivity" />
         </activity>
+        <activity
+            android:name=".tests.SharedPreferencesTestActivity"
+            android:label="@string/title_activity_shared_preferences_test"
+            android:parentActivityName=".UserPreferencesActivity"
+            android:screenOrientation="nosensor">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserPreferencesActivity" />
+        </activity>
+        <!-- END TEST ACTIVITIES -->
+
     </application>
 
 </manifest>
