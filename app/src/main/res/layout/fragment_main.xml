@@ -85,7 +85,7 @@
             android:textSize="16sp"
             android:id="@+id/textView8"
             android:layout_below="@+id/txtSearchTerm"
-            android:layout_alignStart="@+id/ratingBar" />
+            android:layout_alignEnd="@+id/ratingBar"/>
 
         <RatingBar
             android:layout_width="wrap_content"
