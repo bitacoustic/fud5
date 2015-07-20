@@ -9,7 +9,7 @@
                 tools:context="com.csc413.team5.restauranttest.LocuMenuActivity">
 
     <TextView
-        android:text="Display preset menu\n(uses a Locu API call each time)"
+        android:text="Display preset menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textViewDisplayPresetTitle"
@@ -59,29 +59,29 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Display menu by Locu ID\n(uses 2 API calls: 1 for match, 1 for data)"
-        android:id="@+id/textView2"
+        android:text="Display menu by Locu ID"
+        android:id="@+id/textDisplayMenuByLocuID"
         android:textSize="16dp"
         android:textStyle="bold"
         android:layout_below="@+id/buttonCheesecake"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="24dp"
         android:gravity="center_horizontal"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/display_menu_by_id_info_text"
-        android:id="@+id/textView3"
-        android:layout_below="@+id/textView2"
+        android:id="@+id/textViewDisplayMenuByIDInfoText"
+        android:layout_below="@+id/textDisplayMenuByLocuID"
         android:layout_centerHorizontal="true"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editTextLocuSearchId"
-        android:layout_below="@+id/textView3"
+        android:layout_below="@+id/textViewDisplayMenuByIDInfoText"
         android:layout_alignParentStart="true"
         android:inputType="text"
         android:editable="true"
@@ -97,7 +97,7 @@
         android:layout_centerHorizontal="true"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/locu_menu_debug_text"
         android:id="@+id/textViewDebug"
@@ -109,7 +109,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/progressBarLocuMenuTest"
-        style="@android:style/Widget.ProgressBar.Small"
+        style="@android:style/Widget.ProgressBar"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"/>
 
