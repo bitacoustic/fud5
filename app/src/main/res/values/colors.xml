@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- TODO: Add any colors we use to this file -->
+<!-- TODO: Add any colors we use to this file, feel free to edit the specific color codes-->
 
 <resources>
-    <color name="Purple">#43428a</color>
-    <color name="Gold">#ebcd7e</color>
+
+
+    <color name="Green">#008000</color>
+    <color name="Red">#FF0000</color>
+    <color name="Purple">#330033</color>
+    <color name="Gold">#ffcc33</color>
 
 </resources>
