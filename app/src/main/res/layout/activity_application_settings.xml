@@ -27,28 +27,32 @@
                 android:text="@string/activity_application_settings_push_notifications_text"
                 android:id="@+id/txtViewPushNotificationsTitle" />
 
-            <CheckBox
-                android:layout_width="wrap_content"
+            <Switch
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/activity_application_settings_nearby_restaurants_checkbox"
                 android:id="@+id/checkBoxNearbyRestaurants"
                 android:checked="false"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:layout_alignParentEnd="true"
+                />
 
-            <CheckBox
-                android:layout_width="wrap_content"
+            <Switch
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/activity_application_settings_app_updates_checkbox"
                 android:id="@+id/checkBoxAppUpdates"
                 android:checked="false"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/activity_application_settings_reset_application_text"
-                android:id="@+id/txtViewAppSettingsTitle" />
+                android:id="@+id/txtViewAppSettingsTitle"
+                android:layout_marginTop="15dp"/>
 
             <CheckBox
                 android:layout_width="wrap_content"
@@ -147,4 +151,5 @@
 
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>
