@@ -2,7 +2,7 @@ package com.csc413.team5.fud5.tests;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.csc413.team5.fud5.R;
@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * Displays the contents of the shared preferences file.
  */
-public class SharedPreferencesTestActivity extends ActionBarActivity {
+public class SharedPreferencesTestActivity extends AppCompatActivity {
     public static final String PREFS_FILE = "UserSettings";
     private SharedPreferences userSettings;
     TextView out;

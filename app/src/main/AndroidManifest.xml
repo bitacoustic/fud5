@@ -74,22 +74,28 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".userpreferences.ApplicationSettingsActivity"
+            android:label="@string/title_activity_application_settings"
+            android:parentActivityName=".UserPreferencesActivity"
+            android:screenOrientation="nosensor">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserPreferencesActivity" />
+        </activity>
 
-
-        <!-- Test this activity instead-->
+        <!-- BEGIN TEST ACTIVITIES -->
+        <!-- These are to be excluded from the public release -->
+        <!-- Don't add any activities that are part of the actual app in this section -->
         <activity
             android:name=".tests.RestaurantTestActivity"
             android:label="@string/title_restaurant_test_activity"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="nosensor">
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:name="com.google.android.maps.v2.API_KEY"
+                android:value="AIzaSyAU2n7ktwHsJa9_MTKMqoLX0IAQc3QwEGg" />
         </activity>
-
-        <!-- end of test activity-->
-
-
         <activity
             android:name=".tests.LocuMenuTestActivity"
             android:label="@string/title_locu_menu_test_activity"
@@ -99,45 +105,41 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-
-
         <activity
             android:name=".ResultPageActivity"
             android:label="@string/title_activity_result_page"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="nosensor">
-
             <meta-data
                 android:name="com.google.android.maps.v2.API_KEY"
                 android:value="AIzaSyAU2n7ktwHsJa9_MTKMqoLX0IAQc3QwEGg" />
         </activity>
-
-
-        <!-- Test in here for now-->
         <activity
             android:name=".tests.MapsTestActivity"
             android:label="@string/title_activity_maps_test"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".UserPreferencesActivity"
             android:screenOrientation="nosensor">
             <meta-data
                 android:name="com.google.android.maps.v2.API_KEY"
                 android:value="AIzaSyAU2n7ktwHsJa9_MTKMqoLX0IAQc3QwEGg" />
         </activity>
-
-        <!-- End of test activity-->
-
         <activity
-            android:name=".userpreferences.AppSettingsActivity"
-            android:label="@string/title_activity_app_settings"
-            >
+            android:name=".tests.RestaurantSelectorTestActivity"
+            android:label="@string/title_activity_restaurant_selector_test">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UserPreferencesActivity" />
         </activity>
         <activity
-            android:name=".tests.RestaurantSelectorTestActivity"
-            android:label="@string/title_activity_restaurant_selector_test">
+            android:name=".tests.SharedPreferencesTestActivity"
+            android:label="@string/title_activity_shared_preferences_test"
+            android:parentActivityName=".UserPreferencesActivity"
+            android:screenOrientation="nosensor">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserPreferencesActivity" />
         </activity>
+        <!-- END TEST ACTIVITIES -->
 
     </application>
 

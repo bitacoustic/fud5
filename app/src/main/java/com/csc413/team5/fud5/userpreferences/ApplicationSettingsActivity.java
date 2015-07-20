@@ -108,7 +108,6 @@ public class ApplicationSettingsActivity extends AppCompatActivity
         if (isUserSettingsChecked) {
             userSettingsEditor.clear().commit();
 
-            // TODO: test this
             // Reset preferences to default
 
             /* DEFAULT SETTINGS
@@ -178,25 +177,4 @@ public class ApplicationSettingsActivity extends AppCompatActivity
 
         return preferredNicheSet;
     }
-
-    // TODO: Temporary test code
-    /*
-        minStar = userSettings.getFloat("defaultMinStar", (float) 3.5);
-        searchLocation = userSettings.getString("defaultSearchLocation", "1600 Holloway Ave.");
-        searchRadius = userSettings.getFloat("defaultSearchRadius", (float) 1.5);
-        preferredNiches = userSettings.getStringSet("defaultPreferredNiches", getPreferredNiches());
-        appLanguage = userSettings.getString("appLanguage", Locale.getDefault().getDisplayLanguage());
-
-        TextView t1 = (TextView) findViewById(R.id.text_location_preferences);
-        TextView t2 = (TextView) findViewById(R.id.text_default_min_star);
-        TextView t3 = (TextView) findViewById(R.id.text_default_search_radius);
-        TextView t4 = (TextView) findViewById(R.id.text_preferred_niches);
-        TextView t5 = (TextView) findViewById(R.id.text_app_language);
-
-        t1.append(" " + isLocationPreferences);
-        t2.append(" " + minStar);
-        t3.append(" " + searchLocation);
-        t4.append(" " + preferredNiches);
-        t5.append(" " + appLanguage);
-     */
 }

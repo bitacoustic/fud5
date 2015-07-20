@@ -12,6 +12,7 @@ import com.csc413.team5.fud5.tests.LocuMenuTestActivity;
 import com.csc413.team5.fud5.tests.MapsTestActivity;
 import com.csc413.team5.fud5.tests.RestaurantSelectorTestActivity;
 import com.csc413.team5.fud5.tests.RestaurantTestActivity;
+import com.csc413.team5.fud5.tests.SharedPreferencesTestActivity;
 import com.csc413.team5.fud5.userpreferences.ApplicationSettingsActivity;
 import com.csc413.team5.fud5.userpreferences.ModifyRedListDialogFragment;
 import com.csc413.team5.fud5.utils.ToastUtil;
@@ -87,6 +88,13 @@ public class UserPreferencesActivity extends AppCompatActivity {
         startActivity(intent);
 
         ToastUtil.showShortToast(this, "Testing selector...");
+    }
+
+    public void showSharedPreferencesTest(View view) {
+        Intent intent = new Intent(this, SharedPreferencesTestActivity.class);
+        startActivity(intent);
+
+        ToastUtil.showShortToast(this, "Testing shared preferences...");
     }
 
     public void resetRedList(View view){

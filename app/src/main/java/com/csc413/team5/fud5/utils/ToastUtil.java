@@ -7,20 +7,20 @@ import android.widget.Toast;
  */
 public class ToastUtil {
     /**
-     * Long toast
+     * Shows a long toast
      *
-     * @param context
-     * @param msg
+     * @param context: The current context
+     * @param msg: The toast's message
      */
     public static void showLongToast(Context context, CharSequence msg) {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
 
     /**
-     * Short toast
+     * Shows a short toast
      *
-     * @param context
-     * @param msg
+     * @param context: The current context
+     * @param msg: The toast's message
      */
     public static void showShortToast(Context context, CharSequence msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();

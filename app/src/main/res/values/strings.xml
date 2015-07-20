@@ -56,6 +56,10 @@
     <string name="title_restaurant_test_activity">RestaurantTest</string>
     <string name="api_call_result">(loading)</string>
 
+    <!-- SharedPreferencesTest -->
+    <string name="title_activity_shared_preferences_test">SharedPreferencesTestActivity</string>
+    <string name="settings_ui_button_shared_preferences_test">Display shared preferences</string>
+
     <!-- User Preferences -->
     <string name="title_activity_user_preferences">User Preferences</string>
     <string name="settings_ui_text_general">General</string>
@@ -78,11 +82,6 @@
     <string name="dialog_food_preferences_title">Food Preferences</string>
     <string name="dialog_food_preferences_message">Modify default filters when you search for food</string>
 
-    <!-- App Settings-->
-    <string name="title_activity_app_settings">App Settings</string>
-    <string name="settings_ui_button_wipe_restaurant_data">Wipe restaurant data</string>
-    <string name="settings_ui_button_push_notifications">Push notifications</string>
-
 
     <!--Modify red list fragment-->
     <string name="dialog_modify_red_list_title">Red List</string>
@@ -90,12 +89,25 @@
         feed
     </string>
 
-    <!-- ApplicationSetetingsFragment -->
-    <string name="dialog_app_settings_user_settings_checkbox">User Settings</string>
-    <string name="dialog_app_settings_restaurant_history_checkbox">Restaurant History</string>
-    <string name="dialog_app_settings_user_settings_text">Checking this box and pressing \"Reset\" will set your preferred restaurant search options to application defaults. You may need to agree to the End-User License Agreement again on application restart.</string>
-    <string name="dialog_app_settings_restaurant_history_text">This application remembers restaurants when you choose \"Let\'s go!\", \"Maybe later\", or \"Never\". By checking this box and pressing \"Reset\" all of this data will be erased.</string>
-    <string name="dialog_app_settings_reset_checked_items_button">Reset checked items</string>
+    <!-- ApplicationSettings -->
+    <string name="title_activity_application_settings">App Settings</string>
+    <string name="activity_application_settings_user_settings_checkbox">User Settings</string>
+    <string name="activity_application_settings_restaurant_history_checkbox">Restaurant History</string>
+    <string name="activity_application_settings_user_settings_caption">Checking this box and
+        pressing \"Reset\" will set your preferred restaurant search options to application defaults. You may need to agree to the End-User License Agreement again on application restart.</string>
+    <string name="activity_application_settings_restaurant_history_caption">This application
+        remembers restaurants when you choose \"Let\'s go!\", \"Maybe later\", or \"Never\". By checking this box and pressing \"Reset\" all of this data will be erased.</string>
+    <string name="activity_application_settings_reset_checked_items_button">Reset checked items</string>
+    <string name="activity_application_settings_user_settings_text">User Settings</string>
+    <string name="activity_application_settings_restaurant_history_text">Restaurant History</string>
+    <string name="activity_application_settings_are_you_sure_text">Are you sure you want to reset</string>
+    <string name="activity_application_settings_positive_button_text">I\'m sure</string>
+    <string name="activity_application_settings_negative_button_text">Don\'t reset</string>
+    <string name="activity_application_settings_title">Application Settings</string>
+    <string name="activity_application_settings_reset_application_text">Reset Application</string>
+    <string name="activity_application_settings_manage_services_text">Manage Services</string>
+    <string name="activity_application_settings_location_services_button_text">Turn location services on/off</string>
+    <string name="settings_ui_button_push_notifications">Push notifications</string>
 
     <!-- End User Preferences-->
 
@@ -117,4 +129,7 @@
     <string name="title_activity_result_page">ResultPageActivity</string>
     <string name="title_activity_maps_test">Map</string>
     <string name="title_activity_restaurant_selector_test">RestaurantSelectorTestActivity</string>
+    <string name="activity_application_settings_push_notifications_text">Push Notifications</string>
+    <string name="activity_application_settings_nearby_restaurants_checkbox">Nearby restaurants</string>
+    <string name="activity_application_settings_app_updates_checkbox">App updates</string>
 </resources>
