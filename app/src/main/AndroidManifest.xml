@@ -83,6 +83,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UserPreferencesActivity" />
         </activity>
+        <activity
+            android:name=".ResultPageActivity"
+            android:label="@string/title_activity_result_page"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="nosensor">
+            <meta-data
+                android:name="com.google.android.maps.v2.API_KEY"
+                android:value="@string/google_maps_key"/>
+        </activity>
 
         <!-- BEGIN TEST ACTIVITIES -->
         <!-- These are to be excluded from the public release -->
@@ -104,15 +113,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
-        </activity>
-        <activity
-            android:name=".ResultPageActivity"
-            android:label="@string/title_activity_result_page"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="nosensor">
-            <meta-data
-                android:name="com.google.android.maps.v2.API_KEY"
-                android:value="AIzaSyAU2n7ktwHsJa9_MTKMqoLX0IAQc3QwEGg" />
         </activity>
         <activity
             android:name=".tests.MapsTestActivity"
