@@ -63,14 +63,14 @@ public class MapsTestActivity extends FragmentActivity {
      */
     private void setUpMap() {
         //mMap.addMarker(new MarkerOptions().position(new LatLng(37.722039, -122.476640)).title("SFSU"));
-        LatLng sfsu = new LatLng(37.722039, -122.476640); //test latitude longitude
+        LatLng sfsu = new LatLng(37.782263, -122.392632); //test latitude longitude
 
         mMap.setMyLocationEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sfsu, 13));//sets the view
 
         mMap.addMarker(new MarkerOptions()
                 .position(sfsu)
-                .title("School"));
+                .title("New Loc"));
 
         //mMap.getMaxZoomLevel();
     }
