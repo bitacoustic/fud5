@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">FüD5</string>
     <string name="hello_world">Hello world!</string>
+    <string name="main_title">Food Settings</string>
     <string name="how_about">How about...</string>
     <string name="action_settings">Settings</string>
 
