@@ -50,6 +50,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/activity_application_settings_manage_services_text"
+                android:id="@+id/textView5"
+                android:layout_marginTop="15dp"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_application_settings_location_services_button_text"
+                android:id="@+id/buttonManageLocationServices"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/activity_application_settings_reset_application_text"
                 android:id="@+id/txtViewAppSettingsTitle"
                 android:layout_marginTop="15dp"/>
@@ -101,7 +116,8 @@
                 android:layout_height="wrap_content"
                 android:text="Location Preferences:"
                 android:id="@+id/text_location_preferences"
-                android:gravity="left" />
+                android:gravity="left"
+                android:layout_marginTop="15dp"/>
 
             <TextView
                 android:layout_width="fill_parent"
@@ -133,21 +149,6 @@
 
             <!-- end Temporary SharedPrefs settings marker -->
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/activity_application_settings_manage_services_text"
-                android:id="@+id/textView5"
-                android:layout_marginTop="25dp" />
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/activity_application_settings_location_services_button_text"
-                android:id="@+id/buttonManageLocationServices"
-                android:layout_marginTop="10dp" />
 
         </LinearLayout>
     </ScrollView>
