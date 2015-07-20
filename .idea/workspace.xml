@@ -22,7 +22,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0be053e6-2649-4c49-ba33-68c5b23502d2" name="Default" comment="GooogleMaps test implementation&#10;&#10;-maps test page looks the way we would like the results page to look. With strings and all.">
+    <list default="true" id="0be053e6-2649-4c49-ba33-68c5b23502d2" name="Default" comment="GooogleMaps test implementation&#10;&#10;-results page no longer crashes, and our results page looks right">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="t5.iws" />
@@ -4261,7 +4261,13 @@
       <option name="project" value="LOCAL" />
       <updated>1437416979005</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="GooogleMaps test implementation&#10;&#10;-results page no longer crashes, and our results page looks right">
+      <created>1437417039474</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1437417039474</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView">
@@ -4325,7 +4331,8 @@
     <MESSAGE value="GooogleMaps test implementation&#10;&#10;-created the test" />
     <MESSAGE value="GooogleMaps test implementation&#10;&#10;-more formatting" />
     <MESSAGE value="GooogleMaps test implementation&#10;&#10;-maps test page looks the way we would like the results page to look. With strings and all." />
-    <option name="LAST_COMMIT_MESSAGE" value="GooogleMaps test implementation&#10;&#10;-maps test page looks the way we would like the results page to look. With strings and all." />
+    <MESSAGE value="GooogleMaps test implementation&#10;&#10;-results page no longer crashes, and our results page looks right" />
+    <option name="LAST_COMMIT_MESSAGE" value="GooogleMaps test implementation&#10;&#10;-results page no longer crashes, and our results page looks right" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
