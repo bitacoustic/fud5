@@ -1,127 +1,105 @@
 package com.csc413.team5.fud5.userpreferences;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.SharedPreferences;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.Toast;
 
-import com.csc413.team5.appdb.dbHelper;
 import com.csc413.team5.fud5.R;
 
-/**
- * Resets user settings (clears the SharedPreferences file "UserSettings") and/or restaurant
- * history (wipes the green, yellow, and red lists).
- * <p/>
- * Created on 7/16/2015.
- *
- * @author Eric C. Black
- */
 public class ApplicationSettingsFragment extends DialogFragment {
-    private static final String TAG = "AppSettingsDialog";
+    protected boolean mIsUserSettingsChecked;
+    protected boolean mIsRestaurantHistoryChecked;
 
-    protected CheckBox mCheckBoxUserSettings;
-    protected CheckBox mCheckBoxRestaurantHistory;
-    protected Button mBtnReset;
+    ApplicationSettingsConfirmListener mListener;
 
-    protected boolean isUserSettingsChecked;
-    protected boolean isRestaurantHistoryChecked;
+    public static ApplicationSettingsFragment
+    newInstance(boolean isUserSettingsChecked, boolean isRestaurantHistoryChecked) {
+        ApplicationSettingsFragment f = new ApplicationSettingsFragment();
 
-    public static final String PREFS_FILE = "UserSettings";
-    private SharedPreferences userSettings;
-    private SharedPreferences.Editor userSettingsEditor;
-    private dbHelper db;
+        Bundle args = new Bundle();
+        args.putBoolean("isUserSettingsChecked", isUserSettingsChecked);
+        args.putBoolean("isRestaurantHistoryChecked", isRestaurantHistoryChecked);
+        f.setArguments(args);
 
-    public static ApplicationSettingsFragment newInstance() {
-        return new ApplicationSettingsFragment();
+        return f;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        mIsUserSettingsChecked = getArguments()
+                .getBoolean("isUserSettingsChecked", false);
+        mIsRestaurantHistoryChecked = getArguments()
+                .getBoolean("isRestaurantHistoryChecked", false);
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        return dialog;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        String userSettings = getActivity().getResources().getString(R.string
+                .activity_application_settings_user_settings_text);
+        String restaurantHistory = getActivity().getResources().getString(R.string
+                .activity_application_settings_restaurant_history_text);
+        String areYouSureYouWantToResset = getActivity().getResources().getString(R.string
+                .activity_application_settings_are_you_sure_text);
+        String positiveButtonText = getActivity().getResources().getString(R.string
+                .activity_application_settings_positive_button_text);
+        String negativeButtonText = getActivity().getResources().getString(R.string
+                .activity_application_settings_negative_button_text);
+
+        StringBuilder message = new StringBuilder(areYouSureYouWantToResset);
+        message.append(" ");
+
+        if (mIsUserSettingsChecked && mIsRestaurantHistoryChecked)
+            message.append(userSettings + " & " + restaurantHistory + "?");
+        else if (mIsUserSettingsChecked)
+            message.append(userSettings + "?");
+        else if (mIsRestaurantHistoryChecked)
+            message.append(restaurantHistory + "?");
+        else
+            this.dismiss();
+
+        builder.setMessage(message)
+                .setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mListener.onApplicationSettingsConfirmPositiveClick
+                                (ApplicationSettingsFragment.this);
+                    }
+                })
+                .setNegativeButton(negativeButtonText, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mListener.onApplicationSettingsConfirmNegativeClick
+                                (ApplicationSettingsFragment.this);
+                    }
+                });
+
+        return builder.create();
     }
 
-    @Nullable
+    public interface ApplicationSettingsConfirmListener {
+        void onApplicationSettingsConfirmPositiveClick(DialogFragment dialog);
+
+        void onApplicationSettingsConfirmNegativeClick(DialogFragment dialog);
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_application_settings, container, false);
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
 
-        mCheckBoxUserSettings = (CheckBox) v.findViewById(R.id.checkBoxAppSettingsUser);
-
-        userSettings = getActivity().getSharedPreferences(PREFS_FILE, 0);
-        userSettingsEditor = userSettings.edit();
-
-        db = new dbHelper(getActivity(), null, null, 1);
-
-        isUserSettingsChecked = false;
-        mCheckBoxUserSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isUserSettingsChecked = !isUserSettingsChecked;
-                Log.i(TAG, "user settings checkbox was " +
-                        (isUserSettingsChecked ? "checked" : "unchecked"));
-            }
-        });
-
-        mCheckBoxRestaurantHistory = (CheckBox) v.findViewById(R.id.checkBoxAppSettingsRestaurant);
-        isRestaurantHistoryChecked = false;
-        mCheckBoxRestaurantHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isRestaurantHistoryChecked = !isRestaurantHistoryChecked;
-                Log.i(TAG, "restaurant history checkbox was " +
-                        (isRestaurantHistoryChecked ? "checked" : "unchecked"));
-            }
-        });
-
-        mBtnReset = (Button) v.findViewById(R.id.buttonAppSettingsReset);
-        mBtnReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isUserSettingsChecked || isRestaurantHistoryChecked)
-                    resetAppSettings();
-            }
-        });
-
-        return v;
-    }
-
-    public boolean isUserSettingsChecked() {
-        return isUserSettingsChecked;
-    }
-
-    public boolean isRestaurantHistoryChecked() {
-        return isRestaurantHistoryChecked;
-    }
-
-    public void resetAppSettings() {
-        if (isUserSettingsChecked) {
-            userSettingsEditor.clear().commit();
-            Log.i(TAG, "cleared user settings");
-            Toast.makeText(getActivity(), "Cleared User Settings", Toast.LENGTH_SHORT).show();
+        try {
+            // Instantiate the NoticeDialogListener so we can send events to the host
+            mListener = (ApplicationSettingsConfirmListener) activity;
+        } catch (ClassCastException e) {
+            // The activity doesn't implement the interface, throw exception
+            throw new ClassCastException(activity.toString()
+                    + " must implement NoticeDialogListener");
         }
-
-        if (isRestaurantHistoryChecked) {
-            db.wipeRestaurantList(1);
-            Log.i(TAG, "wiped green list (1)");
-            db.wipeRestaurantList(2);
-            Log.i(TAG, "wiped yellow list (2)");
-            db.wipeRestaurantList(3);
-            Log.i(TAG, "wiped red list (3)");
-            Toast.makeText(getActivity(), "Cleared Restaurant History", Toast.LENGTH_SHORT).show();
-        }
-
-        getDialog().dismiss();
     }
 }

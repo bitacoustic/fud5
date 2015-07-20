@@ -7,9 +7,6 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-/**
- * Created by Eric on 7/8/2015.
- */
 public class AskToUseLocationFragment extends DialogFragment {
     NoticeDialogListener mListener;
 

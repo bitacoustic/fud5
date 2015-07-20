@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -57,64 +56,92 @@ public class ModifyRedListDialogFragment extends DialogFragment {
 
         final AlertDialog.Builder ad = new AlertDialog.Builder(this.getActivity());
 
-        if (!db_helper.isDbExist(this.getActivity())) {
-            ad.setTitle(R.string.db_does_not_exist);
-        } else {
-            ad.setTitle(R.string.settings_ui_title_red_list);
-        }
-
         // If there are no items in the red list
-        if (db_helper.isTableEmpty(3)) {
-            ad.setMessage("Red list is empty.");
+        String dialog_message = "";
+
+        if (db_helper.isDbExist(this.getActivity()) && db_helper.isTableExist(3) &&
+                !db_helper.isTableEmpty(3)) {
+
+            ad.setTitle(R.string.dialog_modify_red_list_title);
+
+            // If it's not empty
+            ad.setMultiChoiceItems(redListItems,bl, new DialogInterface.OnMultiChoiceClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+
+                    if(isChecked){
+                        // If user select a item then add it in selected items
+                        selList.add(which);
+                    }
+                    else if (selList.contains(which))
+                    {
+                        // if the item is already selected then remove it
+                        selList.remove(Integer.valueOf(which));
+                    }
+                }
+            });
+
+            // Removes all items that are selected
+            ad.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    msg="";
+                    for (int i = 0; i < selList.size(); i++) {
+
+                        msg="\n"+ redListItems[((int) selList.get(i))];
+
+                        // helper method
+                        deleteFromRedList(redListItems[((int) selList.get(i))].toString());
+                    }
+                    Toast.makeText(getActivity(),
+                            "Removed: \n" + msg, Toast.LENGTH_LONG)
+                            .show();
+                }
+            });
+
+            // Cancels removal
+            ad.setNegativeButton(R.string.generic_cancel_text, new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getActivity(),
+                            "Cancelled removal.", Toast.LENGTH_LONG)
+                            .show();
+                }
+            });
         }
 
-        // If it's not empty
-        ad.setMultiChoiceItems(redListItems,bl, new DialogInterface.OnMultiChoiceClickListener() {
+        else {
 
-        @Override
-        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+            ad.setTitle(R.string.generic_info_title);
 
-                if(isChecked){
-                    // If user select a item then add it in selected items
-                    selList.add(which);
-                }
-                else if (selList.contains(which))
-                {
-                    // if the item is already selected then remove it
-                    selList.remove(Integer.valueOf(which));
-                }
+            // If database does not exist
+            if (!db_helper.isDbExist(this.getActivity())) {
+                dialog_message = dialog_message.concat(getString((R.string.db_does_not_exist)) + "\n");
             }
-        });
 
-        // Removes all items that are selected
-        ad.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
+            // If database does not exist
+            if (!db_helper.isTableExist(3)) {
+                dialog_message = dialog_message.concat(getString(R.string.db_table_does_not_exist) + "\n");
+            }
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                msg="";
-                for (int i = 0; i < selList.size(); i++) {
+            // If table is empty
+            if (db_helper.isTableEmpty(3)) {
+                dialog_message = dialog_message.concat(getString(R.string.db_table_is_empty) + "\n");
+            }
 
-                    msg="\n"+ redListItems[((int) selList.get(i))];
-
-                    // helper method
-                    deleteFromRedList(redListItems[((int) selList.get(i))].toString());
+            // Removes all items that are selected
+            ad.setPositiveButton(R.string.generic_ok_text, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
                 }
-                Toast.makeText(getActivity(),
-                        "Removed: \n" + msg, Toast.LENGTH_LONG)
-                        .show();
-            }
-        });
+            });
 
-        // Cancels removal
-        ad.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getActivity(),
-                        "Cancelled removal.", Toast.LENGTH_LONG)
-                        .show();
-            }
-        });
+            ad.setMessage(dialog_message);
+        }
 
         return ad.create();
     }

@@ -3,8 +3,6 @@ package com.csc413.team5.fud5.tests;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.csc413.team5.fud5.R;
@@ -113,28 +111,6 @@ public class RestaurantTestActivity extends ActionBarActivity {
 
         protected void onPostExecute(String result) {
             output.append("-----------------------------------------------------\n" +
-                            "YELP BUSINESS SEARCH, ATTEMPT TO MATCH VENUE WITH " +
-                            "LOCU AND PULL ADDITIONAL DATA (MENU AND OPEN HOURS)\n" +
-                            "-----------------------------------------------------\n\n"
-            );
-            output.append("Queried Yelp for: " + someRestaurant.getBusinessName() + '\n');
-
-            output.append("Attempted Locu match: "+ ":\n");
-            if (locuId.compareTo("") == 0)
-                output.append("No match found.");
-            else
-                output.append("Matched Locu ID: " + locuId);
-
-
-            output.append("\n\nResult of Yelp business search request with Locu information if a " +
-                    "match was found :\n");
-            if (someRestaurant == null)
-                output.append("null Restaurant()\n");
-            else
-                output.append(someRestaurant.toString());
-
-
-            output.append("\n\n-----------------------------------------------------\n" +
                             "YELP SEARCH FOR BUSINESSES AROUND A PARTICULAR LOCATION\n" +
                             "-----------------------------------------------------"
             );
@@ -148,30 +124,27 @@ public class RestaurantTestActivity extends ActionBarActivity {
                         "RestaurantList are:");
                 output.append(someRestaurantList.toString());
             }
+
+            output.append("\n\n\n\n-----------------------------------------------------\n" +
+                            "YELP BUSINESS SEARCH, ATTEMPT TO MATCH VENUE WITH " +
+                            "LOCU AND PULL ADDITIONAL DATA (MENU AND OPEN HOURS)\n" +
+                            "-----------------------------------------------------\n\n"
+            );
+            output.append("Queried Yelp for: " + someRestaurant.getBusinessName() + '\n');
+
+            output.append("Attempted Locu match: " + ":\n");
+            if (locuId.compareTo("") == 0)
+                output.append("No match found.");
+            else
+                output.append("Matched Locu ID: " + locuId);
+
+
+            output.append("\n\nResult of Yelp business search request with Locu information if a " +
+                    "match was found :\n");
+            if (someRestaurant == null)
+                output.append("null Restaurant()\n");
+            else
+                output.append(someRestaurant.toString());
         }
-    }
-
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

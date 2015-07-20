@@ -3,7 +3,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#0099cc"
+              android:background="@color/Purple"
               android:weightSum="1">
 
     <RelativeLayout
@@ -17,7 +17,7 @@
             android:text="@string/dialog_eula_title"
             android:id="@+id/dialogEulaTitle"
             android:layout_gravity="center_horizontal"
-            android:textColor="#2c3e50"
+            android:textColor="@color/Gold"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">FüD5</string>
     <string name="hello_world">Hello world!</string>
+    <string name="main_title">Food Settings</string>
     <string name="how_about">How about...</string>
     <string name="action_settings">Settings</string>
 
@@ -26,7 +27,6 @@
 
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="title_activity_user_preferences">User Preferences</string>
 
     <string name="select_db_color">Select database color</string>
     <string name="title_activity_green_list">GreenListActivity</string>
@@ -56,11 +56,16 @@
     <string name="title_restaurant_test_activity">RestaurantTest</string>
     <string name="api_call_result">(loading)</string>
 
-    <!-- Settings UI -->
-    <string name="settings_ui_title_general">General</string>
-    <string name="settings_ui_title_misc">Miscellaneous Info</string>
-    <string name="settings_ui_title_dev_playground">Dev Playground</string>
-    <string name="settings_ui_title_red_list">Red List</string>
+    <!-- SharedPreferencesTest -->
+    <string name="title_activity_shared_preferences_test">SharedPreferencesTestActivity</string>
+    <string name="settings_ui_button_shared_preferences_test">Display shared preferences</string>
+
+    <!-- User Preferences -->
+    <string name="title_activity_user_preferences">User Preferences</string>
+    <string name="settings_ui_text_general">General</string>
+    <string name="settings_ui_text_misc">Miscellaneous Info</string>
+    <string name="settings_ui_text_dev_playground">Dev Playground</string>
+    <string name="settings_ui_text_red_list">Red List</string>
     <string name="settings_ui_button_food_settings">Food settings</string>
     <string name="settings_ui_button_app_settings">App Settings</string>
     <string name="settings_ui_button_eula">End User License Agreement</string>
@@ -71,30 +76,68 @@
     <string name="settings_ui_button_google_map_test">Google Map Test</string>
     <string name="settings_ui_button_selector_test">Restaurant Selector Test</string>
     <string name="settings_ui_button_reset_red_list">Clear red list</string>
-    <string name="dialog_food_preferences_message">Food Preferences</string>
     <string name="settings_ui_button_modify_red_list">Modify red list</string>
-    <string name="dialog_database_not_found">
-        Database not found :(
-    </string>
-    <string name="db_does_not_exist">Database does not exist.</string>
+
+    <!--Food preferences-->
+    <string name="dialog_food_preferences_title">Food Preferences</string>
+    <string name="dialog_food_preferences_message">Modify default filters when you search for food</string>
+
 
     <!--Modify red list fragment-->
-    <string name="dialog_no_database">The database does not exist.</string>
-    <string name="dialog_modify_red_list">List of restaurants that won\'t appear in your
+    <string name="dialog_modify_red_list_title">Red List</string>
+    <string name="dialog_modify_red_list_message">List of restaurants that won\'t appear in your
         feed
     </string>
 
-    <!-- ApplicationSetetingsFragment -->
-    <string name="dialog_app_settings_user_settings_checkbox">User Settings</string>
-    <string name="dialog_app_settings_restaurant_history_checkbox">Restaurant History</string>
-    <string name="dialog_app_settings_user_settings_text">Checking this box and pressing \"Reset\" will set your preferred restaurant search options to application defaults. You may need to agree to the End-User License Agreement again on application restart.</string>
-    <string name="dialog_app_settings_restaurant_history_text">This application remembers restaurants when you choose \"Let\'s go!\", \"Maybe later\", or \"Never\". By checking this box and pressing \"Reset\" all of this data will be erased.</string>
-    <string name="dialog_app_settings_reset_checked_items_button">Reset checked items</string>
+    <!-- ApplicationSettings -->
+    <string name="title_activity_application_settings">App Settings</string>
+    <string name="activity_application_settings_user_settings_checkbox">User Settings</string>
+    <string name="activity_application_settings_restaurant_history_checkbox">Restaurant History</string>
+    <string name="activity_application_settings_user_settings_caption">Checking this box and
+        pressing \"Reset\" will set your preferred restaurant search options to application defaults. You may need to agree to the End-User License Agreement again on application restart.</string>
+    <string name="activity_application_settings_restaurant_history_caption">This application
+        remembers restaurants when you choose \"Let\'s go!\", \"Maybe later\", or \"Never\". By checking this box and pressing \"Reset\" all of this data will be erased.</string>
+    <string name="activity_application_settings_reset_checked_items_button">Reset checked items</string>
+    <string name="activity_application_settings_user_settings_text">User Settings</string>
+    <string name="activity_application_settings_restaurant_history_text">Restaurant History</string>
+    <string name="activity_application_settings_are_you_sure_text">Are you sure you want to reset</string>
+    <string name="activity_application_settings_positive_button_text">I\'m sure</string>
+    <string name="activity_application_settings_negative_button_text">Don\'t reset</string>
+    <string name="activity_application_settings_title">Application Settings</string>
+    <string name="activity_application_settings_reset_application_text">Reset Application</string>
+    <string name="activity_application_settings_manage_services_text">Manage Services</string>
+    <string name="activity_application_settings_location_services_button_text">Turn location services on/off</string>
+    <string name="settings_ui_button_push_notifications">Push notifications</string>
+
+    <!-- End User Preferences-->
+
+    <!--Generic strings-->
+    <string name="generic_save_text">Save</string>
+    <string name="generic_cancel_text">Cancel</string>
+    <string name="generic_info_title">Info</string>
+    <string name="generic_cancel_text_message">New settings won\'t be saved.</string>
+    <string name="generic_are_you_sure_title">Are you sure?</string>
+    <string name="generic_back_text">Back</string>
+    <string name="generic_ok_text">Ok</string>
+
+    <!--General database-->
+    <string name="db_does_not_exist">Database does not exist.</string>
+    <string name="db_table_does_not_exist">Database table does not exist.</string>
+    <string name="db_table_is_empty">Database table is empty.</string>
 
     <!--Uncategorized-->
     <string name="title_activity_result_page">ResultPageActivity</string>
     <string name="title_activity_maps_test">Map</string>
     <string name="title_activity_restaurant_selector_test">RestaurantSelectorTestActivity</string>
-    <string name="title_activity_application_settings">ApplicationSettingsActivity</string>
+    <string name="activity_application_settings_push_notifications_text">Push Notifications</string>
+    <string name="activity_application_settings_nearby_restaurants_checkbox">Nearby restaurants</string>
+    <string name="activity_application_settings_app_updates_checkbox">App updates</string>
 
+    <string-array name="radius_array">
+        <item>0.5 mi</item>
+        <item>1.0 mi</item>
+        <item>2.5 mi</item>
+        <item>5.0 mi</item>
+        <item>10 mi</item>
+    </string-array>
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- TODO: Add any colors we use to this file -->
+
+<resources>
+    <color name="Purple">#43428a</color>
+    <color name="Gold">#ebcd7e</color>
+
+</resources>
