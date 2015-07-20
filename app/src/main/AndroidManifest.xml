@@ -108,7 +108,8 @@
         <activity
             android:name=".ResultPageActivity"
             android:label="@string/how_about"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="nosensor"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".tests.MapsTestActivity"
             android:label="@string/title_activity_maps_test"
@@ -120,7 +121,11 @@
         </activity>
         <activity
             android:name=".tests.RestaurantSelectorTestActivity"
-            android:label="@string/title_activity_restaurant_selector_test"></activity>
+            android:label="@string/title_activity_restaurant_selector_test">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserPreferencesActivity" />
+        </activity>
     </application>
 
 </manifest>
