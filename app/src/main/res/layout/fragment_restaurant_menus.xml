@@ -3,13 +3,13 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-                android:background="#DCEFF5">
+                android:background="#fffafff2">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scrollViewRMenusRestaurantName"
-        android:background="#0099cc"
+        android:background="@color/Purple"
         android:padding="5dp">
 
         <TextView
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="@string/rmenus_restaurant_name"
             android:id="@+id/textViewRMenusRestaurantName"
-            android:textColor="#2c3e50"
+            android:textColor="@color/Gold"
             android:textSize="24sp"
             android:gravity="center"
             android:textAlignment="gravity"/>

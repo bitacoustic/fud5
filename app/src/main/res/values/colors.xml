@@ -3,8 +3,7 @@
 <!-- TODO: Add any colors we use to this file -->
 
 <resources>
-
-    <color name="Purple">#6D03A7</color>
-
+    <color name="Purple">#43428a</color>
+    <color name="Gold">#ebcd7e</color>
 
 </resources>
