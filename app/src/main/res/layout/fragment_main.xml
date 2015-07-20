@@ -76,7 +76,7 @@
             android:layout_toStartOf="@+id/btnFindLocation"
             android:minHeight="50dp"
             android:text="Tacos"
-            android:layout_alignEnd="@+id/txtRadius" />
+            android:layout_alignEnd="@+id/fudbuttoncontainer" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -85,40 +85,16 @@
             android:textSize="16sp"
             android:id="@+id/textView8"
             android:layout_below="@+id/txtSearchTerm"
-            android:layout_alignParentStart="true" />
+            android:layout_alignStart="@+id/ratingBar" />
 
         <RatingBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ratingBar"
-            android:layout_below="@+id/textView8"
-            android:layout_alignParentStart="true"
             android:stepSize="0.5"
-            android:rating="3" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:background="@android:drawable/editbox_background_normal"
-            android:ems="10"
-            android:id="@+id/txtRadius"
-            android:text="1.5"
-            android:textSize="24sp"
-            android:minHeight="50dp"
+            android:rating="3"
             android:layout_below="@+id/textView8"
-            android:layout_alignParentEnd="true"
-            android:layout_toEndOf="@+id/ratingBar" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:text="Radius (miles)"
-            android:textSize="16sp"
-            android:id="@+id/textView9"
-            android:layout_above="@+id/txtRadius"
-            android:layout_toEndOf="@+id/ratingBar" />
+            android:layout_alignParentEnd="true" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -139,6 +115,29 @@
                 android:onClick="btnFuDPlz"
                 android:layout_gravity="center" />
         </FrameLayout>
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spnRadius"
+            android:background="@android:drawable/editbox_background_normal"
+            android:spinnerMode="dropdown"
+            android:layout_alignTop="@+id/ratingBar"
+            android:layout_alignParentStart="true"
+            android:minHeight="50dp"
+            android:minWidth="500dp"
+            android:layout_alignBottom="@+id/ratingBar"
+            android:layout_alignEnd="@+id/textView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="Max Radius"
+            android:textSize="16sp"
+            android:id="@+id/textView"
+            android:layout_above="@+id/ratingBar"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 

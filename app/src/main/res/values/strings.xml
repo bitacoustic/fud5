@@ -132,4 +132,12 @@
     <string name="activity_application_settings_push_notifications_text">Push Notifications</string>
     <string name="activity_application_settings_nearby_restaurants_checkbox">Nearby restaurants</string>
     <string name="activity_application_settings_app_updates_checkbox">App updates</string>
+
+    <string-array name="radius_array">
+        <item>0.5 mi</item>
+        <item>1.0 mi</item>
+        <item>2.5 mi</item>
+        <item>5.0 mi</item>
+        <item>10 mi</item>
+    </string-array>
 </resources>
