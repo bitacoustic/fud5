@@ -133,6 +133,11 @@
     <string name="activity_application_settings_nearby_restaurants_checkbox">Nearby restaurants</string>
     <string name="activity_application_settings_app_updates_checkbox">App updates</string>
 
+    <!--Result Page-->
+    <string name="green">Let\'s Go!</string>
+    <string name="yellow">Maybe Later..</string>
+    <string name="red">Don\'t Show</string>
+
     <string-array name="radius_array">
         <item>0.5 mi</item>
         <item>1.0 mi</item>
