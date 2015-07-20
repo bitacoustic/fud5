@@ -107,7 +107,8 @@
         -->
         <activity
             android:name=".ResultPageActivity"
-            android:label="@string/how_about" />
+            android:label="@string/how_about"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".tests.MapsTestActivity"
             android:label="@string/title_activity_maps_test"

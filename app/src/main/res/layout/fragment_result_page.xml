@@ -1,95 +1,94 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.csc413.team5.fud5.ResultPageActivityFragment"
-    android:id="@+id/resultPage">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:text="@string/how_about"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/how_about"
-        android:textSize="24sp"
+        android:id="@+id/imgBackground"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Bob&apos;s Burgers"
-        android:textSize="34sp"
-        android:id="@+id/textView4"
-        android:textStyle="bold"
-        android:layout_below="@+id/how_about"
-        android:layout_centerHorizontal="true" />
-
-
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/map"
         android:layout_alignParentStart="true"
-        tools:context="com.csc413.team5.fud5.MapsActivity"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_alignEnd="@+id/gridLayout"
-        android:layout_below="@+id/textView4" />
+        android:src="@drawable/test_background"
+        android:scaleType="centerCrop" />
 
-
-    <GridLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/gridLayout"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"></GridLayout>
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context="com.csc413.team5.fud5.ResultPageActivityFragment"
+        android:id="@+id/resultPage">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/green"
-        android:id="@+id/greenButton"
-        android:layout_marginTop="21dp"
-        android:clickable="true"
-        android:layout_below="@+id/map"
-        android:layout_alignParentStart="true"
-        android:background="@color/Green"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:focusable="false"
-        android:enabled="false" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/yellow"
-        android:id="@+id/yellowButton"
-        android:layout_below="@+id/greenButton"
-        android:layout_centerHorizontal="true"
-        android:clickable="true"
-        android:background="@color/Gold"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/red"
-        android:id="@+id/redButton"
-        android:clickable="true"
-        android:background="@color/Red"
-        android:textSize="20sp"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:layout_below="@+id/yellowButton"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Bob&apos;s Burgers"
+            android:textSize="34sp"
+            android:id="@+id/textView4"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true" />
 
 
-</RelativeLayout>
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="100pt"
+            android:id="@+id/map"
+            android:layout_below="@+id/textView4"
+            android:layout_alignParentStart="true"
+            tools:context="com.csc413.team5.fud5.MapsActivity"
+            android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/green"
+            android:id="@+id/greenButton"
+            android:layout_marginTop="21dp"
+            android:clickable="true"
+            android:layout_below="@+id/map"
+            android:layout_alignParentStart="true"
+            android:background="@color/Green"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:focusable="false"
+            android:enabled="false" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/yellow"
+            android:id="@+id/yellowButton"
+            android:layout_below="@+id/greenButton"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:background="@color/Gold"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/red"
+            android:id="@+id/redButton"
+            android:clickable="true"
+            android:background="@color/Red"
+            android:textSize="20sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:layout_below="@+id/yellowButton"
+            android:layout_alignParentStart="true" />
+
+
+
+
+    </RelativeLayout>
+</FrameLayout>
