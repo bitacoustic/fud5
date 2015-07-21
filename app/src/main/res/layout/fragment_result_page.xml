@@ -29,6 +29,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Bob&apos;s Burgers"
             android:textSize="34sp"
+            android:singleLine="true"
             android:id="@+id/textView4"
             android:textStyle="bold"
             android:layout_centerHorizontal="true" />
