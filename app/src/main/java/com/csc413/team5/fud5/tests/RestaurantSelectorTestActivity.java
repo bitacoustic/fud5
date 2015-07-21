@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.csc413.team5.appdb.dbHelper;
 import com.csc413.team5.fud5.R;
+import com.csc413.team5.restaurantapiwrapper.DistanceUnit;
+import com.csc413.team5.restaurantapiwrapper.ParameterRangeException;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
 import com.csc413.team5.restaurantapiwrapper.RestaurantApiClient;
 import com.csc413.team5.restaurantapiwrapper.RestaurantList;
@@ -28,6 +30,8 @@ import com.google.android.gms.location.LocationServices;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -96,12 +100,15 @@ public class RestaurantSelectorTestActivity extends Activity
             RestaurantList result = null;
             try {
                 result = new RestaurantApiClient.Builder(mYelpApiKey)
+                        .sort(1)                   // sort by distance
                         .location(mAddressString)
                         .cll(mLastLocation)
                         .build().getRestaurantList();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParameterRangeException e) {
                 e.printStackTrace();
             }
             return result;
@@ -165,36 +172,42 @@ public class RestaurantSelectorTestActivity extends Activity
                         // go in green, second third in yellow, last third in red
                         if (randoms.contains(i)) {
                             if (randoms.indexOf(i) < (randoms.size() / 3)) {
-                                appendOutputText(thisRestaurant.getBusinessName(), Color.GREEN);
+                                appendOutputText(makeString(thisRestaurant, i, "green"), Color
+                                        .GREEN);
                                 // green list = 1
                                 db.insertRestaurantToList(thisRestaurant, 1);
                             } else if (randoms.indexOf(i) >= (randoms.size() / 3) &&
                                     randoms.indexOf(i) < (randoms.size() * 2 / 3)) {
-                                appendOutputText(thisRestaurant.getBusinessName(), Color.YELLOW);
+                                appendOutputText(makeString(thisRestaurant, i, "yellow"), Color
+                                        .YELLOW);
                                 // yellow list = 2
                                 db.insertRestaurantToList(thisRestaurant, 2);
                             } else if (randoms.indexOf(i) >= (randoms.size() * 2 / 3)) {
-                                appendOutputText(thisRestaurant.getBusinessName(), Color.RED);
+                                appendOutputText(makeString(thisRestaurant, i, "red"), Color.RED);
                                 // yellow list = 3
                                 db.insertRestaurantToList(thisRestaurant, 3);
                             }
 
                         } else {
-                            appendOutputText(thisRestaurant.getBusinessName(),
-                                    Color.WHITE);
+                            appendOutputText(makeString(thisRestaurant, i, "white"), Color.WHITE);
                         }
 
                     }
                 } else {
-                    appendOutputText("No results.");
+                    appendOutputText("No results.", Color.RED);
                 }
 
                 RestaurantList resultList = selector(mRestaurantList, 4.0);
 
                 appendOutputText(" ");
                 appendOutputText("Result of selector is:");
-                for (int i = 0; i < resultList.getSize(); i++) {
-                    appendOutputText(resultList.getRestaurant(i).getBusinessName());
+
+                if (mRestaurantList.getSize() < 1) {
+                    appendOutputText("No results.", Color.RED);
+                } else {
+                    for (int i = 0; i < resultList.getSize(); i++) {
+                        appendOutputText(makeString(resultList.getRestaurant(i), i, "white"));
+                    }
                 }
             }
         }
@@ -202,9 +215,7 @@ public class RestaurantSelectorTestActivity extends Activity
 
     // assumption: input restaurant list is sorted by distance
     public RestaurantList selector(RestaurantList rList, double minRating) {
-        if (rList.getSize() < 1)
-            // TODO
-        if (rList.getSize() == 1)
+        if (rList.getSize() <= 1) // nothing to do
             return rList;
 
 //
@@ -355,5 +366,25 @@ public class RestaurantSelectorTestActivity extends Activity
 
     public void appendOutputText(String s) {
         appendOutputText(s, Color.WHITE);
+    }
+
+    public String makeString(Restaurant r, int index, String list) {
+        StringBuilder result = new StringBuilder("[" + index + "] " + r.getBusinessName()
+                + " (stars: " + r.getRating() + ", dist: "
+                + new BigDecimal(r.getDistanceFromSearchLocation(DistanceUnit.MILES))
+                .setScale(2, RoundingMode.HALF_UP) + "mi");
+
+        switch (list.toLowerCase()) {
+            case "green":
+                result.append(", timestamp: ?");
+                break;
+            case "yellow":
+                result.append(", timestamp: ?");
+                break;
+            default:
+                break;
+        }
+
+        return result.append(")").toString();
     }
 }
