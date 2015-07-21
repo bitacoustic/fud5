@@ -159,26 +159,22 @@ public class RestaurantSelectorTestActivity extends Activity
                     // go in green, second third in yellow, last third in red
                     if (randoms.contains(i)) {
                         if (randoms.indexOf(i) < (randoms.size() / 3)) {
-                            appendOutputText(thisRestaurant.getBusinessName() + " "
-                                    + thisRestaurant.getRating(), Color.GREEN);
+                            appendOutputText(thisRestaurant.getBusinessName(), Color.GREEN);
                             // green list = 1
                             db.insertRestaurantToList(thisRestaurant, 1);
                         } else if (randoms.indexOf(i) >= (randoms.size() / 3) &&
                                 randoms.indexOf(i) < (randoms.size() * 2 / 3)) {
-                            appendOutputText(thisRestaurant.getBusinessName() + " "
-                                    + thisRestaurant.getRating(), Color.YELLOW);
+                            appendOutputText(thisRestaurant.getBusinessName(), Color.YELLOW);
                             // yellow list = 2
                             db.insertRestaurantToList(thisRestaurant, 2);
                         } else if (randoms.indexOf(i) >= (randoms.size() * 2 / 3)) {
-                            appendOutputText(thisRestaurant.getBusinessName() + " "
-                                    + thisRestaurant.getRating(), Color.RED);
+                            appendOutputText(thisRestaurant.getBusinessName(), Color.RED);
                             // yellow list = 3
                             db.insertRestaurantToList(thisRestaurant, 3);
                         }
 
                     } else {
-                        appendOutputText(thisRestaurant.getBusinessName() + " "
-                                        + thisRestaurant.getRating(),
+                        appendOutputText(thisRestaurant.getBusinessName(),
                                 Color.WHITE);
                     }
 
