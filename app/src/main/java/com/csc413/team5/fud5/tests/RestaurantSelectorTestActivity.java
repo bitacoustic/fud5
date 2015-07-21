@@ -1,10 +1,12 @@
 package com.csc413.team5.fud5.tests;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -122,75 +124,79 @@ public class RestaurantSelectorTestActivity extends Activity
 
             mRestaurantList = result;
 
-            ArrayList<Integer> randoms = new ArrayList<>();
-            int numRandoms = mRestaurantList.size() / 2;
-            Random rand = new Random();
+            if (mRestaurantList == null) {
+                appendOutputText("There was a problem retrieving results from Yelp. Are you " +
+                        "connected to the internet?", Color.RED);
+            } else {
+                ArrayList<Integer> randoms = new ArrayList<>();
+                int numRandoms = mRestaurantList.size() / 2;
+                Random rand = new Random();
 
-            appendOutputText("Selecting random restaurants to assign to the green, yellow, and " +
-                    "red lists. The remaining restaurants are not assigned to any list (white " +
-                    "text). NOTE: If any of these restaurants were already in the database, " +
-                    "their list status may be reset. The results of this activity persist in " +
-                    "the database after the activity or application is destroyed. To fully " +
-                    "clear all lists on this device/emulator, uninstall the app.\n");
+                appendOutputText("Selecting random restaurants to assign to the green, yellow, and " +
+                        "red lists. The remaining restaurants are not assigned to any list (white " +
+                        "text). NOTE: If any of these restaurants were already in the database, " +
+                        "their list status may be reset. The results of this activity persist in " +
+                        "the database after the activity or application is destroyed. To fully " +
+                        "clear all lists on this device/emulator, uninstall the app.\n");
 
-            for (int i = 0; i < numRandoms; i++) {
-                int randomNumber;
-                do {
-                    randomNumber = rand.nextInt(mRestaurantList.size()); // 0..size-1
-                } while (randoms.contains(randomNumber));
-                randoms.add(randomNumber);
-            }
+                for (int i = 0; i < numRandoms; i++) {
+                    int randomNumber;
+                    do {
+                        randomNumber = rand.nextInt(mRestaurantList.size()); // 0..size-1
+                    } while (randoms.contains(randomNumber));
+                    randoms.add(randomNumber);
+                }
 
-            appendOutputText("Result:");
-            if (mRestaurantList != null) {
-                for (int i = 0; i < mRestaurantList.size(); i++) {
-                    Restaurant thisRestaurant = mRestaurantList.getRestaurant(i);
+                appendOutputText("Result:");
+                if (mRestaurantList != null) {
+                    for (int i = 0; i < mRestaurantList.size(); i++) {
+                        Restaurant thisRestaurant = mRestaurantList.getRestaurant(i);
 
-                    // if this restaurant is currently in any list, make it unlisted
-                    if (db.isRestaurantInList(thisRestaurant, 1))
-                        db.deleteRestaurantFromList(thisRestaurant, 1);
-                    if (db.isRestaurantInList(thisRestaurant, 2))
-                        db.deleteRestaurantFromList(thisRestaurant, 2);
-                    if (db.isRestaurantInList(thisRestaurant, 3))
-                        db.deleteRestaurantFromList(thisRestaurant, 3);
+                        // if this restaurant is currently in any list, make it unlisted
+                        if (db.isRestaurantInList(thisRestaurant, 1))
+                            db.deleteRestaurantFromList(thisRestaurant, 1);
+                        if (db.isRestaurantInList(thisRestaurant, 2))
+                            db.deleteRestaurantFromList(thisRestaurant, 2);
+                        if (db.isRestaurantInList(thisRestaurant, 3))
+                            db.deleteRestaurantFromList(thisRestaurant, 3);
 
-                    // add the restaurant to a list if it was randomly selected; first third
-                    // of the restaurants in the list of randomly selected index numbers
-                    // go in green, second third in yellow, last third in red
-                    if (randoms.contains(i)) {
-                        if (randoms.indexOf(i) < (randoms.size() / 3)) {
-                            appendOutputText(thisRestaurant.getBusinessName(), Color.GREEN);
-                            // green list = 1
-                            db.insertRestaurantToList(thisRestaurant, 1);
-                        } else if (randoms.indexOf(i) >= (randoms.size() / 3) &&
-                                randoms.indexOf(i) < (randoms.size() * 2 / 3)) {
-                            appendOutputText(thisRestaurant.getBusinessName(), Color.YELLOW);
-                            // yellow list = 2
-                            db.insertRestaurantToList(thisRestaurant, 2);
-                        } else if (randoms.indexOf(i) >= (randoms.size() * 2 / 3)) {
-                            appendOutputText(thisRestaurant.getBusinessName(), Color.RED);
-                            // yellow list = 3
-                            db.insertRestaurantToList(thisRestaurant, 3);
+                        // add the restaurant to a list if it was randomly selected; first third
+                        // of the restaurants in the list of randomly selected index numbers
+                        // go in green, second third in yellow, last third in red
+                        if (randoms.contains(i)) {
+                            if (randoms.indexOf(i) < (randoms.size() / 3)) {
+                                appendOutputText(thisRestaurant.getBusinessName(), Color.GREEN);
+                                // green list = 1
+                                db.insertRestaurantToList(thisRestaurant, 1);
+                            } else if (randoms.indexOf(i) >= (randoms.size() / 3) &&
+                                    randoms.indexOf(i) < (randoms.size() * 2 / 3)) {
+                                appendOutputText(thisRestaurant.getBusinessName(), Color.YELLOW);
+                                // yellow list = 2
+                                db.insertRestaurantToList(thisRestaurant, 2);
+                            } else if (randoms.indexOf(i) >= (randoms.size() * 2 / 3)) {
+                                appendOutputText(thisRestaurant.getBusinessName(), Color.RED);
+                                // yellow list = 3
+                                db.insertRestaurantToList(thisRestaurant, 3);
+                            }
+
+                        } else {
+                            appendOutputText(thisRestaurant.getBusinessName(),
+                                    Color.WHITE);
                         }
 
-                    } else {
-                        appendOutputText(thisRestaurant.getBusinessName(),
-                                Color.WHITE);
                     }
-
+                } else {
+                    appendOutputText("No results.");
                 }
-            } else {
-                appendOutputText("No results.");
+
+                RestaurantList resultList = selector(mRestaurantList, 4.0);
+
+                appendOutputText(" ");
+                appendOutputText("Result of selector is:");
+                for (int i = 0; i < resultList.getSize(); i++) {
+                    appendOutputText(resultList.getRestaurant(i).getBusinessName());
+                }
             }
-
-            RestaurantList resultList = selector(mRestaurantList, 4.0);
-
-            appendOutputText(" ");
-            appendOutputText("Result of selector is:");
-            for (int i = 0; i < resultList.getSize(); i++) {
-                appendOutputText(resultList.getRestaurant(i).getBusinessName());
-            }
-
         }
     }
 
@@ -265,11 +271,35 @@ public class RestaurantSelectorTestActivity extends Activity
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (addresses != null)
+        if (addresses != null) {
             mLastLocationAddress = addresses.get(0);
-        mAddressString = RestaurantApiClient.addressToString(mLastLocationAddress);
+            mAddressString = RestaurantApiClient.addressToString(mLastLocationAddress);
+            new RestaurantListTask().execute();
+        } else {
+            LocationManager lm = (LocationManager) getApplicationContext()
+                    .getSystemService(Context.LOCATION_SERVICE);
+            boolean gpsEnabled = false;
+            boolean networkEnabled = false;
 
-        new RestaurantListTask().execute();
+            // check whether GPS and network providers are enabled
+            try {
+                gpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            } catch (Exception e) { }
+
+            try {
+                networkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            } catch (Exception e) { }
+
+            // only show dialog if location services are not enabled
+            if (!gpsEnabled && !networkEnabled) {
+                appendOutputText("Couldn't retrieve your current location because Location " +
+                        "services appears to be off", Color.RED);
+            } else {
+                appendOutputText("There was a problem retrieving your current location, but " +
+                        "location services appear to be active. Are you connected to the " +
+                        "internet?", Color.RED);
+            }
+        }
     }
 
     /**
