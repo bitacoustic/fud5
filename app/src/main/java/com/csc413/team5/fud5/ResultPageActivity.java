@@ -2,8 +2,6 @@ package com.csc413.team5.fud5;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,20 +14,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.ImageView;
+import android.widget.TextView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import android.view.View;
+
 //TODO:remove these imports when Selector is implemented
 import com.csc413.team5.restaurantapiwrapper.*;
 
-
-import com.csc413.team5.fud5.R;
-import org.json.JSONException;
-import java.io.IOException;
-
 public class ResultPageActivity extends AppCompatActivity {
     private GoogleMap mMap;
+    RestaurantList resultList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +36,30 @@ public class ResultPageActivity extends AppCompatActivity {
         task.execute();
         setUpMapIfNeeded();
     }
+    public void displayNextResult(View v){
+        //display restaurant info goes here.
+        //restaurant image loading needs to go in yet another asynctask
+
+        LoadImageTask task = new LoadImageTask();
+        Restaurant firstResult;
+        try{
+            firstResult=resultList.remove(0);
+            TextView title = (TextView)findViewById(R.id.restaurantName);
+            title.setText(firstResult.getBusinessName());
+            task.execute(firstResult);
+
+        } catch(IndexOutOfBoundsException e){} //
+    }
 
     //TODO:remove when Selector implemented
-    private class GetResultTask extends AsyncTask<String, Void, Restaurant> {
+    private class GetResultTask extends AsyncTask<String, Void, RestaurantList> {
 
-        protected void onPostExecute(Restaurant result) {
-            //display restaurant info goes here.
-            //restaurant image loading needs to go in yet another asynctask
-            LoadImageTask task = new LoadImageTask();
-            task.execute(result);
+        protected void onPostExecute(RestaurantList result) {
+            resultList = result;
+            displayNextResult(findViewById(R.id.imgBackground));
         }
         @Override
-        protected Restaurant doInBackground(String... params)  {
+        protected RestaurantList doInBackground(String... params)  {
             // Construct a YelpApiKey from Resource strings
             String consumerKey = getApplicationContext().getResources()
                     .getString(R.string.yelp_consumer_key);
@@ -62,14 +71,14 @@ public class ResultPageActivity extends AppCompatActivity {
                     .getString(R.string.yelp_token_secret);
             YelpApiKey yelpKey = new YelpApiKey(consumerKey, consumerSecret, tokenKey, tokenSecret);
 
-            RestaurantApiClient rClient = new RestaurantApiClient.Builder(yelpKey)
-                    .id("new-tsing-tao-restaurant-san-francisco").build();
             try {
-                return rClient.getRestaurantByYelpID();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            } catch (JSONException e) {
+                RestaurantApiClient rClient = new RestaurantApiClient.Builder(yelpKey).location("Hayward, CA")
+                        //.categoryFilter("foodtrucks,restaurants")
+                        .term("seafood")
+                                //.radiusFilter(15000)
+                        .build();
+                return rClient.getRestaurantList();
+            } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
@@ -93,10 +102,7 @@ public class ResultPageActivity extends AppCompatActivity {
                 URL url = new URL(imageUrl);
                 InputStream is = url.openConnection().getInputStream();
                 return BitmapFactory.decodeStream(is);
-            } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
