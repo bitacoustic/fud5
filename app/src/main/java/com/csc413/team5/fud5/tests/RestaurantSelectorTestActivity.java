@@ -37,6 +37,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+/**
+ * If location services and data connectivity are available, query Yelp for the 20 closest
+ * restaurants, and select a portion of them to place in one of the green, yellow, or red lists.
+ * Then, run the selection algorithm.
+ */
 public class RestaurantSelectorTestActivity extends Activity
         implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -59,7 +64,7 @@ public class RestaurantSelectorTestActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_selector_test);
 
-        // Yelp key
+        // Construct the Yelp API key
         String consumerKey = getApplicationContext().getResources()
                 .getString(R.string.yelp_consumer_key);
         String consumerSecret = getApplicationContext().getResources()
@@ -144,7 +149,8 @@ public class RestaurantSelectorTestActivity extends Activity
                         "text). NOTE: If any of these restaurants were already in the database, " +
                         "their list status may be reset. The results of this activity persist in " +
                         "the database after the activity or application is destroyed. To fully " +
-                        "clear all lists on this device/emulator, uninstall the app.\n");
+                        "clear all lists on this device/emulator, reset Restaurant History in App" +
+                        "Settings.\n");
 
                 for (int i = 0; i < numRandoms; i++) {
                     int randomNumber;
@@ -213,31 +219,65 @@ public class RestaurantSelectorTestActivity extends Activity
         }
     }
 
-    // assumption: input restaurant list is sorted by distance
+    /**
+     * A test of the selection algorithm.
+     * Precondition: The supplied restaurant list is sorted by distance.
+     *
+     * @param rList      a RestaurantList
+     * @param minRating  minimum rating in the range 0.0-5.0 in increments of 0.5
+     * @return           the supplied RestaurantList modified in place to contain the result
+     *                   of the selection
+     */
     public RestaurantList selector(RestaurantList rList, double minRating) {
-        if (rList.getSize() <= 1) // nothing to do
+        if (rList.getSize() < 1) // nothing to do
             return rList;
 
+        // at this point list will have at least one restaurant. We might be tempted to just
+        // return the one restaurant but it might not meet the criteria for selection
+
+//        boolean done = false;
 //
-//        RestaurantList resultList = new RestaurantList();
-//
-//        for (int i = 0; i < rList.getSize(); i++) {
-//            if (rList.getRestaurant(i).getRating() >= minRating)
-//                resultList.add(rList.getRestaurant(i));
+//        while (!done) {
+//            for (int i = 0; i < rList.getSize(); i++) {
+//                if (rList.getRestaurant(i).getRating() < minRating) {
+//                    rList.removeRestaurant(i);
+//                    break;
+//                }
+//                else if (i == rList.getSize() - 1)
+//                    done = true;
+//            }
 //        }
 
-        boolean done = false;
-
-        while (!done) {
-            for (int i = 0; i < rList.getSize(); i++) {
-                if (rList.getRestaurant(i).getRating() < minRating) {
-                    rList.removeRestaurant(i);
-                    break;
-                }
-                else if (i == rList.getSize() - 1)
-                    done = true;
+        // Step 1: remove restaurants < minRating
+        for (int i = 0; i < rList.getSize(); ) {
+            if (rList.getRestaurant(i).getRating() < minRating) {
+                Restaurant removed = rList.removeRestaurant(i);
+                if (removed == null) // check if restaurant was removed successfully
+                    i++;
+                // otherwise don't iterate as next restaurant will be at this index
             }
+            else
+                i++;
         }
+
+        // TODO Step 2: remove restaurants from red list (do we always want to do this?)
+
+        // TODO Step 3: demote restaurants in yellow list -- those added to the yellow list most
+        // recently will be demoted the greatest number of places (use the database timestamp
+        // to determine how recently a restaurant was added)
+
+        // TODO Step 4: handle green list
+        // possibilities:
+        // -- demote restaurants in green list below restaurants in yellow list under the assumption
+        //    the user would rather try something new than be suggested a restaurant they've been
+        //    to before
+        // -- OR demote restaurants in green list to below the last unlisted ("white") restaurant
+        //    and below the last yellow listed restaurant
+        //    e.g. WHITE1 GREEN1 WHITE2 GREEN2 YELLOW1 YELLOW2 WHITE3 would become:
+        //         WHITE1 WHITE2 YELLOW1 YELLOW2 WHITE3 GREEN1 GREEN2
+
+        // TODO handle special cases
+        // -- what happens when the result is an empty list? (e.g. initial list had all red)
 
         return rList;
     }
@@ -265,9 +305,13 @@ public class RestaurantSelectorTestActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
-
+    /**
+     * Check if location services are active. If so, get the current location then call
+     * the RestaurantListTask background task to perform the Yelp API query.
+     */
     @Override
     public void onConnected(Bundle bundle) {
+
         LocationManager lm = (LocationManager) getApplicationContext()
                 .getSystemService(Context.LOCATION_SERVICE);
         boolean gpsEnabled = false;
@@ -351,6 +395,11 @@ public class RestaurantSelectorTestActivity extends Activity
                 .build();
     }
 
+    /**
+     * Add a TextView to the LinearLayout contained within the activity's ScrollView
+     * @param s      text to add
+     * @param color  the color: an int or use e.g. Color.RED
+     */
     public void appendOutputText(String s, int color) {
         TextView txtOut = new TextView(getBaseContext());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -364,6 +413,10 @@ public class RestaurantSelectorTestActivity extends Activity
         linearLayout.addView(txtOut);
     }
 
+    /**
+     * Overloaded version of appendOutputText(String s, int color) that appends white text.
+     * @param s  text to add
+     */
     public void appendOutputText(String s) {
         appendOutputText(s, Color.WHITE);
     }
