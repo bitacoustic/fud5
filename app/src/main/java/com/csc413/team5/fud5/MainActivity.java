@@ -15,13 +15,23 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.EditText;
+
+import android.util.Log;
 
 
 public class MainActivity extends AppCompatActivity {
 
 
     public void btnFuDPlz(View v){
+
+        String location = ((EditText) findViewById(R.id.txtLocation)).getText().toString();
+        String searchTerm = ((EditText) findViewById(R.id.txtLocation)).getText().toString();
+        Log.i("ResultPageActivity", "location " + location);
+        Log.i("ResultPageActivity", "searchTerms " + searchTerm);
         Intent intent = new Intent(this, ResultPageActivity.class);
+        intent.putExtra("location", location);
+        intent.putExtra("searchTerm", searchTerm);
         startActivity(intent);
     }
 

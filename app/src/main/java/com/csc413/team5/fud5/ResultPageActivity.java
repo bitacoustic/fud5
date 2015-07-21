@@ -8,18 +8,21 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import android.content.Intent;
+import android.os.AsyncTask;
+
 
 //imports for images
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import android.view.View;
+import android.location.Location;
+
+import android.util.Log;
 
 //TODO:remove these imports when Selector is implemented
 import com.csc413.team5.restaurantapiwrapper.*;
@@ -27,11 +30,20 @@ import com.csc413.team5.restaurantapiwrapper.*;
 public class ResultPageActivity extends AppCompatActivity {
     private GoogleMap mMap;
     RestaurantList resultList;
+    String location;
+    String searchTerm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_result_page);
+        Intent i = getIntent();
+        location = i.getStringExtra("location");
+        searchTerm = i.getStringExtra("searchTerm");
+        Log.i("ResultPageActivity", "location " + location);
+        Log.i("ResultPageActivity", "searchTerm " + searchTerm);
+
+
         GetResultTask task = new GetResultTask();
         task.execute();
         setUpMapIfNeeded();
@@ -41,9 +53,11 @@ public class ResultPageActivity extends AppCompatActivity {
         //restaurant image loading needs to go in yet another asynctask
 
         LoadImageTask task = new LoadImageTask();
-        Restaurant firstResult;
+        if(resultList==null)return;
         try{
+            Restaurant firstResult;
             firstResult=resultList.remove(0);
+            setUpMap(firstResult);
             TextView title = (TextView)findViewById(R.id.restaurantName);
             title.setText(firstResult.getBusinessName());
             task.execute(firstResult);
@@ -72,9 +86,9 @@ public class ResultPageActivity extends AppCompatActivity {
             YelpApiKey yelpKey = new YelpApiKey(consumerKey, consumerSecret, tokenKey, tokenSecret);
 
             try {
-                RestaurantApiClient rClient = new RestaurantApiClient.Builder(yelpKey).location("Hayward, CA")
+                RestaurantApiClient rClient = new RestaurantApiClient.Builder(yelpKey).location(location)
                         //.categoryFilter("foodtrucks,restaurants")
-                        .term("seafood")
+                        .term(searchTerm)
                                 //.radiusFilter(15000)
                         .build();
                 return rClient.getRestaurantList();
@@ -127,21 +141,22 @@ public class ResultPageActivity extends AppCompatActivity {
                     .getMap();
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
-                setUpMap();
+        //        setUpMap();
             }
         }
     }
 
-    private void setUpMap() {
+    private void setUpMap(Restaurant r) {
+        Location resultLoc = r.getAddressMapable();
 
-        LatLng sfsu = new LatLng(37.782458, -122.392828); //test latitude longitude
+        LatLng lalala = new LatLng(resultLoc.getLatitude(), resultLoc.getLongitude()); //test latitude longitude
 
         mMap.setMyLocationEnabled(true);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sfsu, 13));//sets the view
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lalala, 13));//sets the view
 
         mMap.addMarker(new MarkerOptions()
-                .position(sfsu)
-                .title("New Location"));
+                .position(lalala)
+                .title(r.getBusinessName()));
 
 
     }
