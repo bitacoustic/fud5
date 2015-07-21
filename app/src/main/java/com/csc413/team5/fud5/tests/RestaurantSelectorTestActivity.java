@@ -257,43 +257,42 @@ public class RestaurantSelectorTestActivity extends Activity
 
     @Override
     public void onConnected(Bundle bundle) {
+        LocationManager lm = (LocationManager) getApplicationContext()
+                .getSystemService(Context.LOCATION_SERVICE);
+        boolean gpsEnabled = false;
+        boolean networkEnabled = false;
 
-        // get approximate address from location
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                mGoogleApiClient);
-        Geocoder geocoder;
-        List<Address> addresses = null;
-        geocoder = new Geocoder(this, Locale.getDefault());
+        // check whether GPS and network providers are enabled
         try {
-            // the last parameter specifies max locations turn return; we just need 1
-            addresses = geocoder
-                    .getFromLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude(), 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (addresses != null) {
-            mLastLocationAddress = addresses.get(0);
-            mAddressString = RestaurantApiClient.addressToString(mLastLocationAddress);
-            new RestaurantListTask().execute();
+            gpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch (Exception e) { }
+
+        try {
+            networkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch (Exception e) { }
+
+        // only show dialog if location services are not enabled
+        if (!gpsEnabled && !networkEnabled) {
+            appendOutputText("Couldn't retrieve your current location because Location " +
+                    "services appears to be off", Color.RED);
         } else {
-            LocationManager lm = (LocationManager) getApplicationContext()
-                    .getSystemService(Context.LOCATION_SERVICE);
-            boolean gpsEnabled = false;
-            boolean networkEnabled = false;
-
-            // check whether GPS and network providers are enabled
+            // get approximate address from location
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                    mGoogleApiClient);
+            Geocoder geocoder;
+            List<Address> addresses = null;
+            geocoder = new Geocoder(this, Locale.getDefault());
             try {
-                gpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            } catch (Exception e) { }
-
-            try {
-                networkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-            } catch (Exception e) { }
-
-            // only show dialog if location services are not enabled
-            if (!gpsEnabled && !networkEnabled) {
-                appendOutputText("Couldn't retrieve your current location because Location " +
-                        "services appears to be off", Color.RED);
+                // the last parameter specifies max locations turn return; we just need 1
+                addresses = geocoder
+                        .getFromLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude(), 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (addresses != null) {
+                mLastLocationAddress = addresses.get(0);
+                mAddressString = RestaurantApiClient.addressToString(mLastLocationAddress);
+                new RestaurantListTask().execute();
             } else {
                 appendOutputText("There was a problem retrieving your current location, but " +
                         "location services appear to be active. Are you connected to the " +
