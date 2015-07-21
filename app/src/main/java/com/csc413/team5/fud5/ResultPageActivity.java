@@ -149,13 +149,13 @@ public class ResultPageActivity extends AppCompatActivity {
     private void setUpMap(Restaurant r) {
         Location resultLoc = r.getAddressMapable();
 
-        LatLng lalala = new LatLng(resultLoc.getLatitude(), resultLoc.getLongitude()); //test latitude longitude
+        LatLng latitudeLongitude = new LatLng(resultLoc.getLatitude(), resultLoc.getLongitude()); //test latitude longitude
 
         mMap.setMyLocationEnabled(true);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lalala, 13));//sets the view
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudeLongitude, 13));//sets the view
 
         mMap.addMarker(new MarkerOptions()
-                .position(lalala)
+                .position(latitudeLongitude)
                 .title(r.getBusinessName()));
 
 

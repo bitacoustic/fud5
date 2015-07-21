@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     public void btnFuDPlz(View v){
 
         String location = ((EditText) findViewById(R.id.txtLocation)).getText().toString();
-        String searchTerm = ((EditText) findViewById(R.id.txtLocation)).getText().toString();
+        String searchTerm = ((EditText) findViewById(R.id.txtSearchTerm)).getText().toString();
         Log.i("ResultPageActivity", "location " + location);
         Log.i("ResultPageActivity", "searchTerms " + searchTerm);
         Intent intent = new Intent(this, ResultPageActivity.class);
