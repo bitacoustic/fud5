@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<ImageView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:id="@+id/imgBackground"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:layout_alignParentStart="true"-->
-    <!--android:src="@drawable/test_background"-->
-    <!--android:scaleType="center" />-->
+    <ImageView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/imgBackground"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentStart="true"
+    android:src="@drawable/test_background"
+    android:scaleType="center" />
 
     <RelativeLayout
         android:layout_width="match_parent"
