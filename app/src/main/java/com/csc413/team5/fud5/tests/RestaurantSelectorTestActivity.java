@@ -186,7 +186,47 @@ public class RestaurantSelectorTestActivity extends Activity
             } else {
                 appendOutputText("No results.");
             }
+
+            RestaurantList resultList = selector(mRestaurantList, 4.0);
+
+            appendOutputText(" ");
+            appendOutputText("Result of selector is:");
+            for (int i = 0; i < resultList.getSize(); i++) {
+                appendOutputText(resultList.getRestaurant(i).getBusinessName());
+            }
+
         }
+    }
+
+    // assumption: input restaurant list is sorted by distance
+    public RestaurantList selector(RestaurantList rList, double minRating) {
+        if (rList.getSize() < 1)
+            // TODO
+        if (rList.getSize() == 1)
+            return rList;
+
+//
+//        RestaurantList resultList = new RestaurantList();
+//
+//        for (int i = 0; i < rList.getSize(); i++) {
+//            if (rList.getRestaurant(i).getRating() >= minRating)
+//                resultList.add(rList.getRestaurant(i));
+//        }
+
+        boolean done = false;
+
+        while (!done) {
+            for (int i = 0; i < rList.getSize(); i++) {
+                if (rList.getRestaurant(i).getRating() < minRating) {
+                    rList.removeRestaurant(i);
+                    break;
+                }
+                else if (i == rList.getSize() - 1)
+                    done = true;
+            }
+        }
+
+        return rList;
     }
 
 
