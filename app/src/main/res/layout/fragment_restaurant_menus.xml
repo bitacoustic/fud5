@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scrollViewRMenusRestaurantName"
-        android:background="@color/Purple"
+        android:background="@color/purple"
         android:padding="5dp">
 
         <TextView
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="@string/rmenus_restaurant_name"
             android:id="@+id/textViewRMenusRestaurantName"
-            android:textColor="@color/Gold"
+            android:textColor="@color/gold"
             android:textSize="24sp"
             android:gravity="center"
             android:textAlignment="gravity"/>
