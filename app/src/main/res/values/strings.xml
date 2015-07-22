@@ -4,6 +4,7 @@
     <string name="main_title">Food Preferences</string>
     <string name="how_about">How about...</string>
     <string name="action_settings">Settings</string>
+    <string name="action_menu">Menu</string>
 
     <string name="sample_button">Sample Button</string>
     <string name="button_pressed">Method btnSampleButton() was called.</string>

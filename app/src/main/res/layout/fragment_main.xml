@@ -6,14 +6,6 @@
     android:layout_alignParentTop="false"
     android:layout_alignWithParentIfMissing="false">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/imgBackground"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:src="@drawable/test_background"
-        android:scaleType="centerCrop" />
 
     <RelativeLayout
         android:layout_width="match_parent"

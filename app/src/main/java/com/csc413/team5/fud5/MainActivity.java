@@ -62,16 +62,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    //Closes keyboard if user clicks off of it
-    //Code thanks to Lalit Poptani on stackoverflow.com
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.
-                INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        return true;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -91,5 +81,15 @@ public class MainActivity extends AppCompatActivity {
     private void showUserPreferencesMenu(){
         Intent intent = new Intent(this, UserPreferencesActivity.class);
         startActivity(intent);
+    }
+
+    //Closes keyboard if user clicks off of it
+    //Code thanks to Lalit Poptani on stackoverflow.com
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.
+                INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        return true;
     }
 }
