@@ -71,6 +71,7 @@ public class ResultPageActivity extends AppCompatActivity {
         try{
             Restaurant firstResult;
             firstResult=resultList.remove(0);
+            mMap.clear();
             setUpMap(firstResult);
             TextView title = (TextView)findViewById(R.id.restaurantName);
             title.setText(firstResult.getBusinessName());

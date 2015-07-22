@@ -25,12 +25,17 @@
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_LOG_LEVEL" value="DEBUG" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list id="d3d28041-1ece-48cb-85ad-fd41e1fdc822" name="Default" comment="" />
     <list default="true" id="8050c060-be0c-411f-ac30-fc363938face" name="New AppDb Methods" comment="minRating gets passed to the result page">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/ResultPageActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/ResultPageActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appdb/appdb.iml" afterPath="$PROJECT_DIR$/appdb/appdb.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appdbtest/appdbtest.iml" afterPath="$PROJECT_DIR$/appdbtest/appdbtest.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_result_page.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_result_page.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/restaurantapiwrapper/restaurantapiwrapper.iml" afterPath="$PROJECT_DIR$/restaurantapiwrapper/restaurantapiwrapper.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="1f81dc65-a5db-4888-a3f4-58a2205fdec5" name="App Dependencies" comment="App Dependencies&#10;- General App Dependencies" />
@@ -85,7 +90,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="fragment_result_page.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="fragment_result_page.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_result_page.xml">
           <provider selected="true" editor-type-id="android-designer">
             <state />
@@ -98,17 +103,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ResultPageActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ResultPageActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/ResultPageActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6268657">
+            <state vertical-scroll-proportion="0.0">
               <caret line="78" column="51" selection-start-line="78" selection-start-column="51" selection-end-line="79" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3755#3852#0" expanded="true" />
-                <element signature="e#3890#3990#0" expanded="true" />
-                <element signature="e#4022#4112#0" expanded="true" />
-                <element signature="e#4147#4244#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -120,6 +121,7 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="659" column="28" selection-start-line="659" selection-start-column="28" selection-end-line="659" selection-end-column="28" />
               <folding>
+                <element signature="imports" expanded="false" />
                 <element signature="method#RestaurantApiClient#0;class#RestaurantApiClient#0" expanded="false" />
                 <element signature="method#getRestaurantList#0;class#RestaurantApiClient#0" expanded="false" />
                 <element signature="method#getRestaurantByYelpID#0;class#RestaurantApiClient#0" expanded="false" />
@@ -157,7 +159,11 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#2914#2915#0" expanded="false" />
+                <element signature="e#2965#2966#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -168,15 +174,78 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="381" column="40" selection-start-line="381" selection-start-column="34" selection-end-line="381" selection-end-column="40" />
               <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#2886#2887#0" expanded="false" />
+                <element signature="e#2911#2912#0" expanded="false" />
+                <element signature="e#3116#3117#0" expanded="false" />
+                <element signature="e#3147#3148#0" expanded="false" />
+                <element signature="e#3242#3243#0" expanded="false" />
+                <element signature="e#3269#3270#0" expanded="false" />
+                <element signature="e#3550#3551#0" expanded="false" />
+                <element signature="e#3580#3581#0" expanded="false" />
+                <element signature="e#3729#3730#0" expanded="false" />
+                <element signature="e#3766#3767#0" expanded="false" />
+                <element signature="e#3899#3900#0" expanded="false" />
+                <element signature="e#3936#3937#0" expanded="false" />
+                <element signature="e#4063#4064#0" expanded="false" />
+                <element signature="e#4100#4101#0" expanded="false" />
+                <element signature="e#4205#4206#0" expanded="false" />
+                <element signature="e#4240#4241#0" expanded="false" />
+                <element signature="e#4448#4449#0" expanded="false" />
+                <element signature="e#4484#4485#0" expanded="false" />
+                <element signature="e#4574#4575#0" expanded="false" />
+                <element signature="e#4605#4606#0" expanded="false" />
+                <element signature="e#4772#4773#0" expanded="false" />
+                <element signature="e#4806#4807#0" expanded="false" />
+                <element signature="e#4949#4950#0" expanded="false" />
+                <element signature="e#4983#4984#0" expanded="false" />
+                <element signature="e#5147#5148#0" expanded="false" />
+                <element signature="e#5184#5185#0" expanded="false" />
+                <element signature="e#5339#5340#0" expanded="false" />
+                <element signature="e#5371#5372#0" expanded="false" />
+                <element signature="e#5547#5548#0" expanded="false" />
+                <element signature="e#5582#5583#0" expanded="false" />
+                <element signature="e#6101#6102#0" expanded="false" />
+                <element signature="e#6150#6151#0" expanded="false" />
                 <element signature="method#getDistanceFromSearchLocation#1;class#Restaurant#0" expanded="false" />
                 <element signature="method#getDistanceFromLocation#0;class#Restaurant#0" expanded="false" />
                 <element signature="method#getDistanceFromLocation#1;class#Restaurant#0" expanded="false" />
+                <element signature="e#9755#9756#0" expanded="false" />
+                <element signature="e#9788#9789#0" expanded="false" />
                 <element signature="method#numCategories#0;class#Restaurant#0" expanded="false" />
                 <element signature="method#hasCategories#0;class#Restaurant#0" expanded="false" />
                 <element signature="method#getCategory#0;class#Restaurant#0" expanded="false" />
-                <element signature="e#11599#11600#0" expanded="true" />
-                <element signature="e#11634#11635#0" expanded="true" />
+                <element signature="e#11209#11210#0" expanded="false" />
+                <element signature="e#11238#11239#0" expanded="false" />
+                <element signature="e#12086#12087#0" expanded="false" />
+                <element signature="e#12120#12121#0" expanded="false" />
+                <element signature="e#12376#12377#0" expanded="false" />
+                <element signature="e#12408#12409#0" expanded="false" />
                 <element signature="method#numDeals#0;class#Restaurant#0" expanded="false" />
+                <element signature="e#12913#12914#0" expanded="false" />
+                <element signature="e#12944#12945#0" expanded="false" />
+                <element signature="e#13087#13088#0" expanded="false" />
+                <element signature="e#13119#13120#0" expanded="false" />
+                <element signature="e#13316#13317#0" expanded="false" />
+                <element signature="e#13351#13352#0" expanded="false" />
+                <element signature="e#13467#13468#0" expanded="false" />
+                <element signature="e#13498#13499#0" expanded="false" />
+                <element signature="e#13677#13678#0" expanded="false" />
+                <element signature="e#13711#13712#0" expanded="false" />
+                <element signature="e#14049#14050#0" expanded="false" />
+                <element signature="e#14078#14079#0" expanded="false" />
+                <element signature="e#14385#14386#0" expanded="false" />
+                <element signature="e#14417#14418#0" expanded="false" />
+                <element signature="e#14646#14647#0" expanded="false" />
+                <element signature="e#14688#14689#0" expanded="false" />
+                <element signature="e#14975#14976#0" expanded="false" />
+                <element signature="e#15006#15007#0" expanded="false" />
+                <element signature="e#15257#15258#0" expanded="false" />
+                <element signature="e#15285#15286#0" expanded="false" />
+                <element signature="e#15536#15537#0" expanded="false" />
+                <element signature="e#15567#15568#0" expanded="false" />
+                <element signature="e#15684#15685#0" expanded="false" />
+                <element signature="e#15716#15717#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -3511,8 +3580,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_result_page.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_result_page.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/ResultPageActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_result_page.xml" />
       </list>
     </option>
   </component>
@@ -3547,8 +3616,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
+      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -3697,7 +3765,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -3930,7 +3999,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3880597" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -3939,12 +4008,11 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32791877" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32669982" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.304414" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.304414" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18820679" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -3958,6 +4026,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -4381,7 +4450,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#2914#2915#0" expanded="false" />
+            <element signature="e#2965#2966#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -4390,6 +4463,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="659" column="28" selection-start-line="659" selection-start-column="28" selection-end-line="659" selection-end-column="28" />
           <folding>
+            <element signature="imports" expanded="false" />
             <element signature="method#RestaurantApiClient#0;class#RestaurantApiClient#0" expanded="false" />
             <element signature="method#getRestaurantList#0;class#RestaurantApiClient#0" expanded="false" />
             <element signature="method#getRestaurantByYelpID#0;class#RestaurantApiClient#0" expanded="false" />
@@ -4426,15 +4500,88 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="381" column="40" selection-start-line="381" selection-start-column="34" selection-end-line="381" selection-end-column="40" />
           <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#2886#2887#0" expanded="false" />
+            <element signature="e#2911#2912#0" expanded="false" />
+            <element signature="e#3116#3117#0" expanded="false" />
+            <element signature="e#3147#3148#0" expanded="false" />
+            <element signature="e#3242#3243#0" expanded="false" />
+            <element signature="e#3269#3270#0" expanded="false" />
+            <element signature="e#3550#3551#0" expanded="false" />
+            <element signature="e#3580#3581#0" expanded="false" />
+            <element signature="e#3729#3730#0" expanded="false" />
+            <element signature="e#3766#3767#0" expanded="false" />
+            <element signature="e#3899#3900#0" expanded="false" />
+            <element signature="e#3936#3937#0" expanded="false" />
+            <element signature="e#4063#4064#0" expanded="false" />
+            <element signature="e#4100#4101#0" expanded="false" />
+            <element signature="e#4205#4206#0" expanded="false" />
+            <element signature="e#4240#4241#0" expanded="false" />
+            <element signature="e#4448#4449#0" expanded="false" />
+            <element signature="e#4484#4485#0" expanded="false" />
+            <element signature="e#4574#4575#0" expanded="false" />
+            <element signature="e#4605#4606#0" expanded="false" />
+            <element signature="e#4772#4773#0" expanded="false" />
+            <element signature="e#4806#4807#0" expanded="false" />
+            <element signature="e#4949#4950#0" expanded="false" />
+            <element signature="e#4983#4984#0" expanded="false" />
+            <element signature="e#5147#5148#0" expanded="false" />
+            <element signature="e#5184#5185#0" expanded="false" />
+            <element signature="e#5339#5340#0" expanded="false" />
+            <element signature="e#5371#5372#0" expanded="false" />
+            <element signature="e#5547#5548#0" expanded="false" />
+            <element signature="e#5582#5583#0" expanded="false" />
+            <element signature="e#6101#6102#0" expanded="false" />
+            <element signature="e#6150#6151#0" expanded="false" />
             <element signature="method#getDistanceFromSearchLocation#1;class#Restaurant#0" expanded="false" />
             <element signature="method#getDistanceFromLocation#0;class#Restaurant#0" expanded="false" />
             <element signature="method#getDistanceFromLocation#1;class#Restaurant#0" expanded="false" />
+            <element signature="e#9755#9756#0" expanded="false" />
+            <element signature="e#9788#9789#0" expanded="false" />
             <element signature="method#numCategories#0;class#Restaurant#0" expanded="false" />
             <element signature="method#hasCategories#0;class#Restaurant#0" expanded="false" />
             <element signature="method#getCategory#0;class#Restaurant#0" expanded="false" />
-            <element signature="e#11599#11600#0" expanded="true" />
-            <element signature="e#11634#11635#0" expanded="true" />
+            <element signature="e#11209#11210#0" expanded="false" />
+            <element signature="e#11238#11239#0" expanded="false" />
+            <element signature="e#12086#12087#0" expanded="false" />
+            <element signature="e#12120#12121#0" expanded="false" />
+            <element signature="e#12376#12377#0" expanded="false" />
+            <element signature="e#12408#12409#0" expanded="false" />
             <element signature="method#numDeals#0;class#Restaurant#0" expanded="false" />
+            <element signature="e#12913#12914#0" expanded="false" />
+            <element signature="e#12944#12945#0" expanded="false" />
+            <element signature="e#13087#13088#0" expanded="false" />
+            <element signature="e#13119#13120#0" expanded="false" />
+            <element signature="e#13316#13317#0" expanded="false" />
+            <element signature="e#13351#13352#0" expanded="false" />
+            <element signature="e#13467#13468#0" expanded="false" />
+            <element signature="e#13498#13499#0" expanded="false" />
+            <element signature="e#13677#13678#0" expanded="false" />
+            <element signature="e#13711#13712#0" expanded="false" />
+            <element signature="e#14049#14050#0" expanded="false" />
+            <element signature="e#14078#14079#0" expanded="false" />
+            <element signature="e#14385#14386#0" expanded="false" />
+            <element signature="e#14417#14418#0" expanded="false" />
+            <element signature="e#14646#14647#0" expanded="false" />
+            <element signature="e#14688#14689#0" expanded="false" />
+            <element signature="e#14975#14976#0" expanded="false" />
+            <element signature="e#15006#15007#0" expanded="false" />
+            <element signature="e#15257#15258#0" expanded="false" />
+            <element signature="e#15285#15286#0" expanded="false" />
+            <element signature="e#15536#15537#0" expanded="false" />
+            <element signature="e#15567#15568#0" expanded="false" />
+            <element signature="e#15684#15685#0" expanded="false" />
+            <element signature="e#15716#15717#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/ResultPageActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="78" column="51" selection-start-line="78" selection-start-column="51" selection-end-line="79" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4447,20 +4594,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/ResultPageActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6268657">
-          <caret line="78" column="51" selection-start-line="78" selection-start-column="51" selection-end-line="79" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3755#3852#0" expanded="true" />
-            <element signature="e#3890#3990#0" expanded="true" />
-            <element signature="e#4022#4112#0" expanded="true" />
-            <element signature="e#4147#4244#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
