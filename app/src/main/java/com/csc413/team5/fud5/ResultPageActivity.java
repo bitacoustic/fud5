@@ -70,7 +70,7 @@ public class ResultPageActivity extends AppCompatActivity {
 
         protected void onPostExecute(RestaurantList result) {
             resultList = result;
-            displayNextResult(findViewById(R.id.imgBackground));
+            displayNextResult(findViewById(R.id.imgRestaurant));
         }
         @Override
         protected RestaurantList doInBackground(String... params)  {
@@ -104,7 +104,7 @@ public class ResultPageActivity extends AppCompatActivity {
 
     private class LoadImageTask extends AsyncTask<Restaurant, Void, Bitmap> {
         protected void onPostExecute(Bitmap result) {
-            ImageView background = (ImageView) findViewById(R.id.imgBackground);
+            ImageView background = (ImageView) findViewById(R.id.imgRestaurant);
             background.setImageBitmap(result);
         }
         @Override
