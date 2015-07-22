@@ -67,16 +67,20 @@ public class ResultPageActivity extends AppCompatActivity {
         //display restaurant info goes here.
         //restaurant image loading needs to go in yet another asynctask
         LoadImageTask task = new LoadImageTask();
+
         if(resultList==null)return;
+
         try{
             Restaurant firstResult;
             firstResult=resultList.remove(0);
+//            Log.i("Error inside Try", firstResult.getAddressMapable().toString());
+            mMap.clear();
             setUpMap(firstResult);
             TextView title = (TextView)findViewById(R.id.restaurantName);
             title.setText(firstResult.getBusinessName());
             task.execute(firstResult);
 
-        } catch(IndexOutOfBoundsException e){} //
+        } catch(IndexOutOfBoundsException e){}//
     }
 
     //TODO:remove when Selector implemented
