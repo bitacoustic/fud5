@@ -73,7 +73,10 @@ public class ResultPageActivity extends AppCompatActivity {
         try{
             Restaurant firstResult;
             firstResult=resultList.remove(0);
-//            Log.i("Error inside Try", firstResult.getAddressMapable().toString());
+            if(firstResult.getAddressMapable() == null){
+                firstResult=resultList.remove(0);
+                if(resultList==null)return;
+            }
             mMap.clear();
             setUpMap(firstResult);
             TextView title = (TextView)findViewById(R.id.restaurantName);
@@ -160,9 +163,9 @@ public class ResultPageActivity extends AppCompatActivity {
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
             // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-              //  setUpMap();
-            }
+//            if (mMap != null) {
+//              //  setUpMap();
+//            }
         }
     }
 
