@@ -208,6 +208,79 @@ public class dbHelper extends SQLiteOpenHelper implements dbHelperInterface {
         return restaurantNames;
     }
 
+    @Override
+    public List<String> getRestaurantTimeStampsFromList(int listClass) {
+        SQLiteDatabase db = getWritableDatabase();
+        List<String> restaurantTimestamps = new ArrayList<>();
+
+        String query;
+
+        if (listClass == 1) {   // green
+            query = "SELECT * FROM " + GREEN_RESTAURANTS_TABLE_NAME;
+        } else if (listClass == 2) {    // yellow
+            query = "SELECT * FROM " + YELLOW_RESTAURANTS_TABLE_NAME;
+        } else if (listClass == 3){ // red
+            query = "SELECT * FROM " + RED_RESTAURANTS_TABLE_NAME;
+        } else {
+            Log.d("Error", "listClassificationError");
+            return null;
+        }
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                restaurantTimestamps.add(cursor.getString(1));   // get first column value
+            } while (cursor.moveToNext());  // repeat until no more value
+        } else {
+            // TODO: Catch when there is no item in a list
+            Log.i("Error", "itemNotFoundError");
+        }
+
+        cursor.close();
+        db.close();
+        return restaurantTimestamps;
+    }
+
+    @Override
+    public String getRestaurantTimeStampFromList(Restaurant my_restaurant, int listClass) {
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "";
+        String timeStamp = "";
+
+        // TODO: Catch where my_restaurant.getBusinessName() == "";
+
+        if (listClass == 1) {
+            query = "SELECT * FROM " + GREEN_RESTAURANTS_TABLE_NAME +
+                    " WHERE " + RESTAURANT_ID_COLUMN + "=\"" + my_restaurant.getBusinessName() +
+                    "\" LIMIT 1;";
+        } else if (listClass == 2) {
+            query = "SELECT * FROM " + YELLOW_RESTAURANTS_TABLE_NAME +
+                    " WHERE " + RESTAURANT_ID_COLUMN + "=\"" + my_restaurant.getBusinessName() +
+                    "\" LIMIT 1;";
+        } else if (listClass == 3) {
+            query = "SELECT * FROM " + RED_RESTAURANTS_TABLE_NAME +
+                    " WHERE " + RESTAURANT_ID_COLUMN + "=\"" + my_restaurant.getBusinessName() +
+                    "\" LIMIT 1;";
+        } else {
+            Log.d("Error", "listClassificationError");
+        }
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            timeStamp = cursor.getString(1);
+        } else {
+            // TODO: Catch when there is no item in a list
+            Log.i("Error", "itemNotFoundError");
+        }
+
+        cursor.close();
+        db.close();
+
+        return timeStamp;
+    }
+
     // Helper class that uses delete and insert methods to migrate records
     @Override
     public boolean migrateRestaurantListItem(Restaurant my_restaurant, int fromList, int toList) {

@@ -47,4 +47,15 @@ public class AppDbTestActivity extends AppCompatActivity {
         dbColorDialogFragment deleteDialog = dbColorDialogFragment.newInstance(4);
         deleteDialog.show(getFragmentManager(), "deleteDialog");
     }
+
+    public void checkRecordColumn(View v) {
+        checkWhichDbDialogFragment whichDialog = checkWhichDbDialogFragment.newInstance();
+        whichDialog.show(getFragmentManager(), "whichDialog");
+    }
+
+    public void showRestaurantTimestamp(View v) {
+        showTimestampDialogFragment timeStampDialog = showTimestampDialogFragment.newInstance();
+        timeStampDialog.show(getFragmentManager(), "whichDialog");
+    }
+
 }

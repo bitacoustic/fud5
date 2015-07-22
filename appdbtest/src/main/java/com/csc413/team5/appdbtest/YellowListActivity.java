@@ -30,10 +30,12 @@ public class YellowListActivity extends AppCompatActivity {
 
         /* display DB contents */
         TextView restaurantIDEntries = (TextView) findViewById(R.id.yellow_restaurant_id_text);
+        TextView restaurantTimeStampEntries = (TextView) findViewById(R.id.red_restaurant_timestamp_text);
 
         if (db.isTableExist(2) && !db.isTableEmpty(2)) { // if db exists and is not empty
             for (int i = 0; i < db.getRestaurantNamesFromList(2).size(); i++) {
                 restaurantIDEntries.append("\n" + db.getRestaurantNamesFromList(2).get(i));
+                restaurantTimeStampEntries.append("\n" + db.getRestaurantTimeStampsFromList(2).get(i));
             }
         }
 

@@ -30,11 +30,13 @@ public class RedListActivity extends AppCompatActivity {
 
         /* display DB contents */
         TextView restaurantIDEntries = (TextView) findViewById(R.id.red_restaurant_id_text);
+        TextView restaurantTimeStampEntries = (TextView) findViewById(R.id.red_restaurant_timestamp_text);
 
 
         if (db.isTableExist(3) && !db.isTableEmpty(3)) { // if db exists and is not empty
             for (int i = 0; i < db.getRestaurantNamesFromList(3).size(); i++) {
                 restaurantIDEntries.append("\n" + db.getRestaurantNamesFromList(3).get(i));
+                restaurantTimeStampEntries.append("\n" + db.getRestaurantTimeStampsFromList(3).get(i));
             }
         }
         restaurantIDEntries.append("\n" + "---TABLE INFO---");

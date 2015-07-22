@@ -43,6 +43,34 @@ public interface dbHelperInterface {
      * @see Restaurant
      */
     List<String> getRestaurantNamesFromList(int listClass);
+
+    /**
+     * Returns a list of restaurant timestamps from a designated list
+     *
+     * @param listClass a list to insert an item to
+     * <ol>
+     *  <li>Inserts to green list.</li>
+     *  <li>Inserts to yellow list.</li>
+     *  <li>Inserts to red list.</li>
+     * </ol>
+     * @return a list of restaurant names from a designated list
+     * @see Restaurant
+     */
+    List<String> getRestaurantTimeStampsFromList(int listClass);
+
+    /**
+     * Returns the restaurant's timestamp from a designated list
+     * @param my_restaurant a restaurant
+     * @param listClass
+     * <ol>
+     *  <li>The green list.</li>
+     *  <li>The yellow list.</li>
+     *  <li>The red list.</li>
+     * </ol>
+     * @return if the restaurant is only in the designated list, true
+     * @see Restaurant
+     */
+    String getRestaurantTimeStampFromList(Restaurant my_restaurant, int listClass);
     /* end db_read code */
 
     /* db_update code */
