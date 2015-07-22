@@ -67,14 +67,17 @@ public class ResultPageActivity extends AppCompatActivity {
         //display restaurant info goes here.
         //restaurant image loading needs to go in yet another asynctask
         LoadImageTask task = new LoadImageTask();
-
+        mMap.clear();
         if(resultList==null)return;
 
         try{
             Restaurant firstResult;
             firstResult=resultList.remove(0);
-//            Log.i("Error inside Try", firstResult.getAddressMapable().toString());
-            mMap.clear();
+            if(firstResult.getAddressMapable()==null){
+                firstResult=resultList.remove(0);
+                if(resultList==null)return;
+
+            }
             setUpMap(firstResult);
             TextView title = (TextView)findViewById(R.id.restaurantName);
             title.setText(firstResult.getBusinessName());
@@ -167,6 +170,7 @@ public class ResultPageActivity extends AppCompatActivity {
     }
 
     private void setUpMap(Restaurant r) {
+        Log.e("Restaurant", r.toString());
         Location resultLoc = r.getAddressMapable();
 
         LatLng latitudeLongitude = new LatLng(resultLoc.getLatitude(), resultLoc.getLongitude()); //test latitude longitude
