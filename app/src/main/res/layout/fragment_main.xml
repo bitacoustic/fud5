@@ -48,7 +48,8 @@
             android:src="@android:drawable/ic_menu_mylocation"
             android:layout_below="@+id/textView6"
             android:layout_alignBottom="@+id/txtLocation"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:onClick="btnFindLocation"/>
 
         <TextView
             android:layout_width="wrap_content"
