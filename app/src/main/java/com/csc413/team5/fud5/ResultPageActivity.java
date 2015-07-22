@@ -1,51 +1,59 @@
 package com.csc413.team5.fud5;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.csc413.team5.fud5.tests.LocuMenuTestActivity;
+import com.csc413.team5.restaurantapiwrapper.Restaurant;
+import com.csc413.team5.restaurantapiwrapper.RestaurantApiClient;
+import com.csc413.team5.restaurantapiwrapper.RestaurantList;
+import com.csc413.team5.restaurantapiwrapper.YelpApiKey;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import android.content.Intent;
-import android.os.AsyncTask;
 
-
-//imports for images
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.view.*;
-import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 import java.io.InputStream;
 import java.net.URL;
 
-import android.location.Location;
-
-import android.util.Log;
-
+//imports for images
 //TODO:remove these imports when Selector is implemented
-import com.csc413.team5.restaurantapiwrapper.*;
 
 public class ResultPageActivity extends AppCompatActivity {
+    public static final String TAG = "ResultPageActivity";
+
     private GoogleMap mMap;
     RestaurantList resultList;
+
+    // user input passed from main activity
     String location;
     String searchTerm;
+    int maxRadius;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_result_page);
+
         Intent i = getIntent();
         location = i.getStringExtra("location");
         searchTerm = i.getStringExtra("searchTerm");
-        Log.i("ResultPageActivity", "location " + location);
-        Log.i("ResultPageActivity", "searchTerm " + searchTerm);
-
+        maxRadius = i.getIntExtra("maxRadius", 805); // default to 805m (0.5 miles) if value
+                                                        // not read
+        Log.i(TAG, "Retrieved location: " + location);
+        Log.i(TAG, "Retrieved searchTerm: " + searchTerm);
+        Log.i(TAG, "Retrieved maxRadius: " + maxRadius);
 
         GetResultTask task = new GetResultTask();
         task.execute();
@@ -90,9 +98,10 @@ public class ResultPageActivity extends AppCompatActivity {
 
             try {
                 RestaurantApiClient rClient = new RestaurantApiClient.Builder(yelpKey).location(location)
-                        //.categoryFilter("foodtrucks,restaurants")
+                        //.categoryFilter("foodtrucks,restaurants") is included by default
+                        .sort(2)                  // 0=best matched, 1=distance, 2=highest rated
                         .term(searchTerm)
-                                //.radiusFilter(15000)
+                        .radiusFilter(maxRadius)
                         .build();
                 return rClient.getRestaurantList();
             } catch (Exception e) {

@@ -2,36 +2,44 @@ package com.csc413.team5.fud5;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Rating;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.RatingBar;
-import android.widget.Spinner;
 import android.widget.EditText;
+import android.widget.Spinner;
 
-import android.util.Log;
+import com.csc413.team5.restaurantapiwrapper.DistanceUnit;
+import com.csc413.team5.restaurantapiwrapper.RestaurantApiClient;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    public static final String TAG = "MainActivity";
 
     public void btnFuDPlz(View v){
 
         String location = ((EditText) findViewById(R.id.txtLocation)).getText().toString();
         String searchTerm = ((EditText) findViewById(R.id.txtSearchTerm)).getText().toString();
-        Log.i("ResultPageActivity", "location " + location);
-        Log.i("ResultPageActivity", "searchTerms " + searchTerm);
+
+        String[] maxRadiusArray = ((Spinner) findViewById(R.id.spnRadius)).getSelectedItem()
+                .toString().split(" ");
+        int maxRadius = (int) RestaurantApiClient.convertDistanceUnits(Double.parseDouble
+                (maxRadiusArray[0]), DistanceUnit.MILES, DistanceUnit.METERS);
+
+        Log.i(TAG, "location: " + location);
+        Log.i(TAG, "searchTerm: " + searchTerm);
+        Log.i(TAG, "maxRadius: " + maxRadius);
+
         Intent intent = new Intent(this, ResultPageActivity.class);
         intent.putExtra("location", location);
         intent.putExtra("searchTerm", searchTerm);
+        intent.putExtra("maxRadius", maxRadius);
         startActivity(intent);
     }
 
