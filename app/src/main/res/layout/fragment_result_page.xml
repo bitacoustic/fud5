@@ -28,9 +28,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/restaurantName"
         android:id="@+id/linearResult"
-        android:layout_above="@+id/buttonBar">
+        android:layout_above="@+id/buttonBar"
+        android:layout_below="@+id/restaurantName">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -104,7 +104,6 @@
         android:onClick="displayNextResult" />
 
 </LinearLayout>
-
 
 
 </RelativeLayout>

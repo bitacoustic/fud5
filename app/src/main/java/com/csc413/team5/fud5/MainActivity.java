@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 
 import com.csc413.team5.fud5.utils.ToastUtil;
@@ -77,14 +78,18 @@ public class MainActivity extends AppCompatActivity
         int maxRadius = (int) RestaurantApiClient.convertDistanceUnits(Double.parseDouble
                 (maxRadiusArray[0]), DistanceUnit.MILES, DistanceUnit.METERS);
 
+        double minRating = ((RatingBar) findViewById(R.id.ratingBar)).getRating();
+
         Log.i(TAG, "location: " + location);
         Log.i(TAG, "searchTerm: " + searchTerm);
         Log.i(TAG, "maxRadius: " + maxRadius);
+        Log.i(TAG, "minRating:" + minRating);
 
         Intent intent = new Intent(this, ResultPageActivity.class);
         intent.putExtra("location", location);
         intent.putExtra("searchTerm", searchTerm);
         intent.putExtra("maxRadius", maxRadius);
+        intent.putExtra("minRating", minRating);
         startActivity(intent);
     }
 

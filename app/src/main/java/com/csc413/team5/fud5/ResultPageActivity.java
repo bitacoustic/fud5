@@ -41,6 +41,7 @@ public class ResultPageActivity extends AppCompatActivity {
     String location;
     String searchTerm;
     int maxRadius;
+    double minRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +53,11 @@ public class ResultPageActivity extends AppCompatActivity {
         searchTerm = i.getStringExtra("searchTerm");
         maxRadius = i.getIntExtra("maxRadius", 805); // default to 805m (0.5 miles) if value
                                                         // not read
+        minRating = i.getDoubleExtra("minRating",0);
         Log.i(TAG, "Retrieved location: " + location);
         Log.i(TAG, "Retrieved searchTerm: " + searchTerm);
         Log.i(TAG, "Retrieved maxRadius: " + maxRadius);
+        Log.i(TAG, "Retrieved minRating: " + minRating);
 
         GetResultTask task = new GetResultTask();
         task.execute();
@@ -63,7 +66,6 @@ public class ResultPageActivity extends AppCompatActivity {
     public void displayNextResult(View v){
         //display restaurant info goes here.
         //restaurant image loading needs to go in yet another asynctask
-
         LoadImageTask task = new LoadImageTask();
         if(resultList==null)return;
         try{
