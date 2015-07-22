@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.csc413.team5.fud5.tests.ImageTestActivity"
+    android:background="@color/Purple">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtTestLocation"
+        android:textSize="24sp"
+        android:background="@android:drawable/editbox_background_normal"
+        android:minHeight="50dp"
+        android:singleLine="true"
+        android:text="San Francisco"
+        android:layout_above="@+id/txtTestSearchTerm"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/txtTestSearchTerm" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/editbox_background_normal"
+        android:textSize="24sp"
+        android:id="@+id/txtTestSearchTerm"
+        android:minHeight="50dp"
+        android:singleLine="true"
+        android:text="Tacos"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ImageMe!"
+        android:id="@+id/button"
+        android:layout_alignTop="@+id/txtTestSearchTerm"
+        android:layout_alignParentEnd="true"
+        android:onClick="btnImageMe" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/txtTestLocation"
+        android:layout_alignEnd="@+id/txtTestLocation"
+        android:fillViewport="false">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/api_call_result"
+            android:id="@+id/imageInfo"
+            style="@style/TextAppearance.AppCompat.Inverse" />
+    </ScrollView>
+
+</RelativeLayout>

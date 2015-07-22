@@ -86,6 +86,13 @@
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:text="Image Test"
+                android:id="@+id/test_image"
+                android:onClick="showImageTest"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/settings_ui_button_locu_test"
                 android:id="@+id/test_locu"
                 android:onClick="showLocuTest"/>

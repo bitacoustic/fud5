@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.csc413.team5.appdb.dbHelper;
 import com.csc413.team5.appdbtest.AppDbTestActivity;
+import com.csc413.team5.fud5.tests.ImageTestActivity;
 import com.csc413.team5.fud5.tests.LocuMenuTestActivity;
 import com.csc413.team5.fud5.tests.MapsTestActivity;
 import com.csc413.team5.fud5.tests.RestaurantSelectorTestActivity;
@@ -67,6 +68,13 @@ public class UserPreferencesActivity extends AppCompatActivity {
         startActivity(intent);
 
         ToastUtil.showShortToast(this, "Testing Yelp integration...");
+    }
+
+    public void showImageTest(View view){
+        Intent intent = new Intent(this, ImageTestActivity.class);
+        startActivity(intent);
+
+        ToastUtil.showShortToast(this, "Testing Images...");
     }
 
     public void showLocuTest(View view){
