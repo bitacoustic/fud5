@@ -21,6 +21,7 @@ import com.csc413.team5.restaurantapiwrapper.YelpApiKey;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -153,7 +154,7 @@ public class ResultPageActivity extends AppCompatActivity {
                     .getMap();
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
-        //        setUpMap();
+              //  setUpMap();
             }
         }
     }
@@ -164,11 +165,12 @@ public class ResultPageActivity extends AppCompatActivity {
         LatLng latitudeLongitude = new LatLng(resultLoc.getLatitude(), resultLoc.getLongitude()); //test latitude longitude
 
         mMap.setMyLocationEnabled(true);
+        //mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudeLongitude, 13));//sets the view
 
-        mMap.addMarker(new MarkerOptions()
+        mMap.addMarker(new MarkerOptions().visible(true)
                 .position(latitudeLongitude)
-                .title(r.getBusinessName()));
+                .title(r.getBusinessName())).showInfoWindow();
 
 
     }
