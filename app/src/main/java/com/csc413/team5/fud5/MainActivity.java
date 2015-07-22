@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-
+        // TODO: Migrate this to xml file instead
         //Spinner code from Android example
         Spinner spinner = (Spinner) findViewById(R.id.spnRadius);
         // Create an ArrayAdapter using the string array and a default spinner layout

@@ -14,6 +14,7 @@ import com.csc413.team5.fud5.tests.RestaurantSelectorTestActivity;
 import com.csc413.team5.fud5.tests.RestaurantTestActivity;
 import com.csc413.team5.fud5.tests.SharedPreferencesTestActivity;
 import com.csc413.team5.fud5.userpreferences.ApplicationSettingsActivity;
+import com.csc413.team5.fud5.userpreferences.FoodPreferencesActivity;
 import com.csc413.team5.fud5.userpreferences.ModifyRedListDialogFragment;
 import com.csc413.team5.fud5.utils.ToastUtil;
 
@@ -28,8 +29,8 @@ public class UserPreferencesActivity extends AppCompatActivity {
 
     public void showFoodSettings(View v) {
         // TODO
-//        DialogFragment eulaDialog = EulaDialogFragment.newInstance();
-//        eulaDialog.show(getFragmentManager(), "EULA");
+        Intent intent = new Intent(this, FoodPreferencesActivity.class);
+        startActivity(intent);
 
         ToastUtil.showShortToast(this, "Showing Food Settings");
     }

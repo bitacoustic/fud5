@@ -109,47 +109,6 @@
                 android:id="@+id/buttonAppSettingsReset"
                 android:layout_marginTop="15dp" />
 
-            <!-- Temporary SharedPrefs settings marker -->
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Location Preferences:"
-                android:id="@+id/text_location_preferences"
-                android:gravity="left"
-                android:layout_marginTop="15dp"/>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Default min star:"
-                android:id="@+id/text_default_min_star"
-                android:gravity="left" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Default search radius:"
-                android:id="@+id/text_default_search_radius"
-                android:gravity="left" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Preferred niches:"
-                android:id="@+id/text_preferred_niches"
-                android:gravity="left" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="App Language:"
-                android:id="@+id/text_app_language"
-                android:gravity="left" />
-
-            <!-- end Temporary SharedPrefs settings marker -->
-
-
         </LinearLayout>
     </ScrollView>
 

@@ -58,6 +58,15 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
+            android:name=".userpreferences.FoodPreferencesActivity"
+            android:label="@string/title_activity_food_preferences"
+            android:parentActivityName=".UserPreferencesActivity"
+            android:screenOrientation="nosensor">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".UserPreferencesActivity" />
+        </activity>
+        <activity
             android:name=".userpreferences.ApplicationSettingsActivity"
             android:label="@string/title_activity_application_settings"
             android:parentActivityName=".UserPreferencesActivity"

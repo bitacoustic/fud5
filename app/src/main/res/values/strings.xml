@@ -138,6 +138,13 @@
     <string name="green">Let\'s Go!</string>
     <string name="yellow">Maybe Later..</string>
     <string name="red">Don\'t Show</string>
+    <string name="title_activity_food_preferences">Food Preferences</string>
+    <string name="default_location_search_text">Default Location</string>
+    <string name="default_search_term_text">Default Search Term</string>
+    <string name="default_search_radius_text">Default Search Radius</string>
+    <string name="default_min_star_text">Default Min. Star</string>
+    <string name="hint_default_search_term">Tacos, Italian, Vegetarian</string>
+    <string name="hint_default_location_search">1600 Holloway Ave.</string>
 
     <string-array name="radius_array">
         <item>0.5 mi</item>

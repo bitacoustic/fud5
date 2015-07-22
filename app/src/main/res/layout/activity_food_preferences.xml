@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/default_location_search_text"
+        android:id="@+id/default_location_search_text" />
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtLocation"
+        android:textSize="24sp"
+        android:background="@android:drawable/editbox_background_normal"
+        android:minHeight="50dp"
+        android:singleLine="true"
+        android:hint="@string/hint_default_location_search"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/default_search_term_text"
+        android:id="@+id/default_search_term_text" />
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/editbox_background_normal"
+        android:textSize="24sp"
+        android:id="@+id/txtSearchTerm"
+        android:minHeight="50dp"
+        android:singleLine="true"
+        android:hint="@string/hint_default_search_term"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/default_search_radius_text"
+        android:id="@+id/default_search_radius" />
+    <Spinner
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spnRadius"
+        android:background="@android:drawable/editbox_background_normal"
+        android:spinnerMode="dropdown"
+        android:minHeight="50dp"
+        android:minWidth="500dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/default_min_star_text"
+        android:id="@+id/default_min_star" />
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar"
+        android:stepSize="1.0"
+        android:rating="2.0"
+        android:numStars="5"
+        android:layout_gravity="center"/>
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/generic_save_text"
+        android:id="@+id/ok_button"
+        android:onClick="onSaveButtonPress"/>
+
+</LinearLayout>
