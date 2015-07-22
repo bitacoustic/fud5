@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -66,21 +67,23 @@ public class ResultPageActivity extends AppCompatActivity {
     public void displayNextResult(View v){
         //display restaurant info goes here.
         //restaurant image loading needs to go in yet another asynctask
-        LoadImageTask task = new LoadImageTask();
-
         if(resultList==null)return;
-
         try{
             Restaurant firstResult;
             firstResult=resultList.remove(0);
-//            Log.i("Error inside Try", firstResult.getAddressMapable().toString());
-            mMap.clear();
             setUpMap(firstResult);
             TextView title = (TextView)findViewById(R.id.restaurantName);
             title.setText(firstResult.getBusinessName());
-            task.execute(firstResult);
+            //Load the restaurant image
+            LoadImageTask task = new LoadImageTask();
+            URL imageURL = new URL(firstResult.getImageUrl().toString());
+            task.execute(imageURL);
+            //Load the rating image
+            LoadImageRatingTask ratingTask = new LoadImageRatingTask();
+            imageURL = new URL(firstResult.getRatingImgUrl().toString());
+            ratingTask.execute(imageURL);
 
-        } catch(IndexOutOfBoundsException e){}//
+        } catch(Exception e){} //
     }
 
     //TODO:remove when Selector implemented
@@ -122,18 +125,16 @@ public class ResultPageActivity extends AppCompatActivity {
 
     //END remove
 
-    private class LoadImageTask extends AsyncTask<Restaurant, Void, Bitmap> {
+    private class LoadImageTask extends AsyncTask<URL, Void, Bitmap> {
         protected void onPostExecute(Bitmap result) {
             ImageView restaurantImage = (ImageView) findViewById(R.id.imgRestaurant);
             restaurantImage.setImageBitmap(result);
         }
         @Override
-        protected Bitmap doInBackground(Restaurant... params)  {
+        protected Bitmap doInBackground(URL... params)  {
 
             try {
-                String imageUrl = params[0].getImageUrl().toString();
-                imageUrl =  imageUrl.replace("ms.jpg","o.jpg"); //this gets original image size
-                URL url = new URL(imageUrl);
+                URL url = params[0];
                 InputStream is = url.openConnection().getInputStream();
                 return BitmapFactory.decodeStream(is);
             } catch (Exception e) {
@@ -141,6 +142,13 @@ public class ResultPageActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             return null;
+        }
+    }
+
+    private class LoadImageRatingTask extends LoadImageTask {
+        protected void onPostExecute(Bitmap result) {
+            ImageView ratingImage = (ImageView) findViewById(R.id.imgRating);
+            ratingImage.setImageBitmap(result);
         }
     }
 
