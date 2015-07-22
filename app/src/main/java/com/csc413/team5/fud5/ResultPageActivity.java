@@ -107,8 +107,8 @@ public class ResultPageActivity extends AppCompatActivity {
 
     private class LoadImageTask extends AsyncTask<Restaurant, Void, Bitmap> {
         protected void onPostExecute(Bitmap result) {
-            ImageView background = (ImageView) findViewById(R.id.imgRestaurant);
-            background.setImageBitmap(result);
+            ImageView restaurantImage = (ImageView) findViewById(R.id.imgRestaurant);
+            restaurantImage.setImageBitmap(result);
         }
         @Override
         protected Bitmap doInBackground(Restaurant... params)  {
