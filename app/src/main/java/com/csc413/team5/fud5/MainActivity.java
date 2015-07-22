@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onConnected(Bundle bundle) {
-        if (!islocationServicesOn() && !isNetworkAvailable())
+        if (!isNetworkAvailable() && !islocationServicesOn())
             return;
 
         // Get the most recent location of the device (~ user's current location)
