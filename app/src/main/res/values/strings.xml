@@ -146,6 +146,9 @@
     <string name="hint_default_search_term">Tacos, Italian, Vegetarian</string>
     <string name="hint_default_location_search">1600 Holloway Ave.</string>
 
+    <string name="toast_location_services_are_off">Location services are off</string>
+    <string name="toast_network_unavailable">Network is unavailable</string>
+
     <string-array name="radius_array">
         <item>0.5 mi</item>
         <item>1.0 mi</item>

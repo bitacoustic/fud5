@@ -89,6 +89,14 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
+            android:name=".tests.ImageTestActivity"
+            android:label="Image Test"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
             android:name=".tests.LocuMenuTestActivity"
             android:label="@string/title_locu_menu_test_activity"
             android:parentActivityName=".MainActivity"

@@ -1,51 +1,64 @@
 package com.csc413.team5.fud5;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.media.Image;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.csc413.team5.fud5.tests.LocuMenuTestActivity;
+import com.csc413.team5.restaurantapiwrapper.Restaurant;
+import com.csc413.team5.restaurantapiwrapper.RestaurantApiClient;
+import com.csc413.team5.restaurantapiwrapper.RestaurantList;
+import com.csc413.team5.restaurantapiwrapper.YelpApiKey;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import android.content.Intent;
-import android.os.AsyncTask;
 
-
-//imports for images
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.view.*;
-import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 import java.io.InputStream;
 import java.net.URL;
 
-import android.location.Location;
-
-import android.util.Log;
-
+//imports for images
 //TODO:remove these imports when Selector is implemented
-import com.csc413.team5.restaurantapiwrapper.*;
 
 public class ResultPageActivity extends AppCompatActivity {
+    public static final String TAG = "ResultPageActivity";
+
     private GoogleMap mMap;
     RestaurantList resultList;
+
+    // user input passed from main activity
     String location;
     String searchTerm;
+    int maxRadius;
+    double minRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_result_page);
+
         Intent i = getIntent();
         location = i.getStringExtra("location");
         searchTerm = i.getStringExtra("searchTerm");
-        Log.i("ResultPageActivity", "location " + location);
-        Log.i("ResultPageActivity", "searchTerm " + searchTerm);
-
+        maxRadius = i.getIntExtra("maxRadius", 805); // default to 805m (0.5 miles) if value
+                                                        // not read
+        minRating = i.getDoubleExtra("minRating",0);
+        Log.i(TAG, "Retrieved location: " + location);
+        Log.i(TAG, "Retrieved searchTerm: " + searchTerm);
+        Log.i(TAG, "Retrieved maxRadius: " + maxRadius);
+        Log.i(TAG, "Retrieved minRating: " + minRating);
 
         GetResultTask task = new GetResultTask();
         task.execute();
@@ -54,18 +67,24 @@ public class ResultPageActivity extends AppCompatActivity {
     public void displayNextResult(View v){
         //display restaurant info goes here.
         //restaurant image loading needs to go in yet another asynctask
-
-        LoadImageTask task = new LoadImageTask();
         if(resultList==null)return;
         try{
             Restaurant firstResult;
             firstResult=resultList.remove(0);
+            mMap.clear();
             setUpMap(firstResult);
             TextView title = (TextView)findViewById(R.id.restaurantName);
             title.setText(firstResult.getBusinessName());
-            task.execute(firstResult);
+            //Load the restaurant image
+            LoadImageTask task = new LoadImageTask();
+            URL imageURL = new URL(firstResult.getImageUrl().toString());
+            task.execute(imageURL);
+            //Load the rating image
+            LoadImageRatingTask ratingTask = new LoadImageRatingTask();
+            imageURL = new URL(firstResult.getRatingImgUrl().toString());
+            ratingTask.execute(imageURL);
 
-        } catch(IndexOutOfBoundsException e){} //
+        } catch(Exception e){} //
     }
 
     //TODO:remove when Selector implemented
@@ -89,10 +108,12 @@ public class ResultPageActivity extends AppCompatActivity {
             YelpApiKey yelpKey = new YelpApiKey(consumerKey, consumerSecret, tokenKey, tokenSecret);
 
             try {
-                RestaurantApiClient rClient = new RestaurantApiClient.Builder(yelpKey).location(location)
-                        //.categoryFilter("foodtrucks,restaurants")
+                RestaurantApiClient rClient = new RestaurantApiClient.Builder(yelpKey)
+                        .location(location)
+                        //.categoryFilter("foodtrucks,restaurants") is included by default
+                        .sort(2)                  // 0=best matched, 1=distance, 2=highest rated
                         .term(searchTerm)
-                                //.radiusFilter(15000)
+                        .radiusFilter(maxRadius)
                         .build();
                 return rClient.getRestaurantList();
             } catch (Exception e) {
@@ -105,18 +126,16 @@ public class ResultPageActivity extends AppCompatActivity {
 
     //END remove
 
-    private class LoadImageTask extends AsyncTask<Restaurant, Void, Bitmap> {
+    private class LoadImageTask extends AsyncTask<URL, Void, Bitmap> {
         protected void onPostExecute(Bitmap result) {
-            ImageView background = (ImageView) findViewById(R.id.imgRestaurant);
-            background.setImageBitmap(result);
+            ImageView restaurantImage = (ImageView) findViewById(R.id.imgRestaurant);
+            restaurantImage.setImageBitmap(result);
         }
         @Override
-        protected Bitmap doInBackground(Restaurant... params)  {
+        protected Bitmap doInBackground(URL... params)  {
 
             try {
-                String imageUrl = params[0].getImageUrl().toString();
-                imageUrl =  imageUrl.replace("ms.jpg","o.jpg"); //this gets original image size
-                URL url = new URL(imageUrl);
+                URL url = params[0];
                 InputStream is = url.openConnection().getInputStream();
                 return BitmapFactory.decodeStream(is);
             } catch (Exception e) {
@@ -124,6 +143,13 @@ public class ResultPageActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             return null;
+        }
+    }
+
+    private class LoadImageRatingTask extends LoadImageTask {
+        protected void onPostExecute(Bitmap result) {
+            ImageView ratingImage = (ImageView) findViewById(R.id.imgRating);
+            ratingImage.setImageBitmap(result);
         }
     }
 
@@ -144,7 +170,7 @@ public class ResultPageActivity extends AppCompatActivity {
                     .getMap();
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
-        //        setUpMap();
+              //  setUpMap();
             }
         }
     }
@@ -155,11 +181,12 @@ public class ResultPageActivity extends AppCompatActivity {
         LatLng latitudeLongitude = new LatLng(resultLoc.getLatitude(), resultLoc.getLongitude()); //test latitude longitude
 
         mMap.setMyLocationEnabled(true);
+        //mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudeLongitude, 13));//sets the view
 
-        mMap.addMarker(new MarkerOptions()
+        mMap.addMarker(new MarkerOptions().visible(true)
                 .position(latitudeLongitude)
-                .title(r.getBusinessName()));
+                .title(r.getBusinessName())).showInfoWindow();
 
 
     }
