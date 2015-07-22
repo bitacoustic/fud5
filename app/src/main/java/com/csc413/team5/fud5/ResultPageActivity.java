@@ -176,7 +176,7 @@ public class ResultPageActivity extends AppCompatActivity {
 
         mMap.setMyLocationEnabled(true);
         //mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudeLongitude, 13));//sets the view
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudeLongitude, 15));//sets the view
 
         mMap.addMarker(new MarkerOptions().visible(true)
                 .position(latitudeLongitude)
