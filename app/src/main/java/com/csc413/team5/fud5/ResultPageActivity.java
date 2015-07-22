@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -66,24 +67,24 @@ public class ResultPageActivity extends AppCompatActivity {
     public void displayNextResult(View v){
         //display restaurant info goes here.
         //restaurant image loading needs to go in yet another asynctask
-        LoadImageTask task = new LoadImageTask();
-
         if(resultList==null)return;
-
         try{
             Restaurant firstResult;
             firstResult=resultList.remove(0);
-            if(firstResult.getAddressMapable() == null){
-                firstResult=resultList.remove(0);
-                if(resultList==null)return;
-            }
             mMap.clear();
             setUpMap(firstResult);
             TextView title = (TextView)findViewById(R.id.restaurantName);
             title.setText(firstResult.getBusinessName());
-            task.execute(firstResult);
+            //Load the restaurant image
+            LoadImageTask task = new LoadImageTask();
+            URL imageURL = new URL(firstResult.getImageUrl().toString());
+            task.execute(imageURL);
+            //Load the rating image
+            LoadImageRatingTask ratingTask = new LoadImageRatingTask();
+            imageURL = new URL(firstResult.getRatingImgUrl().toString());
+            ratingTask.execute(imageURL);
 
-        } catch(IndexOutOfBoundsException e){}//
+        } catch(Exception e){} //
     }
 
     //TODO:remove when Selector implemented
@@ -125,18 +126,16 @@ public class ResultPageActivity extends AppCompatActivity {
 
     //END remove
 
-    private class LoadImageTask extends AsyncTask<Restaurant, Void, Bitmap> {
+    private class LoadImageTask extends AsyncTask<URL, Void, Bitmap> {
         protected void onPostExecute(Bitmap result) {
             ImageView restaurantImage = (ImageView) findViewById(R.id.imgRestaurant);
             restaurantImage.setImageBitmap(result);
         }
         @Override
-        protected Bitmap doInBackground(Restaurant... params)  {
+        protected Bitmap doInBackground(URL... params)  {
 
             try {
-                String imageUrl = params[0].getImageUrl().toString();
-                imageUrl =  imageUrl.replace("ms.jpg","o.jpg"); //this gets original image size
-                URL url = new URL(imageUrl);
+                URL url = params[0];
                 InputStream is = url.openConnection().getInputStream();
                 return BitmapFactory.decodeStream(is);
             } catch (Exception e) {
@@ -144,6 +143,13 @@ public class ResultPageActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             return null;
+        }
+    }
+
+    private class LoadImageRatingTask extends LoadImageTask {
+        protected void onPostExecute(Bitmap result) {
+            ImageView ratingImage = (ImageView) findViewById(R.id.imgRating);
+            ratingImage.setImageBitmap(result);
         }
     }
 
@@ -163,9 +169,9 @@ public class ResultPageActivity extends AppCompatActivity {
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
             // Check if we were successful in obtaining the map.
-//            if (mMap != null) {
-//              //  setUpMap();
-//            }
+            if (mMap != null) {
+              //  setUpMap();
+            }
         }
     }
 
@@ -176,7 +182,7 @@ public class ResultPageActivity extends AppCompatActivity {
 
         mMap.setMyLocationEnabled(true);
         //mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudeLongitude, 15));//sets the view
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudeLongitude, 13));//sets the view
 
         mMap.addMarker(new MarkerOptions().visible(true)
                 .position(latitudeLongitude)
