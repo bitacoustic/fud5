@@ -97,7 +97,8 @@ public class ResultPageActivity extends AppCompatActivity {
             YelpApiKey yelpKey = new YelpApiKey(consumerKey, consumerSecret, tokenKey, tokenSecret);
 
             try {
-                RestaurantApiClient rClient = new RestaurantApiClient.Builder(yelpKey).location(location)
+                RestaurantApiClient rClient = new RestaurantApiClient.Builder(yelpKey)
+                        .location(location)
                         //.categoryFilter("foodtrucks,restaurants") is included by default
                         .sort(2)                  // 0=best matched, 1=distance, 2=highest rated
                         .term(searchTerm)

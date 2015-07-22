@@ -2,6 +2,12 @@ package com.csc413.team5.fud5;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,12 +21,51 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.csc413.team5.fud5.utils.ToastUtil;
 import com.csc413.team5.restaurantapiwrapper.DistanceUnit;
 import com.csc413.team5.restaurantapiwrapper.RestaurantApiClient;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
     public static final String TAG = "MainActivity";
+
+    protected String mAddressString;
+    protected GoogleApiClient mGoogleApiClient; // client for Google API requests
+    protected Location mLastLocation; // stores latitude, longitude of device's last known location
+    protected Address mLastLocationAddress; // representation of lat,long as address
+
+    protected EditText mEditLocation;
+
+    public void btnFindLocation(View v) {
+        if (islocationServicesOn()) {
+            if (isNetworkAvailable()) {
+                // compel location update
+                mGoogleApiClient.disconnect();
+                mGoogleApiClient.connect(); // calls onConnected() to get current location
+
+                if (mAddressString.compareTo("") != 0)
+                    mEditLocation.setText(mAddressString);
+            } else {
+                ToastUtil.showShortToast(getApplicationContext(),
+                        getString(R.string.toast_network_unavailable));
+                Log.i(TAG, "Can't get last known location because the network is unavailable");
+            }
+
+        } else {
+            ToastUtil.showShortToast(getApplicationContext(),
+                    getString(R.string.toast_location_services_are_off));
+            Log.i(TAG, "Can't get last known location because location services are off");
+        }
+    }
 
     public void btnFuDPlz(View v){
 
@@ -51,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-
         //Spinner code from Android example
         Spinner spinner = (Spinner) findViewById(R.id.spnRadius);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -61,6 +105,13 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+
+        // ref to Location EditText that can be accessed throughout the activity
+        mEditLocation = (EditText) findViewById(R.id.txtLocation);
+
+        // connected with Google Location services
+        buildGoogleApiClient();
+        mGoogleApiClient.connect();
     }
 
     @Override
@@ -99,5 +150,99 @@ public class MainActivity extends AppCompatActivity {
                 INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         return true;
+    }
+
+
+    /*********************
+     * Location services *
+     *********************/
+
+    /**
+     * Builds a GoogleApiClient, adds API LocationServices.
+     */
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        if (!islocationServicesOn() && !isNetworkAvailable())
+            return;
+
+        // Get the most recent location of the device (~ user's current location)
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        // get approximate address from location
+        Geocoder geocoder;
+        List<Address> addresses = null;
+        geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            // the last parameter specifies max locations turn return; we just need 1
+            addresses = geocoder
+                    .getFromLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude(), 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (addresses != null) {
+            mLastLocationAddress = addresses.get(0);
+            mAddressString = RestaurantApiClient.addressToString(mLastLocationAddress);
+        } else {
+            mAddressString = "";
+        }
+    }
+
+    /**
+     * Re-establish a connection with GoogleApiClient services if the connected is suspended.
+     *
+     * @param i
+     */
+    @Override
+    public void onConnectionSuspended(int i) {
+        // The connection to Google Play services was lost for some reason. We call connect() to
+        // attempt to re-establish the connection.
+        Log.i(TAG, "Google Play services connection suspended. Reconnecting...");
+        mGoogleApiClient.connect();
+    }
+
+    /**
+     * See ConnectionResult documentation for possible error codes.
+     *
+     * @param connectionResult
+     */
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i(TAG, "Google Play services connection failed: ConnectionResult.getErrorCode() = "
+                + connectionResult.getErrorCode());
+    }
+
+
+    public boolean islocationServicesOn() {
+        LocationManager lm = (LocationManager) getApplicationContext()
+                .getSystemService(Context.LOCATION_SERVICE);
+        boolean gpsEnabled = false;
+        boolean networkEnabled = false;
+
+        // check whether GPS and network providers are enabled
+        try {
+            gpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch (Exception e) { }
+
+        try {
+            networkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch (Exception e) { }
+
+        // only show dialog if location services are not enabled
+        return (gpsEnabled || networkEnabled);
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
