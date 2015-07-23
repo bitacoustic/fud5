@@ -51,6 +51,32 @@ public class LocuExtension {
     }
 
     /**
+     * Attempts to match the specified {@link Restaurant} to a venue in Locu's database, extracting
+     * the following information if it is available:
+     * <ul>
+     *     <li>Open hours
+     *     <li>Restaurant menu
+     * </ul>
+     * <p>The Restaurant will be updated in place to reflect the additional information. Returns
+     * the unique Locu ID if a match was found, or an empty String ("") if a match was not found,
+     * as in {@link #getLocuId(Restaurant)}
+     * @param r a Restaurant object
+     * @return a String containing the unique Locu ID of the match, or "" if a match was not
+     *         found
+     */
+    public String updateIfHasMenu(Restaurant r) {
+        String id = getLocuIdIfHasMenu(r);
+        if (id.compareTo("") == 0) // match not found
+            return id;              // don't update Restaurant
+
+        r.locuId = id;
+        updateFromMatchedLocuId(r, id);
+
+        return id;
+    }
+
+
+    /**
      * Attempts to get the Locu ID for the given Restaurant, using the Restaurant's geolocation,
      * name, address, and postal code. If no match was found, returns an empty String ("").
      * @param r a Restaurant object
@@ -90,10 +116,74 @@ public class LocuExtension {
             JSONArray inObjects = in.getJSONArray("objects");
             if (inObjects.length() > 0) {
                 JSONObject inObjectsMatch = inObjects.getJSONObject(0);
+
+                //if (!inObjectsMatch.getBoolean("has_menu"))
+                //    return "";
+
                 if (inObjectsMatch.has("id"))
                     return inObjectsMatch.getString("id");
                 else
                     return ""; // id not present, return""
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();  // if can't read response, match not possible
+            return "";
+        }
+
+        return ""; // default: can't get Locu ID for match
+    }
+
+    /**
+     * Attempts to get the Locu ID for the given Restaurant, using the Restaurant's geolocation,
+     * name, address, and postal code. If no match was found, returns an empty String ("").
+     * @param r a Restaurant object
+     * @return a Locu ID if match was found or if it is already stored in the Restaurant,
+     *         "" if ID information is otherwise unavailable
+     */
+    public String getLocuIdIfHasMenu(Restaurant r) {
+
+        String rName = r.name;
+        int indexNameFirstSpace = rName.indexOf(' ');
+        if (indexNameFirstSpace > 0)
+            rName = rName.substring(0, indexNameFirstSpace);
+
+        String rAddr = r.address.getAddressLine(0).replaceAll(" ", "%20");
+
+        String url = "http://api.locu.com/v1_0/venue/search/?"
+                + "location=" + Double.toString(r.addressMapable.getLatitude())
+                + "%2C" + Double.toString(r.addressMapable.getLongitude())
+                + "&name=" + rName + "&address=" + rAddr
+                + "&postal_code=" + r.address.getPostalCode()
+                + "&api_key=" + key.getKey();
+
+        OAuthRequest request = new OAuthRequest(Verb.GET, url);
+
+        Log.i(TAG, "Sending Locu request: " + request.getUrl());
+        Response response = request.send();
+        Log.i(TAG, "Received response: " + response.getMessage());
+        Log.i(TAG, "Response: " + response.getBody());
+
+        // if GET response was not OK
+        if (response.getMessage().compareTo("OK") != 0)
+            return "";
+
+        JSONObject in = null;
+        try {
+            in = new JSONObject(response.getBody());
+            JSONArray inObjects = in.getJSONArray("objects");
+            if (inObjects.length() > 0) {
+                JSONObject inObjectsMatch = inObjects.getJSONObject(0);
+
+                //if (!inObjectsMatch.getBoolean("has_menu"))
+                //    return "";
+
+                if (inObjectsMatch.has("id") && inObjectsMatch.has("has_menu")) {
+                    if (inObjectsMatch.getBoolean("has_menu"))
+                        return inObjectsMatch.getString("id");
+                    else
+                        return ""; // id not present
+                }
             }
 
         } catch (JSONException e) {
