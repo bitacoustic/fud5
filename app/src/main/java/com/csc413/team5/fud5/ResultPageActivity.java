@@ -9,9 +9,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.csc413.team5.restaurantapiwrapper.LocuApiKey;
@@ -48,11 +52,25 @@ public class ResultPageActivity extends AppCompatActivity
     int maxRadius;
     double minRating;
 
+    TextView mTitle;
+    PopupWindow popupLoadingMenu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_result_page);
 
+        // anchor for PopupWindows
+        mTitle = (TextView) findViewById(R.id.restaurantName);
+        // define "Loading menus" popups
+        LayoutInflater layoutInflater  = (LayoutInflater)getBaseContext()
+                .getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupLoadingMenuView = layoutInflater.inflate(R.layout.popup_loading_rmenu, null);
+        popupLoadingMenu = new PopupWindow(popupLoadingMenuView,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        // load the search parameters entered in main activity
         Intent i = getIntent();
         location = i.getStringExtra("location");
         searchTerm = i.getStringExtra("searchTerm");
@@ -71,9 +89,12 @@ public class ResultPageActivity extends AppCompatActivity
                 getApplicationContext().getResources().getString(R.string.yelp_token),
                 getApplicationContext().getResources().getString(R.string.yelp_token_secret) );
 
+        // start background activity to get the results
         new GetResultTask().execute();
         setUpMapIfNeeded();
     }
+
+
     public void displayNextResult(View v){
         //display restaurant info goes here.
         //restaurant image loading needs to go in yet another asynctask
@@ -193,7 +214,8 @@ public class ResultPageActivity extends AppCompatActivity
     private void setUpMap(Restaurant r) {
         Location resultLoc = r.getAddressMapable();
 
-        LatLng latitudeLongitude = new LatLng(resultLoc.getLatitude(), resultLoc.getLongitude()); //test latitude longitude
+        LatLng latitudeLongitude = new LatLng(resultLoc.getLatitude(),
+                resultLoc.getLongitude()); //test latitude longitude
 
         mMap.setMyLocationEnabled(true);
         //mMap.getUiSettings().setZoomControlsEnabled(true);
@@ -221,8 +243,11 @@ public class ResultPageActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_menu) {
-            if (firstResult != null)
+            if (firstResult != null) {
                 new DisplayMenuTask().execute(firstResult);
+                popupLoadingMenu.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
+            }
+
             return true;
         }
 
@@ -247,6 +272,8 @@ public class ResultPageActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Restaurant restaurant) {
+            popupLoadingMenu.dismiss();
+
             if (restaurant.hasLocuMenus()) {
                 Log.i(TAG, "Found menu for " + restaurant.getBusinessName());
                 DialogFragment displayRestaurantMenus = DisplayRestaurantMenusFragment

@@ -79,6 +79,12 @@
     <string name="settings_ui_button_reset_red_list">Clear red list</string>
     <string name="settings_ui_button_modify_red_list">Modify red list</string>
 
+    <!-- Main Activity -->
+    <string name="main_activity_search_term_title">Search Term (Optional)</string>
+    <string name="main_activity_location_title">Location</string>
+    <string name="main_activity_max_radius_title">Max Radius</string>
+    <string name="main_activity_max_rating_title">Minimum Rating</string>
+
     <!--Food preferences-->
     <string name="dialog_food_preferences_title">Food Preferences</string>
     <string name="dialog_food_preferences_message">Modify default filters when you search for food</string>
@@ -148,4 +154,6 @@
 
     <string name="toast_location_services_are_off">Location services are off</string>
     <string name="toast_network_unavailable">Network is unavailable</string>
+
+    <string name="popup_loading_rmenu_text">Looking for menus</string>
 </resources>
