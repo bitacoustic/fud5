@@ -125,7 +125,9 @@ public class ResultPageActivity extends AppCompatActivity
             title.setText(firstResult.getBusinessName());
             //Load the restaurant image
             LoadImageTask task = new LoadImageTask();
-            URL imageURL = new URL(firstResult.getImageUrl().toString());
+            String tempURL = firstResult.getImageUrl().toString();
+            tempURL =  tempURL.replace("ms.jpg","o.jpg"); //this gets original image size
+            URL imageURL = new URL(tempURL);
             task.execute(imageURL);
             //Load the rating image
             LoadImageRatingTask ratingTask = new LoadImageRatingTask();
