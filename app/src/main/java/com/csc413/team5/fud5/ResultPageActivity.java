@@ -215,9 +215,9 @@ public class ResultPageActivity extends AppCompatActivity
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
             // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-              //  setUpMap();
-            }
+//            if (mMap != null) {
+//              //  setUpMap();
+//            }
         }
     }
 

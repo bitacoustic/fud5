@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity
 
         /* Set default field values */
         // location input
-        locationInput.setText(userSettings.getString("defaultSearchLocation", "1600 Holloway Ave"));
+        locationInput.setText(userSettings.getString("defaultSearchLocation", "1600 Holloway Ave San Francisco"));//1600 Holloway takes you to Illinois
 
         // radius spinner
         String spinnerValue = String.valueOf(userSettings.getFloat("defaultSearchRadius", 3.0f)).concat(" mi");
