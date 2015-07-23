@@ -8,6 +8,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.content.SharedPreferences;
+import android.media.Rating;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -29,22 +31,36 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
+import com.csc413.team5.fud5.utils.ToastUtil;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 
+//public class MainActivity extends AppCompatActivity {
+//        implements GoogleApiClient.ConnectionCallbacks,
+//        GoogleApiClient.OnConnectionFailedListener {
 public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
     public static final String TAG = "MainActivity";
+    // Declare user settings
+    public static final String PREFS_FILE = "UserSettings";
+    private SharedPreferences userSettings;
+    private SharedPreferences.Editor userSettingsEditor;
 
     protected String mAddressString;
     protected GoogleApiClient mGoogleApiClient; // client for Google API requests
     protected Location mLastLocation; // stores latitude, longitude of device's last known location
     protected Address mLastLocationAddress; // representation of lat,long as address
 
-    protected EditText mEditLocation;
+//    protected EditText locationInput;
+
+    EditText locationInput;
+    EditText searchTermInput;
+    Spinner radiusSpinner;
+    RatingBar starRating;
 
     public void btnFindLocation(View v) {
         if (islocationServicesOn()) {
@@ -54,7 +70,7 @@ public class MainActivity extends AppCompatActivity
                 mGoogleApiClient.connect(); // calls onConnected() to get current location
 
                 if (mAddressString.compareTo("") != 0)
-                    mEditLocation.setText(mAddressString);
+                    locationInput.setText(mAddressString);
             } else {
                 ToastUtil.showShortToast(getApplicationContext(),
                         getString(R.string.toast_network_unavailable));
@@ -101,23 +117,49 @@ public class MainActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_main);
 
+        /* Get shared preferences */
+        userSettings = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
+        userSettingsEditor = userSettings.edit();
+
+        /* Initalize inputs*/
+        locationInput = (EditText) findViewById(R.id.txtLocation);
+        searchTermInput = (EditText) findViewById(R.id.txtLocation);
+
+        /* Initialize radius spinner */
         // TODO: Migrate this to xml file instead
         //Spinner code from Android example
-        Spinner spinner = (Spinner) findViewById(R.id.spnRadius);
+        radiusSpinner = (Spinner) findViewById(R.id.spnRadius);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.radius_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        radiusSpinner.setAdapter(adapter);
 
-        // ref to Location EditText that can be accessed throughout the activity
-        mEditLocation = (EditText) findViewById(R.id.txtLocation);
+        /* Initailize rating bar */
+        starRating = (RatingBar) findViewById(R.id.ratingBar);
+
+        /* Set default field values */
+        // location input
+        locationInput.setText(userSettings.getString("defaultSearchLocation", "1600 Holloway Ave"));
+
+        // radius spinner
+        String spinnerValue = String.valueOf(userSettings.getFloat("defaultSearchRadius", 3.0f)).concat(" mi");
+        ArrayAdapter radiusSpinnerAdapter = (ArrayAdapter) radiusSpinner.getAdapter();
+        int spinnerDefaultPosition = radiusSpinnerAdapter.getPosition(spinnerValue);
+        radiusSpinner.setSelection(spinnerDefaultPosition);
+        // star rating
+        starRating.setRating(userSettings.getFloat("defaultMinStar", 3.5f));
+        // TODO search term input
+//        searchTermInput.setText(userSettings.getString("defaultSearchLocation", locationInput.getText().toString()));
+
+        //ref to Location EditText that can be accessed throughout the activity
+        //locationInput = (EditText) findViewById(R.id.txtLocation);
 
         // connected with Google Location services
-        buildGoogleApiClient();
-        mGoogleApiClient.connect();
+//        buildGoogleApiClient();
+//        mGoogleApiClient.connect();
     }
 
     @Override
