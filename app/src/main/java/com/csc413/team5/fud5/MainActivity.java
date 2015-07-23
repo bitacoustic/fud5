@@ -1,8 +1,11 @@
 package com.csc413.team5.fud5;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -157,6 +160,8 @@ public class MainActivity extends AppCompatActivity
         // connected with Google Location services
         buildGoogleApiClient();
         mGoogleApiClient.connect();
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#43428A")));
     }
 
     @Override
