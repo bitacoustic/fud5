@@ -43,7 +43,8 @@
             android:cropToPadding="false"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignBottom="@+id/scrollViewRMenusRestaurantName"/>
+            android:layout_alignBottom="@+id/scrollViewRMenusRestaurantName"
+            android:backgroundTint="@color/gold"/>
 
     </RelativeLayout>
 
