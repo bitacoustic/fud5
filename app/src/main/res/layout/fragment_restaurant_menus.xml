@@ -18,9 +18,10 @@
             android:text="@string/rmenus_restaurant_name"
             android:id="@+id/textViewRMenusRestaurantName"
             android:textColor="@color/gold"
-            android:textSize="24sp"
+            android:textSize="22dp"
             android:gravity="center"
-            android:textAlignment="gravity"/>
+            android:textAlignment="gravity"
+            android:textStyle="bold"/>
     </ScrollView>
 
     <ScrollView

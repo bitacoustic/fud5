@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,14 +88,13 @@ public class DisplayRestaurantMenusFragment extends DialogFragment {
     }
 
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_restaurant_menus, container, false);
         txtMenusRestaurantName = (TextView) v.findViewById(R.id.textViewRMenusRestaurantName);
         txtMenusRestaurantName.setGravity(Gravity.CENTER);
-        txtMenusRestaurantName.setText(mRestaurant.getLocuName());
+        txtMenusRestaurantName.setText(mRestaurant.getBusinessName());
 
         Menus menus = mRestaurant.getLocuMenus();
 

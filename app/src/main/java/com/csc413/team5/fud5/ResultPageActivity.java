@@ -1,10 +1,10 @@
 package com.csc413.team5.fud5;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +14,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.csc413.team5.fud5.tests.LocuMenuTestActivity;
+import com.csc413.team5.restaurantapiwrapper.LocuApiKey;
+import com.csc413.team5.restaurantapiwrapper.LocuExtension;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
 import com.csc413.team5.restaurantapiwrapper.RestaurantApiClient;
 import com.csc413.team5.restaurantapiwrapper.RestaurantList;
@@ -22,7 +23,6 @@ import com.csc413.team5.restaurantapiwrapper.YelpApiKey;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -32,11 +32,13 @@ import java.net.URL;
 //imports for images
 //TODO:remove these imports when Selector is implemented
 
-public class ResultPageActivity extends AppCompatActivity {
+public class ResultPageActivity extends AppCompatActivity
+        implements MenuNotFoundFragment.MenuNotFoundDialogListener {
     public static final String TAG = "ResultPageActivity";
 
     private GoogleMap mMap;
     RestaurantList resultList;
+    Restaurant firstResult;
 
     // user input passed from main activity
     String location;
@@ -54,7 +56,7 @@ public class ResultPageActivity extends AppCompatActivity {
         searchTerm = i.getStringExtra("searchTerm");
         maxRadius = i.getIntExtra("maxRadius", 805); // default to 805m (0.5 miles) if value
                                                         // not read
-        minRating = i.getDoubleExtra("minRating",0);
+        minRating = i.getDoubleExtra("minRating", 0);
         Log.i(TAG, "Retrieved location: " + location);
         Log.i(TAG, "Retrieved searchTerm: " + searchTerm);
         Log.i(TAG, "Retrieved maxRadius: " + maxRadius);
@@ -69,7 +71,6 @@ public class ResultPageActivity extends AppCompatActivity {
         //restaurant image loading needs to go in yet another asynctask
         if(resultList==null)return;
         try{
-            Restaurant firstResult;
             firstResult=resultList.remove(0);
             mMap.clear();
             setUpMap(firstResult);
@@ -85,6 +86,11 @@ public class ResultPageActivity extends AppCompatActivity {
             ratingTask.execute(imageURL);
 
         } catch(Exception e){} //
+    }
+
+    @Override
+    public void onMenuNotFoundPositiveClick(DialogFragment dialog) {
+
     }
 
     //TODO:remove when Selector implemented
@@ -206,12 +212,43 @@ public class ResultPageActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_menu) {
-            Intent intent = new Intent(this, LocuMenuTestActivity.class);
-            startActivity(intent);
+            if (firstResult != null)
+                new DisplayMenuTask().execute(firstResult);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Query Locu for a venue which matches the current restaurant and either display its
+     * menu if available, or tell the user that a menu is unavailable.
+     */
+    private class DisplayMenuTask extends AsyncTask<Restaurant, Void, Restaurant> {
+
+        @Override
+        protected Restaurant doInBackground(Restaurant... params) {
+            Restaurant restaurant = params[0];
+            LocuApiKey locuKey = new LocuApiKey(getApplicationContext().getResources()
+                    .getString(R.string.locu_key));
+            Log.i(TAG, "Attempting to find a menu for " + restaurant.getBusinessName());
+            new LocuExtension(locuKey).updateIfHasMenu(restaurant);
+            return restaurant;
+        }
+
+        @Override
+        protected void onPostExecute(Restaurant restaurant) {
+            if (restaurant.hasLocuMenus()) {
+                Log.i(TAG, "Found menu for " + restaurant.getBusinessName());
+                DialogFragment displayRestaurantMenus = DisplayRestaurantMenusFragment
+                        .newInstance(restaurant);
+                displayRestaurantMenus.show(getFragmentManager(), "menus");
+            } else {
+                Log.i(TAG, "Could not find menu for " + restaurant.getBusinessName());
+                DialogFragment menuNotFoundDialog = new MenuNotFoundFragment();
+                menuNotFoundDialog.show(getFragmentManager(), "menuNotFound");
+            }
+        }
     }
 
     protected void onResume() {
