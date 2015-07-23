@@ -8,13 +8,22 @@ import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Window;
+
+import com.csc413.team5.appdb.dbHelper;
+import com.csc413.team5.restaurantapiwrapper.Restaurant;
+
+import java.sql.Timestamp;
+import java.util.List;
 
 import static android.view.WindowManager.LayoutParams;
 
 public class SplashScreenActivity extends Activity
         implements AskToUseLocationFragment.NoticeDialogListener {
+    private static final String TAG = "SplashScreenActivity";
     private long mStartLoadTime;
+    private long mYellowStaleCutoff;
 
     private Handler mHandler;
     private Runnable mRunAfterWait;
@@ -22,6 +31,8 @@ public class SplashScreenActivity extends Activity
     public static final String PREFS_FILE = "UserSettings";
     private SharedPreferences userSettings;
     private SharedPreferences.Editor userSettingsEditor;
+
+    private dbHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +65,32 @@ public class SplashScreenActivity extends Activity
 
         mHandler.postDelayed(mRunAfterWait, waitTime);
 
+        Log.i(TAG, "Loading user preferences");
         // load user preferences
         userSettings = getSharedPreferences(PREFS_FILE, 0);
         // create a user settings editor for use in this activity
         userSettingsEditor = userSettings.edit();
+
+        // clear stale yellow list items
+        db = new dbHelper(this, null, null, 1);
+        mYellowStaleCutoff = mStartLoadTime - 604800000; // subtract a week in milliseconds
+        Log.i(TAG, "Looking for stale yellow list restaurants (those having timestamp before " +
+                new Timestamp(mYellowStaleCutoff).toString() + ")");
+        List<String> yellowListTimestamps = db.getRestaurantTimeStampsFromList(1);
+        List<String> yellowListRestaurants = db.getRestaurantNamesFromList(1);
+        for (int i = 0; i < yellowListTimestamps.size(); i++) {
+            Timestamp timestamp = Timestamp.valueOf(yellowListTimestamps.get(i));
+            String thisRestaurantName = yellowListRestaurants.get(i);
+            boolean isStale = timestamp.getTime() < mYellowStaleCutoff;
+            Log.i(TAG, thisRestaurantName + " has timestamp " + timestamp + ": " +
+                    (isStale ? "stale" : "OK"));
+            if (isStale) {
+                Log.i(TAG, "Removed " + thisRestaurantName + " from yellow list");
+                Restaurant r = new Restaurant();
+                r.setRestaurantName(thisRestaurantName);
+                db.deleteRestaurantFromList(r, 1); // delete this restaurant from yellow list
+            }
+        }
     }
 
     @Override
@@ -169,6 +202,7 @@ public class SplashScreenActivity extends Activity
     @Override
     public void onLocationDialogPositiveClick(DialogFragment dialog) {
         // send user to settings screen to turn on location services
+        Log.i(TAG, "Sending user to Location Settings");
         startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
 
         // when user is done with location services, onRestart() is called
@@ -183,6 +217,7 @@ public class SplashScreenActivity extends Activity
     protected void openMainActivity(){
         finish();   // removes this activity from the back stack
         Intent intent = new Intent(this, MainActivity.class);
+        Log.i(TAG, "Splash finished, sending to main activity");
         startActivity(intent);
         overridePendingTransition(0,0);
     }
