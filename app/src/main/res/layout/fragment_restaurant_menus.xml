@@ -5,31 +5,54 @@
               android:layout_height="fill_parent"
                 android:background="#fffafff2">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/scrollViewRMenusRestaurantName"
-        android:background="@color/purple"
-        android:padding="5dp">
+        android:id="@+id/relativeLayout">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/rmenus_restaurant_name"
-            android:id="@+id/textViewRMenusRestaurantName"
-            android:textColor="@color/gold"
-            android:textSize="22dp"
-            android:gravity="center"
-            android:textAlignment="gravity"
-            android:textStyle="bold"/>
-    </ScrollView>
+            android:id="@+id/scrollViewRMenusRestaurantName"
+            android:background="@color/purple"
+            android:padding="5dp"
+            android:layout_alignParentEnd="true"
+            android:fillViewport="false"
+            android:paddingRight="75dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rmenus_restaurant_name"
+                android:id="@+id/textViewRMenusRestaurantName"
+                android:textColor="@color/gold"
+                android:textSize="22dp"
+                android:gravity="center"
+                android:textAlignment="gravity"
+                android:textStyle="bold"/>
+        </ScrollView>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/imageButtonRMenus"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:src="@drawable/abc_ic_clear_mtrl_alpha"
+            android:tint="@color/purple"
+            android:cropToPadding="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@+id/scrollViewRMenusRestaurantName"/>
+
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scrollViewRMenusContent"
-        android:layout_below="@+id/scrollViewRMenusRestaurantName"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/relativeLayout">
 
         <LinearLayout
             android:orientation="vertical"

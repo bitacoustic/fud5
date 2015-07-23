@@ -2,7 +2,6 @@ package com.csc413.team5.fud5;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -11,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -92,7 +92,16 @@ public class DisplayRestaurantMenusFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_restaurant_menus, container, false);
-        txtMenusRestaurantName = (TextView) v.findViewById(R.id.textViewRMenusRestaurantName);
+
+        ImageButton btnBack = (ImageButton) v.findViewById(R.id.imageButtonRMenus);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
+                txtMenusRestaurantName = (TextView) v.findViewById(R.id.textViewRMenusRestaurantName);
         txtMenusRestaurantName.setGravity(Gravity.CENTER);
         txtMenusRestaurantName.setText(mRestaurant.getBusinessName());
 
@@ -280,10 +289,5 @@ public class DisplayRestaurantMenusFragment extends DialogFragment {
         } // end for each menu
 
         return v;
-    }
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-
     }
 }

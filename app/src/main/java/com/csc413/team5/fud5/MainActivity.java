@@ -2,14 +2,13 @@ package com.csc413.team5.fud5;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.content.SharedPreferences;
-import android.media.Rating;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -31,9 +30,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
-import com.csc413.team5.fud5.utils.ToastUtil;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -158,8 +155,8 @@ public class MainActivity extends AppCompatActivity
         //locationInput = (EditText) findViewById(R.id.txtLocation);
 
         // connected with Google Location services
-//        buildGoogleApiClient();
-//        mGoogleApiClient.connect();
+        buildGoogleApiClient();
+        mGoogleApiClient.connect();
     }
 
     @Override
