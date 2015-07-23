@@ -37,6 +37,8 @@ public class ResultPageActivity extends AppCompatActivity
     public static final String TAG = "ResultPageActivity";
 
     private GoogleMap mMap;
+
+    YelpApiKey mYelpKey;
     RestaurantList resultList;
     Restaurant firstResult;
 
@@ -62,8 +64,14 @@ public class ResultPageActivity extends AppCompatActivity
         Log.i(TAG, "Retrieved maxRadius: " + maxRadius);
         Log.i(TAG, "Retrieved minRating: " + minRating);
 
-        GetResultTask task = new GetResultTask();
-        task.execute();
+        // Construct a YelpApiKey from Resource strings
+        mYelpKey = new YelpApiKey(
+                getApplicationContext().getResources().getString(R.string.yelp_consumer_key),
+                getApplicationContext().getResources().getString(R.string.yelp_consumer_secret),
+                getApplicationContext().getResources().getString(R.string.yelp_token),
+                getApplicationContext().getResources().getString(R.string.yelp_token_secret) );
+
+        new GetResultTask().execute();
         setUpMapIfNeeded();
     }
     public void displayNextResult(View v){
@@ -93,44 +101,45 @@ public class ResultPageActivity extends AppCompatActivity
 
     }
 
-    //TODO:remove when Selector implemented
+    //TODO: implement the selector
     private class GetResultTask extends AsyncTask<String, Void, RestaurantList> {
 
-        protected void onPostExecute(RestaurantList result) {
-            resultList = result;
-            displayNextResult(findViewById(R.id.imgRestaurant));
-        }
         @Override
         protected RestaurantList doInBackground(String... params)  {
-            // Construct a YelpApiKey from Resource strings
-            String consumerKey = getApplicationContext().getResources()
-                    .getString(R.string.yelp_consumer_key);
-            String consumerSecret = getApplicationContext().getResources()
-                    .getString(R.string.yelp_consumer_secret);
-            String tokenKey = getApplicationContext().getResources()
-                    .getString(R.string.yelp_token);
-            String tokenSecret = getApplicationContext().getResources()
-                    .getString(R.string.yelp_token_secret);
-            YelpApiKey yelpKey = new YelpApiKey(consumerKey, consumerSecret, tokenKey, tokenSecret);
-
             try {
-                RestaurantApiClient rClient = new RestaurantApiClient.Builder(yelpKey)
+                return new RestaurantApiClient.Builder(mYelpKey)
                         .location(location)
                         //.categoryFilter("foodtrucks,restaurants") is included by default
                         .sort(2)                  // 0=best matched, 1=distance, 2=highest rated
                         .term(searchTerm)
+                        .limit(40)
                         .radiusFilter(maxRadius)
-                        .build();
-                return rClient.getRestaurantList();
+                        .build().getRestaurantList();
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
+        }
 
+        protected void onPostExecute(RestaurantList result) {
+            resultList = result;
+
+            // TODO: TEMP CODE which removes restaurants < minRating
+            for (int i = 0; i < resultList.getSize(); ) {
+                if (resultList.getRestaurant(i).getRating() < minRating) {
+                    Restaurant removed = resultList.removeRestaurant(i);
+                    if (removed == null) // check if restaurant was removed successfully
+                        i++;
+                    // otherwise don't iterate as next restaurant will be at this index
+                }
+                else
+                    i++;
+            }
+            // END TEMP
+
+            displayNextResult(findViewById(R.id.imgRestaurant));
         }
     }
-
-    //END remove
 
     private class LoadImageTask extends AsyncTask<URL, Void, Bitmap> {
         protected void onPostExecute(Bitmap result) {
