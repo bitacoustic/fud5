@@ -1,6 +1,5 @@
 package com.csc413.team5.fud5;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -65,12 +64,9 @@ public class MainActivity extends AppCompatActivity
     public void btnFindLocation(View v) {
         if (islocationServicesOn()) {
             if (isNetworkAvailable()) {
-                // compel location update
+                // compel location update; result is shown in the location EditText
                 mGoogleApiClient.disconnect();
                 mGoogleApiClient.connect(); // calls onConnected() to get current location
-
-                if (mAddressString.compareTo("") != 0)
-                    locationInput.setText(mAddressString);
             } else {
                 ToastUtil.showShortToast(getApplicationContext(),
                         getString(R.string.toast_network_unavailable));
@@ -140,9 +136,9 @@ public class MainActivity extends AppCompatActivity
         /* Initailize rating bar */
         starRating = (RatingBar) findViewById(R.id.ratingBar);
 
-        /* Set default field values */
+                /* Set default field values */
         // location input
-        locationInput.setText(userSettings.getString("defaultSearchLocation", "1600 Holloway Ave San Francisco"));//1600 Holloway takes you to Illinois
+//        locationInput.setText(userSettings.getString("defaultSearchLocation", "1600 Holloway Ave San Francisco"));
 
         // radius spinner
         String spinnerValue = String.valueOf(userSettings.getFloat("defaultSearchRadius", 3.0f)).concat(" mi");
@@ -154,8 +150,6 @@ public class MainActivity extends AppCompatActivity
         // TODO search term input
 //        searchTermInput.setText(userSettings.getString("defaultSearchLocation", locationInput.getText().toString()));
 
-        //ref to Location EditText that can be accessed throughout the activity
-        //locationInput = (EditText) findViewById(R.id.txtLocation);
 
         // connected with Google Location services
         buildGoogleApiClient();
@@ -220,7 +214,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onConnected(Bundle bundle) {
-        if (!isNetworkAvailable() && !islocationServicesOn())
+        if (!isNetworkAvailable() || !islocationServicesOn())
             return;
 
         // Get the most recent location of the device (~ user's current location)
@@ -231,15 +225,21 @@ public class MainActivity extends AppCompatActivity
         List<Address> addresses = null;
         geocoder = new Geocoder(this, Locale.getDefault());
         try {
-            // the last parameter specifies max locations turn return; we just need 1
+            // the last parameter specifies max locations returned; we just need 1
             addresses = geocoder
                     .getFromLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude(), 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // if Geocoder returned valid address(es), get a 1-line String representation of the first
+        // address, which is assumed to be the best approximation; otherwise, set address to be
+        // an empty String
         if (addresses != null) {
             mLastLocationAddress = addresses.get(0);
+
             mAddressString = RestaurantApiClient.addressToString(mLastLocationAddress);
+            locationInput.setText(mAddressString);
         } else {
             mAddressString = "";
         }
