@@ -90,6 +90,9 @@ public class LocuExtension {
         if (indexNameFirstSpace > 0)
             rName = rName.substring(0, indexNameFirstSpace);
 
+        if (r.address == null || r.address.getAddressLine(0) == null)
+            return "";
+
         String rAddr = r.address.getAddressLine(0).replaceAll(" ", "%20");
 
         String url = "http://api.locu.com/v1_0/venue/search/?"
@@ -147,6 +150,9 @@ public class LocuExtension {
         int indexNameFirstSpace = rName.indexOf(' ');
         if (indexNameFirstSpace > 0)
             rName = rName.substring(0, indexNameFirstSpace);
+
+        if (r.address == null || r.address.getAddressLine(0) == null)
+            return "";
 
         String rAddr = r.address.getAddressLine(0).replaceAll(" ", "%20");
 

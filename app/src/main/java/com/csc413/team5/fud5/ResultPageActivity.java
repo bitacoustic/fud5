@@ -122,6 +122,16 @@ public class ResultPageActivity extends AppCompatActivity
 
     }
 
+    /**
+     * Dispatch onPause() to fragments.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (popupLoadingMenu.isShowing())
+            popupLoadingMenu.dismiss();
+    }
+
     //TODO: implement the selector
     private class GetResultTask extends AsyncTask<String, Void, RestaurantList> {
 
@@ -272,7 +282,8 @@ public class ResultPageActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Restaurant restaurant) {
-            popupLoadingMenu.dismiss();
+            if (popupLoadingMenu.isShowing())
+                popupLoadingMenu.dismiss();
 
             if (restaurant.hasLocuMenus()) {
                 Log.i(TAG, "Found menu for " + restaurant.getBusinessName());
