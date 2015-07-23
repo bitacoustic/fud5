@@ -32,6 +32,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.InputStream;
@@ -252,8 +253,10 @@ public class ResultPageActivity extends AppCompatActivity
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudeLongitude, 13));//sets the view
 
         mMap.addMarker(new MarkerOptions().visible(true)
-                .position(latitudeLongitude)
-                .title(r.getBusinessName())).showInfoWindow();
+                .position(latitudeLongitude) //these are called on the MarkerOptions object
+                .title(r.getBusinessName())
+                .snippet(r.getAddress().toString())
+        ).showInfoWindow(); //this is called on the marker object
 
 
     }
