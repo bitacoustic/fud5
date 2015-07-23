@@ -83,8 +83,7 @@
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:focusable="false"
-        android:enabled="false" />
+        android:focusable="false" />
 
     <Button
         android:layout_width="match_parent"
