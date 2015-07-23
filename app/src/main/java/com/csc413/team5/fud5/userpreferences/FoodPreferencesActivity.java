@@ -57,7 +57,7 @@ public class FoodPreferencesActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         ratingsSpinner.setAdapter(adapter);
 
-        /* Initalize rating bar */
+        /* Initialize rating bar */
         starRating = (RatingBar) findViewById(R.id.ratingBar);
     }
 

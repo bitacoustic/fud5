@@ -148,12 +148,4 @@
 
     <string name="toast_location_services_are_off">Location services are off</string>
     <string name="toast_network_unavailable">Network is unavailable</string>
-
-    <string-array name="radius_array">
-        <item>0.5 mi</item>
-        <item>1.0 mi</item>
-        <item>2.5 mi</item>
-        <item>5.0 mi</item>
-        <item>10 mi</item>
-    </string-array>
 </resources>

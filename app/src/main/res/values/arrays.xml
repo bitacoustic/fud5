@@ -11,4 +11,11 @@
         <item>Hole in the wall</item>
         <item>Affordable</item>
     </string-array>
+    <string-array name="radius_array">
+        <item>0.5 mi</item>
+        <item>1.0 mi</item>
+        <item>2.5 mi</item>
+        <item>5.0 mi</item>
+        <item>10 mi</item>
+    </string-array>
 </resources>
