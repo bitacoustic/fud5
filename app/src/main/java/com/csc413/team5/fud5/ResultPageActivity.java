@@ -1,6 +1,7 @@
 package com.csc413.team5.fud5;
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -44,6 +45,7 @@ import java.net.URL;
 public class ResultPageActivity extends AppCompatActivity
         implements MenuNotFoundFragment.MenuNotFoundDialogListener {
     public static final String TAG = "ResultPageActivity";
+    private Context mContext;
 
     private GoogleMap mMap;
 
@@ -66,6 +68,10 @@ public class ResultPageActivity extends AppCompatActivity
         setContentView(R.layout.fragment_result_page);
         String title = getString(R.string.title_activity_result_page);
 
+        // save this context to use anywhere in the activity
+        mContext = this;
+
+        // action bar colors
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#43428A")));
         getSupportActionBar().setTitle(Html.fromHtml("<font color = '#ECCD7F'>" + title + "</font>"));
 
@@ -97,6 +103,8 @@ public class ResultPageActivity extends AppCompatActivity
                 getApplicationContext().getResources().getString(R.string.yelp_consumer_secret),
                 getApplicationContext().getResources().getString(R.string.yelp_token),
                 getApplicationContext().getResources().getString(R.string.yelp_token_secret) );
+
+        resultList = null;
 
         // start background activity to get the results
         if (ServiceUtil.isNetworkAvailable(this)) {
@@ -215,18 +223,23 @@ public class ResultPageActivity extends AppCompatActivity
         protected void onPostExecute(RestaurantList result) {
             resultList = result;
 
-            // TODO: TEMP CODE which removes restaurants < minRating
-            for (int i = 0; i < resultList.getSize(); ) {
-                if (resultList.getRestaurant(i).getRating() < minRating) {
-                    Restaurant removed = resultList.removeRestaurant(i);
-                    if (removed == null) // check if restaurant was removed successfully
+            if (resultList == null || resultList.getSize() < 1) { // catch no results
+                ToastUtil.showShortToast(mContext, "No results");
+                finish();
+            } else {
+                // TODO: TEMP CODE which removes restaurants < minRating
+                for (int i = 0; i < resultList.getSize(); ) {
+                    if (resultList.getRestaurant(i).getRating() < minRating) {
+                        Restaurant removed = resultList.removeRestaurant(i);
+                        if (removed == null) // check if restaurant was removed successfully
+                            i++;
+                        // otherwise don't iterate as next restaurant will be at this index
+                    }
+                    else
                         i++;
-                    // otherwise don't iterate as next restaurant will be at this index
                 }
-                else
-                    i++;
+                // END TEMP
             }
-            // END TEMP
 
             displayNextResult(findViewById(R.id.imgRestaurant));
         }
