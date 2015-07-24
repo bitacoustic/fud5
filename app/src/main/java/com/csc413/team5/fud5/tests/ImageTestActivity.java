@@ -15,6 +15,7 @@ import com.csc413.team5.restaurantapiwrapper.*;
 
 import java.io.InputStream;
 import java.net.URL;
+import android.text.format.Formatter;
 
 public class ImageTestActivity extends AppCompatActivity {
     private TextView imageInfo;
@@ -34,9 +35,8 @@ public class ImageTestActivity extends AppCompatActivity {
     }
     private class GetResultTask extends AsyncTask<String, Void, RestaurantList> {
         protected void onPostExecute(RestaurantList result) {
-            //imageInfo.getEditableText().clear();
-            LoadImageListTask task = new LoadImageListTask();
-            task.execute(result);
+            imageInfo.setText("");
+            loadImages(result);
         }
         @Override
         protected RestaurantList doInBackground(String... params)  {
@@ -66,50 +66,48 @@ public class ImageTestActivity extends AppCompatActivity {
             }
         }
     }
-    private class LoadImageListTask extends AsyncTask<RestaurantList, String, String> {
-        @Override
-        protected void onProgressUpdate (String... values)
+
+
+    private void loadImages(RestaurantList results)
+    {
+        for(int i = 0; i<results.size();i++)
         {
-            imageInfo.append(values[0]);
-        }
-        @Override
-        protected String doInBackground(RestaurantList... params)  {
-            RestaurantList results = params[0];
-            for(int i = 0; i<results.size();i++)
-            {
-                try {
-                    Restaurant restaurant = results.getRestaurant(i);
-                    publishProgress(
-                            "\nName = " + restaurant.getBusinessName() +
-                            "\nhasImage = " + restaurant.hasImageUrl()
-                    );
-                    if(restaurant.hasImageUrl() == false) continue;
-                    String imageUrl = restaurant.getImageUrl().toString();
-                    imageUrl =  imageUrl.replace("ms.jpg","o.jpg"); //this gets original image size
-                    URL url = new URL(imageUrl);
-                    InputStream is = url.openConnection().getInputStream();
+            try {
+                final Restaurant restaurant = results.getRestaurant(i);
+                if(restaurant.hasImageUrl() == false) continue;
+                String imageUrl = restaurant.getImageUrl().toString();
+                imageUrl =  imageUrl.replace("ms.jpg","o.jpg"); //this gets original image size
+                URL url = new URL(imageUrl);
 
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inJustDecodeBounds = true;
-                    Bitmap b = BitmapFactory.decodeStream(is, null, options);
-                    int imageHeight = options.outHeight;
-                    int imageWidth = options.outWidth;
-                    String imageType = options.outMimeType;
-                    publishProgress(
-                            "\nimageHeight = " + options.outHeight +
-                            " imageWidth = " + options.outWidth +
-                            " imageType = " + options.outMimeType +
-                            "\n-----------------------------------"
-                    );
-
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                LoadImageTask loadRestaurantImage = new LoadImageTask(){
+                    protected void onPostExecute(Bitmap bitmap) {
+                        imageInfo.append(
+                                "\nName = " + restaurant.getBusinessName() +
+                                "\nhasImage = " + restaurant.hasImageUrl()+
+                                "\nResolution: " + bitmap.getHeight() +
+                                " x " + bitmap.getWidth() +
+                                " Bitmap Size: " + Formatter.formatFileSize(getApplicationContext(),
+                                         bitmap.getAllocationByteCount()) +
+                                "\n-----------------------------------"
+                        );
+                    }
+                };
+                loadRestaurantImage.execute(url);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-
-            return "done";
         }
     }
-
+    public class LoadImageTask extends AsyncTask<URL, Void, Bitmap>{
+        @Override
+        protected Bitmap doInBackground (URL... imageURL)
+        {
+            try {
+                InputStream stream = imageURL[0].openConnection().getInputStream();
+                return BitmapFactory.decodeStream(stream);
+            }catch(Exception e) {}
+            return null;
+        }
+    }
 }
