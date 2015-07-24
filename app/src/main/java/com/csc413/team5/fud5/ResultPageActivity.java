@@ -97,15 +97,7 @@ public class ResultPageActivity extends AppCompatActivity
                 getApplicationContext().getResources().getString(R.string.yelp_consumer_secret),
                 getApplicationContext().getResources().getString(R.string.yelp_token),
                 getApplicationContext().getResources().getString(R.string.yelp_token_secret) );
-    }
 
-    /**
-     * Dispatch onStart() to all fragments.  Ensure any created loaders are
-     * now started.
-     */
-    @Override
-    protected void onStart() {
-        super.onStart();
         // start background activity to get the results
         if (ServiceUtil.isNetworkAvailable(this)) {
             new GetResultTask().execute();
