@@ -10,17 +10,6 @@
     tools:context="com.csc413.team5.fud5.ResultPageActivityFragment"
     android:id="@+id/resultPage">
 
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceLarge"
-    android:text="Loading..."
-    android:textSize="26sp"
-    android:singleLine="true"
-    android:id="@+id/restaurantName"
-    android:textStyle="bold"
-    android:layout_centerHorizontal="true" />
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -28,30 +17,19 @@
         android:layout_alignParentStart="true"
         android:id="@+id/linearResult"
         android:layout_above="@+id/buttonBar"
-        android:layout_below="@+id/restaurantName"
         android:paddingBottom="5dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:id="@+id/imgRating"
-            android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:layout_weight=".1" />
-
-        <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:id="@+id/imgRestaurant"
             android:layout_alignParentStart="true"
             android:src="@android:drawable/stat_sys_warning"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             android:layout_below="@+id/restaurantName"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
-            android:layout_weight="1"
-            android:paddingBottom="5dp" />
+            android:layout_weight="1" />
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -62,8 +40,37 @@
         android:layout_alignParentStart="true"
         tools:context="com.csc413.team5.fud5.MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_marginTop="5dp" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Loading..."
+        android:textSize="28sp"
+        android:textColor="#FFFFFF"
+        android:shadowColor="#000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:singleLine="true"
+        android:id="@+id/restaurantName"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/imgRating"
+        android:layout_gravity="center_horizontal"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:layout_weight="1"
+        android:layout_alignParentBottom="false"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/restaurantName" />
 
     <LinearLayout
     android:id="@+id/buttonBar"
