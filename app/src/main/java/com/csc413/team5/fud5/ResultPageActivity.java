@@ -60,6 +60,11 @@ public class ResultPageActivity extends AppCompatActivity
     double minRating;
 
     TextView mTitle;
+
+    // Locu menu
+    DisplayMenuTask displayMenuTask;
+    DialogFragment displayRestaurantMenus;
+    DialogFragment menuNotFoundDialog;
     PopupWindow popupLoadingMenu;
 
     @Override
@@ -300,14 +305,26 @@ public class ResultPageActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_menu) {
-            if (firstResult != null) {
-                if (ServiceUtil.isNetworkAvailable(this)) {
-                    new DisplayMenuTask().execute(firstResult);
-                    popupLoadingMenu.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
-                } else {
-                    ToastUtil.showShortToast(this, getString(R.string.toast_network_unavailable));
-                }
+        if (id == R.id.action_menu && firstResult != null) {
+            // don't proceed if a DisplayMenuTask is already in progress
+            if (displayMenuTask != null &&
+                    ( displayMenuTask.getStatus() == AsyncTask.Status.RUNNING
+                    || displayMenuTask.getStatus() == AsyncTask.Status.PENDING) )
+                return true;
+
+            // don't proceed if DisplayMenuTask is complete but one of the resulting dialogs
+            // is rendering
+            if (displayRestaurantMenus != null && displayRestaurantMenus.isVisible())
+                return true;
+            if (menuNotFoundDialog != null && menuNotFoundDialog.isVisible())
+                return true;
+
+            if (ServiceUtil.isNetworkAvailable(this)) {
+                displayMenuTask = new DisplayMenuTask();
+                displayMenuTask.execute(firstResult);
+                popupLoadingMenu.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
+            } else {
+                ToastUtil.showShortToast(this, getString(R.string.toast_network_unavailable));
             }
 
             return true;
@@ -334,17 +351,17 @@ public class ResultPageActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Restaurant restaurant) {
-            if (popupLoadingMenu.isShowing())
+            if (popupLoadingMenu != null && popupLoadingMenu.isShowing())
                 popupLoadingMenu.dismiss();
 
             if (restaurant.hasLocuMenus()) {
                 Log.i(TAG, "Found menu for " + restaurant.getBusinessName());
-                DialogFragment displayRestaurantMenus = DisplayRestaurantMenusFragment
-                        .newInstance(restaurant);
+                displayRestaurantMenus = DisplayRestaurantMenusFragment
+                        .getInstance(restaurant);
                 displayRestaurantMenus.show(getFragmentManager(), "menus");
             } else {
                 Log.i(TAG, "Could not find menu for " + restaurant.getBusinessName());
-                DialogFragment menuNotFoundDialog = new MenuNotFoundFragment();
+                menuNotFoundDialog = new MenuNotFoundFragment();
                 menuNotFoundDialog.show(getFragmentManager(), "menuNotFound");
             }
         }

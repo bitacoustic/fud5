@@ -167,7 +167,7 @@ public class LocuMenuTestActivity extends Activity
                 // create an instance of DisplayRestaurantMenusFragment with the restaurant
                 // result of doInBackground() as an argument
                 DialogFragment displayRestaurantMenus = DisplayRestaurantMenusFragment
-                        .newInstance(restaurant);
+                        .getInstance(restaurant);
                 displayRestaurantMenus.show(getFragmentManager(), "menus");
             }
             else {

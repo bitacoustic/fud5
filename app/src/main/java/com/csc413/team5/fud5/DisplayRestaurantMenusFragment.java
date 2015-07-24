@@ -33,8 +33,13 @@ import com.csc413.team5.restaurantapiwrapper.Restaurant;
  * @author Eric C. Black
  */
 public class DisplayRestaurantMenusFragment extends DialogFragment {
+    private static DisplayRestaurantMenusFragment instance = null;
+
     Restaurant mRestaurant; // the restaurant for which to display the menu
     TextView txtMenusRestaurantName;
+
+    public DisplayRestaurantMenusFragment() { // defeat instantiation
+    }
 
     /**
      * Use to instantiate a new dialog to display the specified restaurant's menu. The calling
@@ -43,15 +48,19 @@ public class DisplayRestaurantMenusFragment extends DialogFragment {
      * @return a new instance of DisplayRestaurantMenusFragment with the specified restaurant
      *         as its argument
      */
-    public static DisplayRestaurantMenusFragment newInstance(Restaurant r) {
-        DisplayRestaurantMenusFragment f = new DisplayRestaurantMenusFragment();
+    public static DisplayRestaurantMenusFragment getInstance(Restaurant r) {
+        if (r == null)
+            return null;
+
+        instance = new DisplayRestaurantMenusFragment();
 
         Bundle args = new Bundle();
         args.putSerializable("restaurant", r);
-        f.setArguments(args);
+        instance.setArguments(args);
 
-        return f;
+        return instance;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
