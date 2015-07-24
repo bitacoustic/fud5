@@ -4,17 +4,24 @@ import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.csc413.team5.appdb.dbHelper;
 import com.csc413.team5.fud5.R;
+import com.csc413.team5.fud5.utils.Constants;
+import com.nhaarman.supertooltips.ToolTip;
+import com.nhaarman.supertooltips.ToolTipRelativeLayout;
+import com.nhaarman.supertooltips.ToolTipView;
 
 import java.util.Locale;
 import java.util.Set;
@@ -28,6 +35,11 @@ public class ApplicationSettingsActivity extends AppCompatActivity
     protected CheckBox mCheckBoxRestaurantHistory;
     protected Button mBtnReset;
     protected Button mBtnLocationServices;
+    protected ImageButton mBtnUserSettings;
+    protected ImageButton mBtnRestaurantHistory;
+
+    protected ToolTipView mTooltipUserSettings;
+    protected ToolTipView mTooltipRestaurantHistory;
 
     protected boolean isUserSettingsChecked;
     protected boolean isRestaurantHistoryChecked;
@@ -38,13 +50,18 @@ public class ApplicationSettingsActivity extends AppCompatActivity
     private dbHelper db;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application_settings);
 
-        this.setTitle(getApplicationContext().getResources()
-                .getString(R.string.activity_application_settings_title));
+        String title = getApplicationContext().getResources()
+                .getString(R.string.activity_application_settings_title);
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#43428A")));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color = '#ECCD7F'>" + title + "</font>"));
 
         mCheckBoxUserSettings = (CheckBox) findViewById(R.id.checkBoxAppSettingsUser);
 
@@ -94,6 +111,51 @@ public class ApplicationSettingsActivity extends AppCompatActivity
                         .ACTION_LOCATION_SOURCE_SETTINGS));
             }
         });
+
+        mBtnUserSettings = (ImageButton) findViewById(R.id.imageButtonResetUserSettingsInfo);
+        mBtnUserSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "user settings info button was pressed");
+                if (mTooltipUserSettings != null) {
+                    mTooltipUserSettings.remove();
+                }
+
+                ToolTipRelativeLayout tooltipView
+                        = (ToolTipRelativeLayout) findViewById(R.id.tooltipAppSettingsUser);
+                ToolTip tooltip = new ToolTip()
+                        .withText(getString(R.string
+                                .activity_application_settings_user_settings_caption))
+                        .withColor(Color.parseColor("#ECCD7F"))
+                        .withShadow();
+                mTooltipUserSettings = tooltipView
+                        .showToolTipForView(tooltip, findViewById(R.id.checkBoxAppSettingsUser));
+            }
+        });
+
+        mBtnRestaurantHistory = (ImageButton) findViewById(R.id
+                .imageButtonResetRestaurantHistoryInfo);
+        mBtnRestaurantHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "restaurant history info button was pressed");
+
+                if (mTooltipRestaurantHistory != null) {
+                    mTooltipRestaurantHistory.remove();
+                }
+
+                ToolTipRelativeLayout tooltipView
+                        = (ToolTipRelativeLayout) findViewById(R.id.tooltipAppSettingsRestaurant);
+                ToolTip tooltip = new ToolTip()
+                        .withText(getString(R.string
+                                .activity_application_settings_restaurant_history_caption))
+                        .withColor(Color.parseColor("#ECCD7F"))
+                        .withShadow();
+                mTooltipRestaurantHistory = tooltipView
+                        .showToolTipForView(tooltip,
+                                findViewById(R.id.checkBoxAppSettingsRestaurant));
+            }
+        });
     }
 
     public boolean isUserSettingsChecked() {
@@ -139,11 +201,11 @@ public class ApplicationSettingsActivity extends AppCompatActivity
         }
 
         if (isRestaurantHistoryChecked) {
-            db.wipeRestaurantList(1);
+            db.wipeRestaurantList(Constants.GREEN_LIST);
             Log.i(TAG, "wiped green list (1)");
-            db.wipeRestaurantList(2);
+            db.wipeRestaurantList(Constants.YELLOW_LIST);
             Log.i(TAG, "wiped yellow list (2)");
-            db.wipeRestaurantList(3);
+            db.wipeRestaurantList(Constants.RED_LIST);
             Log.i(TAG, "wiped red list (3)");
             Toast.makeText(this, "Cleared Restaurant History", Toast.LENGTH_SHORT).show();
         }

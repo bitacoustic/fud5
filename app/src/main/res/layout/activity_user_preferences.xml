@@ -32,14 +32,20 @@
                 android:layout_height="wrap_content"
                 android:text="@string/settings_ui_button_food_settings"
                 android:id="@+id/food_preferences"
-                android:onClick="showFoodSettings"/>
+                android:onClick="showFoodSettings"
+                android:background="@color/purple"
+                android:textColor="@color/gold"
+                android:layout_marginBottom="10dp"/>
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_ui_button_app_settings"
                 android:id="@+id/app_settings"
-                android:onClick="showAppSettings"/>
+                android:onClick="showAppSettings"
+                android:background="@color/purple"
+                android:textColor="@color/gold"
+                android:layout_marginBottom="10dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -53,21 +59,28 @@
                 android:layout_height="wrap_content"
                 android:text="@string/settings_ui_button_eula"
                 android:id="@+id/eula_button"
-                android:onClick="showEULA"/>
+                android:onClick="showEULA"
+                android:background="@color/purple"
+                android:textColor="@color/gold"
+                android:layout_marginBottom="10dp"/>
 
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/settings_ui_button_app_info"
                 android:id="@+id/app_info_button"
-                android:onClick="showAppInfo"/>
+                android:onClick="showAppInfo"
+                android:background="@color/purple"
+                android:textColor="@color/gold"
+                android:layout_marginBottom="10dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/settings_ui_text_dev_playground"
-                android:id="@+id/dev_playground" />
+                android:id="@+id/dev_playground"
+                android:layout_marginTop="25dp"/>
 
             <Button
                 android:layout_width="fill_parent"

@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity
         if (location.compareTo("") == 0) {
 //            ToastUtil.showShortToast(this, "Enter a location");
             Log.i(TAG, "Location field cannot be empty");
+            if (toolTipLocationIsEmpty != null)
+                toolTipLocationIsEmpty.remove();
             ToolTipRelativeLayout tooltipLocationView
                     = (ToolTipRelativeLayout) findViewById(R.id.tooltipTxtLocation);
             ToolTip tooltipLocation = new ToolTip()

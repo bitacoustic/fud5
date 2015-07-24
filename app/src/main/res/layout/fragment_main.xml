@@ -26,7 +26,7 @@
             android:singleLine="true"
             android:hint="e.g. 1 Market St, San Francisco"
             android:nestedScrollingEnabled="false"
-            />
+            android:inputType="textPostalAddress"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -69,7 +69,8 @@
             android:minHeight="50dp"
             android:singleLine="true"
             android:layout_alignEnd="@+id/fudbuttoncontainer"
-            android:hint="e.g. Tacos"/>
+            android:hint="e.g. Tacos"
+            android:inputType="text"/>
 
         <TextView
             android:layout_width="wrap_content"
