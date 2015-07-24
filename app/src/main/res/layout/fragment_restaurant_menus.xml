@@ -26,10 +26,11 @@
                 android:text="@string/rmenus_restaurant_name"
                 android:id="@+id/textViewRMenusRestaurantName"
                 android:textColor="@color/gold"
-                android:textSize="22dp"
-                android:gravity="center"
+                android:textSize="20dp"
                 android:textAlignment="gravity"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:paddingRight="50dp"
+                android:gravity="left"/>
         </ScrollView>
 
         <ImageButton

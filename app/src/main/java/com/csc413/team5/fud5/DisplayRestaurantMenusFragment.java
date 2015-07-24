@@ -101,8 +101,8 @@ public class DisplayRestaurantMenusFragment extends DialogFragment {
             }
         });
 
-                txtMenusRestaurantName = (TextView) v.findViewById(R.id.textViewRMenusRestaurantName);
-        txtMenusRestaurantName.setGravity(Gravity.CENTER);
+        txtMenusRestaurantName = (TextView) v.findViewById(R.id.textViewRMenusRestaurantName);
+//        txtMenusRestaurantName.setGravity(Gravity.CENTER);
         txtMenusRestaurantName.setText(mRestaurant.getBusinessName());
 
         Menus menus = mRestaurant.getLocuMenus();
