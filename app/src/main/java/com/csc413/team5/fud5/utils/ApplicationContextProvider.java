@@ -1,4 +1,4 @@
-package com.csc413.team5.fud5;
+package com.csc413.team5.fud5.utils;
 
 import android.app.Application;
 import android.content.Context;

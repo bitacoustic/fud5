@@ -1,15 +1,12 @@
 package com.csc413.team5.fud5;
 
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.csc413.team5.fud5.utils.ServiceUtil;
 import com.csc413.team5.fud5.utils.ToastUtil;
 import com.csc413.team5.restaurantapiwrapper.LocuApiKey;
 import com.csc413.team5.restaurantapiwrapper.LocuExtension;
@@ -34,7 +32,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.InputStream;
@@ -106,7 +103,7 @@ public class ResultPageActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         // start background activity to get the results
-        if (isNetworkAvailable()) {
+        if (ServiceUtil.isNetworkAvailable(this)) {
             new GetResultTask().execute();
             setUpMapIfNeeded();
         } else {
@@ -280,7 +277,7 @@ public class ResultPageActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_menu) {
             if (firstResult != null) {
-                if (isNetworkAvailable()) {
+                if (ServiceUtil.isNetworkAvailable(this)) {
                     new DisplayMenuTask().execute(firstResult);
                     popupLoadingMenu.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
                 } else {
@@ -330,12 +327,5 @@ public class ResultPageActivity extends AppCompatActivity
 
     protected void onResume() {
         super.onResume();
-    }
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

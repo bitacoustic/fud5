@@ -8,9 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,6 +22,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 
+import com.csc413.team5.fud5.utils.ServiceUtil;
 import com.csc413.team5.fud5.utils.ToastUtil;
 import com.csc413.team5.restaurantapiwrapper.DistanceUnit;
 import com.csc413.team5.restaurantapiwrapper.RestaurantApiClient;
@@ -62,8 +60,8 @@ public class MainActivity extends AppCompatActivity
     RatingBar starRating;
 
     public void btnFindLocation(View v) {
-        if (islocationServicesOn()) {
-            if (isNetworkAvailable()) {
+        if (ServiceUtil.isLocationServicesOn(this)) {
+            if (ServiceUtil.isNetworkAvailable(this)) {
                 // compel location update; result is shown in the location EditText
                 mGoogleApiClient.disconnect();
                 mGoogleApiClient.connect(); // calls onConnected() to get current location
@@ -214,7 +212,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onConnected(Bundle bundle) {
-        if (!isNetworkAvailable() || !islocationServicesOn())
+        if (!ServiceUtil.isNetworkAvailable(this) || !ServiceUtil.isLocationServicesOn(this))
             return;
 
         // Get the most recent location of the device (~ user's current location)
@@ -267,32 +265,5 @@ public class MainActivity extends AppCompatActivity
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.i(TAG, "Google Play services connection failed: ConnectionResult.getErrorCode() = "
                 + connectionResult.getErrorCode());
-    }
-
-
-    public boolean islocationServicesOn() {
-        LocationManager lm = (LocationManager) getApplicationContext()
-                .getSystemService(Context.LOCATION_SERVICE);
-        boolean gpsEnabled = false;
-        boolean networkEnabled = false;
-
-        // check whether GPS and network providers are enabled
-        try {
-            gpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        } catch (Exception e) { }
-
-        try {
-            networkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        } catch (Exception e) { }
-
-        // only show dialog if location services are not enabled
-        return (gpsEnabled || networkEnabled);
-    }
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
