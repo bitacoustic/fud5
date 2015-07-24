@@ -10,6 +10,7 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -63,7 +64,10 @@ public class ResultPageActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_result_page);
+        String title = getString(R.string.title_activity_result_page);
+
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#43428A")));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color = '#ECCD7F'>" + title + "</font>"));
 
         // anchor for PopupWindows
         mTitle = (TextView) findViewById(R.id.restaurantName);

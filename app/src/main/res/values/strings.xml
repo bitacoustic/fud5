@@ -2,7 +2,6 @@
     <string name="app_name">FüD5</string>
     <string name="hello_world">Hello world!</string>
     <string name="main_title">Food Preferences</string>
-    <string name="how_about">How about...</string>
     <string name="action_settings">Settings</string>
     <string name="action_menu">Menu</string>
 
@@ -80,8 +79,8 @@
     <string name="settings_ui_button_modify_red_list">Modify red list</string>
 
     <!-- Main Activity -->
-    <string name="main_activity_search_term_title">Search Term (Optional)</string>
-    <string name="main_activity_location_title">Location</string>
+    <string name="main_activity_search_term_title">Type of Food (Optional)</string>
+    <string name="main_activity_location_title">Choose Different Location</string>
     <string name="main_activity_max_radius_title">Max Radius</string>
     <string name="main_activity_max_rating_title">Minimum Rating</string>
 
@@ -133,7 +132,7 @@
     <string name="db_table_is_empty">Database table is empty.</string>
 
     <!--Uncategorized-->
-    <string name="title_activity_result_page">ResultPageActivity</string>
+    <string name="title_activity_result_page">How about...</string>
     <string name="title_activity_maps_test">Map</string>
     <string name="title_activity_restaurant_selector_test">RestaurantSelectorTestActivity</string>
     <string name="activity_application_settings_push_notifications_text">Push Notifications</string>
@@ -143,8 +142,8 @@
     <!--Result Page-->
     <string name="green">Let\'s Go!</string>
     <string name="yellow">Maybe Later..</string>
-    <string name="red">Don\'t Show</string>
-    <string name="title_activity_food_preferences">Food Preferences</string>
+    <string name="red">No Way!</string>
+    <string name="title_activity_food_preferences">What would you like to eat?</string>
     <string name="default_location_search_text">Default Location</string>
     <string name="default_search_term_text">Default Search Term</string>
     <string name="default_search_radius_text">Default Search Radius</string>

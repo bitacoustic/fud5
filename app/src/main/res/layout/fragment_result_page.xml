@@ -28,7 +28,8 @@
         android:layout_alignParentStart="true"
         android:id="@+id/linearResult"
         android:layout_above="@+id/buttonBar"
-        android:layout_below="@+id/restaurantName">
+        android:layout_below="@+id/restaurantName"
+        android:paddingBottom="5dp">
 
         <ImageView
             android:layout_width="wrap_content"

@@ -9,7 +9,7 @@
     tools:context="com.csc413.team5.fud5.ResultPageActivityFragment">
 
     <TextView
-        android:text="@string/how_about"
+        android:text="@string/title_activity_result_page"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/how_about"

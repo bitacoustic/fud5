@@ -10,6 +10,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -109,6 +110,11 @@ public class MainActivity extends AppCompatActivity
         //Don't show keyboard immediately
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        String title = getString(R.string.title_activity_food_preferences);
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#43428A")));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color = '#ECCD7F'>"+title+"</font>"));
+
         setContentView(R.layout.activity_main);
 
         /* Get shared preferences */
@@ -152,8 +158,6 @@ public class MainActivity extends AppCompatActivity
         // connected with Google Location services
         buildGoogleApiClient();
         mGoogleApiClient.connect();
-
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#43428A")));
     }
 
     @Override

@@ -2,8 +2,11 @@ package com.csc413.team5.fud5;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.View;
 
 import com.csc413.team5.appdb.dbHelper;
@@ -26,6 +29,11 @@ public class UserPreferencesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_preferences);
+
+        String title = getString(R.string.title_activity_user_preferences);
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#43428A")));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color = '#ECCD7F'>" + title + "</font>"));
     }
 
     public void showFoodSettings(View v) {
