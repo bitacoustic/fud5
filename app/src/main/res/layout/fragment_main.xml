@@ -1,13 +1,9 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:adjustViewBounds="true"
-    android:layout_alignParentTop="false"
-    android:layout_alignWithParentIfMissing="false">
+
 
 
     <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -72,7 +68,7 @@
             android:minHeight="50dp"
             android:singleLine="true"
             android:layout_alignEnd="@+id/fudbuttoncontainer"
-            android:hint="e.g. tacos"/>
+            android:hint="e.g. Tacos"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -101,7 +97,7 @@
 
             <ImageButton
                 android:layout_width="285dp"
-                android:layout_height="283dp"
+                android:layout_height="285dp"
                 android:id="@+id/btnFuDPlz"
                 android:src="@drawable/fudplz"
                 android:scaleType="centerInside"
@@ -110,7 +106,7 @@
                 android:layout_alignEnd="@+id/textView"
                 android:layout_alignStart="@+id/textView"
                 android:onClick="btnFuDPlz"
-                android:layout_gravity="center" />
+                android:layout_gravity="center_horizontal|bottom" />
         </FrameLayout>
 
         <Spinner
@@ -139,5 +135,4 @@
 
     </RelativeLayout>
 
-</FrameLayout>
 
