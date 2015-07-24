@@ -62,7 +62,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="22dp"
         android:id="@+id/imgRating"
         android:layout_gravity="center_horizontal"
         android:adjustViewBounds="true"
