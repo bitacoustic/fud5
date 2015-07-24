@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity
         String title = getString(R.string.title_activity_food_preferences);
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#43428A")));
-        getSupportActionBar().setTitle(Html.fromHtml("<font color = '#ECCD7F'>"+title+"</font>"));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color = '#ECCD7F'>" + title + "</font>"));
 
         setContentView(R.layout.activity_main);
 
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity
             // the last parameter specifies max locations returned; we just need 1
             addresses = geocoder
                     .getFromLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude(), 1);
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e ) {
             e.printStackTrace();
         }
 
