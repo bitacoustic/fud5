@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     // material design library
     // get last known location
     // Google Maps
@@ -31,4 +31,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:7.5.0'
     compile 'com.google.android.gms:play-services-maps:7.5.0'
     compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.nhaarman.supertooltips:library:3.0.0'
 }

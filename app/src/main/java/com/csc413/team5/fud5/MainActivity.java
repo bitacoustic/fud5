@@ -30,6 +30,9 @@ import com.csc413.team5.restaurantapiwrapper.RestaurantApiClient;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.nhaarman.supertooltips.ToolTip;
+import com.nhaarman.supertooltips.ToolTipRelativeLayout;
+import com.nhaarman.supertooltips.ToolTipView;
 
 import java.io.IOException;
 import java.util.List;
@@ -60,6 +63,8 @@ public class MainActivity extends AppCompatActivity
     Spinner radiusSpinner;
     RatingBar starRating;
 
+    ToolTipView toolTipLocationIsEmpty;
+
     public void btnFindLocation(View v) {
         if (ServiceUtil.isLocationServicesOn(this)) {
             if (ServiceUtil.isNetworkAvailable(this)) {
@@ -83,6 +88,22 @@ public class MainActivity extends AppCompatActivity
 
         String location = ((EditText) findViewById(R.id.txtLocation)).getText().toString();
         String searchTerm = ((EditText) findViewById(R.id.txtSearchTerm)).getText().toString();
+
+        // Check for empty location field (location services are likely off). Show tooltip with
+        // help text
+        if (location.compareTo("") == 0) {
+//            ToastUtil.showShortToast(this, "Enter a location");
+            Log.i(TAG, "Location field cannot be empty");
+            ToolTipRelativeLayout tooltipLocationView
+                    = (ToolTipRelativeLayout) findViewById(R.id.tooltipTxtLocation);
+            ToolTip tooltipLocation = new ToolTip()
+                    .withText(getString(R.string.tooltip_location_field_is_blank))
+                    .withColor(Color.parseColor("#ECCD7F"))
+                    .withShadow();
+            toolTipLocationIsEmpty = tooltipLocationView
+                    .showToolTipForView(tooltipLocation, findViewById(R.id.txtLocation));
+            return;
+        }
 
         String[] maxRadiusArray = ((Spinner) findViewById(R.id.spnRadius)).getSelectedItem()
                 .toString().split(" ");
@@ -123,7 +144,18 @@ public class MainActivity extends AppCompatActivity
 
         /* Initalize inputs*/
         locationInput = (EditText) findViewById(R.id.txtLocation);
-        searchTermInput = (EditText) findViewById(R.id.txtLocation);
+        locationInput.setOnClickListener(new View.OnClickListener() {
+            @Override
+            // If user clicks on the location field and it is non-empty, it is cleared.
+            // Also, clears the tooltip if it is active.
+            public void onClick(View v) {
+                locationInput.setText("");
+                if (toolTipLocationIsEmpty != null)
+                    toolTipLocationIsEmpty.remove();
+            }
+        });
+
+        searchTermInput = (EditText) findViewById(R.id.txtSearchTerm);
 
         /* Initialize radius spinner */
         // TODO: Migrate this to xml file instead
@@ -197,7 +229,6 @@ public class MainActivity extends AppCompatActivity
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         return true;
     }
-
 
     /*********************
      * Location services *
