@@ -62,7 +62,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="20dp"
         android:id="@+id/imgRating"
         android:layout_gravity="center_horizontal"
         android:adjustViewBounds="true"
@@ -70,7 +70,8 @@
         android:layout_weight="1"
         android:layout_alignParentBottom="false"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/restaurantName" />
+        android:layout_below="@+id/restaurantName"
+        android:src="@drawable/stars0_0" />
 
     <LinearLayout
     android:id="@+id/buttonBar"

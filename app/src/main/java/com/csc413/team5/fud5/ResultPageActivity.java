@@ -124,6 +124,7 @@ public class ResultPageActivity extends AppCompatActivity
         if(resultList==null)return;
         try{
             firstResult=resultList.remove(0);
+            Log.i(TAG, "Rating: " + firstResult.getRating());
             mMap.clear();
             setUpMap(firstResult);
             TextView title = (TextView)findViewById(R.id.restaurantName);
