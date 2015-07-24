@@ -125,6 +125,7 @@ public class ResultPageActivity extends AppCompatActivity
         try{
             firstResult=resultList.remove(0);
             Log.i(TAG, "Rating: " + firstResult.getRating());
+            drawStars(firstResult.getRating());
             mMap.clear();
             setUpMap(firstResult);
             TextView title = (TextView)findViewById(R.id.restaurantName);
@@ -135,12 +136,36 @@ public class ResultPageActivity extends AppCompatActivity
             tempURL =  tempURL.replace("ms.jpg","o.jpg"); //this gets original image size
             URL imageURL = new URL(tempURL);
             task.execute(imageURL);
-            //Load the rating image
-            LoadImageRatingTask ratingTask = new LoadImageRatingTask();
-            imageURL = new URL(firstResult.getRatingImgUrl().toString());
-            ratingTask.execute(imageURL);
 
         } catch(Exception e){} //
+    }
+
+    private void drawStars(double rating){
+        ImageView imgRating = (ImageView) findViewById(R.id.imgRating);
+        if (rating == 0.0)
+            imgRating.setImageResource(R.drawable.stars0_0);
+        else if (rating == 0.5)
+            imgRating.setImageResource(R.drawable.stars0_5);
+        else if (rating == 1.0)
+            imgRating.setImageResource(R.drawable.stars1_0);
+        else if (rating == 1.5)
+            imgRating.setImageResource(R.drawable.stars1_5);
+        else if (rating == 2.0)
+            imgRating.setImageResource(R.drawable.stars2_0);
+        else if (rating == 2.5)
+            imgRating.setImageResource(R.drawable.stars2_5);
+        else if (rating == 3.0)
+            imgRating.setImageResource(R.drawable.stars3_0);
+        else if (rating == 3.5)
+            imgRating.setImageResource(R.drawable.stars3_5);
+        else if (rating == 4.0)
+            imgRating.setImageResource(R.drawable.stars4_0);
+        else if (rating == 4.5)
+            imgRating.setImageResource(R.drawable.stars4_5);
+        else if (rating == 5.0)
+            imgRating.setImageResource(R.drawable.stars5_0);
+       else
+            imgRating.setImageResource(R.drawable.error_stars);
     }
 
     @Override
@@ -218,12 +243,6 @@ public class ResultPageActivity extends AppCompatActivity
         }
     }
 
-    private class LoadImageRatingTask extends LoadImageTask {
-        protected void onPostExecute(Bitmap result) {
-            ImageView ratingImage = (ImageView) findViewById(R.id.imgRating);
-            ratingImage.setImageBitmap(result);
-        }
-    }
 
 /*
         setContentView(R.layout.activity_result_page);
