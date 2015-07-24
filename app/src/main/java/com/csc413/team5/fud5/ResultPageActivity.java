@@ -131,13 +131,30 @@ public class ResultPageActivity extends AppCompatActivity
             TextView title = (TextView)findViewById(R.id.restaurantName);
             title.setText(firstResult.getBusinessName());
             //Load the restaurant image
-            LoadImageTask task = new LoadImageTask();
             String tempURL = firstResult.getImageUrl().toString();
             tempURL =  tempURL.replace("ms.jpg","o.jpg"); //this gets original image size
             URL imageURL = new URL(tempURL);
+
+            LoadImageTask task = new LoadImageTask(){
+                protected void onPostExecute(Bitmap result) {
+                    ImageView restaurantImage = (ImageView) findViewById(R.id.imgRestaurant);
+                    restaurantImage.setImageBitmap(result);
+                }
+            };
             task.execute(imageURL);
 
         } catch(Exception e){} //
+    }
+    public class LoadImageTask extends AsyncTask<URL, Void, Bitmap>{
+        @Override
+        protected Bitmap doInBackground (URL... imageURL)
+        {
+            try {
+                InputStream stream = imageURL[0].openConnection().getInputStream();
+                return BitmapFactory.decodeStream(stream);
+            }catch(Exception e) {}
+            return null;
+        }
     }
 
     private void drawStars(double rating){
@@ -223,27 +240,6 @@ public class ResultPageActivity extends AppCompatActivity
         }
     }
 
-    private class LoadImageTask extends AsyncTask<URL, Void, Bitmap> {
-        protected void onPostExecute(Bitmap result) {
-            ImageView restaurantImage = (ImageView) findViewById(R.id.imgRestaurant);
-            restaurantImage.setImageBitmap(result);
-        }
-        @Override
-        protected Bitmap doInBackground(URL... params)  {
-
-            try {
-                URL url = params[0];
-                InputStream is = url.openConnection().getInputStream();
-                return BitmapFactory.decodeStream(is);
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            return null;
-        }
-    }
-
-
 /*
         setContentView(R.layout.activity_result_page);
         Typeface buttonFont = Typeface.createFromAsset(getAssets(), "Chunkfive.otf");
@@ -279,7 +275,7 @@ public class ResultPageActivity extends AppCompatActivity
         mMap.addMarker(new MarkerOptions().visible(true)
                 .position(latitudeLongitude) //these are called on the MarkerOptions object
                 .title(r.getBusinessName())
-                .snippet(r.getAddress().toString())
+                .snippet(r.getAddressDisplay())
         ).showInfoWindow(); //this is called on the marker object
 
 
