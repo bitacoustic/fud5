@@ -77,6 +77,8 @@ public class ResultPageActivity extends AppCompatActivity
         // save this context to use anywhere in the activity
         mContext = this;
 
+        // back button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // action bar colors
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#43428A")));
         getSupportActionBar().setTitle(Html.fromHtml("<font color = '#ECCD7F'>" + title + "</font>"));
@@ -315,6 +317,10 @@ public class ResultPageActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        //Back button
+        if(id == android.R.id.home)
+            finish();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_menu && firstResult != null) {
