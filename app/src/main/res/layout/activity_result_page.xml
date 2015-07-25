@@ -90,7 +90,8 @@
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:focusable="false" />
+        android:focusable="false"
+        android:onClick="btnGreen"/>
 
     <Button
         android:layout_width="match_parent"
@@ -102,7 +103,8 @@
         android:background="@color/gold"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:onClick="btnYellow"/>
 
     <Button
         android:layout_width="match_parent"
@@ -115,7 +117,7 @@
         android:textSize="20sp"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:onClick="displayNextResult" />
+        android:onClick="btnRed" />
 
 </LinearLayout>
 

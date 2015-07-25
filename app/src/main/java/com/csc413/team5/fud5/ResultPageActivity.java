@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.csc413.team5.appdb.dbHelper;
+import com.csc413.team5.fud5.utils.Constants;
 import com.csc413.team5.fud5.utils.ServiceUtil;
 import com.csc413.team5.fud5.utils.ToastUtil;
 import com.csc413.team5.restaurantapiwrapper.LocuApiKey;
@@ -68,6 +69,26 @@ public class ResultPageActivity extends AppCompatActivity
     DialogFragment menuNotFoundDialog;
     PopupWindow popupLoadingMenu;
 
+    // Database
+    dbHelper db;
+
+    public void btnGreen(View v) {
+        // TODO define a behavior
+        db.insertRestaurantToList(firstResult, Constants.GREEN_LIST);
+        ToastUtil.showShortToast(this, "TODO: Green button behavior"); // temp
+    }
+
+    public void btnYellow(View v) {
+        db.insertRestaurantToList(firstResult, Constants.YELLOW_LIST);
+        displayNextResult(v);
+    }
+
+    public void btnRed(View v) {
+        db.insertRestaurantToList(firstResult, Constants.RED_LIST);
+        displayNextResult(v);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +125,9 @@ public class ResultPageActivity extends AppCompatActivity
         Log.i(TAG, "Retrieved searchTerm: " + searchTerm);
         Log.i(TAG, "Retrieved maxRadius: " + maxRadius);
         Log.i(TAG, "Retrieved minRating: " + minRating);
+
+        // Initialize the database
+        db = new dbHelper(this, null, null, 1);
 
         // Construct a YelpApiKey from Resource strings
         mYelpKey = new YelpApiKey(
@@ -228,7 +252,7 @@ public class ResultPageActivity extends AppCompatActivity
                 return new RestaurantApiClient.Builder(mYelpKey)
                         .location(location)
                         //.categoryFilter("foodtrucks,restaurants") is included by default
-                        .sort(2)                  // 0=best matched, 1=distance, 2=highest rated
+                        .sort(RestaurantApiClient.SortBy.HIGHEST_RATED)
                         .term(searchTerm)
                         .limit(40)
                         .radiusFilter(maxRadius)

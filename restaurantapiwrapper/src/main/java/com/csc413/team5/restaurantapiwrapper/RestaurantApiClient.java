@@ -589,11 +589,14 @@ public class RestaurantApiClient {
     }
 
 
+
     /**
-     * Enumerated search type for a Yelp API query, used to signal the proper request format.
+     * Constants for sort-order.
      */
-    private enum YelpQueryType {
-        SEARCH, BUSINESS, PHONE_SEARCH
+    public static class SortBy {
+        public static final int BEST_MATCH = 0;
+        public static final int DISTANCE = 1;
+        public static final int HIGHEST_RATED = 2;
     }
 
 
@@ -771,5 +774,12 @@ public class RestaurantApiClient {
                     ", id='" + id + '\'' +
                     '}';
         }
+    }
+
+    /**
+     * Enumerated search type for a Yelp API query, used to signal the proper request format.
+     */
+    private enum YelpQueryType {
+        SEARCH, BUSINESS, PHONE_SEARCH
     }
 }
