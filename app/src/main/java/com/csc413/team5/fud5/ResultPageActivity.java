@@ -71,7 +71,7 @@ public class ResultPageActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_result_page);
+        setContentView(R.layout.activity_result_page);
         String title = getString(R.string.title_activity_result_page);
 
         // save this context to use anywhere in the activity
