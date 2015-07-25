@@ -1,9 +1,10 @@
 # Team 5
 ## Application summary
-**Name**:
+**Name**: FüD5
 
 **Purpose**: Suggest a restaurant either nearby or at a specified location according to user's
-preferences.
+preferences. Learn from user's response to previous suggestions to progressively provide a
+qualitatively better result.
 
 ## Getting started
 See wiki: https://github.com/sfsucsc413/t5/wiki

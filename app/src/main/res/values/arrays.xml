@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="db_colors_array">
+        <item>Green</item>
+        <item>Yellow</item>
+        <item>Red</item>
+    </string-array>
+    <string-array name="preferred_niche_array">
+        <item>Italian</item>
+        <item>Carnivore</item>
+        <item>Hole in the wall</item>
+        <item>Affordable</item>
+    </string-array>
+    <string-array name="radius_array">
+        <item>0.5 mi</item>
+        <item>1.0 mi</item>
+        <item>2.5 mi</item>
+        <item>5.0 mi</item>
+        <item>10 mi</item>
+    </string-array>
+</resources>

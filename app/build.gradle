@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "23.0.0 rc2"
+    buildToolsVersion '23.0.0 rc3'
 
     defaultConfig {
         applicationId "com.csc413.team5.fud5"
         minSdkVersion 19
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0"
+        versionName "0.5"
     }
     buildTypes {
         release {
@@ -20,6 +20,16 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    // material design library
+    // get last known location
+    // Google Maps
+    compile project(':restaurantapiwrapper')
+    compile project(':appdb')
+    compile project(':appdbtest')
     compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.google.android.gms:play-services-location:7.5.0'
+    compile 'com.google.android.gms:play-services-maps:7.5.0'
+    compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.nhaarman.supertooltips:library:3.0.0'
 }

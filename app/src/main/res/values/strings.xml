@@ -1,7 +1,161 @@
 <resources>
     <string name="app_name">FüD5</string>
     <string name="hello_world">Hello world!</string>
+    <string name="main_title">Food Preferences</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_menu">Menu</string>
+
     <string name="sample_button">Sample Button</string>
     <string name="button_pressed">Method btnSampleButton() was called.</string>
-    <string name="action_settings">Settings</string>
+    <string name="title_activity_maps">Map</string>
+
+    <!-- AskToUseLocationFragment dialog -->
+    <string name="dialog_ask_to_use_location_title">Use Google\'s location service?</string>
+    <string name="dialog_ask_to_use_location_body">
+        Fud5 uses this feature to give you localized restaurant recommendations. This will help all
+        apps on your phone determine the device\'s location. Anonymous location data may be sent
+        to Google even when no apps are running. You can activate this feature later.\n\nIf
+        you press \"Yes\", you will be taken to Android Location Settings.
+    </string>
+    <string name="dialog_ask_to_use_location_agree_button">Yes plz</string>
+    <string name="dialog_ask_to_use_location_disagree_button">Maybe later</string>
+
+    <!-- EulaFragment dialog -->
+    <string name="dialog_eula_title">End User License Agreement</string>
+    <string name="dialog_eula_button_agree">I agree</string>
+    <string name="dialog_eula_button_ok">Ok</string>
+
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="select_db_color">Select database color</string>
+    <string name="title_activity_green_list">GreenListActivity</string>
+    <string name="title_activity_yellow_list">YellowListActivity</string>
+    <string name="title_activity_red_list">RedListActivity</string>
+
+    <!-- MenuNotFoundFragment dialog -->
+    <string name="dialog_menu_not_found_text">
+        No menu is available for this restaurant :(
+    </string>
+    <string name="dialog_menu_not_found_ok_button">Ok</string>
+
+    <!-- DisplayRestaurantMenusFragment dialog -->
+    <string name="rmenus_restaurant_name"/>
+    <string name="title_activity_locu_menu">LocuMenuActivity</string>
+    <string name="locu_search_id">64e0307ca073dccb5666</string>
+
+
+    <!-- LocuMenuTestActivity -->
+    <string name="title_locu_menu_test_activity">Locu Menu Test</string>
+    <string name="locu_menu_debug_text"> </string>
+    <string name="display_menu_by_id_info_text">
+        Note that not all venues have menus. A Locu ID is comprised of 20 alphanumeric characters.
+    </string>
+
+    <!-- RestaurantTest -->
+    <string name="title_restaurant_test_activity">RestaurantTest</string>
+    <string name="api_call_result">(loading)</string>
+
+    <!-- SharedPreferencesTest -->
+    <string name="title_activity_shared_preferences_test">SharedPreferencesTestActivity</string>
+    <string name="settings_ui_button_shared_preferences_test">Display shared preferences</string>
+
+    <!-- User Preferences -->
+    <string name="title_activity_user_preferences">Settings</string>
+    <string name="settings_ui_text_general">Settings</string>
+    <string name="settings_ui_text_misc">Miscellaneous Info</string>
+    <string name="settings_ui_text_dev_playground">Dev Playground</string>
+    <string name="settings_ui_text_red_list">Red List</string>
+    <string name="settings_ui_button_food_settings">Default Settings</string>
+    <string name="settings_ui_button_app_settings">App Settings</string>
+    <string name="settings_ui_button_eula">End User License Agreement</string>
+    <string name="settings_ui_button_app_info">About this app</string>
+    <string name="settings_ui_button_db_test">Database Test</string>
+    <string name="settings_ui_button_yelp_test">Yelp Test</string>
+    <string name="settings_ui_button_locu_test">Locu Test</string>
+    <string name="settings_ui_button_google_map_test">Google Map Test</string>
+    <string name="settings_ui_button_selector_test">Restaurant Selector Test</string>
+    <string name="settings_ui_button_reset_red_list">Remove All Ignored Restaurants</string>
+    <string name="settings_ui_button_modify_red_list">Change Ignored Restaurants</string>
+
+    <!-- Main Activity -->
+    <string name="main_activity_search_term_title">Type of Food (Optional)</string>
+    <string name="main_activity_location_title">Choose Different Location</string>
+    <string name="main_activity_max_radius_title">Max Radius</string>
+    <string name="main_activity_max_rating_title">Minimum Rating</string>
+    <string name="tooltip_location_field_is_blank">Enter a location (at least a city). Or,
+        press the crosshair to get your approximate address (location services must be on).</string>
+
+    <!--Food preferences-->
+    <string name="dialog_food_preferences_title">Food Preferences</string>
+    <string name="dialog_food_preferences_message">Modify default filters when you search for food</string>
+
+
+    <!--Modify red list fragment-->
+    <string name="dialog_modify_red_list_title">Ignored Restaurants</string>
+    <string name="dialog_modify_red_list_message">List of restaurants that won\'t appear in your
+        feed
+    </string>
+
+    <!-- ApplicationSettings -->
+    <string name="title_activity_application_settings">App Settings</string>
+    <string name="activity_application_settings_user_settings_checkbox">User Settings</string>
+    <string name="activity_application_settings_restaurant_history_checkbox">Restaurant History</string>
+    <string name="activity_application_settings_user_settings_caption">Checking this box and
+        pressing \"Reset\" will set your preferred restaurant search options to application defaults. You may need to agree to the End-User License Agreement again on application restart.</string>
+    <string name="activity_application_settings_restaurant_history_caption">This application
+        remembers restaurants when you choose \"Let\'s go!\", \"Maybe later\", or \"Never\". By checking this box and pressing \"Reset\" all of this data will be erased.</string>
+    <string name="activity_application_settings_reset_checked_items_button">Reset checked items</string>
+    <string name="activity_application_settings_user_settings_text">User Settings</string>
+    <string name="activity_application_settings_restaurant_history_text">Restaurant History</string>
+    <string name="activity_application_settings_are_you_sure_text">Are you sure you want to reset</string>
+    <string name="activity_application_settings_positive_button_text">I\'m sure</string>
+    <string name="activity_application_settings_negative_button_text">Don\'t reset</string>
+    <string name="activity_application_settings_title">Application Settings</string>
+    <string name="activity_application_settings_reset_application_text">Reset Application</string>
+    <string name="activity_application_settings_manage_services_text">Manage Services</string>
+    <string name="activity_application_settings_location_services_button_text">Turn location services on/off</string>
+    <string name="settings_ui_button_push_notifications">Push notifications</string>
+
+    <!-- End User Preferences-->
+
+    <!--Generic strings-->
+    <string name="generic_save_text">Save</string>
+    <string name="generic_cancel_text">Cancel</string>
+    <string name="generic_info_title">Info</string>
+    <string name="generic_cancel_text_message">New settings won\'t be saved.</string>
+    <string name="generic_are_you_sure_title">Are you sure?</string>
+    <string name="generic_back_text">Back</string>
+    <string name="generic_ok_text">Ok</string>
+
+    <!--General database-->
+    <string name="db_does_not_exist">Error: Database does not exist.</string>
+    <string name="db_table_does_not_exist">Error: Database table does not exist.</string>
+    <string name="db_table_is_empty">Your ignored restaurant list is empty.</string>
+
+    <!--Uncategorized-->
+    <string name="title_activity_result_page">How about...</string>
+    <string name="title_activity_maps_test">Map</string>
+    <string name="title_activity_restaurant_selector_test">RestaurantSelectorTestActivity</string>
+    <string name="activity_application_settings_push_notifications_text">Push Notifications</string>
+    <string name="activity_application_settings_nearby_restaurants_checkbox">Nearby restaurants</string>
+    <string name="activity_application_settings_app_updates_checkbox">App updates</string>
+
+    <!--Result Page-->
+    <string name="green">Let\'s Go!</string>
+    <string name="yellow">Maybe Later..</string>
+    <string name="red">No Way!</string>
+    <string name="title_activity_food_preferences">Set your default settings.</string>
+    <string name="title_activity_main">What would you like to eat?</string>
+    <string name="default_location_search_text">Default Location</string>
+    <string name="default_location_followup">(for when automatic detection doesn\'t work)</string>
+    <string name="default_search_term_text">Default Type of Food</string>
+    <string name="default_search_radius_text">Default Search Radius</string>
+    <string name="default_min_star_text">Default Minimum Rating</string>
+    <string name="hint_default_search_term">e.g. Tacos</string>
+    <string name="hint_default_location_search">e.g. 1 Market St, San Francisco</string>
+    <string name="popup_loading_rmenu_text">Looking for menus</string>
+
+    <string name="toast_location_services_are_off">Location services are off</string>
+    <string name="toast_network_unavailable">Network is unavailable</string>
 </resources>

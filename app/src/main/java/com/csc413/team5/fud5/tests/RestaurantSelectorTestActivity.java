@@ -1,0 +1,443 @@
+package com.csc413.team5.fud5.tests;
+
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.csc413.team5.appdb.dbHelper;
+import com.csc413.team5.fud5.R;
+import com.csc413.team5.restaurantapiwrapper.DistanceUnit;
+import com.csc413.team5.restaurantapiwrapper.ParameterRangeException;
+import com.csc413.team5.restaurantapiwrapper.Restaurant;
+import com.csc413.team5.restaurantapiwrapper.RestaurantApiClient;
+import com.csc413.team5.restaurantapiwrapper.RestaurantList;
+import com.csc413.team5.restaurantapiwrapper.YelpApiKey;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Random;
+
+/**
+ * If location services and data connectivity are available, query Yelp for the 20 closest
+ * restaurants, and select a portion of them to place in one of the green, yellow, or red lists.
+ * Then, run the selection algorithm.
+ */
+public class RestaurantSelectorTestActivity extends Activity
+        implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
+    public static final String TAG = "RestaurantSelectorTest";
+
+    protected YelpApiKey mYelpApiKey;
+    protected RestaurantList mRestaurantList;
+
+    protected dbHelper db;
+
+    protected String mAddressString;
+    protected GoogleApiClient mGoogleApiClient; // client for Google API requests
+    protected Location mLastLocation; // stores latitude, longitude of device's last known location
+    protected Address mLastLocationAddress; // representation of lat,long as address
+
+    protected LinearLayout linearLayout;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_restaurant_selector_test);
+
+        // Construct the Yelp API key
+        String consumerKey = getApplicationContext().getResources()
+                .getString(R.string.yelp_consumer_key);
+        String consumerSecret = getApplicationContext().getResources()
+                .getString(R.string.yelp_consumer_secret);
+        String tokenKey = getApplicationContext().getResources()
+                .getString(R.string.yelp_token);
+        String tokenSecret = getApplicationContext().getResources()
+                .getString(R.string.yelp_token_secret);
+        mYelpApiKey = new YelpApiKey(consumerKey, consumerSecret, tokenKey, tokenSecret);
+
+        linearLayout = (LinearLayout) findViewById(R.id.linearLayoutRSTest);
+
+        db = new dbHelper(this, null, null, 1);
+
+        appendOutputText("Getting nearby restaurants ...");
+        buildGoogleApiClient();
+        mGoogleApiClient.connect();
+    }
+
+    public class RestaurantListTask extends AsyncTask<Void, Void, RestaurantList> {
+
+        /**
+         * Override this method to perform a computation on a background thread. The
+         * specified parameters are the parameters passed to {@link #execute}
+         * by the caller of this task.
+         * <p>
+         * This method can call {@link #publishProgress} to publish updates
+         * on the UI thread.
+         *
+         * @param params The parameters of the task.
+         * @return A result, defined by the subclass of this task.
+         * @see #onPreExecute()
+         * @see #onPostExecute
+         * @see #publishProgress
+         */
+        @Override
+        protected RestaurantList doInBackground(Void... params) {
+            RestaurantList result = null;
+            try {
+                result = new RestaurantApiClient.Builder(mYelpApiKey)
+                        .sort(1)                   // sort by distance
+                        .location(mAddressString)
+                        .cll(mLastLocation)
+                        .build().getRestaurantList();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParameterRangeException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        /**
+         * <p>Runs on the UI thread after {@link #doInBackground}. The
+         * specified result is the value returned by {@link #doInBackground}.</p>
+         * <p/>
+         * <p>This method won't be invoked if the task was cancelled.</p>
+         *
+         * @param result The result of the operation computed by {@link #doInBackground}.
+         * @see #onPreExecute
+         * @see #doInBackground
+         * @see #onCancelled(Object)
+         */
+        @Override
+        protected void onPostExecute(RestaurantList result) {
+            // do some stuff after the restaurant list has been generated
+
+            mRestaurantList = result;
+
+            if (mRestaurantList == null) {
+                appendOutputText("There was a problem retrieving results from Yelp. Are you " +
+                        "connected to the internet?", Color.RED);
+            } else {
+                ArrayList<Integer> randoms = new ArrayList<>();
+                int numRandoms = mRestaurantList.size() / 2;
+                Random rand = new Random();
+
+                appendOutputText("Selecting random restaurants to assign to the green, yellow, and " +
+                        "red lists. The remaining restaurants are not assigned to any list (white " +
+                        "text). NOTE: If any of these restaurants were already in the database, " +
+                        "their list status may be reset. The results of this activity persist in " +
+                        "the database after the activity or application is destroyed. To fully " +
+                        "clear all lists on this device/emulator, reset Restaurant History in App" +
+                        "Settings.\n");
+
+                for (int i = 0; i < numRandoms; i++) {
+                    int randomNumber;
+                    do {
+                        randomNumber = rand.nextInt(mRestaurantList.size()); // 0..size-1
+                    } while (randoms.contains(randomNumber));
+                    randoms.add(randomNumber);
+                }
+
+                appendOutputText("Result:");
+                if (mRestaurantList != null) {
+                    for (int i = 0; i < mRestaurantList.size(); i++) {
+                        Restaurant thisRestaurant = mRestaurantList.getRestaurant(i);
+
+                        // if this restaurant is currently in any list, make it unlisted
+                        if (db.isRestaurantInList(thisRestaurant, 1))
+                            db.deleteRestaurantFromList(thisRestaurant, 1);
+                        if (db.isRestaurantInList(thisRestaurant, 2))
+                            db.deleteRestaurantFromList(thisRestaurant, 2);
+                        if (db.isRestaurantInList(thisRestaurant, 3))
+                            db.deleteRestaurantFromList(thisRestaurant, 3);
+
+                        // add the restaurant to a list if it was randomly selected; first third
+                        // of the restaurants in the list of randomly selected index numbers
+                        // go in green, second third in yellow, last third in red
+                        if (randoms.contains(i)) {
+                            if (randoms.indexOf(i) < (randoms.size() / 3)) {
+                                appendOutputText(makeString(thisRestaurant, i, "green"), Color
+                                        .GREEN);
+                                // green list = 1
+                                db.insertRestaurantToList(thisRestaurant, 1);
+                            } else if (randoms.indexOf(i) >= (randoms.size() / 3) &&
+                                    randoms.indexOf(i) < (randoms.size() * 2 / 3)) {
+                                appendOutputText(makeString(thisRestaurant, i, "yellow"), Color
+                                        .YELLOW);
+                                // yellow list = 2
+                                db.insertRestaurantToList(thisRestaurant, 2);
+                            } else if (randoms.indexOf(i) >= (randoms.size() * 2 / 3)) {
+                                appendOutputText(makeString(thisRestaurant, i, "red"), Color.RED);
+                                // yellow list = 3
+                                db.insertRestaurantToList(thisRestaurant, 3);
+                            }
+
+                        } else {
+                            appendOutputText(makeString(thisRestaurant, i, "white"), Color.WHITE);
+                        }
+
+                    }
+                } else {
+                    appendOutputText("No results.", Color.RED);
+                }
+
+                RestaurantList resultList = selector(mRestaurantList, 4.0);
+
+                appendOutputText(" ");
+                appendOutputText("Result of selector is:");
+
+                if (mRestaurantList.getSize() < 1) {
+                    appendOutputText("No results.", Color.RED);
+                } else {
+                    for (int i = 0; i < resultList.getSize(); i++) {
+                        appendOutputText(makeString(resultList.getRestaurant(i), i, "white"));
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * A test of the selection algorithm.
+     * Precondition: The supplied restaurant list is sorted by distance.
+     *
+     * @param rList      a RestaurantList
+     * @param minRating  minimum rating in the range 0.0-5.0 in increments of 0.5
+     * @return           the supplied RestaurantList modified in place to contain the result
+     *                   of the selection
+     */
+    public RestaurantList selector(RestaurantList rList, double minRating) {
+        if (rList.getSize() < 1) // nothing to do
+            return rList;
+
+        // at this point list will have at least one restaurant. We might be tempted to just
+        // return the one restaurant but it might not meet the criteria for selection
+
+//        boolean done = false;
+//
+//        while (!done) {
+//            for (int i = 0; i < rList.getSize(); i++) {
+//                if (rList.getRestaurant(i).getRating() < minRating) {
+//                    rList.removeRestaurant(i);
+//                    break;
+//                }
+//                else if (i == rList.getSize() - 1)
+//                    done = true;
+//            }
+//        }
+
+        // Step 1: remove restaurants < minRating
+        for (int i = 0; i < rList.getSize(); ) {
+            if (rList.getRestaurant(i).getRating() < minRating) {
+                Restaurant removed = rList.removeRestaurant(i);
+                if (removed == null) // check if restaurant was removed successfully
+                    i++;
+                // otherwise don't iterate as next restaurant will be at this index
+            }
+            else
+                i++;
+        }
+
+        // TODO Step 2: remove restaurants from red list (do we always want to do this?)
+
+        // TODO Step 3: demote restaurants in yellow list -- those added to the yellow list most
+        // recently will be demoted the greatest number of places (use the database timestamp
+        // to determine how recently a restaurant was added)
+
+        // TODO Step 4: handle green list
+        // possibilities:
+        // -- demote restaurants in green list below restaurants in yellow list under the assumption
+        //    the user would rather try something new than be suggested a restaurant they've been
+        //    to before
+        // -- OR demote restaurants in green list to below the last unlisted ("white") restaurant
+        //    and below the last yellow listed restaurant
+        //    e.g. WHITE1 GREEN1 WHITE2 GREEN2 YELLOW1 YELLOW2 WHITE3 would become:
+        //         WHITE1 WHITE2 YELLOW1 YELLOW2 WHITE3 GREEN1 GREEN2
+
+        // TODO handle special cases
+        // -- what happens when the result is an empty list? (e.g. initial list had all red)
+
+        return rList;
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_restaurant_selector_test, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Check if location services are active. If so, get the current location then call
+     * the RestaurantListTask background task to perform the Yelp API query.
+     */
+    @Override
+    public void onConnected(Bundle bundle) {
+
+        LocationManager lm = (LocationManager) getApplicationContext()
+                .getSystemService(Context.LOCATION_SERVICE);
+        boolean gpsEnabled = false;
+        boolean networkEnabled = false;
+
+        // check whether GPS and network providers are enabled
+        try {
+            gpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch (Exception e) { }
+
+        try {
+            networkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch (Exception e) { }
+
+        // only show dialog if location services are not enabled
+        if (!gpsEnabled && !networkEnabled) {
+            appendOutputText("Couldn't retrieve your current location because Location " +
+                    "services appears to be off", Color.RED);
+        } else {
+            // get approximate address from location
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                    mGoogleApiClient);
+            Geocoder geocoder;
+            List<Address> addresses = null;
+            geocoder = new Geocoder(this, Locale.getDefault());
+            try {
+                // the last parameter specifies max locations turn return; we just need 1
+                addresses = geocoder
+                        .getFromLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude(), 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (addresses != null) {
+                mLastLocationAddress = addresses.get(0);
+                mAddressString = RestaurantApiClient.addressToString(mLastLocationAddress);
+                new RestaurantListTask().execute();
+            } else {
+                appendOutputText("There was a problem retrieving your current location, but " +
+                        "location services appear to be active. Are you connected to the " +
+                        "internet?", Color.RED);
+            }
+        }
+    }
+
+    /**
+     * Re-establish a connection with GoogleApiClient services if the connected is suspended.
+     *
+     * @param i
+     */
+    @Override
+    public void onConnectionSuspended(int i) {
+        // The connection to Google Play services was lost for some reason. We call connect() to
+        // attempt to re-establish the connection.
+        Log.i(TAG, "Google Play services connection suspended. Reconnecting...");
+        mGoogleApiClient.connect();
+    }
+
+    /**
+     * See ConnectionResult documentation for possible error codes.
+     *
+     * @param connectionResult
+     */
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i(TAG, "Google Play services connection failed: ConnectionResult.getErrorCode() = "
+                + connectionResult.getErrorCode());
+    }
+
+    /*****************************
+     * Activity's helper methods *
+     *****************************/
+
+    /**
+     * Builds a GoogleApiClient, adds API LocationServices.
+     */
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    /**
+     * Add a TextView to the LinearLayout contained within the activity's ScrollView
+     * @param s      text to add
+     * @param color  the color: an int or use e.g. Color.RED
+     */
+    public void appendOutputText(String s, int color) {
+        TextView txtOut = new TextView(getBaseContext());
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(10, 0, 10, 0);
+        txtOut.setTextColor(color);
+        txtOut.setTextSize(14);
+        txtOut.setText(s);
+        txtOut.setLayoutParams(params);
+        linearLayout.addView(txtOut);
+    }
+
+    /**
+     * Overloaded version of appendOutputText(String s, int color) that appends white text.
+     * @param s  text to add
+     */
+    public void appendOutputText(String s) {
+        appendOutputText(s, Color.WHITE);
+    }
+
+    public String makeString(Restaurant r, int index, String list) {
+        StringBuilder result = new StringBuilder("[" + index + "] " + r.getBusinessName()
+                + " (stars: " + r.getRating() + ", dist: "
+                + new BigDecimal(r.getDistanceFromSearchLocation(DistanceUnit.MILES))
+                .setScale(2, RoundingMode.HALF_UP) + "mi");
+
+        switch (list.toLowerCase()) {
+            case "green":
+                result.append(", timestamp: ?");
+                break;
+            case "yellow":
+                result.append(", timestamp: ?");
+                break;
+            default:
+                break;
+        }
+
+        return result.append(")").toString();
+    }
+}

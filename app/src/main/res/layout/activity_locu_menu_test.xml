@@ -1,0 +1,116 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                tools:context="com.csc413.team5.restauranttest.LocuMenuActivity">
+
+    <TextView
+        android:text="Display preset menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewDisplayPresetTitle"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:gravity="center_horizontal"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Tsing Tao Restaurant"
+        android:id="@+id/buttonNewTsingTao"
+        android:layout_below="@+id/textViewDisplayPresetTitle"
+        android:layout_alignParentStart="true"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chevy&apos;s Fresh Mex"
+        android:id="@+id/buttonChevys"
+        android:layout_below="@+id/buttonNewTsingTao"
+        android:layout_alignParentStart="true"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nettie&apos;s Crab Shack"
+        android:id="@+id/buttonNetties"
+        android:layout_below="@+id/buttonChevys"
+        android:layout_alignParentEnd="true"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cheesecake Factory"
+        android:id="@+id/buttonCheesecake"
+        android:layout_below="@+id/buttonNetties"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Display menu by Locu ID"
+        android:id="@+id/textDisplayMenuByLocuID"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/buttonCheesecake"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/display_menu_by_id_info_text"
+        android:id="@+id/textViewDisplayMenuByIDInfoText"
+        android:layout_below="@+id/textDisplayMenuByLocuID"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextLocuSearchId"
+        android:layout_below="@+id/textViewDisplayMenuByIDInfoText"
+        android:layout_alignParentStart="true"
+        android:inputType="text"
+        android:editable="true"
+        android:enabled="true"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Display Menu"
+        android:id="@+id/buttonDisplayMenu"
+        android:layout_below="@+id/editTextLocuSearchId"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/locu_menu_debug_text"
+        android:id="@+id/textViewDebug"
+        android:layout_below="@+id/buttonDisplayMenu"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBarLocuMenuTest"
+        style="@android:style/Widget.ProgressBar"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
