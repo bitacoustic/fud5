@@ -27,6 +27,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
+@Deprecated // integrated most functionality into UserPreferencesActivity
 public class ApplicationSettingsActivity extends AppCompatActivity
         implements ApplicationSettingsFragment.ApplicationSettingsConfirmListener {
     private static final String TAG = "AppSettings";

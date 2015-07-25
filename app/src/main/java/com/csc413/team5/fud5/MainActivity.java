@@ -38,10 +38,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-
-//public class MainActivity extends AppCompatActivity {
-//        implements GoogleApiClient.ConnectionCallbacks,
-//        GoogleApiClient.OnConnectionFailedListener {
 public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
@@ -56,8 +52,6 @@ public class MainActivity extends AppCompatActivity
     protected Location mLastLocation; // stores latitude, longitude of device's last known location
     protected Address mLastLocationAddress; // representation of lat,long as address
 
-//    protected EditText locationInput;
-
     EditText locationInput;
     EditText searchTermInput;
     Spinner radiusSpinner;
@@ -71,13 +65,20 @@ public class MainActivity extends AppCompatActivity
                 // compel location update; result is shown in the location EditText
                 mGoogleApiClient.disconnect();
                 mGoogleApiClient.connect(); // calls onConnected() to get current location
-            } else {
+                if (mAddressString.compareTo("") != 0) {
+                    // remove tooltip if it is active and address was obtained
+                    if (toolTipLocationIsEmpty != null)
+                        toolTipLocationIsEmpty.remove();
+                    // set focus on search term
+                    searchTermInput.requestFocus();
+                }
+            } else { // if network is unavailable
                 ToastUtil.showShortToast(getApplicationContext(),
                         getString(R.string.toast_network_unavailable));
                 Log.i(TAG, "Can't get last known location because the network is unavailable");
             }
 
-        } else {
+        } else { // if location services are inactive
             ToastUtil.showShortToast(getApplicationContext(),
                     getString(R.string.toast_location_services_are_off));
             Log.i(TAG, "Can't get last known location because location services are off");
@@ -177,7 +178,7 @@ public class MainActivity extends AppCompatActivity
         // Apply the adapter to the spinner
         radiusSpinner.setAdapter(adapter);
 
-        /* Initailize rating bar */
+        /* Initialize rating bar */
         starRating = (RatingBar) findViewById(R.id.ratingBar);
 
                 /* Set default field values */
@@ -193,7 +194,6 @@ public class MainActivity extends AppCompatActivity
         starRating.setRating(userSettings.getFloat("defaultMinStar", 3.5f));
         // TODO search term input
 //        searchTermInput.setText(userSettings.getString("defaultSearchLocation", locationInput.getText().toString()));
-
 
         // connected with Google Location services
         buildGoogleApiClient();
@@ -278,7 +278,6 @@ public class MainActivity extends AppCompatActivity
         // an empty String
         if (addresses != null) {
             mLastLocationAddress = addresses.get(0);
-
             mAddressString = RestaurantApiClient.addressToString(mLastLocationAddress);
             locationInput.setText(mAddressString);
         } else {
