@@ -95,9 +95,9 @@ public class ModifyRedListDialogFragment extends DialogFragment {
                         // helper method
                         deleteFromRedList(redListItems[((int) selList.get(i))].toString());
                     }
-                    Toast.makeText(getActivity(),
-                            "Removed: \n" + msg, Toast.LENGTH_LONG)
-                            .show();
+//                    Toast.makeText(getActivity(),
+//                            "Removed: \n" + msg, Toast.LENGTH_LONG)
+//                            .show();
                 }
             });
 
@@ -106,9 +106,9 @@ public class ModifyRedListDialogFragment extends DialogFragment {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getActivity(),
-                            "Cancelled removal.", Toast.LENGTH_LONG)
-                            .show();
+//                    Toast.makeText(getActivity(),
+//                            "Cancelled removal.", Toast.LENGTH_LONG)
+//                            .show();
                 }
             });
         }
@@ -153,7 +153,7 @@ public class ModifyRedListDialogFragment extends DialogFragment {
         Restaurant r = new Restaurant();
         r.setRestaurantName(inputText);
 
-        CharSequence text = "Delete: " + inputText + " from red list = " + db_helper.deleteRestaurantFromList(r, 3);
+        CharSequence text = "Removed " + inputText + " from ignored restaurants.";
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
