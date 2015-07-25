@@ -85,6 +85,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void btnFuDPlz(View v){
+        // Save some preferences
+        // search radius
+        userSettingsEditor.putFloat("defaultSearchRadius",
+                Float.parseFloat(((Spinner)findViewById(R.id.spnRadius)).getSelectedItem().toString().substring(0,3))).apply();
+//        // star rating
+        userSettingsEditor.putFloat("defaultMinStar", starRating.getRating()).apply();
 
         String location = ((EditText) findViewById(R.id.txtLocation)).getText().toString();
         String searchTerm = ((EditText) findViewById(R.id.txtSearchTerm)).getText().toString();
