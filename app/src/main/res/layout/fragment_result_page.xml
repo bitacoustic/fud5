@@ -24,7 +24,6 @@
             android:layout_height="0dp"
             android:id="@+id/imgRestaurant"
             android:layout_alignParentStart="true"
-            android:src="@android:drawable/stat_sys_warning"
             android:scaleType="centerCrop"
             android:layout_below="@+id/restaurantName"
             android:layout_gravity="center"

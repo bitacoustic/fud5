@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -126,7 +127,15 @@ public class ResultPageActivity extends AppCompatActivity
     public void displayNextResult(View v){
         //display restaurant info goes here.
         //restaurant image loading needs to go in yet another asynctask
-        if(resultList==null)return;
+        if(resultList==null)
+            return;
+        if (resultList.size() <= 0){
+            ToastUtil.showShortToast(this, "No more matches found.");
+        }else {
+            //Clear the image before the next image is shown
+            //Sometimes a result doesn't have an image, so it was showing the last one
+            ((ImageView) findViewById(R.id.imgRestaurant)).setImageResource(0);
+        }
         try{
             firstResult=resultList.remove(0);
             Log.i(TAG, "Rating: " + firstResult.getRating());
@@ -136,18 +145,21 @@ public class ResultPageActivity extends AppCompatActivity
             TextView title = (TextView)findViewById(R.id.restaurantName);
             title.setText(firstResult.getBusinessName());
             //Load the restaurant image
-            String tempURL = firstResult.getImageUrl().toString();
-            tempURL =  tempURL.replace("ms.jpg","o.jpg"); //this gets original image size
-            URL imageURL = new URL(tempURL);
+            if (firstResult.getImageUrl() == null)
+                ((ImageView)findViewById(R.id.imgRestaurant)).setImageResource(R.drawable.no_image);
+            else {
+                String tempURL = firstResult.getImageUrl().toString();
+                tempURL = tempURL.replace("ms.jpg", "o.jpg"); //this gets original image size
+                URL imageURL = new URL(tempURL);
 
-            LoadImageTask task = new LoadImageTask(){
-                protected void onPostExecute(Bitmap result) {
-                    ImageView restaurantImage = (ImageView) findViewById(R.id.imgRestaurant);
-                    restaurantImage.setImageBitmap(result);
-                }
-            };
-            task.execute(imageURL);
-
+                LoadImageTask task = new LoadImageTask() {
+                    protected void onPostExecute(Bitmap result) {
+                        ImageView restaurantImage = (ImageView) findViewById(R.id.imgRestaurant);
+                        restaurantImage.setImageBitmap(result);
+                    }
+                };
+                task.execute(imageURL);
+            }
         } catch(Exception e){} //
     }
     public class LoadImageTask extends AsyncTask<URL, Void, Bitmap>{
