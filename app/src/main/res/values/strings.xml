@@ -61,22 +61,22 @@
     <string name="settings_ui_button_shared_preferences_test">Display shared preferences</string>
 
     <!-- User Preferences -->
-    <string name="title_activity_user_preferences">User Preferences</string>
-    <string name="settings_ui_text_general">General</string>
+    <string name="title_activity_user_preferences">Settings</string>
+    <string name="settings_ui_text_general">Settings</string>
     <string name="settings_ui_text_misc">Miscellaneous Info</string>
     <string name="settings_ui_text_dev_playground">Dev Playground</string>
     <string name="settings_ui_text_red_list">Red List</string>
-    <string name="settings_ui_button_food_settings">Food settings</string>
+    <string name="settings_ui_button_food_settings">Default Settings</string>
     <string name="settings_ui_button_app_settings">App Settings</string>
     <string name="settings_ui_button_eula">End User License Agreement</string>
-    <string name="settings_ui_button_app_info">App Information</string>
+    <string name="settings_ui_button_app_info">About this app</string>
     <string name="settings_ui_button_db_test">Database Test</string>
     <string name="settings_ui_button_yelp_test">Yelp Test</string>
     <string name="settings_ui_button_locu_test">Locu Test</string>
     <string name="settings_ui_button_google_map_test">Google Map Test</string>
     <string name="settings_ui_button_selector_test">Restaurant Selector Test</string>
-    <string name="settings_ui_button_reset_red_list">Clear red list</string>
-    <string name="settings_ui_button_modify_red_list">Modify red list</string>
+    <string name="settings_ui_button_reset_red_list">Remove All Ignored Restaurants</string>
+    <string name="settings_ui_button_modify_red_list">Change Ignored Restaurants</string>
 
     <!-- Main Activity -->
     <string name="main_activity_search_term_title">Type of Food (Optional)</string>
@@ -92,7 +92,7 @@
 
 
     <!--Modify red list fragment-->
-    <string name="dialog_modify_red_list_title">Red List</string>
+    <string name="dialog_modify_red_list_title">Ignored Restaurants</string>
     <string name="dialog_modify_red_list_message">List of restaurants that won\'t appear in your
         feed
     </string>
@@ -129,9 +129,9 @@
     <string name="generic_ok_text">Ok</string>
 
     <!--General database-->
-    <string name="db_does_not_exist">Database does not exist.</string>
-    <string name="db_table_does_not_exist">Database table does not exist.</string>
-    <string name="db_table_is_empty">Database table is empty.</string>
+    <string name="db_does_not_exist">Error: Database does not exist.</string>
+    <string name="db_table_does_not_exist">Error: Database table does not exist.</string>
+    <string name="db_table_is_empty">Your ignored restaurant list is empty.</string>
 
     <!--Uncategorized-->
     <string name="title_activity_result_page">How about...</string>
@@ -145,13 +145,15 @@
     <string name="green">Let\'s Go!</string>
     <string name="yellow">Maybe Later..</string>
     <string name="red">No Way!</string>
-    <string name="title_activity_food_preferences">What would you like to eat?</string>
+    <string name="title_activity_food_preferences">Set your default settings.</string>
+    <string name="title_activity_main">What would you like to eat?</string>
     <string name="default_location_search_text">Default Location</string>
-    <string name="default_search_term_text">Default Search Term</string>
+    <string name="default_location_followup">(for when automatic detection doesn\'t work)</string>
+    <string name="default_search_term_text">Default Type of Food</string>
     <string name="default_search_radius_text">Default Search Radius</string>
-    <string name="default_min_star_text">Default Min. Star</string>
-    <string name="hint_default_search_term">Tacos, Italian, Vegetarian</string>
-    <string name="hint_default_location_search">1600 Holloway Ave.</string>
+    <string name="default_min_star_text">Default Minimum Rating</string>
+    <string name="hint_default_search_term">e.g. Tacos</string>
+    <string name="hint_default_location_search">e.g. 1 Market St, San Francisco</string>
     <string name="popup_loading_rmenu_text">Looking for menus</string>
 
     <string name="toast_location_services_are_off">Location services are off</string>

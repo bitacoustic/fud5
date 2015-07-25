@@ -1,11 +1,18 @@
 package com.csc413.team5.fud5.userpreferences;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.RatingBar;
@@ -37,6 +44,13 @@ public class FoodPreferencesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_preferences);
 
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        String title = getString(R.string.title_activity_food_preferences);
+
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#43428A")));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color = '#ECCD7F'>" + title + "</font>"));
+
         /* Get shared preferences */
         userSettings = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
         userSettingsEditor = userSettings.edit();
@@ -59,6 +73,16 @@ public class FoodPreferencesActivity extends AppCompatActivity {
 
         /* Initialize rating bar */
         starRating = (RatingBar) findViewById(R.id.ratingBar);
+    }
+
+    //Closes keyboard if user clicks off of it
+    //Code thanks to Lalit Poptani on stackoverflow.com
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.
+                INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        return true;
     }
 
     // Save button click handler

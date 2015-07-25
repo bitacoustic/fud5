@@ -55,7 +55,7 @@ public class UserPreferencesActivity extends AppCompatActivity {
         DialogFragment eulaDialog = EulaDialogFragment.newInstance();
         eulaDialog.show(getFragmentManager(), "EULA");
 
-        ToastUtil.showShortToast(this, "Showing EULA...");
+        //ToastUtil.showShortToast(this, "Showing EULA...");
     }
 
     public void showAppInfo(View v) {
@@ -124,13 +124,13 @@ public class UserPreferencesActivity extends AppCompatActivity {
         // resets red list
         db.wipeRestaurantList(3);
 
-        ToastUtil.showShortToast(this, "Successfully reset red list.");
+        ToastUtil.showShortToast(this, "Removed all ignored restaurants.");
     }
 
     public void modifyRedList(View view) {
         DialogFragment modifyRedListDialog = ModifyRedListDialogFragment.newInstance();
         modifyRedListDialog.show(getFragmentManager(), "red_list");
 
-        ToastUtil.showShortToast(this, "Modifying red list...");
+        //ToastUtil.showShortToast(this, "Modifying red list...");
     }
 }

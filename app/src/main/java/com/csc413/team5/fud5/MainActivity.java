@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity
         //Don't show keyboard immediately
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        String title = getString(R.string.title_activity_food_preferences);
+        String title = getString(R.string.title_activity_main);
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#43428A")));
         getSupportActionBar().setTitle(Html.fromHtml("<font color = '#ECCD7F'>" + title + "</font>"));

@@ -20,39 +20,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/settings_ui_text_general"
-                android:id="@+id/general_settings"/>
-
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_ui_button_food_settings"
-                android:id="@+id/food_preferences"
-                android:onClick="showFoodSettings"
+                android:text="@string/settings_ui_button_app_info"
+                android:id="@+id/app_info_button"
+                android:onClick="showAppInfo"
                 android:background="@color/purple"
                 android:textColor="@color/gold"
                 android:layout_marginBottom="10dp"/>
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_ui_button_app_settings"
-                android:id="@+id/app_settings"
-                android:onClick="showAppSettings"
-                android:background="@color/purple"
-                android:textColor="@color/gold"
-                android:layout_marginBottom="10dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/settings_ui_text_misc"
-                android:id="@+id/miscellaneous_info"/>
 
             <Button
                 android:layout_width="fill_parent"
@@ -67,12 +43,21 @@
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_ui_button_app_info"
-                android:id="@+id/app_info_button"
-                android:onClick="showAppInfo"
                 android:background="@color/purple"
                 android:textColor="@color/gold"
-                android:layout_marginBottom="10dp"/>
+                android:text="@string/settings_ui_button_modify_red_list"
+                android:id="@+id/modify_red_list"
+                android:onClick="modifyRedList"
+                android:layout_marginBottom="10dp" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/purple"
+                android:textColor="@color/gold"
+                android:text="@string/settings_ui_button_reset_red_list"
+                android:id="@+id/reset_red_list"
+                android:onClick="resetRedList" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -81,6 +66,20 @@
                 android:text="@string/settings_ui_text_dev_playground"
                 android:id="@+id/dev_playground"
                 android:layout_marginTop="25dp"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_ui_button_food_settings"
+                android:id="@+id/food_preferences"
+                android:onClick="showFoodSettings" />
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_ui_button_app_settings"
+                android:id="@+id/app_settings"
+                android:onClick="showAppSettings" />
 
             <Button
                 android:layout_width="fill_parent"
@@ -131,26 +130,6 @@
                 android:id="@+id/test_shared_preferences"
                 android:onClick="showSharedPreferencesTest"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/settings_ui_text_red_list"
-                android:id="@+id/red_list" />
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_ui_button_reset_red_list"
-                android:id="@+id/reset_red_list"
-                android:onClick="resetRedList"/>
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_ui_button_modify_red_list"
-                android:id="@+id/modify_red_list"
-                android:onClick="modifyRedList"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
