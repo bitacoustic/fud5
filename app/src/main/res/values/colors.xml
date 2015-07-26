@@ -4,11 +4,12 @@
 
 <resources>
 
-
     <color name="green">#008000</color>
     <color name="red">#FF0000</color>
     <!-- SFSU Colors from http://logo.sfsu.edu/color -->
     <color name="purple">#43428A</color>
+    <color name="dark_purple">#232176</color>
     <color name="gold">#ECCD7F</color>
+    <color name="dark_gold">#E2AF2D</color>
 
 </resources>

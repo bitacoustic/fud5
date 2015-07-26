@@ -91,7 +91,8 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:focusable="false"
-        android:onClick="btnGreen"/>
+        android:onClick="btnGreen"
+        android:stateListAnimator="@null"/>
 
     <Button
         android:layout_width="match_parent"
@@ -104,7 +105,8 @@
         android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
-        android:onClick="btnYellow"/>
+        android:onClick="btnYellow"
+        android:stateListAnimator="@null"/>
 
     <Button
         android:layout_width="match_parent"
@@ -117,9 +119,10 @@
         android:textSize="20sp"
         android:textColor="#FFFFFF"
         android:textStyle="bold"
-        android:onClick="btnRed" />
+        android:onClick="btnRed"
+        android:stateListAnimator="@null"/>
 
-</LinearLayout>
+    </LinearLayout>
 
 
 </RelativeLayout>

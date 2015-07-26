@@ -2,7 +2,13 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+
+        <!-- Status Bar Color-->
+        <item name="android:colorPrimaryDark">@color/purple</item>
+
+        <!-- Action Bar Size-->
+        <item name="android:actionBarSize">38dp</item>
+
     </style>
 
     <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
@@ -12,7 +18,6 @@
 
     <style name="noActionBar" parent="android:Theme.NoTitleBar">
     </style>
-
 
     <!-- Backward-compatible version of ?android:attr/buttonBarStyle -->
     <style name="ButtonBar">
