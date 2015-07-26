@@ -1,4 +1,4 @@
-package com.csc413.team5.fud5;
+package com.csc413.team5.fud5.dialogs;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -16,6 +16,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.csc413.team5.fud5.MainActivity;
+import com.csc413.team5.fud5.R;
 
 /**
  * A dialog providing the end-user license agreement.

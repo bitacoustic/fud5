@@ -1,4 +1,4 @@
-package com.csc413.team5.fud5.userpreferences;
+package com.csc413.team5.fud5.settings;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

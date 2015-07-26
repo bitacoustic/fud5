@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showUserPreferencesMenu(){
-        Intent intent = new Intent(this, UserPreferencesActivity.class);
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 

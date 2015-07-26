@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Window;
 
 import com.csc413.team5.appdb.dbHelper;
+import com.csc413.team5.fud5.dialogs.AskToUseLocationFragment;
+import com.csc413.team5.fud5.dialogs.EulaDialogFragment;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
 
 import java.sql.Timestamp;

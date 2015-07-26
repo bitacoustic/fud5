@@ -12,8 +12,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.csc413.team5.fud5.DisplayRestaurantMenusFragment;
-import com.csc413.team5.fud5.MenuNotFoundFragment;
+import com.csc413.team5.fud5.dialogs.DisplayRestaurantMenusFragment;
+import com.csc413.team5.fud5.dialogs.MenuNotFoundFragment;
 import com.csc413.team5.fud5.R;
 import com.csc413.team5.restaurantapiwrapper.LocuApiKey;
 import com.csc413.team5.restaurantapiwrapper.LocuExtension;

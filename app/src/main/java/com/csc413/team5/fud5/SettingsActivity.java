@@ -1,6 +1,7 @@
-package com.csc413.team5.fud5.userpreferences;
+package com.csc413.team5.fud5;
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
@@ -14,11 +15,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.csc413.team5.appdb.dbHelper;
-import com.csc413.team5.fud5.R;
+import com.csc413.team5.appdbtest.AppDbTestActivity;
+import com.csc413.team5.fud5.dialogs.EulaDialogFragment;
+import com.csc413.team5.fud5.tests.ImageTestActivity;
+import com.csc413.team5.fud5.tests.LocuMenuTestActivity;
+import com.csc413.team5.fud5.tests.MapsTestActivity;
+import com.csc413.team5.fud5.tests.RestaurantSelectorTestActivity;
+import com.csc413.team5.fud5.tests.RestaurantTestActivity;
+import com.csc413.team5.fud5.tests.SharedPreferencesTestActivity;
+import com.csc413.team5.fud5.settings.ApplicationSettingsActivity;
+import com.csc413.team5.fud5.settings.ApplicationSettingsFragment;
+import com.csc413.team5.fud5.settings.FoodPreferencesActivity;
+import com.csc413.team5.fud5.settings.ModifyRedListDialogFragment;
 import com.csc413.team5.fud5.utils.Constants;
+import com.csc413.team5.fud5.utils.ToastUtil;
 import com.nhaarman.supertooltips.ToolTip;
 import com.nhaarman.supertooltips.ToolTipRelativeLayout;
 import com.nhaarman.supertooltips.ToolTipView;
@@ -27,10 +39,11 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
 
-@Deprecated // integrated most functionality into UserPreferencesActivity
-public class ApplicationSettingsActivity extends AppCompatActivity
+
+public class SettingsActivity extends AppCompatActivity
         implements ApplicationSettingsFragment.ApplicationSettingsConfirmListener {
-    private static final String TAG = "AppSettings";
+    private static final String TAG = "Settings";
+    Context mContext;
 
     protected CheckBox mCheckBoxUserSettings;
     protected CheckBox mCheckBoxRestaurantHistory;
@@ -50,19 +63,49 @@ public class ApplicationSettingsActivity extends AppCompatActivity
     private SharedPreferences.Editor userSettingsEditor;
     private dbHelper db;
 
+    public void showAppInfo(View v) {
+//        DialogFragment eulaDialog = EulaDialogFragment.newInstance(false);
+//        eulaDialog.show(getFragmentManager(), "EULA");
 
+        ToastUtil.showShortToast(this, "Showing app info...");
+    }
 
+    public void showEULA(View v) {
+        DialogFragment eulaDialog = EulaDialogFragment.newInstance();
+        eulaDialog.show(getFragmentManager(), "EULA");
+
+        //ToastUtil.showShortToast(this, "Showing EULA...");
+    }
+
+    public void resetRedList(View view){
+        dbHelper db;
+        db = new dbHelper(this, null, null, 1);
+
+        // resets red list
+        // TODO: show a confirmation dialog
+        db.wipeRestaurantList(3);
+        Log.i(TAG, "Red list was cleared");
+
+        ToastUtil.showShortToast(this, getString(R.string
+                .activity_user_preferences_toast_removed_all_ignored_restaurants));
+    }
+
+    public void modifyRedList(View view) {
+        DialogFragment modifyRedListDialog = ModifyRedListDialogFragment.newInstance();
+        modifyRedListDialog.show(getFragmentManager(), "red_list");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_application_settings);
+        setContentView(R.layout.activity_settings);
 
-        String title = getApplicationContext().getResources()
-                .getString(R.string.activity_application_settings_title);
+        String title = getString(R.string.title_activity_user_preferences);
 
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#43428A")));
         getSupportActionBar().setTitle(Html.fromHtml("<font color = '#ECCD7F'>" + title + "</font>"));
+
+        mContext = this;
 
         mCheckBoxUserSettings = (CheckBox) findViewById(R.id.checkBoxAppSettingsUser);
 
@@ -100,7 +143,9 @@ public class ApplicationSettingsActivity extends AppCompatActivity
                     DialogFragment confirmDialog = ApplicationSettingsFragment
                             .newInstance(isUserSettingsChecked, isRestaurantHistoryChecked);
                     confirmDialog.show(getFragmentManager(), "ConfirmResetSettings");
-                }
+                } else
+                    ToastUtil.showShortToast(mContext,
+                            getString(R.string.activity_user_preferences_nothing_was_reset));
             }
         });
 
@@ -118,8 +163,9 @@ public class ApplicationSettingsActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "user settings info button was pressed");
-                if (mTooltipUserSettings != null) {
+                if (mTooltipUserSettings != null && mTooltipUserSettings.isShown()) {
                     mTooltipUserSettings.remove();
+                    return;
                 }
 
                 ToolTipRelativeLayout tooltipView
@@ -127,8 +173,7 @@ public class ApplicationSettingsActivity extends AppCompatActivity
                 ToolTip tooltip = new ToolTip()
                         .withText(getString(R.string
                                 .activity_application_settings_user_settings_caption))
-                        .withColor(Color.parseColor("#ECCD7F"))
-                        .withShadow();
+                        .withColor(Color.parseColor("#ECCD7F"));
                 mTooltipUserSettings = tooltipView
                         .showToolTipForView(tooltip, findViewById(R.id.checkBoxAppSettingsUser));
             }
@@ -141,8 +186,9 @@ public class ApplicationSettingsActivity extends AppCompatActivity
             public void onClick(View v) {
                 Log.i(TAG, "restaurant history info button was pressed");
 
-                if (mTooltipRestaurantHistory != null) {
+                if (mTooltipRestaurantHistory != null && mTooltipRestaurantHistory.isShown()) {
                     mTooltipRestaurantHistory.remove();
+                    return;
                 }
 
                 ToolTipRelativeLayout tooltipView
@@ -150,21 +196,12 @@ public class ApplicationSettingsActivity extends AppCompatActivity
                 ToolTip tooltip = new ToolTip()
                         .withText(getString(R.string
                                 .activity_application_settings_restaurant_history_caption))
-                        .withColor(Color.parseColor("#ECCD7F"))
-                        .withShadow();
+                        .withColor(Color.parseColor("#ECCD7F"));
                 mTooltipRestaurantHistory = tooltipView
                         .showToolTipForView(tooltip,
                                 findViewById(R.id.checkBoxAppSettingsRestaurant));
             }
         });
-    }
-
-    public boolean isUserSettingsChecked() {
-        return isUserSettingsChecked;
-    }
-
-    public boolean isRestaurantHistoryChecked() {
-        return isRestaurantHistoryChecked;
     }
 
     public void resetAppSettings() {
@@ -188,7 +225,7 @@ public class ApplicationSettingsActivity extends AppCompatActivity
             final String searchLocation = "1600 Holloway Ave.";
             final float searchRadius = 1.5f;
 //            Set<String> preferredNiches;
-            String appLanguage = Locale.getDefault().getDisplayLanguage();
+//            String appLanguage = Locale.getDefault().getDisplayLanguage();
 
             userSettingsEditor.putBoolean("hasAgreedToEula", hasAgreed).apply();
             userSettingsEditor.putFloat("defaultMinStar", minStar).apply();
@@ -198,7 +235,8 @@ public class ApplicationSettingsActivity extends AppCompatActivity
             userSettingsEditor.putString("appLanguage", Locale.getDefault().getDisplayLanguage()).apply();
 
             Log.i(TAG, "cleared user settings");
-            Toast.makeText(this, "Cleared User Settings", Toast.LENGTH_SHORT).show();
+            ToastUtil.showShortToast(this,
+                    getString(R.string.activity_user_preferences_cleared_user_settings));
         }
 
         if (isRestaurantHistoryChecked) {
@@ -208,7 +246,8 @@ public class ApplicationSettingsActivity extends AppCompatActivity
             Log.i(TAG, "wiped yellow list (2)");
             db.wipeRestaurantList(Constants.RED_LIST);
             Log.i(TAG, "wiped red list (3)");
-            Toast.makeText(this, "Cleared Restaurant History", Toast.LENGTH_SHORT).show();
+            ToastUtil.showShortToast(this,
+                    getString(R.string.activity_user_preferences_cleared_restaurant_history));
         }
     }
 
@@ -219,7 +258,8 @@ public class ApplicationSettingsActivity extends AppCompatActivity
 
     @Override
     public void onApplicationSettingsConfirmNegativeClick(DialogFragment dialog) {
-        Toast.makeText(this, "Settings were not changed", Toast.LENGTH_SHORT).show();
+        ToastUtil.showShortToast(this,
+                getString(R.string.activity_user_preferences_nothing_was_reset));
     }
 
     // Preferred niches = Search term in the main app
@@ -240,5 +280,74 @@ public class ApplicationSettingsActivity extends AppCompatActivity
         }
 
         return preferredNicheSet;
+    }
+
+
+
+    /* Dev playground */
+
+    public void showFoodSettings(View v) {
+        // TODO
+        Intent intent = new Intent(this, FoodPreferencesActivity.class);
+        startActivity(intent);
+
+        ToastUtil.showShortToast(this, "Showing Food Settings");
+    }
+
+    public void showAppSettings(View v) {
+        Intent intent = new Intent(this, ApplicationSettingsActivity.class);
+        startActivity(intent);
+
+        ToastUtil.showShortToast(this, "Showing App Settings...");
+    }
+
+
+    public void showDbTest(View view){
+        Intent intent = new Intent(this, AppDbTestActivity.class);
+        startActivity(intent);
+
+        ToastUtil.showShortToast(this, "Testing database...");
+    }
+
+    public void showYelpTest(View view){
+        Intent intent = new Intent(this, RestaurantTestActivity.class);
+        startActivity(intent);
+
+        ToastUtil.showShortToast(this, "Testing Yelp integration...");
+    }
+
+    public void showImageTest(View view){
+        Intent intent = new Intent(this, ImageTestActivity.class);
+        startActivity(intent);
+
+        ToastUtil.showShortToast(this, "Testing Images...");
+    }
+
+    public void showLocuTest(View view){
+        Intent intent = new Intent(this, LocuMenuTestActivity.class);
+        startActivity(intent);
+
+        ToastUtil.showShortToast(this, "Testing Locu integration...");
+    }
+
+    public void showMapTest(View view){
+        Intent intent = new Intent(this, MapsTestActivity.class);
+        startActivity(intent);
+
+        ToastUtil.showShortToast(this, "Testing Google Maps integration...");
+    }
+
+    public void showSelectorTest(View view) {
+        Intent intent = new Intent(this, RestaurantSelectorTestActivity.class);
+        startActivity(intent);
+
+        ToastUtil.showShortToast(this, "Testing selector...");
+    }
+
+    public void showSharedPreferencesTest(View view) {
+        Intent intent = new Intent(this, SharedPreferencesTestActivity.class);
+        startActivity(intent);
+
+        ToastUtil.showShortToast(this, "Testing shared preferences...");
     }
 }

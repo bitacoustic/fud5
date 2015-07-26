@@ -1,4 +1,4 @@
-package com.csc413.team5.fud5.userpreferences;
+package com.csc413.team5.fud5.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,8 +19,6 @@ import android.widget.Spinner;
 
 import com.csc413.team5.fud5.R;
 import com.csc413.team5.fud5.utils.ToastUtil;
-
-import java.util.Locale;
 
 /**
  * Displays Food Preferences

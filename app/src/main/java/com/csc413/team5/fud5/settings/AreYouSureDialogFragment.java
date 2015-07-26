@@ -1,11 +1,10 @@
-package com.csc413.team5.fud5.userpreferences;
+package com.csc413.team5.fud5.settings;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.csc413.team5.fud5.R;
 import com.csc413.team5.fud5.utils.ToastUtil;

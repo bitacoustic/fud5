@@ -1,4 +1,4 @@
-package com.csc413.team5.fud5;
+package com.csc413.team5.fud5.dialogs;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -6,6 +6,8 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import com.csc413.team5.fud5.R;
 
 /**
  * TODO Description

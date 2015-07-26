@@ -1,4 +1,4 @@
-package com.csc413.team5.fud5;
+package com.csc413.team5.fud5.dialogs;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.csc413.team5.fud5.R;
 import com.csc413.team5.restaurantapiwrapper.Menu;
 import com.csc413.team5.restaurantapiwrapper.MenuContent;
 import com.csc413.team5.restaurantapiwrapper.MenuItem;
