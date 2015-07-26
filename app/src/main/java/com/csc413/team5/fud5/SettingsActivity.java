@@ -237,6 +237,7 @@ public class SettingsActivity extends AppCompatActivity
             Log.i(TAG, "cleared user settings");
             ToastUtil.showShortToast(this,
                     getString(R.string.activity_user_preferences_cleared_user_settings));
+            mCheckBoxUserSettings.setChecked(false);
         }
 
         if (isRestaurantHistoryChecked) {
@@ -248,6 +249,7 @@ public class SettingsActivity extends AppCompatActivity
             Log.i(TAG, "wiped red list (3)");
             ToastUtil.showShortToast(this,
                     getString(R.string.activity_user_preferences_cleared_restaurant_history));
+            mCheckBoxRestaurantHistory.setChecked(false);
         }
     }
 
