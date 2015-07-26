@@ -155,23 +155,35 @@ public class ResultPageActivity extends AppCompatActivity
     public void displayNextResult(View v){
         //display restaurant info goes here.
         //restaurant image loading needs to go in yet another asynctask
-        if(resultList==null)
+        if (resultList == null)
             return;
-        if (resultList.size() <= 0){
+        if (resultList.size() <= 0) {
             ToastUtil.showShortToast(this, "No more matches found.");
-        }else {
+        } else {
             //Clear the image before the next image is shown
             //Sometimes a result doesn't have an image, so it was showing the last one
             ((ImageView) findViewById(R.id.imgRestaurant)).setImageResource(0);
         }
-        try{
-            firstResult=resultList.remove(0);
+
+        try {
+            firstResult = resultList.remove(0);
             Log.i(TAG, "Rating: " + firstResult.getRating());
             drawStars(firstResult.getRating());
             mMap.clear();
             setUpMap(firstResult);
             TextView title = (TextView)findViewById(R.id.restaurantName);
+
+            // Display business name; reduce font size for long restaurant names
+            int businessNameLength = firstResult.getBusinessName().length();
+            if (businessNameLength < 20) {
+                title.setTextSize(28);
+            } else if (businessNameLength >= 20 && businessNameLength < 29) {
+                title.setTextSize(26);
+            } else {
+                title.setTextSize(20);
+            }
             title.setText(firstResult.getBusinessName());
+
             //Load the restaurant image
             if (firstResult.getImageUrl() == null)
                 ((ImageView)findViewById(R.id.imgRestaurant)).setImageResource(R.drawable.no_image);
@@ -188,7 +200,7 @@ public class ResultPageActivity extends AppCompatActivity
                 };
                 task.execute(imageURL);
             }
-        } catch(Exception e){} //
+        } catch(Exception e){}
     }
     public class LoadImageTask extends AsyncTask<URL, Void, Bitmap>{
         @Override
@@ -256,7 +268,7 @@ public class ResultPageActivity extends AppCompatActivity
                         //.categoryFilter("foodtrucks,restaurants") is included by default
                         .sort(RestaurantApiClient.SortBy.HIGHEST_RATED)
                         .term(searchTerm)
-                        .limit(40)
+                        //.limit(20) is the default
                         .radiusFilter(maxRadius)
                         .build().getRestaurantList();
             } catch (Exception e) {
@@ -320,12 +332,12 @@ public class ResultPageActivity extends AppCompatActivity
 
         mMap.setMyLocationEnabled(true);
         //mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudeLongitude, 13));//sets the view
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudeLongitude, 14));//sets the view
 
         mMap.addMarker(new MarkerOptions().visible(true)
                 .position(latitudeLongitude) //these are called on the MarkerOptions object
                 .title(r.getBusinessName())
-                .snippet(r.getAddressDisplay())
+                .snippet(r.getAddressDisplay().replaceAll("\n", ", "))
         ).showInfoWindow(); //this is called on the marker object
 
 
