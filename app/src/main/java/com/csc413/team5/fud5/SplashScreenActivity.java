@@ -49,11 +49,6 @@ public class SplashScreenActivity extends Activity
 
         setContentView(R.layout.activity_splash_screen);
 
-        // tell the Android OS to open the dialog after 3 seconds (= 3000 milliseconds)
-        long splashScreenTime = 3000; //Magic numbers get their own variable
-        long waitTime =  ((mStartLoadTime + splashScreenTime) - System.currentTimeMillis());
-        if (waitTime < 0)
-            waitTime = 0;
 
         mHandler = new Handler();
         mRunAfterWait = new Runnable() {
@@ -65,7 +60,7 @@ public class SplashScreenActivity extends Activity
             }
         };
 
-        mHandler.postDelayed(mRunAfterWait, waitTime);
+        mHandler.postDelayed(mRunAfterWait, 3000);
 
         Log.i(TAG, "Loading user preferences");
         // load user preferences
