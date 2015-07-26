@@ -28,7 +28,10 @@
             android:layout_height="wrap_content"
             android:id="@+id/imgLocu"
             android:layout_gravity="left|bottom"
-            android:src="@drawable/poweredbylocu" />
+            android:src="@drawable/poweredbylocu"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -36,9 +39,11 @@
             android:id="@+id/imgYelp"
             android:layout_gravity="right|bottom"
             android:src="@drawable/poweredbyyelp"
-            android:paddingLeft="20dp"
+            android:paddingLeft="10dp"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/imgLocu" />
+            android:layout_toEndOf="@+id/imgLocu"
+            android:paddingBottom="10dp"
+            android:paddingRight="10dp"/>
     </RelativeLayout>
 
 </FrameLayout>

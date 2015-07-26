@@ -266,7 +266,7 @@ public class ResultPageActivity extends AppCompatActivity
                 return new RestaurantApiClient.Builder(mYelpKey)
                         .location(location)
                         //.categoryFilter("foodtrucks,restaurants") is included by default
-                        .sort(RestaurantApiClient.SortBy.HIGHEST_RATED)
+                        .sort(RestaurantApiClient.SortBy.BEST_MATCH)
                         .term(searchTerm)
                         //.limit(20) is the default
                         .radiusFilter(maxRadius)
