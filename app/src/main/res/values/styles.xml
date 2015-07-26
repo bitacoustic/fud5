@@ -4,7 +4,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
         <!-- Status Bar Color-->
-        <item name="android:colorPrimaryDark">@color/purple</item>
+        <!-- Omitted: Not supported by Kit Kat. Handled in code. -->
+        <!--<item name="android:colorPrimaryDark">@color/purple</item> -->
 
         <!-- Action Bar Size-->
         <item name="android:actionBarSize">38dp</item>

@@ -38,16 +38,12 @@
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_LOG_LEVEL" value="DEBUG" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list id="d3d28041-1ece-48cb-85ad-fd41e1fdc822" name="Default" comment="" />
-    <list default="true" id="8050c060-be0c-411f-ac30-fc363938face" name="New AppDb Methods" comment="More User Preferences Cleanup&#10;Removed a lot of &quot;Red List&quot; references.">
-      <change type="DELETED" beforePath="C:\Users\Alex\t5\t5" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/SplashScreenActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/SplashScreenActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_22_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_22_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_location_7_5_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_location_7_5_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_22_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_22_2_0.xml" />
+    <list default="true" id="8050c060-be0c-411f-ac30-fc363938face" name="New AppDb Methods" comment="Removed splash screen load time correction. Splash screen wasn't always being displayed.">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/ResultPageActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/ResultPageActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="1f81dc65-a5db-4888-a3f4-58a2205fdec5" name="App Dependencies" comment="App Dependencies&#10;- General App Dependencies" />
@@ -108,42 +104,18 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="-0.0">
               <caret line="87" column="28" selection-start-line="87" selection-start-column="28" selection-end-line="87" selection-end-column="28" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="styles.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="styles.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="59" selection-start-line="6" selection-start-column="59" selection-end-line="6" selection-end-column="59" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="147" column="47" selection-start-line="147" selection-start-column="47" selection-end-line="147" selection-end-column="47" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#6856#7265#0" expanded="false" />
-                <element signature="e#7264#7265#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="colors.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
+            <state vertical-scroll-proportion="0.26333907">
+              <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -152,13 +124,11 @@
       <file leaf-file-name="ResultPageActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/ResultPageActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="389" column="5" selection-start-line="389" selection-start-column="5" selection-end-line="389" selection-end-column="5" />
+            <state vertical-scroll-proportion="-31.655172">
+              <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
               <folding>
                 <element signature="method#btnGreen#0;class#ResultPageActivity#0" expanded="false" />
                 <element signature="method#btnYellow#0;class#ResultPageActivity#0" expanded="false" />
-                <element signature="method#btnRed#0;class#ResultPageActivity#0" expanded="false" />
-                <element signature="method#onCreate#0;class#ResultPageActivity#0" expanded="false" />
                 <element signature="class#LoadImageTask#0;class#ResultPageActivity#0" expanded="false" />
                 <element signature="method#drawStars#0;class#ResultPageActivity#0" expanded="false" />
                 <element signature="method#onMenuNotFoundPositiveClick#0;class#ResultPageActivity#0" expanded="false" />
@@ -172,16 +142,6 @@
                 <element signature="docComment;class#DisplayMenuTask#0;class#ResultPageActivity#0" expanded="false" />
                 <element signature="class#DisplayMenuTask#0;class#ResultPageActivity#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SplashScreenActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/SplashScreenActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7607573">
-              <caret line="71" column="47" selection-start-line="71" selection-start-column="47" selection-end-line="71" selection-end-column="47" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -3516,7 +3476,6 @@
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_maps_test.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_splash_screen.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_result_page.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_food_preferences.xml" />
@@ -3527,14 +3486,15 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/userpreferences/ModifyRedListDialogFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_result_page.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/keys.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/action_bar_gradient.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/ResultPageActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/button_bar_background.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/button_background.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_result_page.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/SplashScreenActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/ResultPageActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_splash_screen.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
       </list>
     </option>
   </component>
@@ -3660,6 +3620,24 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="t5" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
             </PATH_ELEMENT>
@@ -3696,7 +3674,7 @@
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager2.WIDTH" value="317" />
-    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager2.SHOW" value="false" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager2.SHOW" value="true" />
   </component>
   <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
     <UpdatedFiles>
@@ -4081,7 +4059,13 @@
       <option name="project" value="LOCAL" />
       <updated>1437787598419</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Removed splash screen load time correction. Splash screen wasn't always being displayed.">
+      <created>1437946271262</created>
+      <option name="number" value="00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1437946271262</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -4099,7 +4083,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32369298" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32956383" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32258064" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32258064" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18390192" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -4142,7 +4126,8 @@
     <MESSAGE value="No result image is handled&#10;Splash screen Yelp logo update again" />
     <MESSAGE value="Cleaning up User Preferences" />
     <MESSAGE value="More User Preferences Cleanup&#10;Removed a lot of &quot;Red List&quot; references." />
-    <option name="LAST_COMMIT_MESSAGE" value="More User Preferences Cleanup&#10;Removed a lot of &quot;Red List&quot; references." />
+    <MESSAGE value="Removed splash screen load time correction. Splash screen wasn't always being displayed." />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed splash screen load time correction. Splash screen wasn't always being displayed." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -4163,11 +4148,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="147" column="47" selection-start-line="147" selection-start-column="47" selection-end-line="147" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#6856#7265#0" expanded="false" />
-            <element signature="e#7264#7265#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -4367,17 +4348,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_restaurant_menus.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_eula.xml">
       <provider selected="true" editor-type-id="android-designer">
         <state />
@@ -4415,17 +4385,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="52" column="26" selection-start-line="52" selection-start-column="26" selection-end-line="52" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_splash_screen.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
           <folding />
         </state>
       </provider>
@@ -4565,26 +4524,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="59" selection-start-line="6" selection-start-column="59" selection-end-line="6" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="147" column="47" selection-start-line="147" selection-start-column="47" selection-end-line="147" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#6856#7265#0" expanded="false" />
-            <element signature="e#7264#7265#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -4593,15 +4532,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/ResultPageActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/SplashScreenActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="389" column="5" selection-start-line="389" selection-start-column="5" selection-end-line="389" selection-end-column="5" />
+          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_splash_screen.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_restaurant_menus.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/ResultPageActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-31.655172">
+          <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
           <folding>
             <element signature="method#btnGreen#0;class#ResultPageActivity#0" expanded="false" />
             <element signature="method#btnYellow#0;class#ResultPageActivity#0" expanded="false" />
-            <element signature="method#btnRed#0;class#ResultPageActivity#0" expanded="false" />
-            <element signature="method#onCreate#0;class#ResultPageActivity#0" expanded="false" />
             <element signature="class#LoadImageTask#0;class#ResultPageActivity#0" expanded="false" />
             <element signature="method#drawStars#0;class#ResultPageActivity#0" expanded="false" />
             <element signature="method#onMenuNotFoundPositiveClick#0;class#ResultPageActivity#0" expanded="false" />
@@ -4618,10 +4585,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/SplashScreenActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/csc413/team5/fud5/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7607573">
-          <caret line="71" column="47" selection-start-line="71" selection-start-column="47" selection-end-line="71" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="147" column="47" selection-start-line="147" selection-start-column="47" selection-end-line="147" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26333907">
+          <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
           <folding />
         </state>
       </provider>

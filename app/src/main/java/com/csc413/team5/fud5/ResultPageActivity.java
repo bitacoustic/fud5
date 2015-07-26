@@ -86,6 +86,7 @@ public class ResultPageActivity extends AppCompatActivity
     }
 
     public void btnRed(View v) {
+        ToastUtil.showShortToast(this, firstResult.getBusinessName() + " added to your ignored restaurants  list.");
         db.insertRestaurantToList(firstResult, Constants.RED_LIST);
         displayNextResult(v);
     }
