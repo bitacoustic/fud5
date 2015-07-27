@@ -150,6 +150,9 @@ public class ModifyRedListDialogFragment extends DialogFragment {
         Restaurant r = new Restaurant();
         r.setRestaurantName(inputText);
 
+        // Deletes item from red list
+        db_helper.deleteRestaurantFromList(r, 3);
+
         CharSequence text = "Removed " + inputText + " from ignored restaurants.";
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
