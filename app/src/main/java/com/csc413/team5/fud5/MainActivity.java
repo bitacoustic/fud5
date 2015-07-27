@@ -94,7 +94,10 @@ public class MainActivity extends AppCompatActivity
         userSettingsEditor.putFloat("defaultMinStar", starRating.getRating()).apply();
 
         String location = ((EditText) findViewById(R.id.txtLocation)).getText().toString();
-        String searchTerm = ((EditText) findViewById(R.id.txtSearchTerm)).getText().toString();
+        // appending a minimum search term of food; anything else that the user may enter is
+        // optional
+        String searchTerm = "food, " + ((EditText) findViewById(R.id.txtSearchTerm)).getText()
+                .toString();
 
         // Check for empty location field (location services are likely off). Show tooltip with
         // help text
@@ -111,14 +114,16 @@ public class MainActivity extends AppCompatActivity
                     .withShadow();
             toolTipLocationIsEmpty = tooltipLocationView
                     .showToolTipForView(tooltipLocation, findViewById(R.id.txtLocation));
-            return;
+            return; // don't proceed to the results page
         }
 
+        // max radius; calculate value in meters from the spinner choice in miles
         String[] maxRadiusArray = ((Spinner) findViewById(R.id.spnRadius)).getSelectedItem()
                 .toString().split(" ");
         int maxRadius = (int) RestaurantApiClient.convertDistanceUnits(Double.parseDouble
                 (maxRadiusArray[0]), DistanceUnit.MILES, DistanceUnit.METERS);
 
+        // minimum rating
         double minRating = ((RatingBar) findViewById(R.id.ratingBar)).getRating();
 
         Log.i(TAG, "location: " + location);
