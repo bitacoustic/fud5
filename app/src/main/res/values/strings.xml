@@ -163,4 +163,5 @@
     <string name="activity_application_settings_app_updates_checkbox">App updates</string>
     <string name="toast_location_services_are_off">Location services are off</string>
     <string name="toast_network_unavailable">Network is unavailable</string>
+    <string name="activity_result_page_toast_was_added_to_red_list">" was added to your ignored restaurants list."</string>
 </resources>

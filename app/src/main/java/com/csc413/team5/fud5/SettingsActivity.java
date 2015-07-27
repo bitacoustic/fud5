@@ -155,14 +155,16 @@ public class SettingsActivity extends AppCompatActivity
         mBtnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // show confirmation dialog if any of the checkboxes are checked
                 if (mCheckBoxUserSettings.isChecked()
+                        || mCheckBoxIgnoredRestaurantHistory.isChecked()
                         || mCheckBoxAllRestaurantHistory.isChecked()) {
                     DialogFragment confirmDialog = ApplicationSettingsFragment
                             .newInstance(mCheckBoxUserSettings.isChecked(),
                                     mCheckBoxIgnoredRestaurantHistory.isChecked(),
                                     mCheckBoxAllRestaurantHistory.isChecked());
                     confirmDialog.show(getFragmentManager(), "ConfirmResetSettings");
-                } else
+                } else // otherwise, confirm nothing was changed
                     ToastUtil.showShortToast(mContext,
                             getString(R.string.activity_user_preferences_nothing_was_reset));
             }
@@ -179,6 +181,7 @@ public class SettingsActivity extends AppCompatActivity
 
         mBtnUserSettings = (ImageButton) findViewById(R.id.imageButtonResetUserSettingsInfo);
         mBtnUserSettings.setOnClickListener(new View.OnClickListener() {
+            // toggle tooltip
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "user settings info button was pressed");
@@ -201,6 +204,7 @@ public class SettingsActivity extends AppCompatActivity
         mBtnRestaurantHistory = (ImageButton) findViewById(R.id
                 .imageButtonResetRestaurantHistoryInfo);
         mBtnRestaurantHistory.setOnClickListener(new View.OnClickListener() {
+            // toggle tooltip
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "restaurant history info button was pressed");

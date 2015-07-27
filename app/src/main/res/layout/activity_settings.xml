@@ -199,13 +199,6 @@
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_ui_button_app_settings"
-                android:id="@+id/app_settings"
-                android:onClick="showAppSettings" />
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
                 android:text="@string/settings_ui_button_db_test"
                 android:id="@+id/test_db"
                 android:onClick="showDbTest"/>
