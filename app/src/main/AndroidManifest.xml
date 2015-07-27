@@ -74,15 +74,6 @@
                 android:value=".SettingsActivity" />
         </activity>
         <activity
-            android:name=".settings.ApplicationSettingsActivity"
-            android:label="@string/title_activity_application_settings"
-            android:parentActivityName=".SettingsActivity"
-            android:screenOrientation="nosensor">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".SettingsActivity" />
-        </activity>
-        <activity
             android:name=".tests.RestaurantTestActivity"
             android:label="@string/title_restaurant_test_activity"
             android:parentActivityName=".MainActivity"

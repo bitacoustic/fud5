@@ -11,17 +11,20 @@ import com.csc413.team5.fud5.R;
 
 public class ApplicationSettingsFragment extends DialogFragment {
     protected boolean mIsUserSettingsChecked;
-    protected boolean mIsRestaurantHistoryChecked;
+    protected boolean mIsIgnoredRestaurantHistoryChecked;
+    protected boolean mIsAllRestaurantHistoryChecked;
 
     ApplicationSettingsConfirmListener mListener;
 
     public static ApplicationSettingsFragment
-    newInstance(boolean isUserSettingsChecked, boolean isRestaurantHistoryChecked) {
+    newInstance(boolean isUserSettingsChecked, boolean isIgnoredRestaurantHistoryChecked,
+                boolean isAllRestaurantHistoryChecked) {
         ApplicationSettingsFragment f = new ApplicationSettingsFragment();
 
         Bundle args = new Bundle();
         args.putBoolean("isUserSettingsChecked", isUserSettingsChecked);
-        args.putBoolean("isRestaurantHistoryChecked", isRestaurantHistoryChecked);
+        args.putBoolean("isIgnoredRestaurantHistoryChecked", isIgnoredRestaurantHistoryChecked);
+        args.putBoolean("isAllRestaurantHistoryChecked", isAllRestaurantHistoryChecked);
         f.setArguments(args);
 
         return f;
@@ -33,8 +36,10 @@ public class ApplicationSettingsFragment extends DialogFragment {
 
         mIsUserSettingsChecked = getArguments()
                 .getBoolean("isUserSettingsChecked", false);
-        mIsRestaurantHistoryChecked = getArguments()
-                .getBoolean("isRestaurantHistoryChecked", false);
+        mIsIgnoredRestaurantHistoryChecked = getArguments().getBoolean
+                ("isIgnoredRestaurantHistoryChecked", false);
+        mIsAllRestaurantHistoryChecked = getArguments()
+                .getBoolean("isAllRestaurantHistoryChecked", false);
     }
 
     @Override
@@ -43,8 +48,10 @@ public class ApplicationSettingsFragment extends DialogFragment {
 
         String userSettings = getActivity().getResources().getString(R.string
                 .activity_application_settings_user_settings_text);
-        String restaurantHistory = getActivity().getResources().getString(R.string
-                .activity_application_settings_restaurant_history_text);
+        String ignoredRestaurantHistory = getActivity().getString(R.string
+                .activity_application_settings_ignored_restaurant_history_text);
+        String allRestaurantHistory = getActivity().getResources().getString(R.string
+                .activity_application_settings_all_restaurant_history_text);
         String areYouSureYouWantToResset = getActivity().getResources().getString(R.string
                 .activity_application_settings_are_you_sure_text);
         String positiveButtonText = getActivity().getResources().getString(R.string
@@ -55,12 +62,16 @@ public class ApplicationSettingsFragment extends DialogFragment {
         StringBuilder message = new StringBuilder(areYouSureYouWantToResset);
         message.append(" ");
 
-        if (mIsUserSettingsChecked && mIsRestaurantHistoryChecked)
-            message.append(userSettings + " & " + restaurantHistory + "?");
+        if (mIsUserSettingsChecked
+                && (mIsIgnoredRestaurantHistoryChecked || mIsAllRestaurantHistoryChecked))
+            message.append(userSettings + " & " + (mIsIgnoredRestaurantHistoryChecked ?
+                    ignoredRestaurantHistory : allRestaurantHistory)  + "?");
         else if (mIsUserSettingsChecked)
             message.append(userSettings + "?");
-        else if (mIsRestaurantHistoryChecked)
-            message.append(restaurantHistory + "?");
+        else if (mIsIgnoredRestaurantHistoryChecked)
+            message.append(ignoredRestaurantHistory + "?");
+        else if (mIsAllRestaurantHistoryChecked)
+            message.append(allRestaurantHistory + "?");
         else
             this.dismiss();
 

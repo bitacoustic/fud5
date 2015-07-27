@@ -47,23 +47,30 @@
     <string name="settings_ui_button_locu_test">Locu Test</string>
     <string name="settings_ui_button_google_map_test">Google Map Test</string>
     <string name="settings_ui_button_selector_test">Restaurant Selector Test</string>
-    <string name="settings_ui_button_reset_red_list">Remove All Ignored Restaurants</string>
     <string name="settings_ui_button_modify_red_list">Change Ignored Restaurants</string>
     <string name="title_activity_application_settings">App Settings</string>
     <string name="activity_application_settings_user_settings_checkbox">User Settings</string>
-    <string name="activity_application_settings_restaurant_history_checkbox">Restaurant History</string>
+    <string name="settings_ui_button_reset_red_list">Ignored Restaurant History</string>
+    <string name="activity_application_settings_restaurant_history_checkbox">All Restaurant
+        History</string>
     <string name="activity_application_settings_user_settings_caption">Checking this box and
-        pressing \"Reset\" will set your preferred restaurant search options to application defaults. You may need to agree to the End-User License Agreement again on application restart.</string>
+        pressing \"Clear\" will set your preferred restaurant search options to application
+        defaults. You may need to agree to the End-User License Agreement again on application
+        restart.</string>
     <string name="activity_application_settings_restaurant_history_caption">This application
-        remembers restaurants when you choose \"Let\'s go!\", \"Maybe later\", or \"Never\". By checking this box and pressing \"Reset\" all of this data will be erased.</string>
-    <string name="activity_application_settings_reset_checked_items_button">Reset checked items</string>
+        remembers restaurants when you choose \"Let\'s go!\", \"Maybe later\", or \"Always Ignore\".
+        By checking this box and pressing \"Clear\" all of this data will be erased.</string>
+    <string name="activity_application_settings_reset_checked_items_button">Clear checked
+        items</string>
     <string name="activity_application_settings_user_settings_text">User Settings</string>
-    <string name="activity_application_settings_restaurant_history_text">Restaurant History</string>
+    <string name="activity_application_settings_ignored_restaurant_history_text">Ignored Restaurant History</string>
+    <string name="activity_application_settings_all_restaurant_history_text">All Restaurant
+        History</string>
     <string name="activity_application_settings_are_you_sure_text">Are you sure you want to reset</string>
     <string name="activity_application_settings_positive_button_text">I\'m sure</string>
     <string name="activity_application_settings_negative_button_text">Don\'t reset</string>
     <string name="activity_application_settings_title">Application Settings</string>
-    <string name="activity_application_settings_reset_application_text">Reset Application</string>
+    <string name="activity_application_settings_reset_application_text">Clear History</string>
     <string name="activity_application_settings_manage_services_text">Manage Services</string>
     <string name="activity_application_settings_location_services_button_text">Turn location services on/off</string>
     <string name="settings_ui_button_push_notifications">Push notifications</string>
@@ -71,6 +78,7 @@
     <string name="activity_user_preferences_cleared_restaurant_history">Cleared Restaurant History</string>
     <string name="activity_user_preferences_nothing_was_reset">Nothing was reset</string>
     <string name="activity_user_preferences_toast_removed_all_ignored_restaurants">Removed all ignored restaurants.</string>
+    <string name="activity_user_preferences_cleared_ignored_restaurants">Cleared ignored restaurant history</string>
 
     <!-- AskToUseLocationFragment dialog -->
     <string name="dialog_ask_to_use_location_title">Use Google\'s location service?</string>

@@ -47,7 +47,8 @@
                 android:text="Ignored Restaurants"
                 android:id="@+id/textView"
                 android:layout_marginBottom="10dp"
-                android:textSize="18dp"/>
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"/>
 
             <Button
                 android:layout_width="fill_parent"
@@ -60,24 +61,15 @@
                 android:layout_marginBottom="10dp"
                 />
 
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/purple"
-                android:textColor="@color/gold"
-                android:text="@string/settings_ui_button_reset_red_list"
-                android:id="@+id/reset_red_list"
-                android:onClick="resetRedList"
-                android:layout_marginBottom="10dp"/>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/activity_application_settings_reset_application_text"
                 android:id="@+id/txtViewAppSettingsTitle"
-                android:layout_marginBottom="10dp"
-                android:textSize="18dp"/>
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -113,6 +105,14 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/purple"
                 android:layout_marginTop="-15dp"/>
+
+            <CheckBox
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_ui_button_reset_red_list"
+                android:id="@+id/reset_red_list"
+                android:onClick="resetRedList"
+                android:textSize="16dp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -165,7 +165,8 @@
                 android:text="@string/activity_application_settings_manage_services_text"
                 android:id="@+id/textView5"
                 android:layout_marginBottom="10dp"
-                android:textSize="18dp"/>
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"/>
 
             <Button
                 android:layout_width="fill_parent"
@@ -186,7 +187,7 @@
                 android:id="@+id/dev_playground"
                 android:layout_marginTop="25dp"
                 android:textColor="#777"
-                android:textSize="18dp"/>
+                android:textSize="20dp"/>
 
             <Button
                 android:layout_width="fill_parent"

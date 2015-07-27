@@ -19,16 +19,15 @@ import android.widget.ImageButton;
 import com.csc413.team5.appdb.dbHelper;
 import com.csc413.team5.appdbtest.AppDbTestActivity;
 import com.csc413.team5.fud5.dialogs.EulaDialogFragment;
+import com.csc413.team5.fud5.settings.ApplicationSettingsFragment;
+import com.csc413.team5.fud5.settings.FoodPreferencesActivity;
+import com.csc413.team5.fud5.settings.ModifyRedListDialogFragment;
 import com.csc413.team5.fud5.tests.ImageTestActivity;
 import com.csc413.team5.fud5.tests.LocuMenuTestActivity;
 import com.csc413.team5.fud5.tests.MapsTestActivity;
 import com.csc413.team5.fud5.tests.RestaurantSelectorTestActivity;
 import com.csc413.team5.fud5.tests.RestaurantTestActivity;
 import com.csc413.team5.fud5.tests.SharedPreferencesTestActivity;
-import com.csc413.team5.fud5.settings.ApplicationSettingsActivity;
-import com.csc413.team5.fud5.settings.ApplicationSettingsFragment;
-import com.csc413.team5.fud5.settings.FoodPreferencesActivity;
-import com.csc413.team5.fud5.settings.ModifyRedListDialogFragment;
 import com.csc413.team5.fud5.utils.Constants;
 import com.csc413.team5.fud5.utils.ToastUtil;
 import com.nhaarman.supertooltips.ToolTip;
@@ -46,7 +45,8 @@ public class SettingsActivity extends AppCompatActivity
     Context mContext;
 
     protected CheckBox mCheckBoxUserSettings;
-    protected CheckBox mCheckBoxRestaurantHistory;
+    protected CheckBox mCheckBoxIgnoredRestaurantHistory;
+    protected CheckBox mCheckBoxAllRestaurantHistory;
     protected Button mBtnReset;
     protected Button mBtnLocationServices;
     protected ImageButton mBtnUserSettings;
@@ -54,9 +54,6 @@ public class SettingsActivity extends AppCompatActivity
 
     protected ToolTipView mTooltipUserSettings;
     protected ToolTipView mTooltipRestaurantHistory;
-
-    protected boolean isUserSettingsChecked;
-    protected boolean isRestaurantHistoryChecked;
 
     public static final String PREFS_FILE = "UserSettings";
     private SharedPreferences userSettings;
@@ -107,31 +104,50 @@ public class SettingsActivity extends AppCompatActivity
 
         mContext = this;
 
-        mCheckBoxUserSettings = (CheckBox) findViewById(R.id.checkBoxAppSettingsUser);
-
         userSettings = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
         userSettingsEditor = userSettings.edit();
 
         db = new dbHelper(this, null, null, 1);
 
-        isUserSettingsChecked = false;
+        mCheckBoxUserSettings = (CheckBox) findViewById(R.id.checkBoxAppSettingsUser);
         mCheckBoxUserSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isUserSettingsChecked = !isUserSettingsChecked;
                 Log.i(TAG, "user settings checkbox was " +
-                        (isUserSettingsChecked ? "checked" : "unchecked"));
+                        (mCheckBoxUserSettings.isChecked() ? "checked" : "unchecked"));
             }
         });
 
-        mCheckBoxRestaurantHistory = (CheckBox) findViewById(R.id.checkBoxAppSettingsRestaurant);
-        isRestaurantHistoryChecked = false;
-        mCheckBoxRestaurantHistory.setOnClickListener(new View.OnClickListener() {
+        mCheckBoxIgnoredRestaurantHistory = (CheckBox) findViewById(R.id.reset_red_list);
+        mCheckBoxIgnoredRestaurantHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isRestaurantHistoryChecked = !isRestaurantHistoryChecked;
-                Log.i(TAG, "restaurant history checkbox was " +
-                        (isRestaurantHistoryChecked ? "checked" : "unchecked"));
+                if (mCheckBoxIgnoredRestaurantHistory.isChecked()) {
+                    if (mCheckBoxAllRestaurantHistory.isChecked())
+                        mCheckBoxAllRestaurantHistory.setChecked(false);
+                } else {
+                    mCheckBoxAllRestaurantHistory.setChecked(false);
+                }
+
+
+                Log.i(TAG, "ignored restaurant history checkbox was " +
+                        (mCheckBoxIgnoredRestaurantHistory.isChecked() ? "checked" : "unchecked"));
+            }
+        });
+
+        mCheckBoxAllRestaurantHistory = (CheckBox) findViewById(R.id.checkBoxAppSettingsRestaurant);
+        mCheckBoxAllRestaurantHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCheckBoxAllRestaurantHistory.isChecked()) {
+                    if (mCheckBoxIgnoredRestaurantHistory.isChecked())
+                        mCheckBoxIgnoredRestaurantHistory.setChecked(false);
+                } else {
+                    mCheckBoxIgnoredRestaurantHistory.setChecked(false);
+                }
+
+                Log.i(TAG, "all restaurant history checkbox was " +
+                        (mCheckBoxAllRestaurantHistory.isChecked() ? "checked" : "unchecked"));
             }
         });
 
@@ -139,9 +155,12 @@ public class SettingsActivity extends AppCompatActivity
         mBtnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isUserSettingsChecked || isRestaurantHistoryChecked) {
+                if (mCheckBoxUserSettings.isChecked()
+                        || mCheckBoxAllRestaurantHistory.isChecked()) {
                     DialogFragment confirmDialog = ApplicationSettingsFragment
-                            .newInstance(isUserSettingsChecked, isRestaurantHistoryChecked);
+                            .newInstance(mCheckBoxUserSettings.isChecked(),
+                                    mCheckBoxIgnoredRestaurantHistory.isChecked(),
+                                    mCheckBoxAllRestaurantHistory.isChecked());
                     confirmDialog.show(getFragmentManager(), "ConfirmResetSettings");
                 } else
                     ToastUtil.showShortToast(mContext,
@@ -205,7 +224,7 @@ public class SettingsActivity extends AppCompatActivity
     }
 
     public void resetAppSettings() {
-        if (isUserSettingsChecked) {
+        if (mCheckBoxUserSettings.isChecked()) {
             userSettingsEditor.clear().commit();
 
             // TODO: test this
@@ -240,7 +259,15 @@ public class SettingsActivity extends AppCompatActivity
             mCheckBoxUserSettings.setChecked(false);
         }
 
-        if (isRestaurantHistoryChecked) {
+        if (mCheckBoxIgnoredRestaurantHistory.isChecked()) {
+            db.wipeRestaurantList(Constants.RED_LIST);
+            Log.i(TAG, "wiped red list (3)");
+            ToastUtil.showShortToast(this, getString(R.string
+                    .activity_user_preferences_cleared_ignored_restaurants));
+            mCheckBoxIgnoredRestaurantHistory.setChecked(false);
+        }
+
+        if (mCheckBoxAllRestaurantHistory.isChecked()) {
             db.wipeRestaurantList(Constants.GREEN_LIST);
             Log.i(TAG, "wiped green list (1)");
             db.wipeRestaurantList(Constants.YELLOW_LIST);
@@ -249,7 +276,7 @@ public class SettingsActivity extends AppCompatActivity
             Log.i(TAG, "wiped red list (3)");
             ToastUtil.showShortToast(this,
                     getString(R.string.activity_user_preferences_cleared_restaurant_history));
-            mCheckBoxRestaurantHistory.setChecked(false);
+            mCheckBoxAllRestaurantHistory.setChecked(false);
         }
     }
 
@@ -295,14 +322,6 @@ public class SettingsActivity extends AppCompatActivity
 
         ToastUtil.showShortToast(this, "Showing Food Settings");
     }
-
-    public void showAppSettings(View v) {
-        Intent intent = new Intent(this, ApplicationSettingsActivity.class);
-        startActivity(intent);
-
-        ToastUtil.showShortToast(this, "Showing App Settings...");
-    }
-
 
     public void showDbTest(View view){
         Intent intent = new Intent(this, AppDbTestActivity.class);
