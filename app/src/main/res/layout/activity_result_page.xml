@@ -56,7 +56,8 @@
     android:singleLine="true"
     android:id="@+id/restaurantName"
     android:textStyle="bold"
-    android:layout_centerHorizontal="true" />
+    android:layout_centerHorizontal="true"
+    android:onClick="getMoreInfo"/>
 
 <ImageView
     android:layout_width="match_parent"
@@ -69,7 +70,8 @@
     android:layout_alignParentBottom="false"
     android:layout_centerHorizontal="true"
     android:layout_below="@+id/restaurantName"
-    android:src="@drawable/stars0_0" />
+    android:src="@drawable/stars0_0"
+    android:onClick="getMoreInfo"/>
 
 <LinearLayout
     android:id="@+id/buttonBar"

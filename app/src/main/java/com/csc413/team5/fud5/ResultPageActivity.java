@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.csc413.team5.appdb.dbHelper;
 import com.csc413.team5.fud5.dialogs.DisplayRestaurantMenusFragment;
 import com.csc413.team5.fud5.dialogs.MenuNotFoundFragment;
+import com.csc413.team5.fud5.dialogs.MoreInfoDialogFragment;
 import com.csc413.team5.fud5.utils.Constants;
 import com.csc413.team5.fud5.utils.ServiceUtil;
 import com.csc413.team5.fud5.utils.ToastUtil;
@@ -65,6 +66,8 @@ public class ResultPageActivity extends AppCompatActivity
 
     TextView mTitle;
 
+    DialogFragment moreInfoDialog;
+
     // Locu menu
     DisplayMenuTask displayMenuTask;
     DialogFragment displayRestaurantMenus;
@@ -91,6 +94,12 @@ public class ResultPageActivity extends AppCompatActivity
         displayNextResult(v);
     }
 
+    public void getMoreInfo(View v) {
+        if (moreInfoDialog != null && moreInfoDialog.isVisible())
+            moreInfoDialog.dismiss();
+        moreInfoDialog = MoreInfoDialogFragment.getInstance(firstResult);
+        moreInfoDialog.show(getFragmentManager(), "moreInfo");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

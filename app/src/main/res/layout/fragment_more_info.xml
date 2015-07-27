@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollViewMoreInfoDialogTitle"
+            android:background="@color/purple"
+            android:padding="5dp"
+            android:layout_alignParentEnd="true"
+            android:fillViewport="false"
+            android:paddingRight="75dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/textViewMoreInfoTitle"
+                android:textColor="@color/gold"
+                android:textSize="20dp"
+                android:textAlignment="gravity"
+                android:textStyle="bold"
+                android:paddingRight="50dp"
+                android:gravity="left"/>
+        </ScrollView>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/imageButtonMoreInfo"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:src="@drawable/abc_ic_clear_mtrl_alpha"
+            android:tint="@color/purple"
+            android:cropToPadding="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:backgroundTint="@color/gold"
+            android:layout_alignBottom="@+id/scrollViewMoreInfoDialogTitle"
+            android:contentDescription="Close dialog button"
+            android:nestedScrollingEnabled="false"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollViewRMenusContent"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayoutMoreInfoBody">
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
