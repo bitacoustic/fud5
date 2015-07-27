@@ -77,20 +77,49 @@ public class ResultPageActivity extends AppCompatActivity
     // Database
     dbHelper db;
 
+    // user presses the "Let's go!" button
     public void btnGreen(View v) {
         // TODO define a behavior
-        db.insertRestaurantToList(firstResult, Constants.GREEN_LIST);
-        ToastUtil.showShortToast(this, "TODO: Green button behavior"); // temp
+        // if the restaurant is not already in green list, add it
+        if (!db.isRestaurantInList(firstResult, Constants.GREEN_LIST)) {
+            db.insertRestaurantToList(firstResult, Constants.GREEN_LIST);
+            Log.i(TAG, "Added " + firstResult.getBusinessName() + " to green list");
+        } else { // otherwise, don't add it
+            Log.i(TAG, firstResult.getBusinessName() + " was already in green list");
+        }
+
+        // TODO: TEMP - specify green button behavior
+        ToastUtil.showShortToast(this, "TODO: Green button behavior");
+        // END TEMP
     }
 
+    // user presses the "Maybe later..." button
     public void btnYellow(View v) {
-        db.insertRestaurantToList(firstResult, Constants.YELLOW_LIST);
+        // if restaurant is not already in yellow list, add it
+        if (!db.isRestaurantInList(firstResult, Constants.YELLOW_LIST)) {
+            db.insertRestaurantToList(firstResult, Constants.YELLOW_LIST);
+            Log.i(TAG, "Added " + firstResult.getBusinessName() + " to yellow list");
+        } else { // otherwise, update the timestamp by deleting and re-adding it
+            db.deleteRestaurantFromList(firstResult, Constants.YELLOW_LIST);
+            db.insertRestaurantToList(firstResult, Constants.YELLOW_LIST);
+            Log.i(TAG, firstResult.getBusinessName() + " was already in yellow list");
+        }
+
         displayNextResult(v);
     }
 
+    // user presses the "Always ignore" button
     public void btnRed(View v) {
-        ToastUtil.showShortToast(this, firstResult.getBusinessName() + " added to your ignored restaurants  list.");
-        db.insertRestaurantToList(firstResult, Constants.RED_LIST);
+        // if restaurant isn't already in red list, add it
+        if (!db.isRestaurantInList(firstResult, Constants.RED_LIST)) {
+            ToastUtil.showShortToast(this, firstResult.getBusinessName()
+                    + getString(R.string.activity_result_page_toast_was_added_to_red_list));
+            db.insertRestaurantToList(firstResult, Constants.RED_LIST);
+            Log.i(TAG, "Added " + firstResult.getBusinessName() + " to red list");
+        } else { // otherwise, don't do anything
+            Log.i(TAG, firstResult.getBusinessName() + " was already in red list");
+        }
+
         displayNextResult(v);
     }
 
