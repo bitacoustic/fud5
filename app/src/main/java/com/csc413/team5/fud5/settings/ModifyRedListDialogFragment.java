@@ -29,7 +29,7 @@ public class ModifyRedListDialogFragment extends DialogFragment {
     public static ModifyRedListDialogFragment newInstance() {
         // No args needed, therefore no bundle
         return new ModifyRedListDialogFragment();
-    };
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,9 +95,6 @@ public class ModifyRedListDialogFragment extends DialogFragment {
                         // helper method
                         deleteFromRedList(redListItems[((int) selList.get(i))].toString());
                     }
-//                    Toast.makeText(getActivity(),
-//                            "Removed: \n" + msg, Toast.LENGTH_LONG)
-//                            .show();
                 }
             });
 
