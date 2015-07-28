@@ -30,7 +30,7 @@
     <string name="default_min_star_text">Default Minimum Rating</string>
     <string name="hint_default_search_term">e.g. Tacos</string>
     <string name="hint_default_location_search">e.g. 1 Market St, San Francisco</string>
-    <string name="popup_loading_rmenu_text">Looking for menus</string>
+    <string name="popup_loading_text">Looking for info…</string>
 
     <!-- Settings -->
     <string name="title_activity_user_preferences">Settings</string>

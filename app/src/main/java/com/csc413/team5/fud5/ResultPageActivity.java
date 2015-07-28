@@ -416,9 +416,9 @@ public class ResultPageActivity extends AppCompatActivity
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudeLongitude, 14));//sets the view
 
         mMap.addMarker(new MarkerOptions().visible(true)
-                .position(latitudeLongitude) //these are called on the MarkerOptions object
-                .title(r.getBusinessName())
-                .snippet(r.getAddressDisplay().replaceAll("\n", ", "))
+                        .position(latitudeLongitude) //these are called on the MarkerOptions object
+                        .title(r.getBusinessName())
+                        .snippet(r.getAddressDisplay().replaceAll("\n", ", "))
         ).showInfoWindow(); //this is called on the marker object
 
 
@@ -446,12 +446,12 @@ public class ResultPageActivity extends AppCompatActivity
         //Info button
         // get more information about the restaurant currently in focus by displaying a dialog
         if (id == R.id.action_info) {
-            if (mMoreInfoDialog != null && mMoreInfoDialog.isVisible())
-                mMoreInfoDialog.dismiss();
-            mMoreInfoDialog = MoreInfoDialogFragment.getInstance(mFirstResult);
-            mMoreInfoDialog.show(getFragmentManager(), "moreInfo");
+            new GetMoreInfoTask().execute(mFirstResult);
+            mPopupLoadingMenu.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
+
         }
 
+        //Menu button
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_menu && mFirstResult != null) {
             // don't proceed if a DisplayMenuTask is already in progress
@@ -520,7 +520,30 @@ public class ResultPageActivity extends AppCompatActivity
         }
     }
 
-    protected void onResume() {
-        super.onResume();
+    private class GetMoreInfoTask extends AsyncTask<Restaurant, Void, Restaurant> {
+        @Override
+        protected Restaurant doInBackground(Restaurant... params) {
+            Restaurant r = params[0];
+
+            if (!mAlreadyQueriedLocuThisResult) {
+                Log.i(TAG, "Attempting to find open hours for " + r.getBusinessName());
+                new LocuExtension(mLocuKey).updateIfHasMenu(r);
+                mAlreadyQueriedLocuThisResult = true;
+            }
+
+            return r;
+        }
+
+        @Override
+        protected void onPostExecute(Restaurant r) {
+            if (mPopupLoadingMenu != null && mPopupLoadingMenu.isShowing())
+                mPopupLoadingMenu.dismiss();
+
+            if (mMoreInfoDialog != null && mMoreInfoDialog.isVisible())
+                mMoreInfoDialog.dismiss();
+            mMoreInfoDialog = MoreInfoDialogFragment.getInstance(mFirstResult);
+            mMoreInfoDialog.show(getFragmentManager(), "moreInfo");
+        }
     }
+
 }

@@ -4,8 +4,8 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
@@ -15,16 +15,13 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.csc413.team5.fud5.R;
-import com.csc413.team5.fud5.utils.ToastUtil;
 import com.csc413.team5.restaurantapiwrapper.DistanceUnit;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
 
 public class MoreInfoDialogFragment extends DialogFragment {
     private static MoreInfoDialogFragment instance = null;
@@ -120,29 +117,38 @@ public class MoreInfoDialogFragment extends DialogFragment {
                 Color.BLACK, 16, 10);
         appendOutputText(mRestaurant.getAddressDisplay());
 
-        // phone number (click to display phone number in dialer)
-        appendOutputText(mContext.getString(R.string.fragment_more_info_title_phone_number),
-                Color.BLACK, 16, 10);
-        TelephonyManager manager = (TelephonyManager)mContext.getSystemService(Context.TELEPHONY_SERVICE);
-        if(manager.getPhoneType() != TelephonyManager.PHONE_TYPE_NONE) {
-            TextView phoneNumber = appendOutputText(mRestaurant.getPhoneDisplay(), Color.BLUE, 14, 0);
-            phoneNumber.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // display the phone number in the dialer, but don't call it
-                    Intent call = new Intent(Intent.ACTION_DIAL);
-                    call.setData(mRestaurant.getPhoneDialable());
-                    startActivity(call);
+        // phone number (display the number, or if device is a phone, click to display phone
+        // number in dialer)
+        if (mRestaurant.getPhoneDisplay().compareTo("") != 0) {
+            appendOutputText(mContext.getString(R.string.fragment_more_info_title_phone_number),
+                    Color.BLACK, 16, 10);
+            TelephonyManager manager = (TelephonyManager)mContext.getSystemService(Context.TELEPHONY_SERVICE);
+            if (manager.getPhoneType() != TelephonyManager.PHONE_TYPE_NONE) { // if device is phone
+                TextView phoneNumber = appendOutputText(mRestaurant.getPhoneDisplay(), Color.BLUE, 14, 0);
+                phoneNumber.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+                phoneNumber.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // display the phone number in the dialer, but don't call it
+                        Intent call = new Intent(Intent.ACTION_DIAL);
+                        call.setData(mRestaurant.getPhoneDialable());
+                        startActivity(call);
 
-                }
-            });
-        }else{
-            TextView phoneNumber = appendOutputText(mRestaurant.getPhoneDisplay());
+                    }
+                });
+            } else {
+                appendOutputText(mRestaurant.getPhoneDisplay());
+            }
         }
+
         // open hours
         if (mRestaurant.hasHours()) {
-            appendOutputText("Hours", Color.BLACK, 16, 10);
-            appendOutputText(mRestaurant.getHours().toString());
+            String hoursString = mRestaurant.getHours().toString();
+            // if hours string actually has hours to display
+            if (hoursString.length() > 71) {
+                appendOutputText("Hours", Color.BLACK, 16, 10);
+                appendOutputText(mRestaurant.getHours().toString());
+            }
         }
 
         // SeatMe reservation link
