@@ -165,13 +165,6 @@ public class ResultPageActivity extends AppCompatActivity
         displayNextResult(v);
     }
 
-    // get more information about the restaurant currently in focus by displaying a dialog
-    public void getMoreInfo(View v) {
-        if (mMoreInfoDialog != null && mMoreInfoDialog.isVisible())
-            mMoreInfoDialog.dismiss();
-        mMoreInfoDialog = MoreInfoDialogFragment.getInstance(mFirstResult);
-        mMoreInfoDialog.show(getFragmentManager(), "moreInfo");
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -445,8 +438,19 @@ public class ResultPageActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //Back button
-        if(id == android.R.id.home)
+        if(id == android.R.id.home) {
             finish();
+            return true;
+        }
+
+        //Info button
+        // get more information about the restaurant currently in focus by displaying a dialog
+        if (id == R.id.action_info) {
+            if (mMoreInfoDialog != null && mMoreInfoDialog.isVisible())
+                mMoreInfoDialog.dismiss();
+            mMoreInfoDialog = MoreInfoDialogFragment.getInstance(mFirstResult);
+            mMoreInfoDialog.show(getFragmentManager(), "moreInfo");
+        }
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_menu && mFirstResult != null) {

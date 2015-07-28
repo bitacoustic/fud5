@@ -137,9 +137,6 @@ public class MoreInfoDialogFragment extends DialogFragment {
                 }
             });
         }else{
-//            appendOutputText(new BigDecimal(mRestaurant
-//                    .getDistanceFromSearchLocation(DistanceUnit.MILES))
-//                    .setScale(2, RoundingMode.HALF_UP) + " mi");
             TextView phoneNumber = appendOutputText(mRestaurant.getPhoneDisplay());
         }
         // open hours

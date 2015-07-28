@@ -4,4 +4,7 @@
     <item android:id="@+id/action_menu" android:title="@string/action_menu"
         android:orderInCategory="100" app:showAsAction="always" android:icon="@drawable/menu_menu"
         />
+    <item android:id="@+id/action_info" android:title="Info"
+        android:orderInCategory="100" app:showAsAction="always" android:icon="@android:drawable/ic_dialog_info"
+        />
 </menu>
