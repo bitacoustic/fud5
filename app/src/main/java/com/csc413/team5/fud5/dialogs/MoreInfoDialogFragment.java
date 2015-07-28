@@ -4,8 +4,10 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +15,16 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.csc413.team5.fud5.R;
+import com.csc413.team5.fud5.utils.ToastUtil;
 import com.csc413.team5.restaurantapiwrapper.DistanceUnit;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
 public class MoreInfoDialogFragment extends DialogFragment {
     private static MoreInfoDialogFragment instance = null;
@@ -118,17 +123,25 @@ public class MoreInfoDialogFragment extends DialogFragment {
         // phone number (click to display phone number in dialer)
         appendOutputText(mContext.getString(R.string.fragment_more_info_title_phone_number),
                 Color.BLACK, 16, 10);
-        TextView phoneNumber = appendOutputText(mRestaurant.getPhoneDisplay(), Color.BLUE, 14, 0);
-        phoneNumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // display the phone number in the dialer, but don't call it
-                Intent call = new Intent(Intent.ACTION_DIAL);
-                call.setData(mRestaurant.getPhoneDialable());
-                startActivity(call);
-            }
-        });
+        TelephonyManager manager = (TelephonyManager)mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        if(manager.getPhoneType() != TelephonyManager.PHONE_TYPE_NONE) {
+            TextView phoneNumber = appendOutputText(mRestaurant.getPhoneDisplay(), Color.BLUE, 14, 0);
+            phoneNumber.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // display the phone number in the dialer, but don't call it
+                    Intent call = new Intent(Intent.ACTION_DIAL);
+                    call.setData(mRestaurant.getPhoneDialable());
+                    startActivity(call);
 
+                }
+            });
+        }else{
+//            appendOutputText(new BigDecimal(mRestaurant
+//                    .getDistanceFromSearchLocation(DistanceUnit.MILES))
+//                    .setScale(2, RoundingMode.HALF_UP) + " mi");
+            TextView phoneNumber = appendOutputText(mRestaurant.getPhoneDisplay());
+        }
         // open hours
         if (mRestaurant.hasHours()) {
             appendOutputText("Hours", Color.BLACK, 16, 10);
