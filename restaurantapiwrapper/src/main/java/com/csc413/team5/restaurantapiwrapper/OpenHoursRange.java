@@ -65,9 +65,7 @@ public class OpenHoursRange implements Serializable {
 
     @Override
     public String toString() {
-        return "OpenHoursRange{" +
-                "open=" + open.to12HrString() +
-                ", close=" + close.to12HrString() +
-                '}';
+        return open.to12HrString() + " - " + close.to12HrString();
     }
+
 }

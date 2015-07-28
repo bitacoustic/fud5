@@ -303,8 +303,10 @@ public class LocuExtension {
                 e.printStackTrace();
             }
 
-            if (newHours != null)
+            if (newHours != null) {
                 r.hours = newHours;
+                r.hasHours = true;
+            }
         } // end if (in.has("open_hours"))
 
         if (in.has("name")) {

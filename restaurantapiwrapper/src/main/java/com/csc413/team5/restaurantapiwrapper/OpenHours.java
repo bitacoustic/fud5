@@ -2,8 +2,16 @@ package com.csc413.team5.restaurantapiwrapper;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-import static com.csc413.team5.restaurantapiwrapper.DayOfWeek.*;
+import static com.csc413.team5.restaurantapiwrapper.DayOfWeek.FRIDAY;
+import static com.csc413.team5.restaurantapiwrapper.DayOfWeek.MONDAY;
+import static com.csc413.team5.restaurantapiwrapper.DayOfWeek.SATURDAY;
+import static com.csc413.team5.restaurantapiwrapper.DayOfWeek.SUNDAY;
+import static com.csc413.team5.restaurantapiwrapper.DayOfWeek.THURSDAY;
+import static com.csc413.team5.restaurantapiwrapper.DayOfWeek.TUESDAY;
+import static com.csc413.team5.restaurantapiwrapper.DayOfWeek.WEDNESDAY;
 
 /**
  * Representation of the open hours for an entire week, holding {@link OpenHoursPerDay} for each
@@ -27,13 +35,19 @@ public class OpenHours<DayOfWeek, OpenHoursPerDay> extends HashMap implements Se
         put(SUNDAY, null);
     }
 
+    /**
+     * Returns whether there are open hours for this venue. This is true if at least one day of
+     * the week has hours.
+     * @return true if there are open hours, otherwise false
+     */
     public boolean hasOpenHours() {
         boolean hasOpenHours = false;
-        for ( Object key : this.keySet() ) {
-            if (key != null) {
+        Iterator it = this.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            if (pair.getValue() != null)
                 hasOpenHours = true;
-                break;
-            }
+            break;
         }
         return hasOpenHours;
     }
@@ -103,6 +117,67 @@ public class OpenHours<DayOfWeek, OpenHoursPerDay> extends HashMap implements Se
     @Override
     public Object put(Object key, Object value) {
         return super.put(key, value);
+    }
+
+    /**
+     * Returns a String representation of this OpenHours in 12-hour format.
+     * @return
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("");
+        String cl = "closed";
+
+        sb.append("Monday: ");
+        if (get(MONDAY) == null)
+            sb.append(cl);
+        else
+            sb.append(get(MONDAY).toString());
+        sb.append("\n");
+
+        sb.append("Tuesday: ");
+        if (get(TUESDAY) == null)
+            sb.append(cl);
+        else
+            sb.append(get(MONDAY).toString());
+        sb.append("\n");
+
+        sb.append("Wednesday: ");
+        if (get(WEDNESDAY) == null)
+            sb.append(cl);
+        else
+            sb.append(get(WEDNESDAY).toString());
+        sb.append("\n");
+
+        sb.append("Thursday: ");
+        if (get(THURSDAY) == null)
+            sb.append(cl);
+        else
+            sb.append(get(THURSDAY).toString());
+        sb.append("\n");
+
+        sb.append("Friday: ");
+        if (get(FRIDAY) == null)
+            sb.append(cl);
+        else
+            sb.append(get(FRIDAY).toString());
+        sb.append("\n");
+
+        sb.append("Saturday: ");
+        if (get(SATURDAY) == null)
+            sb.append(cl);
+        else
+            sb.append(get(SATURDAY).toString());
+        sb.append("\n");
+
+        sb.append("Sunday: ");
+        if (get(SUNDAY) == null)
+            sb.append(cl);
+        else
+            sb.append(get(SUNDAY).toString());
+        sb.append("\n");
+
+        return sb.toString();
     }
 }
 

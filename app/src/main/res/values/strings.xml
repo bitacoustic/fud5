@@ -184,5 +184,11 @@
     <string name="toast_location_services_are_off">Location services are off</string>
     <string name="toast_network_unavailable">Network is unavailable</string>
     <string name="activity_result_page_toast_was_added_to_red_list">" was added to your ignored restaurants list."</string>
+    <string name="fragment_more_info_reserve_a_table">Reserve a table</string>
+    <string name="fragment_more_info_open_seatme_link">Open SeatMe link</string>
+    <string name="fragment_more_info_title_distance">Distance</string>
+    <string name="fragment_more_info_title_categories">Categories</string>
+    <string name="fragment_more_info_title_address">Address</string>
+    <string name="fragment_more_info_title_phone_number">Phone number</string>
 
 </resources>

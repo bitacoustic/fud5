@@ -56,8 +56,10 @@ public class ResultPageActivity extends AppCompatActivity
     private GoogleMap mMap;
 
     YelpApiKey mYelpKey;
-    RestaurantList resultList;
-    Restaurant firstResult;
+    LocuApiKey mLocuKey;
+    RestaurantList mResultList;
+    Restaurant mFirstResult;
+    boolean mAlreadyQueriedLocuThisResult;
 
     // user input passed from main activity
     String location;
@@ -67,26 +69,65 @@ public class ResultPageActivity extends AppCompatActivity
 
     TextView mTitle;
 
-    DialogFragment moreInfoDialog;
+    DialogFragment mMoreInfoDialog;
 
-    // Locu menu
+    // Restaurant menu
     DisplayMenuTask displayMenuTask;
-    DialogFragment displayRestaurantMenus;
-    DialogFragment menuNotFoundDialog;
-    PopupWindow popupLoadingMenu;
+    DialogFragment mDisplayRestaurantMenus;
+    DialogFragment mMenuNotFoundDialog;
+    PopupWindow mPopupLoadingMenu;
 
     // Database
     dbHelper db;
+
+    /**
+     * Save all appropriate fragment state.
+     *
+     * @param outState
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        // save the state of the info dialog if it is visible
+        if (mMoreInfoDialog != null && mMoreInfoDialog.isVisible())
+            getFragmentManager().putFragment(outState, "info", mMoreInfoDialog);
+    }
+
+    /**
+     * This method is called after {@link #onStart} when the activity is
+     * being re-initialized from a previously saved state, given here in
+     * <var>savedInstanceState</var>.  Most implementations will simply use {@link #onCreate}
+     * to restore their state, but it is sometimes convenient to do it here
+     * after all of the initialization has been done or to allow subclasses to
+     * decide whether to use your default implementation.  The default
+     * implementation of this method performs a restore of any view state that
+     * had previously been frozen by {@link #onSaveInstanceState}.
+     * <p/>
+     * <p>This method is called between {@link #onStart} and
+     * {@link #onPostCreate}.
+     *
+     * @param savedInstanceState the data most recently supplied in {@link #onSaveInstanceState}.
+     * @see #onCreate
+     * @see #onPostCreate
+     * @see #onResume
+     * @see #onSaveInstanceState
+     */
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        // restore the state of the info dialog if it was open while the activity was paused
+        // if it wasn't open this operation shouldn't affect the activity (mMoreInfoDialog == null)
+        mMoreInfoDialog = (DialogFragment) getFragmentManager().getFragment(savedInstanceState,
+                "info");
+    }
 
     // user presses the "Let's go!" button
     public void btnGreen(View v) {
         // TODO define a behavior
         // if the restaurant is not already in green list, add it
-        if (!db.isRestaurantInList(firstResult, Constants.GREEN_LIST)) {
-            db.insertRestaurantToList(firstResult, Constants.GREEN_LIST);
-            Log.i(TAG, "Added " + firstResult.getBusinessName() + " to green list");
+        if (!db.isRestaurantInList(mFirstResult, Constants.GREEN_LIST)) {
+            db.insertRestaurantToList(mFirstResult, Constants.GREEN_LIST);
+            Log.i(TAG, "Added " + mFirstResult.getBusinessName() + " to green list");
         } else { // otherwise, don't add it
-            Log.i(TAG, firstResult.getBusinessName() + " was already in green list");
+            Log.i(TAG, mFirstResult.getBusinessName() + " was already in green list");
         }
 
         // TODO: TEMP - specify green button behavior
@@ -97,13 +138,13 @@ public class ResultPageActivity extends AppCompatActivity
     // user presses the "Maybe later..." button
     public void btnYellow(View v) {
         // if restaurant is not already in yellow list, add it
-        if (!db.isRestaurantInList(firstResult, Constants.YELLOW_LIST)) {
-            db.insertRestaurantToList(firstResult, Constants.YELLOW_LIST);
-            Log.i(TAG, "Added " + firstResult.getBusinessName() + " to yellow list");
+        if (!db.isRestaurantInList(mFirstResult, Constants.YELLOW_LIST)) {
+            db.insertRestaurantToList(mFirstResult, Constants.YELLOW_LIST);
+            Log.i(TAG, "Added " + mFirstResult.getBusinessName() + " to yellow list");
         } else { // otherwise, update the timestamp by deleting and re-adding it
-            db.deleteRestaurantFromList(firstResult, Constants.YELLOW_LIST);
-            db.insertRestaurantToList(firstResult, Constants.YELLOW_LIST);
-            Log.i(TAG, firstResult.getBusinessName() + " was already in yellow list");
+            db.deleteRestaurantFromList(mFirstResult, Constants.YELLOW_LIST);
+            db.insertRestaurantToList(mFirstResult, Constants.YELLOW_LIST);
+            Log.i(TAG, mFirstResult.getBusinessName() + " was already in yellow list");
         }
 
         displayNextResult(v);
@@ -112,13 +153,13 @@ public class ResultPageActivity extends AppCompatActivity
     // user presses the "Always ignore" button
     public void btnRed(View v) {
         // if restaurant isn't already in red list, add it
-        if (!db.isRestaurantInList(firstResult, Constants.RED_LIST)) {
-            ToastUtil.showShortToast(this, firstResult.getBusinessName()
+        if (!db.isRestaurantInList(mFirstResult, Constants.RED_LIST)) {
+            ToastUtil.showShortToast(this, mFirstResult.getBusinessName()
                     + getString(R.string.activity_result_page_toast_was_added_to_red_list));
-            db.insertRestaurantToList(firstResult, Constants.RED_LIST);
-            Log.i(TAG, "Added " + firstResult.getBusinessName() + " to red list");
+            db.insertRestaurantToList(mFirstResult, Constants.RED_LIST);
+            Log.i(TAG, "Added " + mFirstResult.getBusinessName() + " to red list");
         } else { // otherwise, don't do anything
-            Log.i(TAG, firstResult.getBusinessName() + " was already in red list");
+            Log.i(TAG, mFirstResult.getBusinessName() + " was already in red list");
         }
 
         displayNextResult(v);
@@ -126,17 +167,11 @@ public class ResultPageActivity extends AppCompatActivity
 
     // get more information about the restaurant currently in focus by displaying a dialog
     public void getMoreInfo(View v) {
-        if (moreInfoDialog != null && moreInfoDialog.isVisible())
-            moreInfoDialog.dismiss();
-        moreInfoDialog = MoreInfoDialogFragment.getInstance(firstResult);
-        moreInfoDialog.show(getFragmentManager(), "moreInfo");
+        if (mMoreInfoDialog != null && mMoreInfoDialog.isVisible())
+            mMoreInfoDialog.dismiss();
+        mMoreInfoDialog = MoreInfoDialogFragment.getInstance(mFirstResult);
+        mMoreInfoDialog.show(getFragmentManager(), "moreInfo");
     }
-
-    // close the results page and return to the main activity
-    public void closeResultsPage(View v) {
-        finish(); // pop activity from the stack
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,7 +194,7 @@ public class ResultPageActivity extends AppCompatActivity
         LayoutInflater layoutInflater  = (LayoutInflater)getBaseContext()
                 .getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupLoadingMenuView = layoutInflater.inflate(R.layout.popup_loading_rmenu, null);
-        popupLoadingMenu = new PopupWindow(popupLoadingMenuView,
+        mPopupLoadingMenu = new PopupWindow(popupLoadingMenuView,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
 
@@ -178,14 +213,18 @@ public class ResultPageActivity extends AppCompatActivity
         // Initialize the database
         db = new dbHelper(this, null, null, 1);
 
-        // Construct a YelpApiKey from Resource strings
+        // Construct API keys from Resource strings
         mYelpKey = new YelpApiKey(
                 getApplicationContext().getResources().getString(R.string.yelp_consumer_key),
                 getApplicationContext().getResources().getString(R.string.yelp_consumer_secret),
                 getApplicationContext().getResources().getString(R.string.yelp_token),
                 getApplicationContext().getResources().getString(R.string.yelp_token_secret) );
+        mLocuKey = new LocuApiKey(getApplicationContext().getResources()
+                .getString(R.string.locu_key));
 
-        resultList = null;
+        mResultList = null;
+        mFirstResult = null;
+        mAlreadyQueriedLocuThisResult = false;
 
         // start background activity to get the results
         if (ServiceUtil.isNetworkAvailable(this)) {
@@ -202,9 +241,9 @@ public class ResultPageActivity extends AppCompatActivity
     public void displayNextResult(View v){
         //display restaurant info goes here.
         //restaurant image loading needs to go in yet another asynctask
-        if (resultList == null)
+        if (mResultList == null)
             return;
-        if (resultList.size() <= 0) {
+        if (mResultList.size() <= 0) {
             ToastUtil.showShortToast(this, "No more matches found.");
         } else {
             //Clear the image before the next image is shown
@@ -213,15 +252,17 @@ public class ResultPageActivity extends AppCompatActivity
         }
 
         try {
-            firstResult = resultList.remove(0);
-            Log.i(TAG, "Rating: " + firstResult.getRating());
-            drawStars(firstResult.getRating());
+            mFirstResult = mResultList.remove(0);
+            mAlreadyQueriedLocuThisResult = false;
+
+            Log.i(TAG, "Rating: " + mFirstResult.getRating());
+            drawStars(mFirstResult.getRating());
             mMap.clear();
-            setUpMap(firstResult);
+            setUpMap(mFirstResult);
             TextView title = (TextView)findViewById(R.id.restaurantName);
 
             // Display business name; reduce font size for long restaurant names
-            int businessNameLength = firstResult.getBusinessName().length();
+            int businessNameLength = mFirstResult.getBusinessName().length();
             if (businessNameLength < 20) {
                 title.setTextSize(28);
             } else if (businessNameLength >= 20 && businessNameLength < 29) {
@@ -229,13 +270,13 @@ public class ResultPageActivity extends AppCompatActivity
             } else {
                 title.setTextSize(20);
             }
-            title.setText(firstResult.getBusinessName());
+            title.setText(mFirstResult.getBusinessName());
 
             //Load the restaurant image
-            if (firstResult.getImageUrl() == null)
+            if (mFirstResult.getImageUrl() == null)
                 ((ImageView)findViewById(R.id.imgRestaurant)).setImageResource(R.drawable.no_image);
             else {
-                String tempURL = firstResult.getImageUrl().toString();
+                String tempURL = mFirstResult.getImageUrl().toString();
                 tempURL = tempURL.replace("ms.jpg", "o.jpg"); //this gets original image size
                 URL imageURL = new URL(tempURL);
 
@@ -300,8 +341,8 @@ public class ResultPageActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        if (popupLoadingMenu.isShowing())
-            popupLoadingMenu.dismiss();
+        if (mPopupLoadingMenu.isShowing())
+            mPopupLoadingMenu.dismiss();
     }
 
     //TODO: implement the selector
@@ -325,16 +366,16 @@ public class ResultPageActivity extends AppCompatActivity
         }
 
         protected void onPostExecute(RestaurantList result) {
-            resultList = result;
+            mResultList = result;
 
-            if (resultList == null || resultList.getSize() < 1) { // catch no results
+            if (mResultList == null || mResultList.getSize() < 1) { // catch no results
                 DialogFragment noResultsDialog = NoResultsDialogFragment.getInstance();
                 noResultsDialog.show(getFragmentManager(), "noResults");
             } else {
                 // TODO: TEMP CODE which removes restaurants < minRating
-                for (int i = 0; i < resultList.getSize(); ) {
-                    if (resultList.getRestaurant(i).getRating() < minRating) {
-                        Restaurant removed = resultList.removeRestaurant(i);
+                for (int i = 0; i < mResultList.getSize(); ) {
+                    if (mResultList.getRestaurant(i).getRating() < minRating) {
+                        Restaurant removed = mResultList.removeRestaurant(i);
                         if (removed == null) // check if restaurant was removed successfully
                             i++;
                         // otherwise don't iterate as next restaurant will be at this index
@@ -408,7 +449,7 @@ public class ResultPageActivity extends AppCompatActivity
             finish();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_menu && firstResult != null) {
+        if (id == R.id.action_menu && mFirstResult != null) {
             // don't proceed if a DisplayMenuTask is already in progress
             if (displayMenuTask != null &&
                     ( displayMenuTask.getStatus() == AsyncTask.Status.RUNNING
@@ -417,15 +458,15 @@ public class ResultPageActivity extends AppCompatActivity
 
             // don't proceed if DisplayMenuTask is complete but one of the resulting dialogs
             // is rendering
-            if (displayRestaurantMenus != null && displayRestaurantMenus.isVisible())
+            if (mDisplayRestaurantMenus != null && mDisplayRestaurantMenus.isVisible())
                 return true;
-            if (menuNotFoundDialog != null && menuNotFoundDialog.isVisible())
+            if (mMenuNotFoundDialog != null && mMenuNotFoundDialog.isVisible())
                 return true;
 
             if (ServiceUtil.isNetworkAvailable(this)) {
                 displayMenuTask = new DisplayMenuTask();
-                displayMenuTask.execute(firstResult);
-                popupLoadingMenu.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
+                displayMenuTask.execute(mFirstResult);
+                mPopupLoadingMenu.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
             } else {
                 ToastUtil.showShortToast(this, getString(R.string.toast_network_unavailable));
             }
@@ -445,27 +486,32 @@ public class ResultPageActivity extends AppCompatActivity
         @Override
         protected Restaurant doInBackground(Restaurant... params) {
             Restaurant restaurant = params[0];
-            LocuApiKey locuKey = new LocuApiKey(getApplicationContext().getResources()
-                    .getString(R.string.locu_key));
-            Log.i(TAG, "Attempting to find a menu for " + restaurant.getBusinessName());
-            new LocuExtension(locuKey).updateIfHasMenu(restaurant);
+
+            // only perform the call if the API call if the restaurant does not already have
+            // menu information (e.g. the menus button has already been pressed this result)
+            if (!mAlreadyQueriedLocuThisResult) {
+                Log.i(TAG, "Attempting to find a menu for " + restaurant.getBusinessName());
+                new LocuExtension(mLocuKey).updateIfHasMenu(restaurant);
+                mAlreadyQueriedLocuThisResult = true;
+            }
+
             return restaurant;
         }
 
         @Override
         protected void onPostExecute(Restaurant restaurant) {
-            if (popupLoadingMenu != null && popupLoadingMenu.isShowing())
-                popupLoadingMenu.dismiss();
+            if (mPopupLoadingMenu != null && mPopupLoadingMenu.isShowing())
+                mPopupLoadingMenu.dismiss();
 
             if (restaurant.hasLocuMenus()) {
                 Log.i(TAG, "Found menu for " + restaurant.getBusinessName());
-                displayRestaurantMenus = DisplayRestaurantMenusFragment
+                mDisplayRestaurantMenus = DisplayRestaurantMenusFragment
                         .getInstance(restaurant);
-                displayRestaurantMenus.show(getFragmentManager(), "menus");
+                mDisplayRestaurantMenus.show(getFragmentManager(), "menus");
             } else {
                 Log.i(TAG, "Could not find menu for " + restaurant.getBusinessName());
-                menuNotFoundDialog = new MenuNotFoundFragment();
-                menuNotFoundDialog.show(getFragmentManager(), "menuNotFound");
+                mMenuNotFoundDialog = new MenuNotFoundFragment();
+                mMenuNotFoundDialog.show(getFragmentManager(), "menuNotFound");
             }
         }
     }

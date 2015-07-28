@@ -23,4 +23,20 @@ public class OpenHoursPerDay<OpenHoursRange> extends ArrayList implements Serial
     public boolean hasHours() {
         return isEmpty();
     }
+
+    /**
+     * @return the string representation of this {@code OpenHoursPerDay}.
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("");
+
+        for (int i = 0; i < size(); i++) {
+            sb.append(get(i));
+            if (i < size() - 1)
+                sb.append(", ");
+        }
+
+        return sb.toString();
+    }
 }

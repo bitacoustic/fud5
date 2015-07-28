@@ -52,14 +52,15 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/scrollViewRMenusContent"
+        android:id="@+id/scrollViewMoreInfoBody"
         >
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/linearLayoutMoreInfoBody">
+            android:id="@+id/linearLayoutMoreInfoBody"
+            android:padding="10dp">
         </LinearLayout>
     </ScrollView>
 
