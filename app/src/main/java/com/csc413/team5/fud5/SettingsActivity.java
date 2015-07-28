@@ -44,17 +44,23 @@ public class SettingsActivity extends AppCompatActivity
     private static final String TAG = "Settings";
     Context mContext;
 
-    protected CheckBox mCheckBoxUserSettings;
-    protected CheckBox mCheckBoxIgnoredRestaurantHistory;
-    protected CheckBox mCheckBoxAllRestaurantHistory;
     protected Button mBtnReset;
     protected Button mBtnLocationServices;
+
+    // check boxes with associated info buttons and tooltips
+    protected CheckBox mCheckBoxUserSettings;
     protected ImageButton mBtnUserSettings;
-    protected ImageButton mBtnRestaurantHistory;
-
     protected ToolTipView mTooltipUserSettings;
-    protected ToolTipView mTooltipRestaurantHistory;
 
+    protected CheckBox mCheckBoxIgnoredRestaurantHistory;
+    protected ImageButton mBtnIgnoredRestaurantHistory;
+    protected ToolTipView mTooltipIgnoredRestaurantHistory;
+
+    protected CheckBox mCheckBoxAllRestaurantHistory;
+    protected ImageButton mBtnAllRestaurantHistory;
+    protected ToolTipView mTooltipAllRestaurantHistory;
+
+    // database and shared preferences
     public static final String PREFS_FILE = "UserSettings";
     private SharedPreferences userSettings;
     private SharedPreferences.Editor userSettingsEditor;
@@ -201,16 +207,43 @@ public class SettingsActivity extends AppCompatActivity
             }
         });
 
-        mBtnRestaurantHistory = (ImageButton) findViewById(R.id
+        mBtnIgnoredRestaurantHistory = (ImageButton) findViewById(R.id
+                .imageButtonResetIgnoredRestaurantHistoryInfo);
+        mBtnIgnoredRestaurantHistory.setOnClickListener(new View.OnClickListener() {
+            // toggle tooltip
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "ignored restaurant history info button was pressed");
+
+                if (mTooltipIgnoredRestaurantHistory != null
+                        && mTooltipIgnoredRestaurantHistory.isShown()) {
+                    mTooltipIgnoredRestaurantHistory.remove();
+                    return;
+                }
+
+                ToolTipRelativeLayout tooltipView
+                        = (ToolTipRelativeLayout) findViewById(R.id.
+                        tooltipAppSettingsIgnoredRestaurants);
+                ToolTip tooltip = new ToolTip()
+                        .withText(getString(R.string
+                                .activity_application_settings_ignored_restaurant_history_caption))
+                        .withColor(Color.parseColor("#ECCD7F"));
+                mTooltipIgnoredRestaurantHistory = tooltipView
+                        .showToolTipForView(tooltip,
+                                findViewById(R.id.reset_red_list));
+            }
+        });
+
+        mBtnAllRestaurantHistory= (ImageButton) findViewById(R.id
                 .imageButtonResetRestaurantHistoryInfo);
-        mBtnRestaurantHistory.setOnClickListener(new View.OnClickListener() {
+        mBtnAllRestaurantHistory.setOnClickListener(new View.OnClickListener() {
             // toggle tooltip
             @Override
             public void onClick(View v) {
                 Log.i(TAG, "restaurant history info button was pressed");
 
-                if (mTooltipRestaurantHistory != null && mTooltipRestaurantHistory.isShown()) {
-                    mTooltipRestaurantHistory.remove();
+                if (mTooltipAllRestaurantHistory != null && mTooltipAllRestaurantHistory.isShown()) {
+                    mTooltipAllRestaurantHistory.remove();
                     return;
                 }
 
@@ -220,7 +253,7 @@ public class SettingsActivity extends AppCompatActivity
                         .withText(getString(R.string
                                 .activity_application_settings_restaurant_history_caption))
                         .withColor(Color.parseColor("#ECCD7F"));
-                mTooltipRestaurantHistory = tooltipView
+                mTooltipAllRestaurantHistory = tooltipView
                         .showToolTipForView(tooltip,
                                 findViewById(R.id.checkBoxAppSettingsRestaurant));
             }

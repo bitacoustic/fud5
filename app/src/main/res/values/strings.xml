@@ -47,7 +47,7 @@
     <string name="settings_ui_button_locu_test">Locu Test</string>
     <string name="settings_ui_button_google_map_test">Google Map Test</string>
     <string name="settings_ui_button_selector_test">Restaurant Selector Test</string>
-    <string name="settings_ui_button_modify_red_list">Change Ignored Restaurants</string>
+    <string name="settings_ui_button_modify_red_list">View/Remove Ignored Restaurants</string>
     <string name="title_activity_application_settings">App Settings</string>
     <string name="activity_application_settings_user_settings_checkbox">User Settings</string>
     <string name="settings_ui_button_reset_red_list">Ignored Restaurant History</string>
@@ -57,7 +57,12 @@
         pressing \"Clear\" will set your preferred restaurant search options to application
         defaults. You may need to agree to the End-User License Agreement again on application
         restart.</string>
-    <string name="activity_application_settings_restaurant_history_caption">This application
+    <string name="activity_application_settings_ignored_restaurant_history_caption">When you view
+        a result and press \"Always Ignore\", FüD5 won\'t show you this restaurant again. By
+        checking this box and pressing \"Clear\" your entire history of ignored restaurants will
+        be erased. If you\'d prefer to see your ignored restaurants and selectively clear them,
+        press the button \"View / Remove Ignored Restaurants\".</string>
+    <string name="activity_application_settings_restaurant_history_caption">FüD5
         remembers restaurants when you choose \"Let\'s go!\", \"Maybe later\", or \"Always Ignore\".
         By checking this box and pressing \"Clear\" all of this data will be erased.</string>
     <string name="activity_application_settings_reset_checked_items_button">Clear checked
@@ -115,6 +120,18 @@
     <string name="title_activity_locu_menu">LocuMenuActivity</string>
     <string name="locu_search_id">64e0307ca073dccb5666</string>
 
+    <!-- No results fragment -->
+    <string name="fragment_no_results_title">No results</string>
+    <string name="fragment_no_results_body">We couldn\'t use the specified search parameters to find
+        a great new restaurant for you to try today. Try at least one of the
+        following:</string>
+    <string name="fragment_no_results_body_tip1">&#8226; Widen the max radius.</string>
+    <string name="fragment_no_results_body_tip2">&#8226; Lower the minimum star rating.</string>
+    <string name="fragment_no_results_body_tip3">&#8226; Eliminate some search terms.</string>
+    <string
+        name="fragment_no_results_body_tip4">&#8226; Search from a different address or just
+        specify a city.</string>
+
     <!-- LocuMenuTestActivity -->
     <string name="title_locu_menu_test_activity">Locu Menu Test</string>
     <string name="locu_menu_debug_text"> </string>
@@ -149,6 +166,9 @@
     <string name="generic_back_text">Back</string>
     <string name="generic_ok_text">Ok</string>
 
+    <!-- Accessibility -->
+    <string name="accessibility_info_button">info</string>
+
     <!--General database-->
     <string name="db_does_not_exist">Error: Database does not exist.</string>
     <string name="db_table_does_not_exist">Error: Database table does not exist.</string>
@@ -164,14 +184,5 @@
     <string name="toast_location_services_are_off">Location services are off</string>
     <string name="toast_network_unavailable">Network is unavailable</string>
     <string name="activity_result_page_toast_was_added_to_red_list">" was added to your ignored restaurants list."</string>
-    <string name="fragment_no_results_title">No results</string>
-    <string name="fragment_no_results_body">We couldn\'t use the specified search parameters to find
-        a great new restaurant for you to try today. Try at least one of the
-        following:</string>
-    <string name="fragment_no_results_body_tip1">&#8226; Widen the max radius.</string>
-    <string name="fragment_no_results_body_tip2">&#8226; Lower the minimum star rating.</string>
-    <string name="fragment_no_results_body_tip3">&#8226; Eliminate some search terms.</string>
-    <string
-        name="fragment_no_results_body_tip4">&#8226; Search from a different address or just
-        specify a city.</string>
+
 </resources>

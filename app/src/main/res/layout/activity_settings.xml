@@ -47,7 +47,7 @@
                 android:text="Ignored Restaurants"
                 android:id="@+id/textView"
                 android:layout_marginBottom="10dp"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:layout_marginTop="10dp"/>
 
             <Button
@@ -67,7 +67,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/activity_application_settings_reset_application_text"
                 android:id="@+id/txtViewAppSettingsTitle"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"/>
 
@@ -83,7 +83,7 @@
                     android:id="@+id/checkBoxAppSettingsUser"
                     android:checked="false"
                     android:paddingRight="10dp"
-                    android:textSize="16dp"/>
+                    android:textSize="16sp"/>
 
                 <ImageButton
                     android:layout_width="wrap_content"
@@ -96,7 +96,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_toEndOf="@+id/checkBoxAppSettingsUser"
                     android:layout_marginStart="5dp"
-                    android:layout_alignBottom="@+id/checkBoxAppSettingsUser"/>
+                    android:layout_alignBottom="@+id/checkBoxAppSettingsUser"
+                    android:contentDescription="@string/accessibility_info_button"/>
             </RelativeLayout>
 
             <com.nhaarman.supertooltips.ToolTipRelativeLayout
@@ -106,13 +107,37 @@
                 android:textColor="@color/purple"
                 android:layout_marginTop="-15dp"/>
 
-            <CheckBox
-                android:layout_width="fill_parent"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="32dp">
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_ui_button_reset_red_list"
+                    android:id="@+id/reset_red_list"
+                    android:onClick="resetRedList"
+                    android:textSize="16sp"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageButtonResetIgnoredRestaurantHistoryInfo"
+                    android:src="@android:drawable/ic_dialog_info"
+                    android:padding="0dp"
+                    android:paddingLeft="10dp"
+                    android:tint="@color/purple"
+                    android:contentDescription="@string/accessibility_info_button"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="false"
+                    android:layout_toEndOf="@id/reset_red_list"
+                    android:layout_marginStart="15dp"/>
+            </RelativeLayout>
+
+            <com.nhaarman.supertooltips.ToolTipRelativeLayout
+                android:id="@+id/tooltipAppSettingsIgnoredRestaurants"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_ui_button_reset_red_list"
-                android:id="@+id/reset_red_list"
-                android:onClick="resetRedList"
-                android:textSize="16dp"/>
+                android:textColor="@color/purple"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -125,7 +150,7 @@
                     android:id="@+id/checkBoxAppSettingsRestaurant"
                     android:checked="false"
                     android:clickable="true"
-                    android:textSize="16dp"/>
+                    android:textSize="16sp"/>
 
                 <ImageButton
                     android:layout_width="wrap_content"
@@ -135,11 +160,11 @@
                     android:padding="0dp"
                     android:paddingLeft="10dp"
                     android:tint="@color/purple"
-                    android:layout_marginLeft="15dp"
                     android:layout_alignParentTop="true"
                     android:layout_toEndOf="@+id/checkBoxAppSettingsRestaurant"
                     android:layout_marginStart="15dp"
-                    android:layout_alignParentBottom="true"/>
+                    android:layout_alignParentBottom="true"
+                    android:contentDescription="@string/accessibility_info_button"/>
             </RelativeLayout>
 
             <com.nhaarman.supertooltips.ToolTipRelativeLayout
@@ -165,7 +190,7 @@
                 android:text="@string/activity_application_settings_manage_services_text"
                 android:id="@+id/textView5"
                 android:layout_marginBottom="10dp"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:layout_marginTop="10dp"/>
 
             <Button

@@ -2,14 +2,12 @@ package com.csc413.team5.fud5.dialogs;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import com.csc413.team5.fud5.R;
 
@@ -18,8 +16,6 @@ import com.csc413.team5.fud5.R;
  */
 public class NoResultsDialogFragment extends DialogFragment {
     private static NoResultsDialogFragment instance = null;
-    Context mContext;
-    LinearLayout linearLayout;
 
     public NoResultsDialogFragment() { // defeat instantiation
     }
