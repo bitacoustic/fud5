@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout"
+        >
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollViewNoResults"
+            android:background="@color/purple"
+            android:padding="5dp"
+            android:layout_alignParentEnd="true"
+            android:fillViewport="false"
+            android:paddingRight="75dp"
+            android:layout_toEndOf="@+id/imageButtonMoreInfo"
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewMoreInfoTitle"
+                android:textColor="@color/gold"
+                android:textSize="20dp"
+                android:textAlignment="gravity"
+                android:textStyle="bold"
+                android:paddingRight="50dp"
+                android:gravity="left"
+                android:layout_alignBottom="@+id/scrollViewNoResultsTitle"
+                android:layout_centerHorizontal="true"
+                android:paddingLeft="50dp"
+                android:text="@string/fragment_no_results_title"/>
+        </ScrollView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/imageViewNoResults"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:src="@android:drawable/ic_dialog_alert"
+            android:cropToPadding="false"
+            android:contentDescription="Close dialog button"
+            android:nestedScrollingEnabled="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:background="@color/purple"
+            android:tint="@color/gold"
+            android:paddingLeft="10dp"
+            android:layout_alignBottom="@+id/scrollViewNoResults"/>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollViewNoResultsBody"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayoutNoResultsBody"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_no_results_body"
+                android:id="@+id/textViewNoResultsBody"
+                android:paddingBottom="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_no_results_body_tip1"
+                android:id="@+id/textViewNoResultsTip1"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_no_results_body_tip2"
+                android:id="@+id/textViewNoResultsTip2"
+                android:paddingLeft="20dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_no_results_body_tip3"
+                android:id="@+id/textViewNoResultsTip3"
+                android:paddingLeft="20dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_no_results_body_tip4"
+                android:id="@+id/textViewNoResultsTip4"
+                android:paddingLeft="20dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="20dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/generic_ok_text"
+        android:id="@+id/buttonNoResultsOk"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/gold"
+        android:background="@color/purple"
+        android:layout_marginBottom="20dp"
+        android:nestedScrollingEnabled="false"/>
+
+</LinearLayout>

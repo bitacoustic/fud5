@@ -26,6 +26,7 @@ import com.csc413.team5.appdb.dbHelper;
 import com.csc413.team5.fud5.dialogs.DisplayRestaurantMenusFragment;
 import com.csc413.team5.fud5.dialogs.MenuNotFoundFragment;
 import com.csc413.team5.fud5.dialogs.MoreInfoDialogFragment;
+import com.csc413.team5.fud5.dialogs.NoResultsDialogFragment;
 import com.csc413.team5.fud5.utils.Constants;
 import com.csc413.team5.fud5.utils.ServiceUtil;
 import com.csc413.team5.fud5.utils.ToastUtil;
@@ -123,12 +124,19 @@ public class ResultPageActivity extends AppCompatActivity
         displayNextResult(v);
     }
 
+    // get more information about the restaurant currently in focus by displaying a dialog
     public void getMoreInfo(View v) {
         if (moreInfoDialog != null && moreInfoDialog.isVisible())
             moreInfoDialog.dismiss();
         moreInfoDialog = MoreInfoDialogFragment.getInstance(firstResult);
         moreInfoDialog.show(getFragmentManager(), "moreInfo");
     }
+
+    // close the results page and return to the main activity
+    public void closeResultsPage(View v) {
+        finish(); // pop activity from the stack
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -320,8 +328,8 @@ public class ResultPageActivity extends AppCompatActivity
             resultList = result;
 
             if (resultList == null || resultList.getSize() < 1) { // catch no results
-                ToastUtil.showShortToast(mContext, "No results");
-                finish();
+                DialogFragment noResultsDialog = NoResultsDialogFragment.getInstance();
+                noResultsDialog.show(getFragmentManager(), "noResults");
             } else {
                 // TODO: TEMP CODE which removes restaurants < minRating
                 for (int i = 0; i < resultList.getSize(); ) {
@@ -335,9 +343,9 @@ public class ResultPageActivity extends AppCompatActivity
                         i++;
                 }
                 // END TEMP
-            }
 
-            displayNextResult(findViewById(R.id.imgRestaurant));
+                displayNextResult(findViewById(R.id.imgRestaurant));
+            }
         }
     }
 

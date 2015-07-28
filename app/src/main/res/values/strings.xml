@@ -164,4 +164,14 @@
     <string name="toast_location_services_are_off">Location services are off</string>
     <string name="toast_network_unavailable">Network is unavailable</string>
     <string name="activity_result_page_toast_was_added_to_red_list">" was added to your ignored restaurants list."</string>
+    <string name="fragment_no_results_title">No results</string>
+    <string name="fragment_no_results_body">We couldn\'t use the specified search parameters to find
+        a great new restaurant for you to try today. Try at least one of the
+        following:</string>
+    <string name="fragment_no_results_body_tip1">&#8226; Widen the max radius.</string>
+    <string name="fragment_no_results_body_tip2">&#8226; Lower the minimum star rating.</string>
+    <string name="fragment_no_results_body_tip3">&#8226; Eliminate some search terms.</string>
+    <string
+        name="fragment_no_results_body_tip4">&#8226; Search from a different address or just
+        specify a city.</string>
 </resources>
