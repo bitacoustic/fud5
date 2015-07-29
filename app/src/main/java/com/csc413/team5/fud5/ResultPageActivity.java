@@ -57,6 +57,7 @@ public class ResultPageActivity extends AppCompatActivity
 
     YelpApiKey mYelpKey;
     LocuApiKey mLocuKey;
+    GetResultTask getResultTask;
     RestaurantList mResultList;
     Restaurant mFirstResult;
     boolean mAlreadyQueriedLocuThisResult;
@@ -76,7 +77,7 @@ public class ResultPageActivity extends AppCompatActivity
     DisplayMenuTask displayMenuTask;
     DialogFragment mDisplayRestaurantMenus;
     DialogFragment mMenuNotFoundDialog;
-    PopupWindow mPopupLoadingMenu;
+    PopupWindow mPopupLoadingInProgress;
 
     // Database
     dbHelper db;
@@ -188,9 +189,13 @@ public class ResultPageActivity extends AppCompatActivity
         LayoutInflater layoutInflater  = (LayoutInflater)getBaseContext()
                 .getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupLoadingMenuView = layoutInflater.inflate(R.layout.popup_loading_rmenu, null);
-        mPopupLoadingMenu = new PopupWindow(popupLoadingMenuView,
+        mPopupLoadingInProgress = new PopupWindow(popupLoadingMenuView,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
+        // other activity buttons can't be pressed while popup is in focus (background activity
+        // in progress)
+        mPopupLoadingInProgress.setOutsideTouchable(false);
+        mPopupLoadingInProgress.setFocusable(true);
 
         // load the search parameters entered in main activity
         Intent i = getIntent();
@@ -222,7 +227,16 @@ public class ResultPageActivity extends AppCompatActivity
 
         // start background activity to get the results
         if (ServiceUtil.isNetworkAvailable(this)) {
-            new GetResultTask().execute();
+            getResultTask = new GetResultTask();
+            getResultTask.execute();
+            // display "loading..." popup after the activity window has finished rendering
+            // (minus the map and image which can only be drawn after the background task is
+            // complete)
+            getWindow().getDecorView().post(new Runnable() {
+                public void run() {
+                    mPopupLoadingInProgress.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
+                }
+            });
             setUpMapIfNeeded();
         } else {
             // Close the results page immediately if there is no network connectivity; to the user
@@ -367,8 +381,8 @@ public class ResultPageActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        if (mPopupLoadingMenu.isShowing())
-            mPopupLoadingMenu.dismiss();
+        if (mPopupLoadingInProgress.isShowing())
+            mPopupLoadingInProgress.dismiss();
     }
 
     //TODO: implement the selector
@@ -394,6 +408,11 @@ public class ResultPageActivity extends AppCompatActivity
         protected void onPostExecute(RestaurantList result) {
             mResultList = result;
 
+            // dismiss loading popup
+            if (mPopupLoadingInProgress.isShowing())
+                mPopupLoadingInProgress.dismiss();
+
+            // begin displaying results or tell user no results found
             if (mResultList == null || mResultList.getSize() < 1) { // catch no results
                 DialogFragment noResultsDialog = NoResultsDialogFragment
                         .getInstance(Constants.NO_RESULTS);
@@ -482,7 +501,7 @@ public class ResultPageActivity extends AppCompatActivity
         // get more information about the restaurant currently in focus by displaying a dialog
         if (id == R.id.action_info) {
             new GetMoreInfoTask().execute(mFirstResult);
-            mPopupLoadingMenu.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
+            mPopupLoadingInProgress.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
 
         }
 
@@ -505,7 +524,7 @@ public class ResultPageActivity extends AppCompatActivity
             if (ServiceUtil.isNetworkAvailable(this)) {
                 displayMenuTask = new DisplayMenuTask();
                 displayMenuTask.execute(mFirstResult);
-                mPopupLoadingMenu.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
+                mPopupLoadingInProgress.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
             } else {
                 ToastUtil.showShortToast(this, getString(R.string.toast_network_unavailable));
             }
@@ -539,8 +558,8 @@ public class ResultPageActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Restaurant restaurant) {
-            if (mPopupLoadingMenu != null && mPopupLoadingMenu.isShowing())
-                mPopupLoadingMenu.dismiss();
+            if (mPopupLoadingInProgress != null && mPopupLoadingInProgress.isShowing())
+                mPopupLoadingInProgress.dismiss();
 
             if (restaurant.hasLocuMenus()) {
                 Log.i(TAG, "Found menu for " + restaurant.getBusinessName());
@@ -571,8 +590,8 @@ public class ResultPageActivity extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Restaurant r) {
-            if (mPopupLoadingMenu != null && mPopupLoadingMenu.isShowing())
-                mPopupLoadingMenu.dismiss();
+            if (mPopupLoadingInProgress != null && mPopupLoadingInProgress.isShowing())
+                mPopupLoadingInProgress.dismiss();
 
             if (mMoreInfoDialog != null && mMoreInfoDialog.isVisible())
                 mMoreInfoDialog.dismiss();
