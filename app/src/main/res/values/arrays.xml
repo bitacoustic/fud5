@@ -23,6 +23,10 @@
         <item>Get grub here...</item>
         <item>Time to try...</item>
         <item>Check out...</item>
-        <item>We suggest...</item>
+        <item>I suggest...</item>
+        <item>This looks good...</item>
+        <item>Why not try...</item>
+        <item>Fresh from the Yelp Machine...</item>
+        <item>Bam!</item>
     </string-array>
 </resources>
