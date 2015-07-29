@@ -30,6 +30,7 @@ import com.csc413.team5.fud5.dialogs.MoreInfoDialogFragment;
 import com.csc413.team5.fud5.dialogs.NoResultsDialogFragment;
 import com.csc413.team5.fud5.utils.Constants;
 import com.csc413.team5.fud5.utils.ServiceUtil;
+import com.csc413.team5.fud5.utils.TextGeneratorUtil;
 import com.csc413.team5.fud5.utils.ToastUtil;
 import com.csc413.team5.restaurantapiwrapper.LocuApiKey;
 import com.csc413.team5.restaurantapiwrapper.LocuExtension;
@@ -174,7 +175,7 @@ public class ResultPageActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_page);
-        String title = getString(R.string.title_activity_result_page);
+        String title = TextGeneratorUtil.randomizeFromArray(getResources().getStringArray(R.array.results_title));
 
         // save this context to use anywhere in the activity
         mContext = this;
@@ -642,5 +643,4 @@ public class ResultPageActivity extends AppCompatActivity
             mMoreInfoDialog.show(getFragmentManager(), "moreInfo");
         }
     }
-
 }
