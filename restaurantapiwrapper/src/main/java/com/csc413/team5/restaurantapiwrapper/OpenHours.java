@@ -129,49 +129,49 @@ public class OpenHours<DayOfWeek, OpenHoursPerDay> extends HashMap implements Se
         String cl = "closed";
 
         sb.append("Monday: ");
-        if (get(MONDAY) == null)
+        if (get(MONDAY).toString().compareTo("") == 0)
             sb.append(cl);
         else
             sb.append(get(MONDAY).toString());
         sb.append("\n");
 
         sb.append("Tuesday: ");
-        if (get(TUESDAY) == null)
+        if (get(TUESDAY).toString().compareTo("") == 0)
             sb.append(cl);
         else
             sb.append(get(TUESDAY).toString());
         sb.append("\n");
 
         sb.append("Wednesday: ");
-        if (get(WEDNESDAY) == null)
+        if (get(WEDNESDAY).toString().compareTo("") == 0)
             sb.append(cl);
         else
             sb.append(get(WEDNESDAY).toString());
         sb.append("\n");
 
         sb.append("Thursday: ");
-        if (get(THURSDAY) == null)
+        if (get(THURSDAY).toString().compareTo("") == 0)
             sb.append(cl);
         else
             sb.append(get(THURSDAY).toString());
         sb.append("\n");
 
         sb.append("Friday: ");
-        if (get(FRIDAY) == null)
+        if (get(FRIDAY).toString().compareTo("") == 0)
             sb.append(cl);
         else
             sb.append(get(FRIDAY).toString());
         sb.append("\n");
 
         sb.append("Saturday: ");
-        if (get(SATURDAY) == null)
+        if (get(SATURDAY).toString().compareTo("") == 0)
             sb.append(cl);
         else
             sb.append(get(SATURDAY).toString());
         sb.append("\n");
 
         sb.append("Sunday: ");
-        if (get(SUNDAY) == null)
+        if (get(SUNDAY).toString().compareTo("") == 0)
             sb.append(cl);
         else
             sb.append(get(SUNDAY).toString());
