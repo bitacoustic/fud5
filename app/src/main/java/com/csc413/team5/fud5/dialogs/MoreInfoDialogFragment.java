@@ -92,7 +92,7 @@ public class MoreInfoDialogFragment extends DialogFragment {
         // Yelp attribution logo; according to documentation, it must appear before API content
         ImageView yelpLogo = new ImageView(mContext);
         LinearLayout.LayoutParams yelpLogoParams = new LinearLayout.LayoutParams(
-                50, 25);
+                100, 50);
         yelpLogoParams.setMargins(0, 0, 0, 10);
         yelpLogo.setLayoutParams(yelpLogoParams);
         yelpLogo.setImageResource(R.drawable.yelp_logo_50x25);
@@ -104,14 +104,14 @@ public class MoreInfoDialogFragment extends DialogFragment {
                 .setScale(2, RoundingMode.HALF_UP).doubleValue();
         if (distance > 0) {
             appendOutputText(mContext.getString(R.string.fragment_more_info_title_distance),
-                    Color.BLACK, 16, 0);
+                    Color.BLACK, 15, 0);
             appendOutputText(distance + " mi");
         }
 
         // categories
         if (mRestaurant.hasCategories()) {
             appendOutputText(mContext.getString(R.string.fragment_more_info_title_categories),
-                    Color.BLACK, 16, 10);
+                    Color.BLACK, 15, 10);
             StringBuilder categories = new StringBuilder("");
             for (int i = 0; i < mRestaurant.numCategories(); i++) {
                 categories.append(mRestaurant.getCategories().get(i).getName());
@@ -124,7 +124,7 @@ public class MoreInfoDialogFragment extends DialogFragment {
         // address
         if (mRestaurant.getAddressDisplay().compareTo("") != 0) {
             appendOutputText(mContext.getString(R.string.fragment_more_info_title_address),
-                    Color.BLACK, 16, 10);
+                    Color.BLACK, 15, 10);
             appendOutputText(mRestaurant.getAddressDisplay());
         }
 
@@ -132,10 +132,11 @@ public class MoreInfoDialogFragment extends DialogFragment {
         // number in dialer)
         if (mRestaurant.getPhoneDisplay().compareTo("") != 0) {
             appendOutputText(mContext.getString(R.string.fragment_more_info_title_phone_number),
-                    Color.BLACK, 16, 10);
+                    Color.BLACK, 15, 10);
             TelephonyManager manager = (TelephonyManager)mContext.getSystemService(Context.TELEPHONY_SERVICE);
             if (manager.getPhoneType() != TelephonyManager.PHONE_TYPE_NONE) { // if device is phone
-                TextView phoneNumber = appendOutputText(mRestaurant.getPhoneDisplay(), Color.BLUE, 14, 0);
+                TextView phoneNumber = appendOutputText(mRestaurant.getPhoneDisplay(), Color
+                        .BLUE, 13, 0);
                 phoneNumber.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
                 phoneNumber.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -155,9 +156,9 @@ public class MoreInfoDialogFragment extends DialogFragment {
         // SeatMe reservation link if available
         if (mRestaurant.hasSeatMeUrl()) {
             appendOutputText('\n' + mContext.getString(R.string.fragment_more_info_reserve_a_table),
-                    Color.BLACK, 16, 10);
+                    Color.BLACK, 15, 10);
             TextView reservationUrl = appendOutputText(mContext.getString(R.string
-                    .fragment_more_info_open_seatme_link), Color.BLUE, 14, 0);
+                    .fragment_more_info_open_seatme_link), Color.BLUE, 13, 0);
             reservationUrl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -183,17 +184,17 @@ public class MoreInfoDialogFragment extends DialogFragment {
             if (mRestaurant.hasHours()) {
                 String hoursString = mRestaurant.getHours().toString();
                 // if hours string actually has hours to display
-                if (hoursString.length() > 71) {
-                    appendOutputText("Hours", Color.BLACK, 16, 10);
+                if (hoursString.length() > 112) {
+                    appendOutputText("Hours", Color.BLACK, 15, 10);
                     appendOutputText(mRestaurant.getHours().toString());
                 }
             }
 
             // website
             if (mRestaurant.getLocuWebsiteUrl() != null) {
-                appendOutputText("Website", Color.BLACK, 16, 10);
+                appendOutputText("Website", Color.BLACK, 15, 10);
                 TextView website = appendOutputText(mRestaurant.getLocuWebsiteUrl().toString(),
-                        Color.BLUE, 14, 0);
+                        Color.BLUE, 13, 0);
                 website.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
                 website.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -209,7 +210,7 @@ public class MoreInfoDialogFragment extends DialogFragment {
             ImageView locuLogo = new ImageView(mContext);
             locuLogo.setImageResource(R.drawable.poweredbylocu_color);
             LinearLayout.LayoutParams locuLogoParams = new LinearLayout.LayoutParams(
-                    155, 25);
+                    233, 38);
             locuLogoParams.setMargins(0, 25, 0, 10);
             locuLogo.setLayoutParams(locuLogoParams);
             linearLayout.addView(locuLogo);
@@ -246,6 +247,6 @@ public class MoreInfoDialogFragment extends DialogFragment {
      * @return   the created TextView
      */
     public TextView appendOutputText(String s) {
-        return appendOutputText(s, Color.DKGRAY, 14, 0);
+        return appendOutputText(s, Color.DKGRAY, 13, 0);
     }
 }
