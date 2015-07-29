@@ -60,6 +60,7 @@ public class ResultPageActivity extends AppCompatActivity
     RestaurantList mResultList;
     Restaurant mFirstResult;
     boolean mAlreadyQueriedLocuThisResult;
+    Bitmap nextImage;
 
     // user input passed from main activity
     String location;
@@ -271,8 +272,15 @@ public class ResultPageActivity extends AppCompatActivity
             title.setText(mFirstResult.getBusinessName());
 
             //Load the restaurant image
+
             if (mFirstResult.getImageUrl() == null)
                 ((ImageView)findViewById(R.id.imgRestaurant)).setImageResource(R.drawable.no_image);
+            else if(nextImage!=null)
+            {
+                ImageView restaurantImage = (ImageView) findViewById(R.id.imgRestaurant);
+                restaurantImage.setImageBitmap(nextImage);
+                preload();
+            }
             else {
                 String tempURL = mFirstResult.getImageUrl().toString();
                 tempURL = tempURL.replace("ms.jpg", "o.jpg"); //this gets original image size
@@ -282,11 +290,31 @@ public class ResultPageActivity extends AppCompatActivity
                     protected void onPostExecute(Bitmap result) {
                         ImageView restaurantImage = (ImageView) findViewById(R.id.imgRestaurant);
                         restaurantImage.setImageBitmap(result);
+                        preload();
                     }
                 };
                 task.execute(imageURL);
             }
         } catch(Exception e){}
+    }
+    //checks if next result has image, and if so, loads it.
+    //does nothing if a)resultList is empty, or b)result has no image.
+    public void preload()
+    {
+        nextImage = null;
+        if (mResultList.isEmpty())return;
+        Restaurant nextRestaurant = mResultList.getRestaurant(0);
+        if(nextRestaurant.hasImageUrl())
+        {   try{
+            String temp = nextRestaurant.getImageUrl().toString().replace("ms.jpg", "o.jpg");
+            final URL nextImageURL = new URL(temp);
+            LoadImageTask task = new LoadImageTask() {
+                protected void onPostExecute(Bitmap result) {
+                    nextImage = result;
+                }
+            };
+            task.execute(nextImageURL);
+        } catch(Exception anyAndAllExceptions){/*and do nothing*/}}
     }
     public class LoadImageTask extends AsyncTask<URL, Void, Bitmap>{
         @Override

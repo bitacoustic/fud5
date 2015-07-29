@@ -115,7 +115,7 @@ public class RestaurantList implements Serializable {
      * @return true if restaurant list is empty, false otherwise
      */
     public boolean isEmpty() {
-        return (restaurants == null);
+        return (restaurants == null || restaurants.isEmpty() );
     }
 
     /**
