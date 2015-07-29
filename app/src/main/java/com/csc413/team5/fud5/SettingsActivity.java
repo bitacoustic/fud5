@@ -3,8 +3,6 @@ package com.csc413.team5.fud5;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -19,7 +17,7 @@ import android.widget.ImageButton;
 import com.csc413.team5.appdb.dbHelper;
 import com.csc413.team5.appdbtest.AppDbTestActivity;
 import com.csc413.team5.fud5.dialogs.EulaDialogFragment;
-import com.csc413.team5.fud5.settings.ApplicationSettingsFragment;
+import com.csc413.team5.fud5.settings.ApplicationSettingsDialogFragment;
 import com.csc413.team5.fud5.settings.FoodPreferencesActivity;
 import com.csc413.team5.fud5.settings.ModifyRedListDialogFragment;
 import com.csc413.team5.fud5.tests.ImageTestActivity;
@@ -28,19 +26,16 @@ import com.csc413.team5.fud5.tests.MapsTestActivity;
 import com.csc413.team5.fud5.tests.RestaurantSelectorTestActivity;
 import com.csc413.team5.fud5.tests.RestaurantTestActivity;
 import com.csc413.team5.fud5.tests.SharedPreferencesTestActivity;
+import com.csc413.team5.fud5.utils.AppSettingsHelper;
 import com.csc413.team5.fud5.utils.Constants;
 import com.csc413.team5.fud5.utils.ToastUtil;
 import com.nhaarman.supertooltips.ToolTip;
 import com.nhaarman.supertooltips.ToolTipRelativeLayout;
 import com.nhaarman.supertooltips.ToolTipView;
 
-import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
-
 
 public class SettingsActivity extends AppCompatActivity
-        implements ApplicationSettingsFragment.ApplicationSettingsConfirmListener {
+        implements ApplicationSettingsDialogFragment.ApplicationSettingsConfirmListener {
     private static final String TAG = "Settings";
     Context mContext;
 
@@ -61,9 +56,6 @@ public class SettingsActivity extends AppCompatActivity
     protected ToolTipView mTooltipAllRestaurantHistory;
 
     // database and shared preferences
-    public static final String PREFS_FILE = "UserSettings";
-    private SharedPreferences userSettings;
-    private SharedPreferences.Editor userSettingsEditor;
     private dbHelper db;
 
     public void showAppInfo(View v) {
@@ -110,8 +102,7 @@ public class SettingsActivity extends AppCompatActivity
 
         mContext = this;
 
-        userSettings = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
-        userSettingsEditor = userSettings.edit();
+        AppSettingsHelper.init(this);
 
         db = new dbHelper(this, null, null, 1);
 
@@ -165,7 +156,7 @@ public class SettingsActivity extends AppCompatActivity
                 if (mCheckBoxUserSettings.isChecked()
                         || mCheckBoxIgnoredRestaurantHistory.isChecked()
                         || mCheckBoxAllRestaurantHistory.isChecked()) {
-                    DialogFragment confirmDialog = ApplicationSettingsFragment
+                    DialogFragment confirmDialog = ApplicationSettingsDialogFragment
                             .newInstance(mCheckBoxUserSettings.isChecked(),
                                     mCheckBoxIgnoredRestaurantHistory.isChecked(),
                                     mCheckBoxAllRestaurantHistory.isChecked());
@@ -262,33 +253,26 @@ public class SettingsActivity extends AppCompatActivity
 
     public void resetAppSettings() {
         if (mCheckBoxUserSettings.isChecked()) {
-            userSettingsEditor.clear().commit();
+            AppSettingsHelper.clear();
 
-            // TODO: test this
             // Reset preferences to default
-
             /* DEFAULT SETTINGS
-            * Has agreed to EULA: false
             * Min star: 3.5
-            * Location search: 1600 Holloway Ave.
             * Radius: 5 mi.
-            * Niches: Italian, Carnivore, Hole in the wall, affordable
-            * App Language: Relative to device language
+            * Search term: Tacos
             * */
 
-            final boolean hasAgreed = false;
             final float minStar = 3.50f;
-            final String searchLocation = "1600 Holloway Ave.";
-            final float searchRadius = 1.5f;
-//            Set<String> preferredNiches;
-//            String appLanguage = Locale.getDefault().getDisplayLanguage();
+            final float searchRadius = 1.0f;
+            final String searchTerm = "Tacos";
 
-            userSettingsEditor.putBoolean("hasAgreedToEula", hasAgreed).apply();
-            userSettingsEditor.putFloat("defaultMinStar", minStar).apply();
-            userSettingsEditor.putString("defaultSearchLocation", searchLocation).apply();
-            userSettingsEditor.putFloat("defaultSearchRadius", searchRadius).apply();
-//            userSettings.getStringSet("defaultPreferredNiches", getPreferredNiches().apply());
-            userSettingsEditor.putString("appLanguage", Locale.getDefault().getDisplayLanguage()).apply();
+            // default search term
+            AppSettingsHelper.setDefaultSearchTermInput(searchTerm);
+            // search radius
+            AppSettingsHelper.setDefaultRadiusValue(searchRadius);
+            // star rating
+            AppSettingsHelper.setDefaultStarRating(minStar);
+            //
 
             Log.i(TAG, "cleared user settings");
             ToastUtil.showShortToast(this,
@@ -308,7 +292,7 @@ public class SettingsActivity extends AppCompatActivity
             db.wipeRestaurantList(Constants.GREEN_LIST);
             Log.i(TAG, "wiped green list (1)");
             db.wipeRestaurantList(Constants.YELLOW_LIST);
-            Log.i(TAG, "wiped yellow list (2)");
+            Log.i(TAG, "wiped yelw list (2)");
             db.wipeRestaurantList(Constants.RED_LIST);
             Log.i(TAG, "wiped red list (3)");
             ToastUtil.showShortToast(this,
@@ -327,28 +311,6 @@ public class SettingsActivity extends AppCompatActivity
         ToastUtil.showShortToast(this,
                 getString(R.string.activity_user_preferences_nothing_was_reset));
     }
-
-    // Preferred niches = Search term in the main app
-    // TODO: Implement this in the future
-    private Set<String> getPreferredNiches() {
-
-        // load preferred niches from resources
-        // TODO This array must be able to be modified when Food Preferences is modified
-        // ie: when user deletes a niche, update resources
-        TypedArray preferred_niche = getResources().obtainTypedArray(R.array.preferred_niche_array);
-
-        Set<String> preferredNicheSet = new TreeSet<String>();
-
-        int preferred_niche_size = getResources().obtainTypedArray(R.array.preferred_niche_array).length();
-
-        for (int i = 0; i < preferred_niche_size; i++) {
-            preferredNicheSet.add(preferred_niche.getString(i));
-        }
-
-        return preferredNicheSet;
-    }
-
-
 
     /* Dev playground */
 

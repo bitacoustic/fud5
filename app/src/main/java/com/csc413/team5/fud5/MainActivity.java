@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 
+import com.csc413.team5.fud5.utils.AppSettingsHelper;
 import com.csc413.team5.fud5.utils.ServiceUtil;
 import com.csc413.team5.fud5.utils.ToastUtil;
 import com.csc413.team5.restaurantapiwrapper.DistanceUnit;
@@ -42,10 +43,6 @@ public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
     public static final String TAG = "MainActivity";
-    // Declare user settings
-    public static final String PREFS_FILE = "UserSettings";
-    private SharedPreferences userSettings;
-    private SharedPreferences.Editor userSettingsEditor;
 
     protected String mAddressString;
     protected GoogleApiClient mGoogleApiClient; // client for Google API requests
@@ -87,11 +84,12 @@ public class MainActivity extends AppCompatActivity
 
     public void btnFuDPlz(View v){
         // Save some preferences
+        // default search term
+        AppSettingsHelper.setDefaultSearchTermInput(searchTermInput.getText().toString());
         // search radius
-        userSettingsEditor.putFloat("defaultSearchRadius",
-                Float.parseFloat(((Spinner)findViewById(R.id.spnRadius)).getSelectedItem().toString().substring(0,3))).apply();
-//        // star rating
-        userSettingsEditor.putFloat("defaultMinStar", starRating.getRating()).apply();
+        AppSettingsHelper.setDefaultRadiusValue(Float.parseFloat(radiusSpinner.getSelectedItem().toString().substring(0, 3)));
+        // star rating
+        AppSettingsHelper.setDefaultStarRating(starRating.getRating());
 
         String location = ((EditText) findViewById(R.id.txtLocation)).getText().toString();
         // appending a minimum search term of food; anything else that the user may enter is
@@ -153,8 +151,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         /* Get shared preferences */
-        userSettings = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
-        userSettingsEditor = userSettings.edit();
+        AppSettingsHelper.init(this);
 
         /* Initalize inputs*/
         locationInput = (EditText) findViewById(R.id.txtLocation);
@@ -172,8 +169,6 @@ public class MainActivity extends AppCompatActivity
         searchTermInput = (EditText) findViewById(R.id.txtSearchTerm);
 
         /* Initialize radius spinner */
-        // TODO: Migrate this to xml file instead
-        //Spinner code from Android example
         radiusSpinner = (Spinner) findViewById(R.id.spnRadius);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -186,19 +181,15 @@ public class MainActivity extends AppCompatActivity
         /* Initialize rating bar */
         starRating = (RatingBar) findViewById(R.id.ratingBar);
 
-                /* Set default field values */
-        // location input
-//        locationInput.setText(userSettings.getString("defaultSearchLocation", "1600 Holloway Ave San Francisco"));
+        /* Set default field values */
 
         // radius spinner
-        String spinnerValue = String.valueOf(userSettings.getFloat("defaultSearchRadius", 3.0f)).concat(" mi");
+        String spinnerValue = String.valueOf(AppSettingsHelper.getDefaultRadiusValue()).concat(" mi");
         ArrayAdapter radiusSpinnerAdapter = (ArrayAdapter) radiusSpinner.getAdapter();
         int spinnerDefaultPosition = radiusSpinnerAdapter.getPosition(spinnerValue);
         radiusSpinner.setSelection(spinnerDefaultPosition);
         // star rating
-        starRating.setRating(userSettings.getFloat("defaultMinStar", 3.5f));
-        // TODO search term input
-//        searchTermInput.setText(userSettings.getString("defaultSearchLocation", locationInput.getText().toString()));
+        starRating.setRating(AppSettingsHelper.getStarRating());
 
         // connected with Google Location services
         buildGoogleApiClient();
@@ -234,7 +225,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     //Closes keyboard if user clicks off of it
-    //Code thanks to Lalit Poptani on stackoverflow.com
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.

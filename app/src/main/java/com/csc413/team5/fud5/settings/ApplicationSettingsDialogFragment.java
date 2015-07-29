@@ -9,17 +9,17 @@ import android.os.Bundle;
 
 import com.csc413.team5.fud5.R;
 
-public class ApplicationSettingsFragment extends DialogFragment {
+public class ApplicationSettingsDialogFragment extends DialogFragment {
     protected boolean mIsUserSettingsChecked;
     protected boolean mIsIgnoredRestaurantHistoryChecked;
     protected boolean mIsAllRestaurantHistoryChecked;
 
     ApplicationSettingsConfirmListener mListener;
 
-    public static ApplicationSettingsFragment
+    public static ApplicationSettingsDialogFragment
     newInstance(boolean isUserSettingsChecked, boolean isIgnoredRestaurantHistoryChecked,
                 boolean isAllRestaurantHistoryChecked) {
-        ApplicationSettingsFragment f = new ApplicationSettingsFragment();
+        ApplicationSettingsDialogFragment f = new ApplicationSettingsDialogFragment();
 
         Bundle args = new Bundle();
         args.putBoolean("isUserSettingsChecked", isUserSettingsChecked);
@@ -80,14 +80,14 @@ public class ApplicationSettingsFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mListener.onApplicationSettingsConfirmPositiveClick
-                                (ApplicationSettingsFragment.this);
+                                (ApplicationSettingsDialogFragment.this);
                     }
                 })
                 .setNegativeButton(negativeButtonText, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mListener.onApplicationSettingsConfirmNegativeClick
-                                (ApplicationSettingsFragment.this);
+                                (ApplicationSettingsDialogFragment.this);
                     }
                 });
 
