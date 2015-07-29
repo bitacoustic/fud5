@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -86,14 +87,26 @@ public class MoreInfoDialogFragment extends DialogFragment {
             }
         });
 
-        /* display restaurant information */
+        /* display restaurant information (if available)*/
 
-        // distance
-        appendOutputText(mContext.getString(R.string.fragment_more_info_title_distance),
-                Color.BLACK, 16, 0);
-        appendOutputText(new BigDecimal(mRestaurant
+        // Yelp attribution logo; according to documentation, it must appear before API content
+        ImageView yelpLogo = new ImageView(mContext);
+        LinearLayout.LayoutParams yelpLogoParams = new LinearLayout.LayoutParams(
+                50, 25);
+        yelpLogoParams.setMargins(0, 0, 0, 10);
+        yelpLogo.setLayoutParams(yelpLogoParams);
+        yelpLogo.setImageResource(R.drawable.yelp_logo_50x25);
+        linearLayout.addView(yelpLogo);
+
+        // distance; only display if distance is non-zero (when search is finer than city-scope)
+        double distance = new BigDecimal(mRestaurant
                 .getDistanceFromSearchLocation(DistanceUnit.MILES))
-                .setScale(2, RoundingMode.HALF_UP) + " mi");
+                .setScale(2, RoundingMode.HALF_UP).doubleValue();
+        if (distance > 0) {
+            appendOutputText(mContext.getString(R.string.fragment_more_info_title_distance),
+                    Color.BLACK, 16, 0);
+            appendOutputText(distance + " mi");
+        }
 
         // categories
         if (mRestaurant.hasCategories()) {
@@ -109,9 +122,11 @@ public class MoreInfoDialogFragment extends DialogFragment {
         }
 
         // address
-        appendOutputText(mContext.getString(R.string.fragment_more_info_title_address),
-                Color.BLACK, 16, 10);
-        appendOutputText(mRestaurant.getAddressDisplay());
+        if (mRestaurant.getAddressDisplay().compareTo("") != 0) {
+            appendOutputText(mContext.getString(R.string.fragment_more_info_title_address),
+                    Color.BLACK, 16, 10);
+            appendOutputText(mRestaurant.getAddressDisplay());
+        }
 
         // phone number (display the number, or if device is a phone, click to display phone
         // number in dialer)
@@ -137,17 +152,7 @@ public class MoreInfoDialogFragment extends DialogFragment {
             }
         }
 
-        // open hours
-        if (mRestaurant.hasHours()) {
-            String hoursString = mRestaurant.getHours().toString();
-            // if hours string actually has hours to display
-            if (hoursString.length() > 71) {
-                appendOutputText("Hours", Color.BLACK, 16, 10);
-                appendOutputText(mRestaurant.getHours().toString());
-            }
-        }
-
-        // SeatMe reservation link
+        // SeatMe reservation link if available
         if (mRestaurant.hasSeatMeUrl()) {
             appendOutputText('\n' + mContext.getString(R.string.fragment_more_info_reserve_a_table),
                     Color.BLACK, 16, 10);
@@ -161,6 +166,53 @@ public class MoreInfoDialogFragment extends DialogFragment {
                     startActivity(openBrowser);
                 }
             });
+        }
+
+        // if Locu information exists, display it and the attribution logo
+        if (mRestaurant.hasHours() || mRestaurant.getLocuWebsiteUrl() != null) {
+            // add divider line
+            ImageView divider = new ImageView(v.getContext());
+            LinearLayout.LayoutParams paramsDivider = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, 5);
+            paramsDivider.setMargins(0, 35, 0, 10);
+            divider.setLayoutParams(paramsDivider);
+            divider.setBackgroundColor(Color.DKGRAY);
+            linearLayout.addView(divider);
+
+            // open hours
+            if (mRestaurant.hasHours()) {
+                String hoursString = mRestaurant.getHours().toString();
+                // if hours string actually has hours to display
+                if (hoursString.length() > 71) {
+                    appendOutputText("Hours", Color.BLACK, 16, 10);
+                    appendOutputText(mRestaurant.getHours().toString());
+                }
+            }
+
+            // website
+            if (mRestaurant.getLocuWebsiteUrl() != null) {
+                appendOutputText("Website", Color.BLACK, 16, 10);
+                TextView website = appendOutputText(mRestaurant.getLocuWebsiteUrl().toString(),
+                        Color.BLUE, 14, 0);
+                website.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+                website.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent displayWebsite = new Intent(Intent.ACTION_VIEW);
+                        displayWebsite.setData(mRestaurant.getLocuWebsiteUrl());
+                        startActivity(displayWebsite);
+                    }
+                });
+            }
+
+            // attribution logo; according to Locu documentation, must appear after the API content
+            ImageView locuLogo = new ImageView(mContext);
+            locuLogo.setImageResource(R.drawable.poweredbylocu_color);
+            LinearLayout.LayoutParams locuLogoParams = new LinearLayout.LayoutParams(
+                    155, 25);
+            locuLogoParams.setMargins(0, 25, 0, 10);
+            locuLogo.setLayoutParams(locuLogoParams);
+            linearLayout.addView(locuLogo);
         }
 
         return v;

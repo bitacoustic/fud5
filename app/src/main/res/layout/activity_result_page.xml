@@ -56,7 +56,8 @@
     android:singleLine="true"
     android:id="@+id/restaurantName"
     android:textStyle="bold"
-    android:layout_centerHorizontal="true" />
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="10dp"/>
 
 <ImageView
     android:layout_width="match_parent"
@@ -71,7 +72,14 @@
     android:layout_below="@+id/restaurantName"
     android:src="@drawable/stars0_0" />
 
-<LinearLayout
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageViewResultPageYelpLogo"
+        android:src="@drawable/yelp_logo_50x25"
+        />
+
+    <LinearLayout
     android:id="@+id/buttonBar"
     android:orientation="horizontal"
     android:layout_width="match_parent"

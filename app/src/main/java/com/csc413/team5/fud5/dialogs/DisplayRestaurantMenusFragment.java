@@ -38,6 +38,7 @@ public class DisplayRestaurantMenusFragment extends DialogFragment {
 
     Restaurant mRestaurant; // the restaurant for which to display the menu
     TextView txtMenusRestaurantName;
+    ImageView imgPoweredByLocu;
 
     public DisplayRestaurantMenusFragment() { // defeat instantiation
     }
@@ -114,6 +115,12 @@ public class DisplayRestaurantMenusFragment extends DialogFragment {
         txtMenusRestaurantName = (TextView) v.findViewById(R.id.textViewRMenusRestaurantName);
 //        txtMenusRestaurantName.setGravity(Gravity.CENTER);
         txtMenusRestaurantName.setText(mRestaurant.getBusinessName());
+
+        imgPoweredByLocu = (ImageView) v.findViewById(R.id.imageViewRMenusPoweredByLocu);
+        imgPoweredByLocu.setImageResource(R.drawable.poweredbylocu);
+        LinearLayout.LayoutParams imgPoweredByLocuParams = new LinearLayout.LayoutParams(310, 50);
+        imgPoweredByLocuParams.setMargins(0, 0, 0, 0);
+        imgPoweredByLocu.setLayoutParams(imgPoweredByLocuParams);
 
         Menus menus = mRestaurant.getLocuMenus();
 

@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.csc413.team5.appdb.dbHelper;
@@ -196,6 +197,11 @@ public class ResultPageActivity extends AppCompatActivity
         // in progress)
         mPopupLoadingInProgress.setOutsideTouchable(false);
         mPopupLoadingInProgress.setFocusable(true);
+
+        // make the Yelp logo unobtrusively small
+        ImageView yelpAttributionLogo = (ImageView) findViewById(R.id.imageViewResultPageYelpLogo);
+        RelativeLayout.LayoutParams yelpLogoParams = new RelativeLayout.LayoutParams(100, 50);
+        yelpAttributionLogo.setLayoutParams(yelpLogoParams);
 
         // load the search parameters entered in main activity
         Intent i = getIntent();

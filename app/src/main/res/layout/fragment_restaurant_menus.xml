@@ -51,10 +51,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/scrollViewRMenusContent"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/relativeLayout">
+        android:layout_below="@+id/relativeLayout"
+        android:layout_above="@+id/linearLayout">
 
         <LinearLayout
             android:orientation="vertical"
@@ -63,5 +63,23 @@
             android:id="@+id/linearLayoutRMenusContent">
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/linearLayout"
+        android:background="@color/purple">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageViewRMenusPoweredByLocu"
+            android:layout_alignParentBottom="true"
+            android:cropToPadding="false"
+            android:minHeight="50dp"
+            android:layout_gravity="right"/>
+    </LinearLayout>
 
 </RelativeLayout>

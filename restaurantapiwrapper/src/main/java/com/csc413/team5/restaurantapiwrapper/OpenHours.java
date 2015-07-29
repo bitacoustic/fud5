@@ -139,7 +139,7 @@ public class OpenHours<DayOfWeek, OpenHoursPerDay> extends HashMap implements Se
         if (get(TUESDAY) == null)
             sb.append(cl);
         else
-            sb.append(get(MONDAY).toString());
+            sb.append(get(TUESDAY).toString());
         sb.append("\n");
 
         sb.append("Wednesday: ");
@@ -175,7 +175,6 @@ public class OpenHours<DayOfWeek, OpenHoursPerDay> extends HashMap implements Se
             sb.append(cl);
         else
             sb.append(get(SUNDAY).toString());
-        sb.append("\n");
 
         return sb.toString();
     }
