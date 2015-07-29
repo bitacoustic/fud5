@@ -9,7 +9,7 @@ import android.os.Bundle;
 
 import com.csc413.team5.fud5.R;
 
-public class AskToUseLocationFragment extends DialogFragment {
+public class AskToUseLocationDialogFragment extends DialogFragment {
     NoticeDialogListener mListener;
 
     @Override
@@ -23,7 +23,7 @@ public class AskToUseLocationFragment extends DialogFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // Send the positive button event back to the host activity
-                                mListener.onLocationDialogPositiveClick(AskToUseLocationFragment.this);
+                                mListener.onLocationDialogPositiveClick(AskToUseLocationDialogFragment.this);
                             }
                         })
                 .setNegativeButton(R.string.dialog_ask_to_use_location_disagree_button,
@@ -32,7 +32,7 @@ public class AskToUseLocationFragment extends DialogFragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // Send the negative button event back to the host activity
-                                mListener.onLocationDialogNegativeClick(AskToUseLocationFragment.this);
+                                mListener.onLocationDialogNegativeClick(AskToUseLocationDialogFragment.this);
                             }
                         });
         //return super.onCreateDialog(savedInstanceState);

@@ -24,7 +24,7 @@ import android.widget.TextView;
 
 import com.csc413.team5.appdb.dbHelper;
 import com.csc413.team5.fud5.dialogs.DisplayRestaurantMenusFragment;
-import com.csc413.team5.fud5.dialogs.MenuNotFoundFragment;
+import com.csc413.team5.fud5.dialogs.MenuNotFoundDialogFragment;
 import com.csc413.team5.fud5.dialogs.MoreInfoDialogFragment;
 import com.csc413.team5.fud5.dialogs.NoResultsDialogFragment;
 import com.csc413.team5.fud5.utils.Constants;
@@ -49,7 +49,7 @@ import java.net.URL;
 //TODO:remove these imports when Selector is implemented
 
 public class ResultPageActivity extends AppCompatActivity
-        implements MenuNotFoundFragment.MenuNotFoundDialogListener {
+        implements MenuNotFoundDialogFragment.MenuNotFoundDialogListener {
     public static final String TAG = "ResultPageActivity";
     private Context mContext;
 
@@ -237,7 +237,12 @@ public class ResultPageActivity extends AppCompatActivity
         if (mResultList == null)
             return;
         if (mResultList.size() <= 0) {
-            ToastUtil.showShortToast(this, "No more matches found.");
+//            ToastUtil.showShortToast(this, "No more matches found.");
+            DialogFragment noResultsDialog = NoResultsDialogFragment
+                    .getInstance(Constants.NO_MORE_RESULTS);
+            noResultsDialog.setCancelable(false);
+            noResultsDialog.show(getFragmentManager(), "noResults");
+
         } else {
             //Clear the image before the next image is shown
             //Sometimes a result doesn't have an image, so it was showing the last one
@@ -325,7 +330,7 @@ public class ResultPageActivity extends AppCompatActivity
 
     @Override
     public void onMenuNotFoundPositiveClick(DialogFragment dialog) {
-
+        // Don't do anything
     }
 
     /**
@@ -362,7 +367,9 @@ public class ResultPageActivity extends AppCompatActivity
             mResultList = result;
 
             if (mResultList == null || mResultList.getSize() < 1) { // catch no results
-                DialogFragment noResultsDialog = NoResultsDialogFragment.getInstance();
+                DialogFragment noResultsDialog = NoResultsDialogFragment
+                        .getInstance(Constants.NO_RESULTS);
+                noResultsDialog.setCancelable(false);
                 noResultsDialog.show(getFragmentManager(), "noResults");
             } else {
                 // TODO: TEMP CODE which removes restaurants < minRating
@@ -514,7 +521,7 @@ public class ResultPageActivity extends AppCompatActivity
                 mDisplayRestaurantMenus.show(getFragmentManager(), "menus");
             } else {
                 Log.i(TAG, "Could not find menu for " + restaurant.getBusinessName());
-                mMenuNotFoundDialog = new MenuNotFoundFragment();
+                mMenuNotFoundDialog = new MenuNotFoundDialogFragment();
                 mMenuNotFoundDialog.show(getFragmentManager(), "menuNotFound");
             }
         }

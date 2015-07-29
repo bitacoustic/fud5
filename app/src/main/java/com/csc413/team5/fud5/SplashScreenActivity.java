@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.Window;
 
 import com.csc413.team5.appdb.dbHelper;
-import com.csc413.team5.fud5.dialogs.AskToUseLocationFragment;
+import com.csc413.team5.fud5.dialogs.AskToUseLocationDialogFragment;
 import com.csc413.team5.fud5.dialogs.EulaDialogFragment;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
 
@@ -22,7 +22,7 @@ import java.util.List;
 import static android.view.WindowManager.LayoutParams;
 
 public class SplashScreenActivity extends Activity
-        implements AskToUseLocationFragment.NoticeDialogListener {
+        implements AskToUseLocationDialogFragment.NoticeDialogListener {
     private static final String TAG = "SplashScreenActivity";
     private long mStartLoadTime;
     private long mYellowStaleCutoff;
@@ -169,7 +169,7 @@ public class SplashScreenActivity extends Activity
 
 
     /**
-     * Opens dialog AskToUseLocationFragment if location services are not enabled; if they are
+     * Opens dialog AskToUseLocationDialogFragment if location services are not enabled; if they are
      * enabled, just go to main activity
      */
     public void askToUseLocation() {
@@ -189,7 +189,7 @@ public class SplashScreenActivity extends Activity
 
         // only show dialog if location services are not enabled
         if (!gpsEnabled && !networkEnabled) {
-            DialogFragment dialogAskToUseLocation = new AskToUseLocationFragment();
+            DialogFragment dialogAskToUseLocation = new AskToUseLocationDialogFragment();
             dialogAskToUseLocation.show(getFragmentManager(), "askToUseLocation");
         } else { // otherwise just open main activity
             openMainActivity();

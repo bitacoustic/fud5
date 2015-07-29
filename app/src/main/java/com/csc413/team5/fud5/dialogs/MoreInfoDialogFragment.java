@@ -48,10 +48,6 @@ public class MoreInfoDialogFragment extends DialogFragment {
         return instance;
     }
 
-    void dismissDialog(View v) {
-        dismiss();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -163,7 +163,7 @@ public class EulaDialogFragment extends DialogFragment {
 
             // only show dialog if location services are not enabled
             if (!gpsEnabled && !networkEnabled) {
-                DialogFragment dialogAskToUseLocation = new AskToUseLocationFragment();
+                DialogFragment dialogAskToUseLocation = new AskToUseLocationDialogFragment();
                 dialogAskToUseLocation.show(getFragmentManager(), "askToUseLocation");
             } else {
                 Intent intent = new Intent(getActivity(), MainActivity.class);

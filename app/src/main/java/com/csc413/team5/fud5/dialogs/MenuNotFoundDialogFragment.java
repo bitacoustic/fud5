@@ -16,7 +16,7 @@ import com.csc413.team5.fud5.R;
  *
  * @author Eric C. Black
  */
-public class MenuNotFoundFragment extends DialogFragment {
+public class MenuNotFoundDialogFragment extends DialogFragment {
     MenuNotFoundDialogListener mListener;
 
     /**
@@ -33,7 +33,7 @@ public class MenuNotFoundFragment extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                mListener.onMenuNotFoundPositiveClick(MenuNotFoundFragment.this);
+                                mListener.onMenuNotFoundPositiveClick(MenuNotFoundDialogFragment.this);
                             }
                         });
 

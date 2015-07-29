@@ -13,14 +13,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.csc413.team5.fud5.dialogs.DisplayRestaurantMenusFragment;
-import com.csc413.team5.fud5.dialogs.MenuNotFoundFragment;
+import com.csc413.team5.fud5.dialogs.MenuNotFoundDialogFragment;
 import com.csc413.team5.fud5.R;
 import com.csc413.team5.restaurantapiwrapper.LocuApiKey;
 import com.csc413.team5.restaurantapiwrapper.LocuExtension;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
 
 public class LocuMenuTestActivity extends Activity
-        implements MenuNotFoundFragment.MenuNotFoundDialogListener {
+        implements MenuNotFoundDialogFragment.MenuNotFoundDialogListener {
     LocuApiKey mLocuKey;
     Restaurant mRestaurant;
     TextView mTxtDebug;
@@ -172,7 +172,7 @@ public class LocuMenuTestActivity extends Activity
             }
             else {
                 mTxtDebug.setText("No menus are available for the specified ID.");
-                DialogFragment menuNotFoundDialog = new MenuNotFoundFragment();
+                DialogFragment menuNotFoundDialog = new MenuNotFoundDialogFragment();
                 menuNotFoundDialog.show(getFragmentManager(), "menuNotFound");
             }
 
@@ -183,7 +183,7 @@ public class LocuMenuTestActivity extends Activity
 
     }
 
-    // MenuNotFoundFragment dialog
+    // MenuNotFoundDialogFragment dialog
 
     @Override
     public void onMenuNotFoundPositiveClick(DialogFragment dialog) {
