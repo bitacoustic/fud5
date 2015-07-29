@@ -1,5 +1,6 @@
 package com.csc413.team5.restaurantapiwrapper;
 
+import android.net.Uri;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -312,6 +313,30 @@ public class LocuExtension {
         if (in.has("name")) {
             try {
                 r.locuName = in.getString("name");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (in.has("facebook_url")) {
+            try {
+                r.facebookUrl = Uri.parse(in.getString("facebook_url"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (in.has("twitter_id")) {
+            try {
+                r.twitterId = in.getString("twitter_id");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (in.has("website_url")) {
+            try {
+                r.locuWebsiteUrl = Uri.parse(in.getString("website_url"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

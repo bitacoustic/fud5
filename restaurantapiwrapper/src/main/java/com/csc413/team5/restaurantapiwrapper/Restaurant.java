@@ -66,6 +66,10 @@ public class Restaurant implements Serializable {
     protected String locuId;
     protected Menus locuMenus;
     protected String locuName;
+    protected Uri locuWebsiteUrl;
+
+    protected Uri facebookUrl;
+    protected String twitterId;
 
     // Locu or Factual
     protected OpenHours hours;
@@ -108,6 +112,9 @@ public class Restaurant implements Serializable {
         locuId = "";
         locuMenus = null;
         locuName = "";
+        locuWebsiteUrl = null;
+        facebookUrl = null;
+        twitterId = "";
         hours = new OpenHours();
         hasHours = false;
     }
@@ -509,6 +516,38 @@ public class Restaurant implements Serializable {
         return locuName;
     }
 
+    public Uri getFacebookUrl() {
+        return facebookUrl;
+    }
+
+    public boolean hasFacebookUrl() {
+        return (facebookUrl != null);
+    }
+
+    public String getTwitterId() {
+        return twitterId;
+    }
+
+    public boolean hasTwitterId() {
+        return (twitterId.compareTo("") != 0);
+    }
+
+    /**
+     * Returns the website URL obtained from Locu, or null if unavailable
+     * @return the website URL obtained from Locu, or null if unavailable
+     */
+    public Uri getLocuWebsiteUrl() {
+        return locuWebsiteUrl;
+    }
+
+    /**
+     * Returns true if Restaurant has website URL obtained from Locu, otherwise false
+     * @return true if Restaurant has website URL obtained from Locu, otherwise false
+     */
+    public boolean hasLocuWebsiteUrl() {
+        return (locuWebsiteUrl != null);
+    }
+
     /**
      * Returns the OpenHours for this Restaurant if this information was obtained through Locu
      * or Factual.
@@ -528,8 +567,8 @@ public class Restaurant implements Serializable {
     }
 
 
-    // TODO
     // TEST to get current version of db code to work
+    @Deprecated
     public void setRestaurantName(String name) {
         this.name = name;
     }
@@ -540,37 +579,40 @@ public class Restaurant implements Serializable {
      */
     @Override
     public String toString() {
-        return "\n------------\nRestaurant{" +
-                "\nid='" + id + "'" +
-                ",\nisClosed=" + isClosed +
-                ",\nname='" + name +
-                "',\naddress=" + address +
-                ",\naddressDisplay='" + addressDisplay +
-                "',\naddressMapable='" + addressMapable +
-                "',\nphoneDisplay='" + phoneDisplay +
-                "',\nphoneDialable=" + phoneDialable +
-                ",\nimageUrl=" + imageUrl +
-                ",\nhasImageUrl=" + hasImageUrl +
-                ",\nbusinessUrl=" + businessUrl +
-                ",\nhasBusinessUrl=" + hasBusinessUrl +
-                ",\nmobileUrl=" + mobileUrl +
-                ",\nhasMobileUrl=" + hasMobileUrl +
-                ",\ndistanceFromSearchLocation=" + distanceFromSearchLocation +
-                ",\ncategories=" + categories +
-                ",\nrating=" + rating +
-                ",\nratingImgUrl=" + ratingImgUrl +
-                ",\nreviewCount=" + reviewCount +
-                ",\nyelpDeals=" + yelpDeals +
-                ",\nhasDeals=" + hasDeals +
-                ",\nseatMeUrl=" + seatMeUrl +
-                ",\nhasSeatMeUrl=" + hasSeatMeUrl +
-                ",\neat24Url=" + eat24Url +
-                ",\nhasEat24Url=" + hasEat24Url +
-                ",\nlocuId='" + locuId +
-                "',\nlocuMenus=" + locuMenus +
-                ",\nhours=" + hours +
-                ",\nhasHours=" + hasHours +
-                "}";
+        return "\nRestaurant{" +
+                "\nid='" + id + '\'' +
+                ",\n isClosed=" + isClosed +
+                ",\n name='" + name + '\'' +
+                ",\n address=" + address +
+                ",\n addressDisplay='" + addressDisplay + '\'' +
+                ",\n addressMapable=" + addressMapable +
+                ",\n phoneDisplay='" + phoneDisplay + '\'' +
+                ",\n phoneDialable=" + phoneDialable +
+                ",\n imageUrl=" + imageUrl +
+                ",\n hasImageUrl=" + hasImageUrl +
+                ",\n businessUrl=" + businessUrl +
+                ",\n hasBusinessUrl=" + hasBusinessUrl +
+                ",\n mobileUrl=" + mobileUrl +
+                ",\n hasMobileUrl=" + hasMobileUrl +
+                ",\n distanceFromSearchLocation=" + distanceFromSearchLocation +
+                ",\n categories=" + categories +
+                ",\n rating=" + rating +
+                ",\n ratingImgUrl=" + ratingImgUrl +
+                ",\n reviewCount=" + reviewCount +
+                ",\n yelpDeals=" + yelpDeals +
+                ",\n hasDeals=" + hasDeals +
+                ",\n seatMeUrl=" + seatMeUrl +
+                ",\n hasSeatMeUrl=" + hasSeatMeUrl +
+                ",\n eat24Url=" + eat24Url +
+                ",\n hasEat24Url=" + hasEat24Url +
+                ",\n locuId='" + locuId + '\'' +
+                ",\n locuMenus=" + locuMenus +
+                ",\n locuName='" + locuName + '\'' +
+                ",\n locuWebsiteUrl=" + locuWebsiteUrl +
+                ",\n facebookUrl=" + facebookUrl +
+                ",\n twitterId='" + twitterId + '\'' +
+                ",\n hours=" + hours +
+                ",\n hasHours=" + hasHours +
+                '}';
     }
-
 } // end class
