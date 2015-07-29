@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Timestamp"
-                android:id="@+id/yelow_restarant_timestamp_text"/>
+                android:id="@+id/yellow_restaurant_timestamp_text"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
