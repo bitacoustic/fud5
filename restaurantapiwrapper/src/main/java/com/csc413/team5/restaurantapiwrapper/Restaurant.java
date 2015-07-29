@@ -75,6 +75,9 @@ public class Restaurant implements Serializable {
     protected OpenHours hours;
     protected boolean hasHours;
 
+    //for randomization
+    int weight;
+
 
 
     /* Constructors */
@@ -615,4 +618,14 @@ public class Restaurant implements Serializable {
                 ",\n hasHours=" + hasHours +
                 '}';
     }
+
+    public void setRandomValue(int random){
+        weight = random;
+    }
+
+    public int getRandomValue(){
+        return weight;
+    }
+
+
 } // end class

@@ -45,6 +45,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Random;
 
 //imports for images
 //TODO:remove these imports when Selector is implemented
@@ -271,7 +272,22 @@ public class ResultPageActivity extends AppCompatActivity
         }
 
         try {
-            mFirstResult = mResultList.remove(0);
+            //Grab restaurant with largest random value.
+            int largest = 0;
+           for(int i=0; i<mResultList.getSize(); i++){
+               if(mResultList.getRestaurant(i).getRandomValue() > largest){
+                   largest = mResultList.getRestaurant(i).getRandomValue();
+                   mFirstResult = mResultList.getRestaurant(i);
+               }
+           }
+            //remove a result from a list
+            for(int j=0; j<mResultList.getSize(); j++){
+                if(mResultList.getRestaurant(j) == mFirstResult){
+                    mResultList.remove(j);
+                }
+            }
+
+            //mFirstResult = mResultList.remove(0);
             mAlreadyQueriedLocuThisResult = false;
 
             Log.i(TAG, "Rating: " + mFirstResult.getRating());
@@ -323,7 +339,16 @@ public class ResultPageActivity extends AppCompatActivity
     {
         nextImage = null;
         if (mResultList.isEmpty())return;
-        Restaurant nextRestaurant = mResultList.getRestaurant(0);
+        //changed code here to make sure image updates with random selection
+        int largest =0;
+        for(int i=0; i<mResultList.getSize(); i++){
+            if(mResultList.getRestaurant(i).getRandomValue() > largest){
+                largest = mResultList.getRestaurant(i).getRandomValue();
+                mFirstResult = mResultList.getRestaurant(i);
+            }
+        }
+        Restaurant nextRestaurant = mFirstResult;
+        //end of changes
         if(nextRestaurant.hasImageUrl())
         {   try{
             String temp = nextRestaurant.getImageUrl().toString().replace("ms.jpg", "o.jpg");
@@ -413,10 +438,21 @@ public class ResultPageActivity extends AppCompatActivity
 
         protected void onPostExecute(RestaurantList result) {
             mResultList = result;
-
+            Random rand = new Random();
+            double  randomNum;
             // dismiss loading popup
             if (mPopupLoadingInProgress.isShowing())
                 mPopupLoadingInProgress.dismiss();
+
+            for(int i=0; i<mResultList.getSize()-1; i++){
+                randomNum = rand.nextInt((100 - 1) + 1);
+                randomNum = randomNum * .3;
+                mResultList.getRestaurant(i).setRandomValue((int)randomNum);
+                //helps debug
+                Log.i(TAG,"Restaurant: " + mResultList.getRestaurant(i).getBusinessName()
+                + " - Value: " + mResultList.getRestaurant(i).getRandomValue());
+            }
+
 
             // begin displaying results or tell user no results found
             if (mResultList == null || mResultList.getSize() < 1) { // catch no results
@@ -427,7 +463,8 @@ public class ResultPageActivity extends AppCompatActivity
             } else {
                 // TODO: TEMP CODE which removes restaurants < minRating
                 for (int i = 0; i < mResultList.getSize(); ) {
-                    if (mResultList.getRestaurant(i).getRating() < minRating) {
+                    if (mResultList.getRestaurant(i).getRating() < minRating ||
+                            db.getRestaurantListColor(mResultList.getRestaurant(i)) == 3) {
                         Restaurant removed = mResultList.removeRestaurant(i);
                         if (removed == null) // check if restaurant was removed successfully
                             i++;
