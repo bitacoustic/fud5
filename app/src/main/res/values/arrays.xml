@@ -18,4 +18,11 @@
         <item>5.0 mi</item>
         <item>10 mi</item>
     </string-array>
+    <string-array name="results_title">
+        <item>How about...</item>
+        <item>Get grub here...</item>
+        <item>Time to try...</item>
+        <item>Check out...</item>
+        <item>We suggest...</item>
+    </string-array>
 </resources>
