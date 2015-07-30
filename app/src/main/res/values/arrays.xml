@@ -17,8 +17,10 @@
         <item>Get grub here...</item>
         <item>Time to try...</item>
         <item>Check out...</item>
-        <item>I suggest...</item>
         <item>This looks good...</item>
         <item>Why not try...</item>
+        <item>Try going to...</item>
+        <item>I suggest...</item>
+        <item>I recommend...</item>
     </string-array>
 </resources>
