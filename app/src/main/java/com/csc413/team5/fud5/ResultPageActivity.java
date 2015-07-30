@@ -479,12 +479,17 @@ public class ResultPageActivity extends AppCompatActivity
                 // TODO: TEMP CODE which removes restaurants < minRating
                 for (int i = 0; i < mResultList.getSize(); ) {
                     if (mResultList.getRestaurant(i).getRating() < minRating ||
-                            db.getRestaurantListColor(mResultList.getRestaurant(i)) == 3) {
+                            db.isRestaurantInList(mResultList.getRestaurant(i), Constants.RED_LIST)) {
                         Restaurant removed = mResultList.removeRestaurant(i);
                         if (removed == null) // check if restaurant was removed successfully
                             i++;
                         // otherwise don't iterate as next restaurant will be at this index
                     }
+//                    else if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.YELLOW_LIST)){
+//                        int value = mResultList.getRestaurant(i).getRandomValue();
+//                        value = value *2;
+//                        mResultList.getRestaurant(i).setRandomValue(value);
+//                    }
                     else
                         i++;
                 }
