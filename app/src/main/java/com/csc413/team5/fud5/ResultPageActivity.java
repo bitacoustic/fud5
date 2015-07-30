@@ -52,9 +52,6 @@ import java.util.Random;
 
 //import com.csc413.team5.fud5.OpenGoogleMapsActivity;
 
-//imports for images
-//TODO:remove these imports when Selector is implemented
-
 public class ResultPageActivity extends AppCompatActivity
         implements MenuNotFoundDialogFragment.MenuNotFoundDialogListener {
     public static final String TAG = "ResultPageActivity";
@@ -131,7 +128,6 @@ public class ResultPageActivity extends AppCompatActivity
 
     // user presses the "Let's go!" button
     public void btnGreen(View v) {
-        // TODO define a behavior
         // if the restaurant is not already in green list, add it
         if (!db.isRestaurantInList(previousResult, Constants.GREEN_LIST)) {
             db.insertRestaurantToList(previousResult, Constants.GREEN_LIST);
@@ -431,7 +427,6 @@ public class ResultPageActivity extends AppCompatActivity
             mPopupLoadingInProgress.dismiss();
     }
 
-    //TODO: implement the selector
     private class GetResultTask extends AsyncTask<String, Void, RestaurantList> {
 
         @Override
@@ -476,7 +471,6 @@ public class ResultPageActivity extends AppCompatActivity
                 noResultsDialog.setCancelable(false);
                 noResultsDialog.show(getFragmentManager(), "noResults");
             } else {
-                // TODO: TEMP CODE which removes restaurants < minRating
                 for (int i = 0; i < mResultList.getSize(); ) {
                     if (mResultList.getRestaurant(i).getRating() < minRating ||
                             db.isRestaurantInList(mResultList.getRestaurant(i), Constants.RED_LIST)) {
@@ -493,7 +487,6 @@ public class ResultPageActivity extends AppCompatActivity
                     else
                         i++;
                 }
-                // END TEMP
 
                 displayNextResult(findViewById(R.id.imgRestaurant));
             }

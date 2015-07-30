@@ -77,8 +77,6 @@ public class SettingsActivity extends AppCompatActivity
         dbHelper db;
         db = new dbHelper(this, null, null, 1);
 
-        // resets red list
-        // TODO: show a confirmation dialog
         db.wipeRestaurantList(3);
         Log.i(TAG, "Red list was cleared");
 
@@ -316,7 +314,6 @@ public class SettingsActivity extends AppCompatActivity
     /* Dev playground */
 
     public void showFoodSettings(View v) {
-        // TODO
         Intent intent = new Intent(this, FoodPreferencesActivity.class);
         startActivity(intent);
 
