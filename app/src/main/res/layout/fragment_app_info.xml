@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#fffafff2">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollViewRMenusRestaurantName"
+            android:background="@color/purple"
+            android:padding="5dp"
+            android:layout_alignParentEnd="true"
+            android:fillViewport="false"
+            android:paddingRight="75dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About this App"
+                android:id="@+id/textViewRMenusRestaurantName"
+                android:textColor="@color/gold"
+                android:textSize="20dp"
+                android:textAlignment="gravity"
+                android:textStyle="bold"
+                android:paddingRight="50dp"
+                android:gravity="left"/>
+        </ScrollView>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollViewappInfo"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/relativeLayout"
+        android:padding="10dp">
+
+        <TextView
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_info_text"
+            android:id="@+id/linearLayoutRMenusContent">
+        </TextView>
+    </ScrollView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ok"
+        android:id="@+id/okayAppInfo"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
