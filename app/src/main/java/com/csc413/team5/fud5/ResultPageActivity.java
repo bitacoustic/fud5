@@ -133,16 +133,16 @@ public class ResultPageActivity extends AppCompatActivity
     public void btnGreen(View v) {
         // TODO define a behavior
         // if the restaurant is not already in green list, add it
-        if (!db.isRestaurantInList(mFirstResult, Constants.GREEN_LIST)) {
-            db.insertRestaurantToList(mFirstResult, Constants.GREEN_LIST);
-            Log.i(TAG, "Added " + mFirstResult.getBusinessName() + " to green list");
+        if (!db.isRestaurantInList(previousResult, Constants.GREEN_LIST)) {
+            db.insertRestaurantToList(previousResult, Constants.GREEN_LIST);
+            Log.i(TAG, "Added " + previousResult.getBusinessName() + " to green list");
         } else { // otherwise, don't add it
-            Log.i(TAG, mFirstResult.getBusinessName() + " was already in green list");
+            Log.i(TAG, previousResult.getBusinessName() + " was already in green list");
         }
 
         ToastUtil.showShortToast(this, "Opening Maps!");
 
-        Location destLoc = mFirstResult.getAddressMapable();
+        Location destLoc = previousResult.getAddressMapable();
         double destLat = destLoc.getLatitude();
         double destLong = destLoc.getLongitude();
 
@@ -581,7 +581,7 @@ public class ResultPageActivity extends AppCompatActivity
 
             if (ServiceUtil.isNetworkAvailable(this)) {
                 displayMenuTask = new DisplayMenuTask();
-                displayMenuTask.execute(mFirstResult);
+                displayMenuTask.execute(previousResult);
                 mPopupLoadingInProgress.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
             } else {
                 ToastUtil.showShortToast(this, getString(R.string.toast_network_unavailable));
@@ -653,7 +653,7 @@ public class ResultPageActivity extends AppCompatActivity
 
             if (mMoreInfoDialog != null && mMoreInfoDialog.isVisible())
                 mMoreInfoDialog.dismiss();
-            mMoreInfoDialog = MoreInfoDialogFragment.getInstance(mFirstResult);
+            mMoreInfoDialog = MoreInfoDialogFragment.getInstance(previousResult);
             mMoreInfoDialog.show(getFragmentManager(), "moreInfo");
         }
     }
