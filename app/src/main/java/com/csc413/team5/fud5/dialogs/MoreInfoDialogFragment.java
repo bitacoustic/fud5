@@ -154,20 +154,20 @@ public class MoreInfoDialogFragment extends DialogFragment {
         }
 
         // SeatMe reservation link if available
-        if (mRestaurant.hasSeatMeUrl()) {
-            appendOutputText('\n' + mContext.getString(R.string.fragment_more_info_reserve_a_table),
-                    Color.BLACK, 15, 10);
-            TextView reservationUrl = appendOutputText(mContext.getString(R.string
-                    .fragment_more_info_open_seatme_link), Color.BLUE, 13, 0);
-            reservationUrl.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent openBrowser = new Intent(Intent.ACTION_VIEW);
-                    openBrowser.setData(mRestaurant.getSeatMeUrl());
-                    startActivity(openBrowser);
-                }
-            });
-        }
+//        if (mRestaurant.hasSeatMeUrl()) {
+//            appendOutputText('\n' + mContext.getString(R.string.fragment_more_info_reserve_a_table),
+//                    Color.BLACK, 15, 10);
+//            TextView reservationUrl = appendOutputText(mContext.getString(R.string
+//                    .fragment_more_info_open_seatme_link), Color.BLUE, 13, 0);
+//            reservationUrl.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent openBrowser = new Intent(Intent.ACTION_VIEW);
+//                    openBrowser.setData(mRestaurant.getSeatMeUrl());
+//                    startActivity(openBrowser);
+//                }
+//            });
+//        }
 
         // if Locu information exists, display it and the attribution logo
         if (mRestaurant.hasHours() || mRestaurant.getLocuWebsiteUrl() != null) {
