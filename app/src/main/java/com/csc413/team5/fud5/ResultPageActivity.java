@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -46,7 +47,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Locale;
 import java.util.Random;
+
+//import com.csc413.team5.fud5.OpenGoogleMapsActivity;
 
 //imports for images
 //TODO:remove these imports when Selector is implemented
@@ -136,9 +140,17 @@ public class ResultPageActivity extends AppCompatActivity
             Log.i(TAG, mFirstResult.getBusinessName() + " was already in green list");
         }
 
-        // TODO: TEMP - specify green button behavior
-        ToastUtil.showShortToast(this, "TODO: Green button behavior");
-        // END TEMP
+        ToastUtil.showShortToast(this, "Opening Maps!");
+
+        Location destLoc = mFirstResult.getAddressMapable();
+        double destLat = destLoc.getLatitude();
+        double destLong = destLoc.getLongitude();
+
+        String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?daddr=%f,%f", destLat, destLong);
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(intent);
+
+
     }
 
     // user presses the "Maybe later..." button
@@ -483,14 +495,14 @@ public class ResultPageActivity extends AppCompatActivity
         }
     }
 
-/*
-        setContentView(R.layout.activity_result_page);
-        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "Chunkfive.otf");
-        Button greenButton = (Button) findViewById(R.id.greenButton);
-        greenButton.setTypeface(buttonFont);
-        //TextView myTextView = (TextView)findViewById(R.id.greenButton);
-       // myTextView.setTypeface(buttonFont);
-*/
+//
+//        setContentView(R.layout.activity_result_page);
+//        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "Chunkfive.otf");
+//        Button greenButton = (Button) findViewById(R.id.greenButton);
+//        greenButton.setTypeface(buttonFont);
+//        //TextView myTextView = (TextView)findViewById(R.id.greenButton);
+//       // myTextView.setTypeface(buttonFont);
+//
 
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
