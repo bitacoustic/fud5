@@ -11,6 +11,8 @@ public class Constants {
     public static final String DEFAULT_SEARCH_TERM_INPUT_KEY = "defaultSearchTerm";
     public static final String DEFAULT_RADIUS_KEY = "defaultSearchRadius";
     public static final String DEFAULT_STAR_RATING_KEY = "defaultMinStar";
+    public static final String LAST_GREEN_RESTAURANT = "lastGreenRestaurant";
+    public static final String LAST_GREEN_RESTAURANT_TIMESTAMP = "lastGreenRestaurantTimestamp";
 
     // parameters for "No results" dialog
     public static final int NO_RESULTS = 0;

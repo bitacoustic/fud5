@@ -368,10 +368,7 @@ public class Restaurant implements Serializable {
      * @return true if the Restaurant has been assigned a category, false otherwise
      */
     public boolean hasCategories() {
-        if (categories == null)
-            return false;
-        else
-            return true;
+        return categories != null;
     }
 
     /**
@@ -503,8 +500,8 @@ public class Restaurant implements Serializable {
     }
 
     /**
-     * Returns whether the Restaurant contains Locu {@linnk Menus} information.
-     * @return true if the Restaurant contains Locu {@linnk Menus} information, otherwise false
+     * Returns whether the Restaurant contains Locu {@link Menus} information.
+     * @return true if the Restaurant contains Locu {@link Menus} information, otherwise false
      */
     public boolean hasLocuMenus() {
         return (locuMenus != null);
@@ -571,7 +568,6 @@ public class Restaurant implements Serializable {
 
 
     // TEST to get current version of db code to work
-    @Deprecated
     public void setRestaurantName(String name) {
         this.name = name;
     }

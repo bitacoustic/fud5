@@ -29,6 +29,7 @@ import com.csc413.team5.fud5.dialogs.DisplayRestaurantMenusFragment;
 import com.csc413.team5.fud5.dialogs.MenuNotFoundDialogFragment;
 import com.csc413.team5.fud5.dialogs.MoreInfoDialogFragment;
 import com.csc413.team5.fud5.dialogs.NoResultsDialogFragment;
+import com.csc413.team5.fud5.utils.AppSettingsHelper;
 import com.csc413.team5.fud5.utils.Constants;
 import com.csc413.team5.fud5.utils.ServiceUtil;
 import com.csc413.team5.fud5.utils.TextGeneratorUtil;
@@ -59,72 +60,39 @@ public class ResultPageActivity extends AppCompatActivity
 
     private GoogleMap mMap;
 
-    YelpApiKey mYelpKey;
-    LocuApiKey mLocuKey;
-    GetResultTask getResultTask;
-    RestaurantList mResultList;
-    Restaurant mFirstResult;
-    boolean mAlreadyQueriedLocuThisResult;
-    Bitmap nextImage;
-
     // user input passed from main activity
     String location;
     String searchTerm;
     int maxRadius;
     double minRating;
 
+    // API query
+    YelpApiKey mYelpKey;
+    LocuApiKey mLocuKey;
+    GetResultTask getResultTask;
+    RestaurantList mResultList;
+    Restaurant mFirstResult;
+    Restaurant previousResult;
+    boolean mAlreadyQueriedLocuThisResult;
+    Bitmap nextImage;
+
     TextView mTitle;
 
-    DialogFragment mMoreInfoDialog;
-
-    // Restaurant menu
+    // Dialogs and popups
     DisplayMenuTask displayMenuTask;
     DialogFragment mDisplayRestaurantMenus;
     DialogFragment mMenuNotFoundDialog;
+    DialogFragment mMoreInfoDialog;
     PopupWindow mPopupLoadingInProgress;
 
     // Database
     dbHelper db;
-    Restaurant previousResult;
 
-    /**
-     * Save all appropriate fragment state.
-     *
-     * @param outState
-     */
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        // save the state of the info dialog if it is visible
-        if (mMoreInfoDialog != null && mMoreInfoDialog.isVisible())
-            getFragmentManager().putFragment(outState, "info", mMoreInfoDialog);
-    }
 
-    /**
-     * This method is called after {@link #onStart} when the activity is
-     * being re-initialized from a previously saved state, given here in
-     * <var>savedInstanceState</var>.  Most implementations will simply use {@link #onCreate}
-     * to restore their state, but it is sometimes convenient to do it here
-     * after all of the initialization has been done or to allow subclasses to
-     * decide whether to use your default implementation.  The default
-     * implementation of this method performs a restore of any view state that
-     * had previously been frozen by {@link #onSaveInstanceState}.
-     * <p/>
-     * <p>This method is called between {@link #onStart} and
-     * {@link #onPostCreate}.
-     *
-     * @param savedInstanceState the data most recently supplied in {@link #onSaveInstanceState}.
-     * @see #onCreate
-     * @see #onPostCreate
-     * @see #onResume
-     * @see #onSaveInstanceState
-     */
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        // restore the state of the info dialog if it was open while the activity was paused
-        // if it wasn't open this operation shouldn't affect the activity (mMoreInfoDialog == null)
-        mMoreInfoDialog = (DialogFragment) getFragmentManager().getFragment(savedInstanceState,
-                "info");
-    }
+
+    /* *************** */
+    /* ONCLICK METHODS */
+    /* *************** */
 
     // user presses the "Let's go!" button
     public void btnGreen(View v) {
@@ -136,8 +104,12 @@ public class ResultPageActivity extends AppCompatActivity
             Log.i(TAG, previousResult.getBusinessName() + " was already in green list");
         }
 
-        //ToastUtil.showShortToast(this, "Opening Maps!");
+        // save a reference to this restaurant in order to later ask the user for feedback:
+        //   - liked the restaurant: confirm addition to green list
+        //   - didn't like the restaurant: remove from green list and add to red instaed
+        AppSettingsHelper.setLastGreenRestaurant(previousResult);
 
+        // launch Google Maps to provide navigation
         Location destLoc = previousResult.getAddressMapable();
         double destLat = destLoc.getLatitude();
         double destLong = destLoc.getLongitude();
@@ -145,8 +117,6 @@ public class ResultPageActivity extends AppCompatActivity
         String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?daddr=%f,%f", destLat, destLong);
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         startActivity(intent);
-
-
     }
 
     // user presses the "Maybe later..." button
@@ -158,7 +128,8 @@ public class ResultPageActivity extends AppCompatActivity
         } else { // otherwise, update the timestamp by deleting and re-adding it
             db.deleteRestaurantFromList(previousResult, Constants.YELLOW_LIST);
             db.insertRestaurantToList(previousResult, Constants.YELLOW_LIST);
-            Log.i(TAG, previousResult.getBusinessName() + " was already in yellow list");
+            Log.i(TAG, previousResult.getBusinessName() + " was already in yellow list; updated " +
+                    "its timestamp");
         }
 
         displayNextResult(v);
@@ -179,6 +150,9 @@ public class ResultPageActivity extends AppCompatActivity
         displayNextResult(v);
     }
 
+    /* ************************** *
+    /* ACTIVITY LIFECYCLE METHODS */
+    /* ************************** */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -263,6 +237,129 @@ public class ResultPageActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Save all appropriate fragment state.
+     *
+     * @param outState
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        // save the state of the info dialog if it is visible
+        if (mMoreInfoDialog != null && mMoreInfoDialog.isVisible())
+            getFragmentManager().putFragment(outState, "info", mMoreInfoDialog);
+    }
+
+    /**
+     * This method is called after {@link #onStart} when the activity is
+     * being re-initialized from a previously saved state, given here in
+     * <var>savedInstanceState</var>.  Most implementations will simply use {@link #onCreate}
+     * to restore their state, but it is sometimes convenient to do it here
+     * after all of the initialization has been done or to allow subclasses to
+     * decide whether to use your default implementation.  The default
+     * implementation of this method performs a restore of any view state that
+     * had previously been frozen by {@link #onSaveInstanceState}.
+     * <p/>
+     * <p>This method is called between {@link #onStart} and
+     * {@link #onPostCreate}.
+     *
+     * @param savedInstanceState the data most recently supplied in {@link #onSaveInstanceState}.
+     * @see #onCreate
+     * @see #onPostCreate
+     * @see #onResume
+     * @see #onSaveInstanceState
+     */
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        // restore the state of the info dialog if it was open while the activity was paused
+        // if it wasn't open this operation shouldn't affect the activity (mMoreInfoDialog == null)
+        mMoreInfoDialog = (DialogFragment) getFragmentManager().getFragment(savedInstanceState,
+                "info");
+    }
+
+    /**
+     * Dispatch onPause() to fragments.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mPopupLoadingInProgress.isShowing())
+            mPopupLoadingInProgress.dismiss();
+    }
+
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_result_page, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //Back button
+        if(id == android.R.id.home) {
+            finish();
+            return true;
+        }
+
+        //Info button
+        // get more information about the restaurant currently in focus by displaying a dialog
+        if (id == R.id.action_info) {
+            boolean networkIsAvailable = ServiceUtil.isNetworkAvailable(mContext);
+            if (!mAlreadyQueriedLocuThisResult && networkIsAvailable) {
+                // need to make an API call and network is available -- query Locu and display info
+                new GetMoreInfoTask().execute(mFirstResult);
+                mPopupLoadingInProgress.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
+            } else if (!mAlreadyQueriedLocuThisResult) {
+                // need to make an API call but network is unavailable
+                ToastUtil.showShortToast(this, getString(R.string.toast_network_unavailable));
+            } else { // mAlreadyQueriedLocuThisResult == true
+                // just show the info dialog with the information already available
+                new GetMoreInfoTask().execute(mFirstResult);
+                mPopupLoadingInProgress.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
+            }
+
+        }
+
+        //Menu button
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_menu && mFirstResult != null) {
+            // don't proceed if a DisplayMenuTask is already in progress
+            if (displayMenuTask != null &&
+                    ( displayMenuTask.getStatus() == AsyncTask.Status.RUNNING
+                            || displayMenuTask.getStatus() == AsyncTask.Status.PENDING) )
+                return true;
+
+            // don't proceed if DisplayMenuTask is complete but one of the resulting dialogs
+            // is rendering
+            if (mDisplayRestaurantMenus != null && mDisplayRestaurantMenus.isVisible())
+                return true;
+            if (mMenuNotFoundDialog != null && mMenuNotFoundDialog.isVisible())
+                return true;
+
+            if (ServiceUtil.isNetworkAvailable(this)) {
+                displayMenuTask = new DisplayMenuTask();
+                displayMenuTask.execute(previousResult);
+                mPopupLoadingInProgress.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
+            } else {
+                ToastUtil.showShortToast(this, getString(R.string.toast_network_unavailable));
+            }
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+    /* *********************** */
+    /* ACTIVITY HELPER METHODS */
+    /* *********************** */
+
     public void displayNextResult(View v){
         //display restaurant info goes here.
         //restaurant image loading needs to go in yet another asynctask
@@ -301,7 +398,8 @@ public class ResultPageActivity extends AppCompatActivity
             //mFirstResult = mResultList.remove(0);
             mAlreadyQueriedLocuThisResult = false;
 
-            Log.i(TAG, "Rating: " + mFirstResult.getRating());
+            Log.i(TAG, "Drawing stars for " + mFirstResult.getBusinessName() + ": " + mFirstResult
+                    .getRating());
             drawStars(mFirstResult.getRating());
             mMap.clear();
             setUpMap(mFirstResult);
@@ -344,8 +442,12 @@ public class ResultPageActivity extends AppCompatActivity
             }
         } catch(Exception e){}
     }
-    //checks if next result has image, and if so, loads it.
-    //does nothing if a)resultList is empty, or b)result has no image.
+
+
+    /**
+     * Checks if next result has image, and if so, loads it.
+     * does nothing if a)resultList is empty, or b)result has no image.
+     */
     public void preload()
     {
         nextImage = null;
@@ -372,17 +474,7 @@ public class ResultPageActivity extends AppCompatActivity
             task.execute(nextImageURL);
         } catch(Exception anyAndAllExceptions){/*and do nothing*/}}
     }
-    public class LoadImageTask extends AsyncTask<URL, Void, Bitmap>{
-        @Override
-        protected Bitmap doInBackground (URL... imageURL)
-        {
-            try {
-                InputStream stream = imageURL[0].openConnection().getInputStream();
-                return BitmapFactory.decodeStream(stream);
-            }catch(Exception e) {}
-            return null;
-        }
-    }
+
 
     private void drawStars(double rating){
         ImageView imgRating = (ImageView) findViewById(R.id.imgRating);
@@ -417,16 +509,49 @@ public class ResultPageActivity extends AppCompatActivity
         // Don't do anything
     }
 
-    /**
-     * Dispatch onPause() to fragments.
-     */
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (mPopupLoadingInProgress.isShowing())
-            mPopupLoadingInProgress.dismiss();
+
+    private void setUpMapIfNeeded() {
+        // Do a null check to confirm that we have not already instantiated the map.
+        if (mMap == null) {
+            // Try to obtain the map from the SupportMapFragment.
+            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+                    .getMap();
+            // Check if we were successful in obtaining the map.
+//            if (mMap != null) {
+//              //  setUpMap();
+//            }
+        }
     }
 
+    private void setUpMap(Restaurant r) {
+        Location resultLoc = r.getAddressMapable();
+
+        LatLng latitudeLongitude = new LatLng(resultLoc.getLatitude(),
+                resultLoc.getLongitude()); //test latitude longitude
+
+        mMap.setMyLocationEnabled(true);
+        //mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudeLongitude, 14));//sets the view
+
+        mMap.addMarker(new MarkerOptions().visible(true)
+                        .position(latitudeLongitude) //these are called on the MarkerOptions object
+                        .title(r.getBusinessName())
+                        .snippet(r.getAddressDisplay().replaceAll("\n", ", "))
+        ).showInfoWindow(); //this is called on the marker object
+    }
+
+
+
+
+    /* **************** */
+    /* BACKGROUND TASKS */
+    /* **************** */
+
+    /**
+     * 1. Query Yelp for a list of restaurants based on parameters obtained in main activity.
+     * 2. Apply a selection process (randomization and weighting) to order the list.
+     * 3. Display the first result.
+     */
     private class GetResultTask extends AsyncTask<String, Void, RestaurantList> {
 
         @Override
@@ -434,10 +559,10 @@ public class ResultPageActivity extends AppCompatActivity
             try {
                 return new RestaurantApiClient.Builder(mYelpKey)
                         .location(location)
-                        //.categoryFilter("foodtrucks,restaurants") is included by default
+                                //.categoryFilter("foodtrucks,restaurants") is included by default
                         .sort(RestaurantApiClient.SortBy.BEST_MATCH)
                         .term(searchTerm)
-                        //.limit(20) is the default
+                                //.limit(20) is the default
                         .radiusFilter(maxRadius)
                         .build().getRestaurantList();
             } catch (Exception e) {
@@ -462,14 +587,14 @@ public class ResultPageActivity extends AppCompatActivity
                     randomNum = randomNum * 0.6;
                 }
                 if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.GREEN_LIST)) {
-                   Log.i(TAG,mResultList.getRestaurant(i).getBusinessName() + " is in Green List. Applying weight." +
-                    "\nOld random number " + randomNum);
+                    Log.i(TAG,mResultList.getRestaurant(i).getBusinessName() + " is in Green List. Applying weight." +
+                            "\nOld random number " + randomNum);
                     randomNum = randomNum * 1.15;
                 }
                 mResultList.getRestaurant(i).setRandomValue((int)randomNum);
                 //helps debug
                 Log.i(TAG,"Restaurant: " + mResultList.getRestaurant(i).getBusinessName()
-                + " - Value: " + mResultList.getRestaurant(i).getRandomValue());
+                        + " - Value: " + mResultList.getRestaurant(i).getRandomValue());
             }
 
 
@@ -500,115 +625,6 @@ public class ResultPageActivity extends AppCompatActivity
                 displayNextResult(findViewById(R.id.imgRestaurant));
             }
         }
-    }
-
-//
-//        setContentView(R.layout.activity_result_page);
-//        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "Chunkfive.otf");
-//        Button greenButton = (Button) findViewById(R.id.greenButton);
-//        greenButton.setTypeface(buttonFont);
-//        //TextView myTextView = (TextView)findViewById(R.id.greenButton);
-//       // myTextView.setTypeface(buttonFont);
-//
-
-    private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                    .getMap();
-            // Check if we were successful in obtaining the map.
-//            if (mMap != null) {
-//              //  setUpMap();
-//            }
-        }
-    }
-
-    private void setUpMap(Restaurant r) {
-        Location resultLoc = r.getAddressMapable();
-
-        LatLng latitudeLongitude = new LatLng(resultLoc.getLatitude(),
-                resultLoc.getLongitude()); //test latitude longitude
-
-        mMap.setMyLocationEnabled(true);
-        //mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latitudeLongitude, 14));//sets the view
-
-        mMap.addMarker(new MarkerOptions().visible(true)
-                        .position(latitudeLongitude) //these are called on the MarkerOptions object
-                        .title(r.getBusinessName())
-                        .snippet(r.getAddressDisplay().replaceAll("\n", ", "))
-        ).showInfoWindow(); //this is called on the marker object
-
-
-    }
-
-    public boolean onCreateOptionsMenu(android.view.Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_result_page, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //Back button
-        if(id == android.R.id.home) {
-            finish();
-            return true;
-        }
-
-        //Info button
-        // get more information about the restaurant currently in focus by displaying a dialog
-        if (id == R.id.action_info) {
-            boolean networkIsAvailable = ServiceUtil.isNetworkAvailable(mContext);
-            if (!mAlreadyQueriedLocuThisResult && networkIsAvailable) {
-                // need to make an API call and network is available -- query Locu and display info
-                new GetMoreInfoTask().execute(mFirstResult);
-                mPopupLoadingInProgress.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
-            } else if (!mAlreadyQueriedLocuThisResult && !networkIsAvailable) {
-                // need to make an API call but network is unavailable
-                ToastUtil.showShortToast(this, getString(R.string.toast_network_unavailable));
-            } else { // mAlreadyQueriedLocuThisResult == true
-                // just show the info dialog with the information already available
-                new GetMoreInfoTask().execute(mFirstResult);
-                mPopupLoadingInProgress.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
-            }
-
-        }
-
-        //Menu button
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_menu && mFirstResult != null) {
-            // don't proceed if a DisplayMenuTask is already in progress
-            if (displayMenuTask != null &&
-                    ( displayMenuTask.getStatus() == AsyncTask.Status.RUNNING
-                    || displayMenuTask.getStatus() == AsyncTask.Status.PENDING) )
-                return true;
-
-            // don't proceed if DisplayMenuTask is complete but one of the resulting dialogs
-            // is rendering
-            if (mDisplayRestaurantMenus != null && mDisplayRestaurantMenus.isVisible())
-                return true;
-            if (mMenuNotFoundDialog != null && mMenuNotFoundDialog.isVisible())
-                return true;
-
-            if (ServiceUtil.isNetworkAvailable(this)) {
-                displayMenuTask = new DisplayMenuTask();
-                displayMenuTask.execute(previousResult);
-                mPopupLoadingInProgress.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
-            } else {
-                ToastUtil.showShortToast(this, getString(R.string.toast_network_unavailable));
-            }
-
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -650,6 +666,10 @@ public class ResultPageActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Display information about the current restaurant. Query Locu for more information
+     * if it has not already been done.
+     */
     private class GetMoreInfoTask extends AsyncTask<Restaurant, Void, Restaurant> {
         @Override
         protected Restaurant doInBackground(Restaurant... params) {
@@ -675,4 +695,30 @@ public class ResultPageActivity extends AppCompatActivity
             mMoreInfoDialog.show(getFragmentManager(), "moreInfo");
         }
     }
+
+    /**
+     * Returns a bitmap image from the supplied URL
+     */
+    public class LoadImageTask extends AsyncTask<URL, Void, Bitmap>{
+        @Override
+        protected Bitmap doInBackground (URL... imageURL)
+        {
+            try {
+                InputStream stream = imageURL[0].openConnection().getInputStream();
+                return BitmapFactory.decodeStream(stream);
+            }catch(Exception e) {}
+            return null;
+        }
+    }
+
 }
+
+
+//
+//        setContentView(R.layout.activity_result_page);
+//        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "Chunkfive.otf");
+//        Button greenButton = (Button) findViewById(R.id.greenButton);
+//        greenButton.setTypeface(buttonFont);
+//        //TextView myTextView = (TextView)findViewById(R.id.greenButton);
+//       // myTextView.setTypeface(buttonFont);
+//

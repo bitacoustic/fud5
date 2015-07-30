@@ -3,6 +3,8 @@ package com.csc413.team5.fud5.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.csc413.team5.restaurantapiwrapper.Restaurant;
+
 /** Contains methods that link to SharedPreferences
  * Created by niculistana on 7/28/15.
  */
@@ -40,6 +42,49 @@ public class AppSettingsHelper {
 
     public static void setEulaTrue() {
         userSettingsEditor.putBoolean("hasAgreedToEula", true).apply();
+    }
+
+    /**
+     * If the user presses the green button, save the identifier of the last green restaurant so
+     * the app can ask the user for feedback about the restaurant later.
+     * @param r a Restaurant object
+     */
+    public static void setLastGreenRestaurant(Restaurant r) {
+        userSettingsEditor.putString(Constants.LAST_GREEN_RESTAURANT, r.getBusinessName())
+            .putLong(Constants.LAST_GREEN_RESTAURANT_TIMESTAMP, System.currentTimeMillis())
+                .apply();
+    }
+
+    /**
+     * Returns last green restaurant, or empty string if the field is empty, either because the
+     * green but hasn't been pressed before, or user has already responded to our prompt
+     * to give feedback about the most recent green-listed restaurant
+     * @return a Restaurant object containing just the ID, or "" if there is no data
+     */
+    public static Restaurant getLastGreenRestaurant() {
+        Restaurant r = new Restaurant();
+        r.setRestaurantName(userSettings.getString(Constants.LAST_GREEN_RESTAURANT, ""));
+        return r;
+    }
+
+    /**
+     * Returns the TimeinMillis that the user pressed the green button, or -1 if this information
+     * is unavailable
+     * @return the TimeinMillis that the user pressed the green button, or -1 if this information
+     *         is unavailable
+     */
+    public static long getLastGreenRestaurantTimestamp() {
+        return userSettings.getLong(Constants.LAST_GREEN_RESTAURANT_TIMESTAMP, -1);
+    }
+
+    /**
+     * Clears the last green restaurant and its associated timestamp. This can be called after
+     * the user has given feedback about the last visited (green-listed) restaurant.
+     */
+    public static void clearLastGreenRestaurant() {
+        userSettingsEditor.putString(Constants.LAST_GREEN_RESTAURANT, "")
+                .putLong(Constants.LAST_GREEN_RESTAURANT_TIMESTAMP, -1)
+                .apply();
     }
 
     public static void clear() {

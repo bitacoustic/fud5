@@ -26,6 +26,7 @@ import com.csc413.team5.fud5.utils.AppSettingsHelper;
 import com.csc413.team5.fud5.utils.ServiceUtil;
 import com.csc413.team5.fud5.utils.ToastUtil;
 import com.csc413.team5.restaurantapiwrapper.DistanceUnit;
+import com.csc413.team5.restaurantapiwrapper.Restaurant;
 import com.csc413.team5.restaurantapiwrapper.RestaurantApiClient;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -193,6 +194,27 @@ public class MainActivity extends AppCompatActivity
         // connected with Google Location services
         buildGoogleApiClient();
         mGoogleApiClient.connect();
+    }
+
+    /**
+     * Dispatch onResume() to fragments.  Note that for better inter-operation
+     * with older versions of the platform, at the point of this call the
+     * fragments attached to the activity are <em>not</em> resumed.  This means
+     * that in some cases the previous state may still be saved, not allowing
+     * fragment transactions that modify the state.  To correctly interact
+     * with fragments in their proper state, you should instead override
+     * {@link #onResumeFragments()}.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        Restaurant lastGreen = AppSettingsHelper.getLastGreenRestaurant();
+        if (lastGreen.getBusinessName().compareTo("") != 0) {
+            long lastGreenTime = AppSettingsHelper.getLastGreenRestaurantTimestamp();
+            ToastUtil.showShortToast(this, "TODO: How did you like "
+                    + lastGreen.getBusinessName() + "?");
+        }
     }
 
     @Override
