@@ -84,6 +84,7 @@ public class ResultPageActivity extends AppCompatActivity
 
     // Database
     dbHelper db;
+    Restaurant previousResult;
 
     /**
      * Save all appropriate fragment state.
@@ -143,13 +144,13 @@ public class ResultPageActivity extends AppCompatActivity
     // user presses the "Maybe later..." button
     public void btnYellow(View v) {
         // if restaurant is not already in yellow list, add it
-        if (!db.isRestaurantInList(mFirstResult, Constants.YELLOW_LIST)) {
-            db.insertRestaurantToList(mFirstResult, Constants.YELLOW_LIST);
-            Log.i(TAG, "Added " + mFirstResult.getBusinessName() + " to yellow list");
+        if (!db.isRestaurantInList(previousResult, Constants.YELLOW_LIST)) {
+            db.insertRestaurantToList(previousResult, Constants.YELLOW_LIST);
+            Log.i(TAG, "Added " + previousResult.getBusinessName() + " to yellow list");
         } else { // otherwise, update the timestamp by deleting and re-adding it
-            db.deleteRestaurantFromList(mFirstResult, Constants.YELLOW_LIST);
-            db.insertRestaurantToList(mFirstResult, Constants.YELLOW_LIST);
-            Log.i(TAG, mFirstResult.getBusinessName() + " was already in yellow list");
+            db.deleteRestaurantFromList(previousResult, Constants.YELLOW_LIST);
+            db.insertRestaurantToList(previousResult, Constants.YELLOW_LIST);
+            Log.i(TAG, previousResult.getBusinessName() + " was already in yellow list");
         }
 
         displayNextResult(v);
@@ -158,13 +159,13 @@ public class ResultPageActivity extends AppCompatActivity
     // user presses the "Always ignore" button
     public void btnRed(View v) {
         // if restaurant isn't already in red list, add it
-        if (!db.isRestaurantInList(mFirstResult, Constants.RED_LIST)) {
-            ToastUtil.showShortToast(this, mFirstResult.getBusinessName()
+        if (!db.isRestaurantInList(previousResult, Constants.RED_LIST)) {
+            ToastUtil.showShortToast(this, previousResult.getBusinessName()
                     + getString(R.string.activity_result_page_toast_was_added_to_red_list));
-            db.insertRestaurantToList(mFirstResult, Constants.RED_LIST);
-            Log.i(TAG, "Added " + mFirstResult.getBusinessName() + " to red list");
+            db.insertRestaurantToList(previousResult, Constants.RED_LIST);
+            Log.i(TAG, "Added " + previousResult.getBusinessName() + " to red list");
         } else { // otherwise, don't do anything
-            Log.i(TAG, mFirstResult.getBusinessName() + " was already in red list");
+            Log.i(TAG, previousResult.getBusinessName() + " was already in red list");
         }
 
         displayNextResult(v);
@@ -273,6 +274,7 @@ public class ResultPageActivity extends AppCompatActivity
         }
 
         try {
+
             //Grab restaurant with largest random value.
             int largest = 0;
            for(int i=0; i<mResultList.getSize(); i++){
@@ -284,7 +286,7 @@ public class ResultPageActivity extends AppCompatActivity
             //remove a result from a list
             for(int j=0; j<mResultList.getSize(); j++){
                 if(mResultList.getRestaurant(j) == mFirstResult){
-                    mResultList.remove(j);
+                   previousResult = mResultList.remove(j);
                 }
             }
 
