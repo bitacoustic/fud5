@@ -136,7 +136,7 @@ public class ResultPageActivity extends AppCompatActivity
             Log.i(TAG, previousResult.getBusinessName() + " was already in green list");
         }
 
-        ToastUtil.showShortToast(this, "Opening Maps!");
+        //ToastUtil.showShortToast(this, "Opening Maps!");
 
         Location destLoc = previousResult.getAddressMapable();
         double destLat = destLoc.getLatitude();
@@ -456,7 +456,16 @@ public class ResultPageActivity extends AppCompatActivity
 
             for(int i=0; i<mResultList.getSize()-1; i++){
                 randomNum = rand.nextInt((100 - 1) + 1);
-                randomNum = randomNum * .3;
+                if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.YELLOW_LIST)) {
+                    Log.i(TAG,mResultList.getRestaurant(i).getBusinessName() + " is in Yellow List. " +
+                            "\nOld random number " + randomNum);
+                    randomNum = randomNum * 0.6;
+                }
+                if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.GREEN_LIST)) {
+                   Log.i(TAG,mResultList.getRestaurant(i).getBusinessName() + " is in Green List. Applying weight." +
+                    "\nOld random number " + randomNum);
+                    randomNum = randomNum * 1.15;
+                }
                 mResultList.getRestaurant(i).setRandomValue((int)randomNum);
                 //helps debug
                 Log.i(TAG,"Restaurant: " + mResultList.getRestaurant(i).getBusinessName()
