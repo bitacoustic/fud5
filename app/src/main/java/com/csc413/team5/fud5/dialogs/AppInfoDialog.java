@@ -7,8 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 
 import com.csc413.team5.fud5.R;
+
+import static com.csc413.team5.fud5.R.id.okayAppInfo;
 
 /**
  * Created by JagatJagat on 7/28/15.
@@ -17,9 +20,7 @@ public class AppInfoDialog extends DialogFragment {
     private static AppInfoDialog instance = null;
 
     public AppInfoDialog(){
-
-
-
+        
     }
 
     public static AppInfoDialog getInstance(){
@@ -43,10 +44,25 @@ public class AppInfoDialog extends DialogFragment {
         return dialog;
     }
 
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //View v = inflater.inflate(R.layout.fragment_restaurant_menus, container, false);
         View v = inflater.inflate(R.layout.fragment_app_info, container, false);
+
+        //Button button = (Button)v.findViewById(R.id.okayAppInfo);
+
+        Button okButton = (Button)v.findViewById(R.id.okayAppInfo);
+
+
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDialog().dismiss(); // return to the calling activity
+
+            }
+        });
+
         return v;
     }
 
