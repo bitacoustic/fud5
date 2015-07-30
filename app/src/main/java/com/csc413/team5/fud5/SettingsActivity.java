@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 
 import com.csc413.team5.appdb.dbHelper;
 import com.csc413.team5.appdbtest.AppDbTestActivity;
+import com.csc413.team5.fud5.dialogs.AppInfoDialog;
 import com.csc413.team5.fud5.dialogs.EulaDialogFragment;
 import com.csc413.team5.fud5.settings.ApplicationSettingsDialogFragment;
 import com.csc413.team5.fud5.settings.FoodPreferencesActivity;
@@ -59,8 +60,8 @@ public class SettingsActivity extends AppCompatActivity
     private dbHelper db;
 
     public void showAppInfo(View v) {
-//        DialogFragment eulaDialog = EulaDialogFragment.newInstance(false);
-//        eulaDialog.show(getFragmentManager(), "EULA");
+        DialogFragment infoDialog = AppInfoDialog.getInstance();
+        infoDialog.show(getFragmentManager(), "App Info");
 
         ToastUtil.showShortToast(this, "Showing app info...");
     }
