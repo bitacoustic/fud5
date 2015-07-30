@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#fffafff2">
+    android:background="@color/purple">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,10 +14,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/scrollViewRMenusRestaurantName"
-            android:background="@color/purple"
             android:padding="5dp"
             android:layout_alignParentEnd="true"
             android:fillViewport="false"
+            android:background="@color/purple"
             android:paddingRight="75dp">
 
             <TextView
@@ -40,9 +40,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scrollViewappInfo"
-        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
         android:layout_below="@+id/relativeLayout"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/okayAppInfo">
 
         <LinearLayout
             android:orientation="vertical"

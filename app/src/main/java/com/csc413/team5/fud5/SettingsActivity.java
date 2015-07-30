@@ -63,7 +63,7 @@ public class SettingsActivity extends AppCompatActivity
         DialogFragment infoDialog = AppInfoDialog.getInstance();
         infoDialog.show(getFragmentManager(), "App Info");
 
-        ToastUtil.showShortToast(this, "Showing app info...");
+        //ToastUtil.showShortToast(this, "Showing app info...");
     }
 
     public void showEULA(View v) {
