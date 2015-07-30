@@ -485,11 +485,11 @@ public class ResultPageActivity extends AppCompatActivity
                             i++;
                         // otherwise don't iterate as next restaurant will be at this index
                     }
-                    else if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.YELLOW_LIST)){
-                        int value = mResultList.getRestaurant(i).getRandomValue();
-                        value = value *2;
-                        mResultList.getRestaurant(i).setRandomValue(value);
-                    }
+//                    else if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.YELLOW_LIST)){
+//                        int value = mResultList.getRestaurant(i).getRandomValue();
+//                        value = value *2;
+//                        mResultList.getRestaurant(i).setRandomValue(value);
+//                    }
                     else
                         i++;
                 }
