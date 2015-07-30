@@ -5,12 +5,6 @@
         <item>Yellow</item>
         <item>Red</item>
     </string-array>
-    <string-array name="preferred_niche_array">
-        <item>Italian</item>
-        <item>Carnivore</item>
-        <item>Hole in the wall</item>
-        <item>Affordable</item>
-    </string-array>
     <string-array name="radius_array">
         <item>0.5 mi</item>
         <item>1.0 mi</item>
@@ -26,7 +20,5 @@
         <item>I suggest...</item>
         <item>This looks good...</item>
         <item>Why not try...</item>
-        <item>Fresh from the Yelp Machine...</item>
-        <item>Bam!</item>
     </string-array>
 </resources>
