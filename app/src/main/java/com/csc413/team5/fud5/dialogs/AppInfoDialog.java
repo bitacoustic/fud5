@@ -57,7 +57,7 @@ public class AppInfoDialog extends DialogFragment {
 
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { 
                 getDialog().dismiss(); // return to the calling activity
 
             }
