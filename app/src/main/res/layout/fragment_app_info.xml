@@ -47,7 +47,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_info_text"
+            android:text="@string/appInfoDialogtext"
             android:id="@+id/linearLayoutRMenusContent">
         </TextView>
     </ScrollView>
