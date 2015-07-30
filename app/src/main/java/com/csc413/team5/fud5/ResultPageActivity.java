@@ -565,8 +565,19 @@ public class ResultPageActivity extends AppCompatActivity
         //Info button
         // get more information about the restaurant currently in focus by displaying a dialog
         if (id == R.id.action_info) {
-            new GetMoreInfoTask().execute(mFirstResult);
-            mPopupLoadingInProgress.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
+            boolean networkIsAvailable = ServiceUtil.isNetworkAvailable(mContext);
+            if (!mAlreadyQueriedLocuThisResult && networkIsAvailable) {
+                // need to make an API call and network is available -- query Locu and display info
+                new GetMoreInfoTask().execute(mFirstResult);
+                mPopupLoadingInProgress.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
+            } else if (!mAlreadyQueriedLocuThisResult && !networkIsAvailable) {
+                // need to make an API call but network is unavailable
+                ToastUtil.showShortToast(this, getString(R.string.toast_network_unavailable));
+            } else { // mAlreadyQueriedLocuThisResult == true
+                // just show the info dialog with the information already available
+                new GetMoreInfoTask().execute(mFirstResult);
+                mPopupLoadingInProgress.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
+            }
 
         }
 
