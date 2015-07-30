@@ -42,12 +42,6 @@ public class EulaDialogFragment extends DialogFragment {
         return new EulaDialogFragment();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-    }
-
     /**
      * @param savedInstanceState The last saved instance state of the Fragment,
      *                           or null if this is a freshly created Fragment.

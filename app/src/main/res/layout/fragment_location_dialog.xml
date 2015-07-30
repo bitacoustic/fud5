@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple"
+    android:weightSum="1">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/dialog_ask_to_use_location_title"
+            android:id="@+id/dialogLocationTitle"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/gold"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="18sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="439dp"
+            android:id="@+id/dialogLocationScrollView"
+            android:layout_gravity="center_horizontal"
+            android:background="#FFFFFF"
+            android:padding="15dp"
+            android:layout_weight="0.37"
+            android:layout_below="@+id/dialogLocationTitle"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/dialogLocationPositiveButton"
+            android:layout_marginTop="0dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_ask_to_use_location_body"
+                android:id="@+id/dialogLocationText"
+                android:textSize="20sp"
+                android:textColor="#000000"/>
+        </ScrollView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_ask_to_use_location_disagree_button"
+            android:id="@+id/dialogLocationNegativeButton"
+            android:layout_below="@+id/dialogLocationScrollView"
+            android:layout_alignStart="@+id/dialogLocationTitle"
+            android:layout_marginStart="10dp"
+            android:layout_alignParentEnd="false" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_ask_to_use_location_agree_button"
+            android:id="@+id/dialogLocationPositiveButton"
+            android:layout_alignParentBottom="true"
+            android:layout_alignEnd="@+id/dialogLocationTitle"
+            android:layout_marginEnd="10dp" />
+    </RelativeLayout>
+
+</LinearLayout>
