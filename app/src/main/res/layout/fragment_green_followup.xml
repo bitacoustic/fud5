@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/imageViewNoResults"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:src="@android:drawable/presence_online"
+            android:cropToPadding="false"
+            android:contentDescription="Close dialog button"
+            android:nestedScrollingEnabled="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:background="@color/purple"
+            android:paddingLeft="10dp"
+            android:layout_alignBottom="@+id/textViewNoResultsTitle" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewGreenFollowupTitle"
+            android:textColor="@color/gold"
+            android:textSize="20dp"
+            android:textAlignment="gravity"
+            android:textStyle="bold"
+            android:gravity="left"
+            android:background="@color/purple"
+            android:text="What did you think about "
+            android:paddingLeft="10dp"
+            android:layout_toEndOf="@+id/imageViewNoResults"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollViewNoResultsBody"
+        >
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayoutGreenFollowupBody"
+            android:padding="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageViewGreenFollowupFudlaut"
+                android:src="@drawable/fudlaut"
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="328dp"
+                android:layout_alignBottom="@+id/textViewGreenFollowupBody"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Your feedback helps us give better recommendations."
+                android:id="@+id/textViewGreenFollowupBody"
+                android:paddingBottom="10dp"
+                android:paddingLeft="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="false"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="I liked it"
+        android:id="@+id/buttonGreenFollowupGreen"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/green"
+        android:nestedScrollingEnabled="false"
+        android:layout_margin="10dp"
+        android:textColor="#FFFFFF"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ask me again later"
+        android:id="@+id/buttonGreenFollowupYellow"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/gold"
+        android:nestedScrollingEnabled="false"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_margin="10dp"
+        android:textColor="#FFFFFF"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="don&apos;t suggest again"
+        android:id="@+id/buttonGreenFollowupRed"
+        android:background="@color/red"
+        android:nestedScrollingEnabled="false"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_margin="10dp"
+        android:textColor="#FFFFFF"/>
+
+</LinearLayout>

@@ -10,9 +10,11 @@ import android.os.Bundle;
 import com.csc413.team5.fud5.R;
 
 /**
- * TODO Description
+ * Dialog to display when there is nothing result to show, which can occur in the following
+ * circumstances: 1) no results from the Yelp query, 2) the selection process results in an empty
+ * list, or 3) user has reached the end of the displayed results
  * <p>
- * Created on $(DATE).
+ * Created on 7/27/2015.
  *
  * @author Eric C. Black
  */
