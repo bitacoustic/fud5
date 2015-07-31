@@ -100,14 +100,14 @@ public class ResultPageActivity extends AppCompatActivity
         if (!db.isRestaurantInList(previousResult, Constants.GREEN_LIST)) {
             db.insertRestaurantToList(previousResult, Constants.GREEN_LIST);
             Log.i(TAG, "Added " + previousResult.getBusinessName() + " to green list");
-        } else { // otherwise, don't add it
+
+            // save a reference to this restaurant in order to later ask the user for feedback:
+            //   - liked the restaurant: confirm addition to green list
+            //   - didn't like the restaurant: remove from green list and add to red instaed
+            AppSettingsHelper.setLastGreenRestaurant(previousResult);
+        } else { // otherwise, don't add it & don't ask user for feedback later
             Log.i(TAG, previousResult.getBusinessName() + " was already in green list");
         }
-
-        // save a reference to this restaurant in order to later ask the user for feedback:
-        //   - liked the restaurant: confirm addition to green list
-        //   - didn't like the restaurant: remove from green list and add to red instaed
-        AppSettingsHelper.setLastGreenRestaurant(previousResult);
 
         // launch Google Maps to provide navigation
         Location destLoc = previousResult.getAddressMapable();
