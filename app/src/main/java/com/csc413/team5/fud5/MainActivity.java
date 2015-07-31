@@ -241,6 +241,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     if (lastGreenID.compareTo("") != 0) {
                         greenFollowupDialog =
                                 GreenFollowupDialogFragment.getInstance(lastGreenID, lastGreenTime);
+                        greenFollowupDialog.setCancelable(false);
                         greenFollowupDialog.show(getFragmentManager(), "greenFollowupDialog");
                         // button click in dialog is handled by the dialog's listener methods
                         // implemented below

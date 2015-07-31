@@ -259,7 +259,12 @@ public class SettingsActivity extends AppCompatActivity
         mSeekBarFollowupProgress = AppSettingsHelper.getGreenFollowupInterval();
         mSeekBarFollowupInterval.setProgress(mSeekBarFollowupProgress);
         mTxtFollowupInterval = (TextView) findViewById(R.id.textViewSettingsFollowupIntervalText);
-        mTxtFollowupInterval.setText(mSeekBarFollowupProgress + " hours");
+        if (mSeekBarFollowupProgress > 1)
+            mTxtFollowupInterval.setText(mSeekBarFollowupProgress + " hours");
+        else if (mSeekBarFollowupProgress == 1)
+            mTxtFollowupInterval.setText("1 hour");
+        else
+            mTxtFollowupInterval.setText("none");
         mSeekBarFollowupInterval.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
