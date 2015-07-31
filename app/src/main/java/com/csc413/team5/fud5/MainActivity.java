@@ -439,6 +439,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (!db.isRestaurantInList(r, Constants.RED_LIST))
             db.insertRestaurantToList(r, Constants.RED_LIST);
         Log.i(TAG, "Added " + r.getBusinessName() + " to red list");
+        AppSettingsHelper.clearLastGreenRestaurant();
         greenFollowupDialog.dismiss();
     }
 }
