@@ -1,5 +1,6 @@
 package com.csc413.team5.fud5;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,7 +23,10 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 
+import com.csc413.team5.appdb.dbHelper;
+import com.csc413.team5.fud5.dialogs.GreenFollowupDialogFragment;
 import com.csc413.team5.fud5.utils.AppSettingsHelper;
+import com.csc413.team5.fud5.utils.Constants;
 import com.csc413.team5.fud5.utils.ServiceUtil;
 import com.csc413.team5.fud5.utils.ToastUtil;
 import com.csc413.team5.restaurantapiwrapper.DistanceUnit;
@@ -39,9 +43,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity
-        implements GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        GreenFollowupDialogFragment.GreenFollowupDialogListener {
     public static final String TAG = "MainActivity";
 
     protected String mAddressString;
@@ -55,6 +59,9 @@ public class MainActivity extends AppCompatActivity
     RatingBar starRating;
 
     ToolTipView toolTipLocationIsEmpty;
+
+    DialogFragment greenFollowupDialog;
+    dbHelper db;
 
     public void btnFindLocation(View v) {
         if (ServiceUtil.isLocationServicesOn(this)) {
@@ -153,6 +160,9 @@ public class MainActivity extends AppCompatActivity
         /* Get shared preferences */
         AppSettingsHelper.init(this);
 
+        /* Initialize the database */
+        db = new dbHelper(this, null, null, Constants.RESTAURANT_LISTS_TABLE_ID);
+
         /* Initalize inputs*/
         locationInput = (EditText) findViewById(R.id.txtLocation);
         locationInput.setOnClickListener(new View.OnClickListener() {
@@ -209,11 +219,13 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
 
-        Restaurant lastGreen = AppSettingsHelper.getLastGreenRestaurant();
-        if (lastGreen.getBusinessName().compareTo("") != 0) {
+        String lastGreenID = AppSettingsHelper.getLastGreenRestaurantID();
+        if (lastGreenID.compareTo("") != 0) {
             long lastGreenTime = AppSettingsHelper.getLastGreenRestaurantTimestamp();
-            ToastUtil.showShortToast(this, "TODO: How did you like "
-                    + lastGreen.getBusinessName() + "?");
+            greenFollowupDialog =
+                    GreenFollowupDialogFragment.getInstance(lastGreenID, lastGreenTime);
+            greenFollowupDialog.show(getFragmentManager(), "greenFollowupDialog");
+            // button click in dialog is handled by the dialog's listener methods implemented below
         }
     }
 
@@ -323,5 +335,42 @@ public class MainActivity extends AppCompatActivity
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.i(TAG, "Google Play services connection failed: ConnectionResult.getErrorCode() = "
                 + connectionResult.getErrorCode());
+    }
+
+    /**
+     * Restaurant remains in green list. Clear the restaurant from user settings so we don't ask
+     * about it again.
+     * @param dialog
+     */
+    @Override
+    public void OnGreenFollowupClickedGreen(DialogFragment dialog) {
+        AppSettingsHelper.clearLastGreenRestaurant();
+        Log.i(TAG, "Liked last green-listed restaurant; it remains in green list");
+        greenFollowupDialog.dismiss();
+    }
+
+    /**
+     * Restaurant remains in user settings so user is reprompted at the next onResume().
+     * @param dialog
+     */
+    @Override
+    public void OnGreenFollowupClickedYellow(DialogFragment dialog) {
+        AppSettingsHelper.setLastGreenRestaurantTimestampToNow();
+        Log.i(TAG, "Reset timer on last green restaurant, will reprompt later");
+        greenFollowupDialog.dismiss();
+    }
+
+    @Override
+    public void OnGreenFollowupClickedRed(DialogFragment dialog) {
+        // remove the restaurant from the green list and add it to the red list instead
+        Restaurant r = new Restaurant();
+        r.setRestaurantName(AppSettingsHelper.getLastGreenRestaurantID());
+        if (db.isRestaurantInList(r, Constants.GREEN_LIST))
+            db.deleteRestaurantFromList(r, Constants.GREEN_LIST);
+        Log.i(TAG, "Removed " + r.getBusinessName() + " from green list");
+        if (!db.isRestaurantInList(r, Constants.RED_LIST))
+            db.insertRestaurantToList(r, Constants.RED_LIST);
+        Log.i(TAG, "Added " + r.getBusinessName() + " to red list");
+        greenFollowupDialog.dismiss();
     }
 }

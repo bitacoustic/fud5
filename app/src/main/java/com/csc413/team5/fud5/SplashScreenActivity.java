@@ -14,6 +14,7 @@ import android.view.Window;
 import com.csc413.team5.appdb.dbHelper;
 import com.csc413.team5.fud5.dialogs.AskToUseLocationDialogFragment;
 import com.csc413.team5.fud5.dialogs.EulaDialogFragment;
+import com.csc413.team5.fud5.utils.Constants;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
 
 import java.sql.Timestamp;
@@ -73,8 +74,8 @@ public class SplashScreenActivity extends Activity
         mYellowStaleCutoff = mStartLoadTime - 604800000; // subtract a week in milliseconds
         Log.i(TAG, "Looking for stale yellow list restaurants (those having timestamp before " +
                 new Timestamp(mYellowStaleCutoff).toString() + ")");
-        List<String> yellowListTimestamps = db.getRestaurantTimeStampsFromList(1);
-        List<String> yellowListRestaurants = db.getRestaurantNamesFromList(1);
+        List<String> yellowListTimestamps = db.getRestaurantTimeStampsFromList(Constants.YELLOW_LIST);
+        List<String> yellowListRestaurants = db.getRestaurantNamesFromList(Constants.YELLOW_LIST);
         for (int i = 0; i < yellowListTimestamps.size(); i++) {
             Timestamp timestamp = Timestamp.valueOf(yellowListTimestamps.get(i));
             String thisRestaurantName = yellowListRestaurants.get(i);
@@ -85,7 +86,8 @@ public class SplashScreenActivity extends Activity
                 Log.i(TAG, "Removed " + thisRestaurantName + " from yellow list");
                 Restaurant r = new Restaurant();
                 r.setRestaurantName(thisRestaurantName);
-                db.deleteRestaurantFromList(r, 1); // delete this restaurant from yellow list
+                db.deleteRestaurantFromList(r, Constants.YELLOW_LIST); // delete this restaurant from yellow
+                // list
             }
         }
     }

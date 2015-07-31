@@ -56,15 +56,13 @@ public class AppSettingsHelper {
     }
 
     /**
-     * Returns last green restaurant, or empty string if the field is empty, either because the
+     * Returns last green restaurant's ID, or empty string if the field is empty, either because the
      * green but hasn't been pressed before, or user has already responded to our prompt
      * to give feedback about the most recent green-listed restaurant
      * @return a Restaurant object containing just the ID, or "" if there is no data
      */
-    public static Restaurant getLastGreenRestaurant() {
-        Restaurant r = new Restaurant();
-        r.setRestaurantName(userSettings.getString(Constants.LAST_GREEN_RESTAURANT, ""));
-        return r;
+    public static String getLastGreenRestaurantID() {
+        return userSettings.getString(Constants.LAST_GREEN_RESTAURANT, "");
     }
 
     /**
@@ -75,6 +73,11 @@ public class AppSettingsHelper {
      */
     public static long getLastGreenRestaurantTimestamp() {
         return userSettings.getLong(Constants.LAST_GREEN_RESTAURANT_TIMESTAMP, -1);
+    }
+
+    public static void setLastGreenRestaurantTimestampToNow() {
+        userSettingsEditor.putLong(Constants.LAST_GREEN_RESTAURANT_TIMESTAMP,
+                System.currentTimeMillis()).apply();
     }
 
     /**
