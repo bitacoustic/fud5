@@ -22,6 +22,8 @@ public class GreenFollowupDialogFragment extends DialogFragment {
     String mId;
     long mTimestamp;
 
+    Button mBtnGreen, mBtnYellow, mBtnRed, mBtnOk;
+
     public GreenFollowupDialogFragment() {}
 
     public static GreenFollowupDialogFragment getInstance(String id, long timestamp) {
@@ -79,24 +81,24 @@ public class GreenFollowupDialogFragment extends DialogFragment {
         TextView dialogTitle = (TextView) v.findViewById(R.id.textViewGreenFollowupTitle);
         dialogTitle.append(instance.mId + "?");
 
-        Button green = (Button) v.findViewById(R.id.buttonGreenFollowupGreen);
-        green.setOnClickListener(new View.OnClickListener() {
+        mBtnGreen = (Button) v.findViewById(R.id.buttonGreenFollowupGreen);
+        mBtnGreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.OnGreenFollowupClickedGreen(GreenFollowupDialogFragment.this);
             }
         });
 
-        Button yellow = (Button) v.findViewById(R.id.buttonGreenFollowupYellow);
-        yellow.setOnClickListener(new View.OnClickListener() {
+        mBtnYellow = (Button) v.findViewById(R.id.buttonGreenFollowupYellow);
+        mBtnYellow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.OnGreenFollowupClickedYellow(GreenFollowupDialogFragment.this);
             }
         });
 
-        Button red = (Button) v.findViewById(R.id.buttonGreenFollowupRed);
-        red.setOnClickListener(new View.OnClickListener() {
+        mBtnRed = (Button) v.findViewById(R.id.buttonGreenFollowupRed);
+        mBtnRed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.OnGreenFollowupClickedRed(GreenFollowupDialogFragment.this);

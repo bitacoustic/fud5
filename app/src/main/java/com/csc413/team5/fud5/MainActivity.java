@@ -207,6 +207,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     /**
+     * Dispatch onPause() to fragments.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected())
+            mGoogleApiClient.disconnect();
+    }
+
+    /**
      * Dispatch onResume() to fragments.  Note that for better inter-operation
      * with older versions of the platform, at the point of this call the
      * fragments attached to the activity are <em>not</em> resumed.  This means
@@ -218,16 +228,68 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Override
     protected void onResume() {
         super.onResume();
+        if (mGoogleApiClient != null & ServiceUtil.isNetworkAvailable(this))
+            mGoogleApiClient.reconnect();
 
-        String lastGreenID = AppSettingsHelper.getLastGreenRestaurantID();
-        if (lastGreenID.compareTo("") != 0) {
+        if (greenFollowupDialog == null || !greenFollowupDialog.isVisible()) {
             long lastGreenTime = AppSettingsHelper.getLastGreenRestaurantTimestamp();
-            greenFollowupDialog =
-                    GreenFollowupDialogFragment.getInstance(lastGreenID, lastGreenTime);
-            greenFollowupDialog.show(getFragmentManager(), "greenFollowupDialog");
-            // button click in dialog is handled by the dialog's listener methods implemented below
+            if (lastGreenTime > 0) {
+                long greenTimerExpiry = lastGreenTime
+                        + (AppSettingsHelper.getGreenFollowupInterval() * 3600000);
+                if (greenTimerExpiry < System.currentTimeMillis()) {
+                    String lastGreenID = AppSettingsHelper.getLastGreenRestaurantID();
+                    if (lastGreenID.compareTo("") != 0) {
+                        greenFollowupDialog =
+                                GreenFollowupDialogFragment.getInstance(lastGreenID, lastGreenTime);
+                        greenFollowupDialog.show(getFragmentManager(), "greenFollowupDialog");
+                        // button click in dialog is handled by the dialog's listener methods
+                        // implemented below
+                    }
+                }
+            }
         }
+
     }
+
+    /**
+     * Save all appropriate fragment state.
+     *
+     * @param outState
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        // save the state of the info dialog if it is visible
+        if (greenFollowupDialog != null && greenFollowupDialog.isVisible())
+            getFragmentManager().putFragment(outState, "greenFollowUp", greenFollowupDialog);
+    }
+
+    /**
+     * This method is called after {@link #onStart} when the activity is
+     * being re-initialized from a previously saved state, given here in
+     * <var>savedInstanceState</var>.  Most implementations will simply use {@link #onCreate}
+     * to restore their state, but it is sometimes convenient to do it here
+     * after all of the initialization has been done or to allow subclasses to
+     * decide whether to use your default implementation.  The default
+     * implementation of this method performs a restore of any view state that
+     * had previously been frozen by {@link #onSaveInstanceState}.
+     * <p/>
+     * <p>This method is called between {@link #onStart} and
+     * {@link #onPostCreate}.
+     *
+     * @param savedInstanceState the data most recently supplied in {@link #onSaveInstanceState}.
+     * @see #onCreate
+     * @see #onPostCreate
+     * @see #onResume
+     * @see #onSaveInstanceState
+     */
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        // restore the state of the info dialog if it was open while the activity was paused
+        // if it wasn't open this operation shouldn't affect the activity (mMoreInfoDialog == null)
+        greenFollowupDialog = (DialogFragment) getFragmentManager().getFragment(savedInstanceState,
+                "greenFollowUp");
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -344,6 +406,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
      */
     @Override
     public void OnGreenFollowupClickedGreen(DialogFragment dialog) {
+        ToastUtil.showLongToast(this, "Thanks for the feedback! You liked " + AppSettingsHelper
+                .getLastGreenRestaurantID() + ".");
         AppSettingsHelper.clearLastGreenRestaurant();
         Log.i(TAG, "Liked last green-listed restaurant; it remains in green list");
         greenFollowupDialog.dismiss();
@@ -355,6 +419,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
      */
     @Override
     public void OnGreenFollowupClickedYellow(DialogFragment dialog) {
+        ToastUtil.showLongToast(this, "Okay, we'll ask you about "
+                + AppSettingsHelper.getLastGreenRestaurantID() + " later.");
         AppSettingsHelper.setLastGreenRestaurantTimestampToNow();
         Log.i(TAG, "Reset timer on last green restaurant, will reprompt later");
         greenFollowupDialog.dismiss();
@@ -364,6 +430,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void OnGreenFollowupClickedRed(DialogFragment dialog) {
         // remove the restaurant from the green list and add it to the red list instead
         Restaurant r = new Restaurant();
+        ToastUtil.showLongToast(this, "Thanks for the feedback! We won't show you " +
+                AppSettingsHelper.getLastGreenRestaurantID() + " again.");
         r.setRestaurantName(AppSettingsHelper.getLastGreenRestaurantID());
         if (db.isRestaurantInList(r, Constants.GREEN_LIST))
             db.deleteRestaurantFromList(r, Constants.GREEN_LIST);

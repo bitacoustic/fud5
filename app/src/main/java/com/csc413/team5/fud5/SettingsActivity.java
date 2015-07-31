@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.csc413.team5.appdb.dbHelper;
 import com.csc413.team5.appdbtest.AppDbTestActivity;
@@ -42,6 +44,10 @@ public class SettingsActivity extends AppCompatActivity
 
     protected Button mBtnReset;
     protected Button mBtnLocationServices;
+
+    protected SeekBar mSeekBarFollowupInterval;
+    protected int mSeekBarFollowupProgress;
+    protected TextView mTxtFollowupInterval;
 
     // check boxes with associated info buttons and tooltips
     protected CheckBox mCheckBoxUserSettings;
@@ -246,6 +252,34 @@ public class SettingsActivity extends AppCompatActivity
                 mTooltipAllRestaurantHistory = tooltipView
                         .showToolTipForView(tooltip,
                                 findViewById(R.id.checkBoxAppSettingsRestaurant));
+            }
+        });
+
+        mSeekBarFollowupInterval = (SeekBar) findViewById(R.id.seekBarSettingsFollowupInterval);
+        mSeekBarFollowupProgress = AppSettingsHelper.getGreenFollowupInterval();
+        mSeekBarFollowupInterval.setProgress(mSeekBarFollowupProgress);
+        mTxtFollowupInterval = (TextView) findViewById(R.id.textViewSettingsFollowupIntervalText);
+        mTxtFollowupInterval.setText(mSeekBarFollowupProgress + " hours");
+        mSeekBarFollowupInterval.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mSeekBarFollowupProgress = progress;
+                if (mSeekBarFollowupProgress > 1)
+                    mTxtFollowupInterval.setText(mSeekBarFollowupProgress + " hours");
+                else if (mSeekBarFollowupProgress == 1)
+                    mTxtFollowupInterval.setText("1 hour");
+                else
+                    mTxtFollowupInterval.setText("none");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                AppSettingsHelper.setGreenFollowupInterval(mSeekBarFollowupProgress);
             }
         });
     }

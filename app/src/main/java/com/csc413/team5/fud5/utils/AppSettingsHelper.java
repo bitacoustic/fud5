@@ -90,6 +90,18 @@ public class AppSettingsHelper {
                 .apply();
     }
 
+    public static void setGreenFollowupInterval(int interval) {
+        userSettingsEditor.putInt("greenFollowupInterval", interval).apply();
+    }
+
+    public static int getGreenFollowupInterval() {
+        return userSettings.getInt("greenFollowupInterval",
+                Constants.DEFAULT_GREEN_FOLLOWUP_INTERVAL);
+    }
+
+    /**
+     * Clear all user preferences
+     */
     public static void clear() {
         userSettingsEditor.clear().commit();
     }
