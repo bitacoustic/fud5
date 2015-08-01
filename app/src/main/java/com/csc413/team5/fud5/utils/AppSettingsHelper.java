@@ -20,6 +20,10 @@ public class AppSettingsHelper {
         return null;
     }
 
+    public static boolean hasAgreedToEula() {
+        return userSettings.getBoolean("hasAgreedToEula", false);
+    }
+
     public static String getDefaultRadiusValue() {
         return String.valueOf(userSettings.getFloat(Constants.DEFAULT_RADIUS_KEY, 3.0f)).concat(" mi");
     }

@@ -27,7 +27,8 @@ public class NoResultsDialogFragment extends DialogFragment {
     }
 
     public static NoResultsDialogFragment getInstance(int displayWhen) {
-        instance = new NoResultsDialogFragment();
+        if (instance == null)
+            instance = new NoResultsDialogFragment();
 
         Bundle args = new Bundle();
         args.putInt("displayWhen", displayWhen);

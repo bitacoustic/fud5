@@ -32,6 +32,7 @@
     <string name="hint_default_location_search">e.g. 1 Market St, San Francisco</string>
     <string name="popup_loading_text">Looking for info…</string>
     <string name="activity_result_page_title_preload_text"> </string>
+    <string name="activity_result_page_toast_was_added_to_red_list">" was added to your ignored restaurants list."</string>
 
     <!-- Settings -->
     <string name="title_activity_user_preferences">Settings</string>
@@ -121,6 +122,14 @@
     <string name="title_activity_locu_menu">LocuMenuActivity</string>
     <string name="locu_search_id">64e0307ca073dccb5666</string>
 
+    <!-- MoreInfoDialogFragment dialog -->
+    <string name="fragment_more_info_open_seatme_link">Open SeatMe link</string>
+    <string name="fragment_more_info_title_distance">Distance</string>
+    <string name="fragment_more_info_title_categories">Categories</string>
+    <string name="fragment_more_info_title_address">Address</string>
+    <string name="fragment_more_info_title_phone_number">Phone number</string>
+    <string name="fragment_more_info_reserve_a_table">Reserve a table</string>
+
     <!-- No results fragment -->
     <string name="fragment_no_results_title">No results</string>
     <string name="fragment_no_results_body">We couldn\'t use the specified search parameters to find
@@ -176,7 +185,7 @@
     <string name="db_table_is_empty">Your ignored restaurant list is empty.</string>
 
     <!--Uncategorized-->
-    <string name="title_activity_result_page">How about...</string>
+    <string name="title_activity_result_page"> </string>
     <string name="title_activity_maps_test">Map</string>
     <string name="title_activity_restaurant_selector_test">RestaurantSelectorTestActivity</string>
     <string name="activity_application_settings_push_notifications_text">Push Notifications</string>
@@ -184,12 +193,7 @@
     <string name="activity_application_settings_app_updates_checkbox">App updates</string>
     <string name="toast_location_services_are_off">Location services are off</string>
     <string name="toast_network_unavailable">Network is unavailable</string>
-    <string name="activity_result_page_toast_was_added_to_red_list">" was added to your ignored restaurants list."</string>
-    <string name="fragment_more_info_reserve_a_table">Reserve a table</string>
-    <string name="fragment_more_info_open_seatme_link">Open SeatMe link</string>
-    <string name="fragment_more_info_title_distance">Distance</string>
-    <string name="fragment_more_info_title_categories">Categories</string>
-    <string name="fragment_more_info_title_address">Address</string>
-    <string name="fragment_more_info_title_phone_number">Phone number</string>
+    <string name="fragment_more_info_hours_title">Hours</string>
+    <string name="fragment_more_info_website_title">Website</string>
 
 </resources>

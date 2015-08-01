@@ -40,7 +40,8 @@ public class MoreInfoDialogFragment extends DialogFragment {
         if (r == null)
             return null;
 
-        instance = new MoreInfoDialogFragment();
+        if (instance == null)
+            instance = new MoreInfoDialogFragment();
 
         Bundle args = new Bundle();
         args.putSerializable("restaurant", r);
@@ -185,14 +186,16 @@ public class MoreInfoDialogFragment extends DialogFragment {
                 String hoursString = mRestaurant.getHours().toString();
                 // if hours string actually has hours to display
                 if (hoursString.length() > 112) {
-                    appendOutputText("Hours", Color.BLACK, 15, 10);
+                    appendOutputText(mContext.getString(R.string.fragment_more_info_hours_title),
+                            Color.BLACK, 15, 10);
                     appendOutputText(mRestaurant.getHours().toString());
                 }
             }
 
             // website
             if (mRestaurant.getLocuWebsiteUrl() != null) {
-                appendOutputText("Website", Color.BLACK, 15, 10);
+                appendOutputText(mContext.getString(R.string.fragment_more_info_website_title)
+                        , Color.BLACK, 15, 10);
                 TextView website = appendOutputText(mRestaurant.getLocuWebsiteUrl().toString(),
                         Color.BLUE, 13, 0);
                 website.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);

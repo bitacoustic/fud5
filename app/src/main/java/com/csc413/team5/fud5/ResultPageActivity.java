@@ -68,7 +68,7 @@ public class ResultPageActivity extends AppCompatActivity
     LocuApiKey mLocuKey;
     GetResultTask getResultTask;
     RestaurantList mResultList;
-    Restaurant mFirstResult, previousResult;
+    Restaurant mReadResult, mCurrentResult;
     boolean mAlreadyQueriedLocuThisResult;
     Bitmap nextImage;
 
@@ -91,20 +91,20 @@ public class ResultPageActivity extends AppCompatActivity
     // user presses the "Let's go!" button
     public void btnGreen(View v) {
         // if the restaurant is not already in green list, add it
-        if (!db.isRestaurantInList(previousResult, Constants.GREEN_LIST)) {
-            db.insertRestaurantToList(previousResult, Constants.GREEN_LIST);
-            Log.i(TAG, "Added " + previousResult.getBusinessName() + " to green list");
+        if (!db.isRestaurantInList(mCurrentResult, Constants.GREEN_LIST)) {
+            db.insertRestaurantToList(mCurrentResult, Constants.GREEN_LIST);
+            Log.i(TAG, "Added " + mCurrentResult.getBusinessName() + " to green list");
 
             // save a reference to this restaurant in order to later ask the user for feedback:
             //   - liked the restaurant: confirm addition to green list
             //   - didn't like the restaurant: remove from green list and add to red instaed
-            AppSettingsHelper.setLastGreenRestaurant(previousResult);
+            AppSettingsHelper.setLastGreenRestaurant(mCurrentResult);
         } else { // otherwise, don't add it & don't ask user for feedback later
-            Log.i(TAG, previousResult.getBusinessName() + " was already in green list");
+            Log.i(TAG, mCurrentResult.getBusinessName() + " was already in green list");
         }
 
         // launch Google Maps to provide navigation
-        Location destLoc = previousResult.getAddressMapable();
+        Location destLoc = mCurrentResult.getAddressMapable();
         double destLat = destLoc.getLatitude();
         double destLong = destLoc.getLongitude();
 
@@ -116,13 +116,13 @@ public class ResultPageActivity extends AppCompatActivity
     // user presses the "Maybe later..." button
     public void btnYellow(View v) {
         // if restaurant is not already in yellow list, add it
-        if (!db.isRestaurantInList(previousResult, Constants.YELLOW_LIST)) {
-            db.insertRestaurantToList(previousResult, Constants.YELLOW_LIST);
-            Log.i(TAG, "Added " + previousResult.getBusinessName() + " to yellow list");
+        if (!db.isRestaurantInList(mCurrentResult, Constants.YELLOW_LIST)) {
+            db.insertRestaurantToList(mCurrentResult, Constants.YELLOW_LIST);
+            Log.i(TAG, "Added " + mCurrentResult.getBusinessName() + " to yellow list");
         } else { // otherwise, update the timestamp by deleting and re-adding it
-            db.deleteRestaurantFromList(previousResult, Constants.YELLOW_LIST);
-            db.insertRestaurantToList(previousResult, Constants.YELLOW_LIST);
-            Log.i(TAG, previousResult.getBusinessName() + " was already in yellow list; updated " +
+            db.deleteRestaurantFromList(mCurrentResult, Constants.YELLOW_LIST);
+            db.insertRestaurantToList(mCurrentResult, Constants.YELLOW_LIST);
+            Log.i(TAG, mCurrentResult.getBusinessName() + " was already in yellow list; updated " +
                     "its timestamp");
         }
 
@@ -132,13 +132,13 @@ public class ResultPageActivity extends AppCompatActivity
     // user presses the "Always ignore" button
     public void btnRed(View v) {
         // if restaurant isn't already in red list, add it
-        if (!db.isRestaurantInList(previousResult, Constants.RED_LIST)) {
-            ToastUtil.showShortToast(this, previousResult.getBusinessName()
+        if (!db.isRestaurantInList(mCurrentResult, Constants.RED_LIST)) {
+            ToastUtil.showShortToast(this, mCurrentResult.getBusinessName()
                     + getString(R.string.activity_result_page_toast_was_added_to_red_list));
-            db.insertRestaurantToList(previousResult, Constants.RED_LIST);
-            Log.i(TAG, "Added " + previousResult.getBusinessName() + " to red list");
+            db.insertRestaurantToList(mCurrentResult, Constants.RED_LIST);
+            Log.i(TAG, "Added " + mCurrentResult.getBusinessName() + " to red list");
         } else { // otherwise, don't do anything
-            Log.i(TAG, previousResult.getBusinessName() + " was already in red list");
+            Log.i(TAG, mCurrentResult.getBusinessName() + " was already in red list");
         }
 
         displayNextResult(v);
@@ -152,7 +152,7 @@ public class ResultPageActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_page);
-        String title = TextGeneratorUtil.randomizeFromArray(getResources().getStringArray(R.array.results_title));
+//        String title = TextGeneratorUtil.randomizeFromArray(getResources().getStringArray(R.array.results_title));
 
         // save this context to use anywhere in the activity
         mContext = this;
@@ -161,7 +161,7 @@ public class ResultPageActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // action bar colors
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#43428A")));
-        getSupportActionBar().setTitle(Html.fromHtml("<font color = '#ECCD7F'>" + title + "</font>"));
+//        getSupportActionBar().setTitle(Html.fromHtml("<font color = '#ECCD7F'>" + title + "</font>"));
 
         // anchor for PopupWindows
         mTitle = (TextView) findViewById(R.id.restaurantName);
@@ -206,9 +206,10 @@ public class ResultPageActivity extends AppCompatActivity
         mLocuKey = new LocuApiKey(getApplicationContext().getResources()
                 .getString(R.string.locu_key));
 
+        // initialize activity-scope variables
         mResultList = null;
-        mFirstResult = null;
-        previousResult = null;
+        mReadResult = null;
+        mCurrentResult = null;
         mAlreadyQueriedLocuThisResult = false;
 
         // start background activity to get the results
@@ -307,14 +308,14 @@ public class ResultPageActivity extends AppCompatActivity
             boolean networkIsAvailable = ServiceUtil.isNetworkAvailable(mContext);
             if (!mAlreadyQueriedLocuThisResult && networkIsAvailable) {
                 // need to make an API call and network is available -- query Locu and display info
-                new GetMoreInfoTask().execute(mFirstResult);
+                new GetMoreInfoTask().execute(mReadResult);
                 mPopupLoadingInProgress.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
             } else if (!mAlreadyQueriedLocuThisResult) {
                 // need to make an API call but network is unavailable
                 ToastUtil.showShortToast(this, getString(R.string.toast_network_unavailable));
             } else { // mAlreadyQueriedLocuThisResult == true
                 // just show the info dialog with the information already available
-                new GetMoreInfoTask().execute(mFirstResult);
+                new GetMoreInfoTask().execute(mReadResult);
                 mPopupLoadingInProgress.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
             }
 
@@ -322,7 +323,7 @@ public class ResultPageActivity extends AppCompatActivity
 
         //Menu button
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_menu && mFirstResult != null) {
+        if (id == R.id.action_menu && mReadResult != null) {
             // don't proceed if a DisplayMenuTask is already in progress
             if (displayMenuTask != null &&
                     ( displayMenuTask.getStatus() == AsyncTask.Status.RUNNING
@@ -338,7 +339,7 @@ public class ResultPageActivity extends AppCompatActivity
 
             if (ServiceUtil.isNetworkAvailable(this)) {
                 displayMenuTask = new DisplayMenuTask();
-                displayMenuTask.execute(previousResult);
+                displayMenuTask.execute(mCurrentResult);
                 mPopupLoadingInProgress.showAtLocation(mTitle, Gravity.CENTER, 0, 0);
             } else {
                 ToastUtil.showShortToast(this, getString(R.string.toast_network_unavailable));
@@ -381,29 +382,38 @@ public class ResultPageActivity extends AppCompatActivity
             for(int i=0; i<mResultList.getSize(); i++){
                if(mResultList.getRestaurant(i).getRandomValue() > largest){
                    largest = mResultList.getRestaurant(i).getRandomValue();
-                   mFirstResult = mResultList.getRestaurant(i);
+                   mReadResult = mResultList.getRestaurant(i);
                }
             }
 
             //remove a result from a list
             for(int j=0; j<mResultList.getSize(); j++){
-                if(mResultList.getRestaurant(j) == mFirstResult){
-                   previousResult = mResultList.remove(j);
+                if(mResultList.getRestaurant(j) == mReadResult){
+                   mCurrentResult = mResultList.remove(j);
                 }
             }
 
-            //mFirstResult = mResultList.remove(0);
+            // Display random title bar text, e.g. "I suggest..." or "How about..."
+            try {
+                getSupportActionBar().setTitle(Html.fromHtml("<font color = '#ECCD7F'>"
+                        + TextGeneratorUtil.randomizeFromArray(getResources()
+                        .getStringArray(R.array.results_title)) +
+                        "</font>"));
+            } catch (NullPointerException e) { }
+
+
+            //mReadResult = mResultList.remove(0);
             mAlreadyQueriedLocuThisResult = false;
 
-            Log.i(TAG, "Drawing stars for " + mFirstResult.getBusinessName() + ": " + mFirstResult
+            Log.i(TAG, "Drawing stars for " + mReadResult.getBusinessName() + ": " + mReadResult
                     .getRating());
-            drawStars(mFirstResult.getRating());
+            drawStars(mReadResult.getRating());
             mMap.clear();
-            setUpMap(mFirstResult);
+            setUpMap(mReadResult);
             TextView title = (TextView)findViewById(R.id.restaurantName);
 
             // Display business name; reduce font size for long restaurant names
-            int businessNameLength = mFirstResult.getBusinessName().length();
+            int businessNameLength = mReadResult.getBusinessName().length();
             if (businessNameLength < 20) {
                 title.setTextSize(28);
             } else if (businessNameLength >= 20 && businessNameLength < 29) {
@@ -411,11 +421,11 @@ public class ResultPageActivity extends AppCompatActivity
             } else {
                 title.setTextSize(20);
             }
-            title.setText(mFirstResult.getBusinessName());
+            title.setText(mReadResult.getBusinessName());
 
             //Load the restaurant image
 
-            if (mFirstResult.getImageUrl() == null)
+            if (mReadResult.getImageUrl() == null)
                 ((ImageView)findViewById(R.id.imgRestaurant)).setImageResource(R.drawable.no_image);
             else if(nextImage!=null)
             {
@@ -424,7 +434,7 @@ public class ResultPageActivity extends AppCompatActivity
                 preload();
             }
             else {
-                String tempURL = mFirstResult.getImageUrl().toString();
+                String tempURL = mReadResult.getImageUrl().toString();
                 tempURL = tempURL.replace("ms.jpg", "o.jpg"); //this gets original image size
                 URL imageURL = new URL(tempURL);
 
@@ -454,10 +464,10 @@ public class ResultPageActivity extends AppCompatActivity
         for(int i=0; i<mResultList.getSize(); i++){
             if(mResultList.getRestaurant(i).getRandomValue() > largest){
                 largest = mResultList.getRestaurant(i).getRandomValue();
-                mFirstResult = mResultList.getRestaurant(i);
+                mReadResult = mResultList.getRestaurant(i);
             }
         }
-        Restaurant nextRestaurant = mFirstResult;
+        Restaurant nextRestaurant = mReadResult;
         //end of changes
         if(nextRestaurant.hasImageUrl())
         {   try{
@@ -690,7 +700,7 @@ public class ResultPageActivity extends AppCompatActivity
 
             if (mMoreInfoDialog != null && mMoreInfoDialog.isVisible())
                 mMoreInfoDialog.dismiss();
-            mMoreInfoDialog = MoreInfoDialogFragment.getInstance(previousResult);
+            mMoreInfoDialog = MoreInfoDialogFragment.getInstance(mCurrentResult);
             mMoreInfoDialog.show(getFragmentManager(), "moreInfo");
         }
     }

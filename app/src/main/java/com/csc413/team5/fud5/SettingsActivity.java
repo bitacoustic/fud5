@@ -39,7 +39,7 @@ import com.nhaarman.supertooltips.ToolTipView;
 
 public class SettingsActivity extends AppCompatActivity
         implements ApplicationSettingsDialogFragment.ApplicationSettingsConfirmListener {
-    private static final String TAG = "Settings";
+    private static final String TAG = "SettingsActivity";
     Context mContext;
 
     protected Button mBtnReset;
@@ -64,6 +64,10 @@ public class SettingsActivity extends AppCompatActivity
 
     // database and shared preferences
     private dbHelper db;
+
+    /* ************************ */
+    /* ACTIVITY ONCLICK METHODS */
+    /* ************************ */
 
     public void showAppInfo(View v) {
         DialogFragment infoDialog = AppInfoDialog.getInstance();
@@ -94,6 +98,10 @@ public class SettingsActivity extends AppCompatActivity
         DialogFragment modifyRedListDialog = ModifyRedListDialogFragment.newInstance();
         modifyRedListDialog.show(getFragmentManager(), "red_list");
     }
+
+    /* ************************** */
+    /* ACTIVITY LIFECYCLE METHODS */
+    /* ************************** */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -290,7 +298,7 @@ public class SettingsActivity extends AppCompatActivity
     }
 
     public void resetAppSettings() {
-        if (mCheckBoxUserSettings.isChecked()) {
+        if (mCheckBoxUserSettings.isChecked()) { // clear user settings
             AppSettingsHelper.clear();
 
             // Reset preferences to default
@@ -318,7 +326,7 @@ public class SettingsActivity extends AppCompatActivity
             mCheckBoxUserSettings.setChecked(false);
         }
 
-        if (mCheckBoxIgnoredRestaurantHistory.isChecked()) {
+        if (mCheckBoxIgnoredRestaurantHistory.isChecked()) { // clear ignored restaurant history
             db.wipeRestaurantList(Constants.RED_LIST);
             Log.i(TAG, "wiped red list (3)");
             ToastUtil.showShortToast(this, getString(R.string
@@ -326,7 +334,7 @@ public class SettingsActivity extends AppCompatActivity
             mCheckBoxIgnoredRestaurantHistory.setChecked(false);
         }
 
-        if (mCheckBoxAllRestaurantHistory.isChecked()) {
+        if (mCheckBoxAllRestaurantHistory.isChecked()) { // clear all restaurant history
             db.wipeRestaurantList(Constants.GREEN_LIST);
             Log.i(TAG, "wiped green list (1)");
             db.wipeRestaurantList(Constants.YELLOW_LIST);
@@ -350,7 +358,9 @@ public class SettingsActivity extends AppCompatActivity
                 getString(R.string.activity_user_preferences_nothing_was_reset));
     }
 
+    /* ************** */
     /* Dev playground */
+    /* ************** */
 
     public void showFoodSettings(View v) {
         Intent intent = new Intent(this, FoodPreferencesActivity.class);

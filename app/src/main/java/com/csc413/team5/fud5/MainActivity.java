@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected Location mLastLocation; // stores latitude, longitude of device's last known location
     protected Address mLastLocationAddress; // representation of lat,long as address
 
-    EditText locationInput;
-    EditText searchTermInput;
+    // user input fields
+    EditText locationInput, searchTermInput;
     Spinner radiusSpinner;
     RatingBar starRating;
 
@@ -63,6 +63,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     DialogFragment greenFollowupDialog;
     dbHelper db;
 
+    /* *************** */
+    /* ONCLICK METHODS */
+    /* *************** */
+
+    /**
+     * Behavior for the crosshair button next to the location textedit field.
+     * @param v calling view
+     */
     public void btnFindLocation(View v) {
         if (ServiceUtil.isLocationServicesOn(this)) {
             if (ServiceUtil.isNetworkAvailable(this)) {
@@ -89,6 +97,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
+    /**
+     * Behavior for the big Fud Plz button.
+     * @param v calling view
+     */
     public void btnFuDPlz(View v){
         // Save some preferences
         // default search term
@@ -143,6 +155,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         intent.putExtra("minRating", minRating);
         startActivity(intent);
     }
+
+    /* ************************** */
+    /* ACTIVITY LIFECYCLE METHODS */
+    /* ************************** */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -253,7 +269,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     /**
-     * Save all appropriate fragment state.
+     * Save state of green followup dialog fragment if it is active. This ensures it renders
+     * properly and the app does not crash onResume(). This method is called by onPause().
      *
      * @param outState
      */
@@ -265,23 +282,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     }
 
     /**
-     * This method is called after {@link #onStart} when the activity is
-     * being re-initialized from a previously saved state, given here in
-     * <var>savedInstanceState</var>.  Most implementations will simply use {@link #onCreate}
-     * to restore their state, but it is sometimes convenient to do it here
-     * after all of the initialization has been done or to allow subclasses to
-     * decide whether to use your default implementation.  The default
-     * implementation of this method performs a restore of any view state that
-     * had previously been frozen by {@link #onSaveInstanceState}.
-     * <p/>
-     * <p>This method is called between {@link #onStart} and
-     * {@link #onPostCreate}.
-     *
-     * @param savedInstanceState the data most recently supplied in {@link #onSaveInstanceState}.
-     * @see #onCreate
-     * @see #onPostCreate
-     * @see #onResume
-     * @see #onSaveInstanceState
+     * Restore state of green followup dialog. This method is called by onRestore().
      */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
@@ -299,6 +300,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         return true;
     }
 
+    /**
+     * Called when the gear icon is clicked.
+     * @param item  the title bar icon selected
+     * @return true if the button press was handled, otherwise false
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -308,14 +314,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            showUserPreferencesMenu();
+            showSettingsActivity();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void showUserPreferencesMenu(){
+    private void showSettingsActivity(){
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
@@ -329,9 +335,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         return true;
     }
 
-    /*********************
-     * Location services *
-     *********************/
+    /* ***************** */
+    /* LOCATION SERVICES */
+    /* ***************** */
 
     /**
      * Builds a GoogleApiClient, adds API LocationServices.
@@ -344,6 +350,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 .build();
     }
 
+    /**
+     * Gets the device's last known location (effectively, the device's current location at
+     * the time this method is called). Called when a connection to Google Play location services
+     * is established.
+     * @param bundle state/arguments
+     */
     @Override
     public void onConnected(Bundle bundle) {
         if (!ServiceUtil.isNetworkAvailable(this) || !ServiceUtil.isLocationServicesOn(this))
@@ -378,8 +390,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     /**
      * Re-establish a connection with GoogleApiClient services if the connected is suspended.
-     *
-     * @param i
      */
     @Override
     public void onConnectionSuspended(int i) {
@@ -391,8 +401,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     /**
      * See ConnectionResult documentation for possible error codes.
-     *
-     * @param connectionResult
      */
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
@@ -400,10 +408,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 + connectionResult.getErrorCode());
     }
 
+    /* ********************************** */
+    /* GREEN-LIST FOLLOWUP DIALOG BUTTONS */
+    /* ********************************** */
+
     /**
      * Restaurant remains in green list. Clear the restaurant from user settings so we don't ask
      * about it again.
-     * @param dialog
+     * @param dialog the calling dialog fragment
      */
     @Override
     public void OnGreenFollowupClickedGreen(DialogFragment dialog) {
@@ -416,7 +428,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     /**
      * Restaurant remains in user settings so user is reprompted at the next onResume().
-     * @param dialog
+     * @param dialog the calling dialog fragment
      */
     @Override
     public void OnGreenFollowupClickedYellow(DialogFragment dialog) {
@@ -427,6 +439,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         greenFollowupDialog.dismiss();
     }
 
+    /**
+     * Remove restaurant from green list and add it to red list.
+     * @param dialog the calling dialog fragment
+     */
     @Override
     public void OnGreenFollowupClickedRed(DialogFragment dialog) {
         // remove the restaurant from the green list and add it to the red list instead

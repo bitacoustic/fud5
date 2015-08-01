@@ -54,7 +54,8 @@ public class DisplayRestaurantMenusFragment extends DialogFragment {
         if (r == null)
             return null;
 
-        instance = new DisplayRestaurantMenusFragment();
+        if (instance == null)
+            instance = new DisplayRestaurantMenusFragment();
 
         Bundle args = new Bundle();
         args.putSerializable("restaurant", r);

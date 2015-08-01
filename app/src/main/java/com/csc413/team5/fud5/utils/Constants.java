@@ -16,6 +16,7 @@ public class Constants {
     public static final String LAST_GREEN_RESTAURANT_TIMESTAMP = "lastGreenRestaurantTimestamp";
 
     public static final int DEFAULT_GREEN_FOLLOWUP_INTERVAL = 3;
+    public static final int YELLOW_STALE_INTERVAL_IN_MILLIS = 604800000; // = 1 week
 
     // parameters for "No results" dialog
     public static final int NO_RESULTS = 0;
