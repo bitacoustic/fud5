@@ -51,8 +51,6 @@ import java.net.URL;
 import java.util.Locale;
 import java.util.Random;
 
-//import com.csc413.team5.fud5.OpenGoogleMapsActivity;
-
 public class ResultPageActivity extends AppCompatActivity
         implements MenuNotFoundDialogFragment.MenuNotFoundDialogListener {
     public static final String TAG = "ResultPageActivity";
@@ -61,8 +59,7 @@ public class ResultPageActivity extends AppCompatActivity
     private GoogleMap mMap;
 
     // user input passed from main activity
-    String location;
-    String searchTerm;
+    String location, searchTerm;
     int maxRadius;
     double minRating;
 
@@ -71,8 +68,7 @@ public class ResultPageActivity extends AppCompatActivity
     LocuApiKey mLocuKey;
     GetResultTask getResultTask;
     RestaurantList mResultList;
-    Restaurant mFirstResult;
-    Restaurant previousResult;
+    Restaurant mFirstResult, previousResult;
     boolean mAlreadyQueriedLocuThisResult;
     Bitmap nextImage;
 
@@ -80,9 +76,7 @@ public class ResultPageActivity extends AppCompatActivity
 
     // Dialogs and popups
     DisplayMenuTask displayMenuTask;
-    DialogFragment mDisplayRestaurantMenus;
-    DialogFragment mMenuNotFoundDialog;
-    DialogFragment mMoreInfoDialog;
+    DialogFragment mDisplayRestaurantMenus, mMenuNotFoundDialog, mMoreInfoDialog;
     PopupWindow mPopupLoadingInProgress;
 
     // Database
@@ -214,6 +208,7 @@ public class ResultPageActivity extends AppCompatActivity
 
         mResultList = null;
         mFirstResult = null;
+        previousResult = null;
         mAlreadyQueriedLocuThisResult = false;
 
         // start background activity to get the results
@@ -292,6 +287,7 @@ public class ResultPageActivity extends AppCompatActivity
         return true;
     }
 
+    // Define actions on selection of title bar icons
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -300,7 +296,7 @@ public class ResultPageActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //Back button
-        if(id == android.R.id.home) {
+        if (id == android.R.id.home) {
             finish();
             return true;
         }
@@ -382,12 +378,13 @@ public class ResultPageActivity extends AppCompatActivity
 
             //Grab restaurant with largest random value.
             int largest = 0;
-           for(int i=0; i<mResultList.getSize(); i++){
+            for(int i=0; i<mResultList.getSize(); i++){
                if(mResultList.getRestaurant(i).getRandomValue() > largest){
                    largest = mResultList.getRestaurant(i).getRandomValue();
                    mFirstResult = mResultList.getRestaurant(i);
                }
-           }
+            }
+
             //remove a result from a list
             for(int j=0; j<mResultList.getSize(); j++){
                 if(mResultList.getRestaurant(j) == mFirstResult){
@@ -555,7 +552,7 @@ public class ResultPageActivity extends AppCompatActivity
     private class GetResultTask extends AsyncTask<String, Void, RestaurantList> {
 
         @Override
-        protected RestaurantList doInBackground(String... params)  {
+        protected RestaurantList doInBackground(String... params) {
             try {
                 return new RestaurantApiClient.Builder(mYelpKey)
                         .location(location)
@@ -574,37 +571,21 @@ public class ResultPageActivity extends AppCompatActivity
         protected void onPostExecute(RestaurantList result) {
             mResultList = result;
             Random rand = new Random();
-            double  randomNum;
+            double randomNum;
+
             // dismiss loading popup
             if (mPopupLoadingInProgress.isShowing())
                 mPopupLoadingInProgress.dismiss();
 
-            for(int i=0; i<mResultList.getSize()-1; i++){
-                randomNum = rand.nextInt((100 - 1) + 1);
-                if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.YELLOW_LIST)) {
-                    Log.i(TAG,mResultList.getRestaurant(i).getBusinessName() + " is in Yellow List. " +
-                            "\nOld random number " + randomNum);
-                    randomNum = randomNum * 0.6;
-                }
-                if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.GREEN_LIST)) {
-                    Log.i(TAG,mResultList.getRestaurant(i).getBusinessName() + " is in Green List. Applying weight." +
-                            "\nOld random number " + randomNum);
-                    randomNum = randomNum * 1.15;
-                }
-                mResultList.getRestaurant(i).setRandomValue((int)randomNum);
-                //helps debug
-                Log.i(TAG,"Restaurant: " + mResultList.getRestaurant(i).getBusinessName()
-                        + " - Value: " + mResultList.getRestaurant(i).getRandomValue());
-            }
-
-
             // begin displaying results or tell user no results found
-            if (mResultList == null || mResultList.getSize() < 1) { // catch no results
+            if (mResultList == null /*|| mResultList.getSize() < 1*/) { // catch no results
                 DialogFragment noResultsDialog = NoResultsDialogFragment
                         .getInstance(Constants.NO_RESULTS);
                 noResultsDialog.setCancelable(false);
                 noResultsDialog.show(getFragmentManager(), "noResults");
-            } else {
+            } else { // results list is non-empty
+
+                // remove red-listed restaurants from result list
                 for (int i = 0; i < mResultList.getSize(); ) {
                     if (mResultList.getRestaurant(i).getRating() < minRating ||
                             db.isRestaurantInList(mResultList.getRestaurant(i), Constants.RED_LIST)) {
@@ -612,14 +593,32 @@ public class ResultPageActivity extends AppCompatActivity
                         if (removed == null) // check if restaurant was removed successfully
                             i++;
                         // otherwise don't iterate as next restaurant will be at this index
-                    }
-//                    else if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.YELLOW_LIST)){
-//                        int value = mResultList.getRestaurant(i).getRandomValue();
-//                        value = value *2;
-//                        mResultList.getRestaurant(i).setRandomValue(value);
-//                    }
-                    else
+                    } else
                         i++;
+                }
+
+                // Selection
+                for (int i = 0; i < mResultList.getSize(); i++) {
+                    randomNum = rand.nextInt((100 - 1) + 1);
+
+                    // apply weight if current is yellow-listed restaurant
+                    if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.YELLOW_LIST)) {
+                        Log.i(TAG, mResultList.getRestaurant(i).getBusinessName() + " is in Yellow List. " +
+                                "\nOld random number " + randomNum);
+                        randomNum = randomNum * 0.6;
+                    }
+
+                    // apply weight if current is green-listed restaurant
+                    if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.GREEN_LIST)) {
+                        Log.i(TAG, mResultList.getRestaurant(i).getBusinessName() + " is in Green List. Applying weight." +
+                                "\nOld random number " + randomNum);
+                        randomNum = randomNum * 1.15;
+                    }
+
+                    mResultList.getRestaurant(i).setRandomValue((int) randomNum);
+                    //helps debug
+                    Log.i(TAG, "Restaurant: " + mResultList.getRestaurant(i).getBusinessName()
+                            + " - Value: " + mResultList.getRestaurant(i).getRandomValue());
                 }
 
                 displayNextResult(findViewById(R.id.imgRestaurant));
