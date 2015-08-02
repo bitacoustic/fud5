@@ -127,6 +127,7 @@ public class Restaurant implements Serializable {
     /* Getters */
 
     /**
+     * Returns the unique Yelp ID of this venue
      * @return unique Yelp ID; can be used for back-end lists
      */
     public String getId() {
@@ -134,7 +135,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
-     * If the restaurant is permanently closed, we don't want to display it.
+     * Returns whether the restaurant is permanently closed.
      * @return true if the restaurant is *permanently* closed, otherwise false
      */
     public boolean isClosed() {
@@ -142,6 +143,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * Returns the name of the business
      * @return the name of the business
      */
     public String getBusinessName() {
@@ -149,22 +151,26 @@ public class Restaurant implements Serializable {
     }
 
     /**
-     * @return an Address object representing the location of the Restaurant (including physical
+     * Returns an Address object representing the location of the Restaurant (including physical
      *         address, latitude & longitude, and business phone number), or null
      *         if the information is not available
+     * @return an Address object
      */
     public Address getAddress() {
         return address;
     }
 
     /**
-     * @return address for display; might include cross-streets or other useful information
+     * Returns address for display; might include neighborhood, cross-streets or other useful
+     * information
+     * @return address for display
      */
     public String getAddressDisplay() {
         return addressDisplay;
     }
 
     /**
+     * Returns {@link android.location.Location} coordinate of restaurant
      * @return {@link android.location.Location} coordinate of restaurant
      */
     public Location getAddressMapable() {
@@ -172,6 +178,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * Returns {@link android.location.Location} coordinate of restaurant
      * @return {@link android.location.Location} coordinate of restaurant
      */
     public Location getLocation() {
@@ -179,6 +186,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * Returns phone number formatted for display
      * @return phone number formatted for display
      */
     public String getPhoneDisplay() {
@@ -187,7 +195,6 @@ public class Restaurant implements Serializable {
 
     /**
      * Returns phone number number formatted for device's Dialer
-     *
      * @return a URI, if there is a phone number for this business, null otherwise
      */
     public Uri getPhoneDialable() {
@@ -195,6 +202,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
+     * Returns URI for the business image
      * @return URI for the business image
      */
     public Uri getImageUrl() {
@@ -516,18 +524,36 @@ public class Restaurant implements Serializable {
         return locuName;
     }
 
+    /**
+     * Returns the restaurant's Facebook URL
+     * @return a URI containing the restaurant's Facebook URL, or null if this information is
+     * unavailable
+     */
     public Uri getFacebookUrl() {
         return facebookUrl;
     }
 
+    /**
+     * Returns whether the restaurant has a Facebook URL.
+     * @return true if the restaurant has a Facebook URL, otherwise false
+     */
     public boolean hasFacebookUrl() {
         return (facebookUrl != null);
     }
 
+    /**
+     * Returns the restaurant's Twitter ID
+     * @return a String representing the restaurant's Twitter ID, or an empty String if this
+     * information is unavailable
+     */
     public String getTwitterId() {
         return twitterId;
     }
 
+    /**
+     * Returns whether the restaurant has a Twitter ID
+     * @return true if the restaurant has a Twitter ID, otherwise false
+     */
     public boolean hasTwitterId() {
         return (twitterId.compareTo("") != 0);
     }

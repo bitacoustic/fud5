@@ -36,7 +36,7 @@ import java.util.Locale;
  * <p><pre>
  *     YelpApiKey yelpKey = new YelpApiKey(consumerKey, consumerSecret, tokenKey, tokenSecret);
  *     Restaurant result = new RestaurantApiClient.Builder(yelpKey)
- *         .id("ikes-place-san-francisco-4").build().getRestaurantByYelpID();
+ *         .id("ikes-place-san-francisco-4").build().getRestaurantByID();
  * </pre>
  * <p>
  * References:
@@ -118,11 +118,7 @@ public class RestaurantApiClient {
      * for usage examples.
      * <p>
      * <ul>
-     *     <li>{@link #location} - Defaults to "San Francisco, CA" if no explicit
-     *         location was passed
-     *     <li>{@link #cll} - a {@link Location} specifying a latitude and
-     *         longitude; if passed, this will be sent along with {@link #location} in order
-     *         to obtain more localized search results
+
      *     <li>{@link #term} - Search terms
      *     <li>{@link #limit} - Maximum number of desired results
      *     <li>{@link #offset} - Start results at a particular index. In combination with
@@ -171,22 +167,38 @@ public class RestaurantApiClient {
             this.id = "ikes-place-san-francisco-4";
         }
 
+        /**
+         * Defaults to "San Francisco, CA" if no explicit location was passed
+         * @param location a String containing, at minimum, a city
+         */
         public Builder location(String location) {
             this.location = location;
             return this;
         }
 
+        /**
+         * a {@link Location} specifying a latitude and longitude; if passed, this will be sent
+         * along with {@link #location} in order to obtain more localized search results
+         * @param cll a {@link Location} object
+         */
         public Builder cll(Location cll) {
             this.cll = cll;
             return this;
         }
 
+        /**
+         * Search terms, e.g. "tacos" or "Italian"
+         * @param term Search terms, e.g. "tacos" or "Italian"
+         */
         public Builder term(String term) {
             this.term = term;
             return this;
         }
 
         /**
+         * Maximum number of desired results; if this parameter is not specified, at most 20
+         * results are returned
+         * @param limit an integer from 1 to 20
          * @throws ParameterRangeException  if parameter is less than 1
          */
         public Builder limit(int limit) throws ParameterRangeException {
@@ -198,6 +210,9 @@ public class RestaurantApiClient {
         }
 
         /**
+         * Start results at a particular index. In combination with
+         *         {@link #limit}, this is useful for paginating results.
+         * @param offset a positive integer
          * @throws ParameterRangeException  if parameter is less than 1
          */
         public Builder offset(int offset) throws ParameterRangeException {
@@ -209,6 +224,11 @@ public class RestaurantApiClient {
         }
 
         /**
+         * Sort mode: 0=Best matched (default), 1=Distance, 2=Highest Rated
+         *         (see <a href="https://www.yelp.com/developers/documentation/v2/search_api">Yelp
+         *         Search API documentation</a> for more information)
+         * @param sort integer 0, 1, or 2; can be specified by enumerated value
+         *             RestaurantApiClient.SortBy.DISTANCE or BEST_MATCH or HIGHEST_RATED
          * @throws ParameterRangeException  if parameter is outide range 0-2
          */
         public Builder sort(int sort) throws ParameterRangeException {
@@ -220,9 +240,12 @@ public class RestaurantApiClient {
         }
 
         /**
-         * Append new category filters to the default ("restaurants,foodtrucks").
+         * A list of comma-delimited categories.
+         * Appends new category filters to the default ("restaurants,foodtrucks").
          * For example, passing "asian_fusion" will result in an overall category filter parameter
          * of "restaurants,foodtrucks,asian_fusion".
+         * See  <a href="https://www.yelp.com/developers/documentation/v2/all_category_list">
+         * Yelp Category List</a> for a master list.
          * @param categoryFilter a category filter as specified in Yelp API documentation
          * @return a RestaurantApiClient object to pass down the chain
          */
@@ -244,6 +267,9 @@ public class RestaurantApiClient {
         }
 
         /**
+         *  range from the search location (a {@link Location} or
+         *         the center of the search area) in meters; must be in range 1 - 40,0000
+         * @param radiusFilter an integer in range 1 - 40,0000
          * @throws ParameterRangeException  if parameter is outside range 1-40000
          */
         public Builder radiusFilter(int radiusFilter) throws ParameterRangeException {
@@ -255,6 +281,15 @@ public class RestaurantApiClient {
             return this;
         }
 
+//        public Builder dealsFilter(boolean dealsFilter) {
+//            this.dealsFilter = dealsFilter;
+//            return this;
+//        }
+
+        /**
+         * A unique Yelp ID.
+         * @param id a String containing a unique Yelp ID
+         */
         public Builder id(String id) {
             this.id = id;
             return this;
@@ -367,7 +402,7 @@ public class RestaurantApiClient {
      * @throws IOException   if JSON text can't be parsed into JSONObject or JSONArray
      * @throws JSONException if JSONObject or JSONArray encountered a problem
      */
-    public Restaurant getRestaurantByYelpID() throws IOException, JSONException {
+    public Restaurant getRestaurantByID() throws IOException, JSONException {
         String resultString;
         Restaurant result;
         // create OAuth request

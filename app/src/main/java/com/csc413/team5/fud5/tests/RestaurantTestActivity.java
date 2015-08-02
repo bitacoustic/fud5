@@ -61,7 +61,7 @@ public class RestaurantTestActivity extends ActionBarActivity {
             RestaurantApiClient rClient = new RestaurantApiClient.Builder(yelpKey)
                     .id("new-tsing-tao-restaurant-san-francisco").build();
             try {
-                someRestaurant = rClient.getRestaurantByYelpID();
+                someRestaurant = rClient.getRestaurantByID();
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
