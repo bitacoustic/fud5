@@ -16,7 +16,7 @@ import com.csc413.team5.fud5.dialogs.DisplayRestaurantMenusFragment;
 import com.csc413.team5.fud5.dialogs.MenuNotFoundDialogFragment;
 import com.csc413.team5.fud5.R;
 import com.csc413.team5.restaurantapiwrapper.LocuApiKey;
-import com.csc413.team5.restaurantapiwrapper.LocuExtension;
+import com.csc413.team5.restaurantapiwrapper.MenuAndHoursExtension;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
 
 public class LocuMenuTestActivity extends Activity
@@ -34,7 +34,7 @@ public class LocuMenuTestActivity extends Activity
 
         mTxtDebug = (TextView) findViewById(R.id.textViewDebug);
 
-        // create a LocuApiKey to pass to the LocuExtension
+        // create a LocuApiKey to pass to the MenuAndHoursExtension
         mLocuKey = new LocuApiKey(getApplicationContext().getResources()
                 .getString(R.string.locu_key));
 
@@ -141,8 +141,8 @@ public class LocuMenuTestActivity extends Activity
         @Override
         protected Restaurant doInBackground(String... params) {
             mRestaurant = new Restaurant(); // contains only default parameters
-            LocuExtension locu = new LocuExtension(mLocuKey);
-            locu.updateFromMatchedLocuId(mRestaurant, params[0]);
+            MenuAndHoursExtension locu = new MenuAndHoursExtension(mLocuKey);
+            locu.updateFromMatchedId(mRestaurant, params[0]);
             return mRestaurant;
         }
 

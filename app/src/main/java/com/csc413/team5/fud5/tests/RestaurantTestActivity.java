@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.csc413.team5.fud5.R;
 import com.csc413.team5.restaurantapiwrapper.LocuApiKey;
-import com.csc413.team5.restaurantapiwrapper.LocuExtension;
+import com.csc413.team5.restaurantapiwrapper.MenuAndHoursExtension;
 import com.csc413.team5.restaurantapiwrapper.MapBounds;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
 import com.csc413.team5.restaurantapiwrapper.RestaurantApiClient;
@@ -80,7 +80,7 @@ public class RestaurantTestActivity extends ActionBarActivity {
             // WARNING: Locu functionality isn't yet fully implemented
             LocuApiKey locuKey = new LocuApiKey(getApplicationContext().getResources()
                     .getString(R.string.locu_key));
-            LocuExtension locu = new LocuExtension(locuKey);
+            MenuAndHoursExtension locu = new MenuAndHoursExtension(locuKey);
 
             // attempt a match for the restaurant in Locu and update its information if found;
             // the locu ID will be returned if a match was found, otherwise locuId's contents

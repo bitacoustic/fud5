@@ -481,9 +481,9 @@ public class Restaurant implements Serializable {
 
 
     /**
-     * Returns the matching Locu ID if the {@link LocuExtension} was used
+     * Returns the matching Locu ID if the {@link MenuAndHoursExtension} was used
      *         and successfully found a match; otherwise ""
-     * @return the matching Locu ID for the Restaurant, if the {@link LocuExtension} was used
+     * @return the matching Locu ID for the Restaurant, if the {@link MenuAndHoursExtension} was used
      *         and successfully found a match; otherwise ""
      */
     public String getLocuId() {
@@ -491,7 +491,7 @@ public class Restaurant implements Serializable {
     }
 
     /**
-     * Returns {@link Menus} for the restaurant obtained through Locu if the {@link LocuExtension}
+     * Returns {@link Menus} for the restaurant obtained through Locu if the {@link MenuAndHoursExtension}
      * was used on the Restaurant and a menu was available, otherwise null.
      * @return a {@link Menus} object or null if this information is unavailable
      */

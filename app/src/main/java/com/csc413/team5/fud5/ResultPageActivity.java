@@ -35,7 +35,7 @@ import com.csc413.team5.fud5.utils.ServiceUtil;
 import com.csc413.team5.fud5.utils.TextGeneratorUtil;
 import com.csc413.team5.fud5.utils.ToastUtil;
 import com.csc413.team5.restaurantapiwrapper.LocuApiKey;
-import com.csc413.team5.restaurantapiwrapper.LocuExtension;
+import com.csc413.team5.restaurantapiwrapper.MenuAndHoursExtension;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
 import com.csc413.team5.restaurantapiwrapper.RestaurantApiClient;
 import com.csc413.team5.restaurantapiwrapper.RestaurantList;
@@ -650,7 +650,7 @@ public class ResultPageActivity extends AppCompatActivity
             // menu information (e.g. the menus button has already been pressed this result)
             if (!mAlreadyQueriedLocuThisResult) {
                 Log.i(TAG, "Attempting to find a menu for " + restaurant.getBusinessName());
-                new LocuExtension(mLocuKey).updateIfHasMenu(restaurant);
+                new MenuAndHoursExtension(mLocuKey).updateIfHasMenu(restaurant);
                 mAlreadyQueriedLocuThisResult = true;
             }
 
@@ -686,7 +686,7 @@ public class ResultPageActivity extends AppCompatActivity
 
             if (!mAlreadyQueriedLocuThisResult) {
                 Log.i(TAG, "Attempting to find open hours for " + r.getBusinessName());
-                new LocuExtension(mLocuKey).updateIfHasMenu(r);
+                new MenuAndHoursExtension(mLocuKey).updateIfHasMenu(r);
                 mAlreadyQueriedLocuThisResult = true;
             }
 

@@ -11,18 +11,18 @@ import org.scribe.model.Response;
 import org.scribe.model.Verb;
 
 /**
- * Locu extension for {@link RestaurantApiClient}; WARNING: not yet fully implemented -- currently
- * only obtains open hours, if available.
+ * Locu extension for {@link RestaurantApiClient} which obtains menus, open hours, and restaurant's
+ * Twitter ID and Facebook URL.
  * <p>
  * Created on 7/2/2015.
  *
  * @author Eric C. Black
  */
-public class LocuExtension {
-    private static final String TAG = "LocuExtension";
+public class MenuAndHoursExtension {
+    private static final String TAG = "MenuAndHoursExtension";
     private final LocuApiKey key;
 
-    public LocuExtension(LocuApiKey key) {
+    public MenuAndHoursExtension(LocuApiKey key) {
         this.key = key;
     }
 
@@ -35,18 +35,18 @@ public class LocuExtension {
      * </ul>
      * <p>The Restaurant will be updated in place to reflect the additional information. Returns
      * the unique Locu ID if a match was found, or an empty String ("") if a match was not found,
-     * as in {@link #getLocuId(Restaurant)}
+     * as in {@link #getId(Restaurant)}
      * @param r a Restaurant object
      * @return a String containing the unique Locu ID of the match, or "" if a match was not
      *         found
      */
     public String update(Restaurant r) {
-        String id = getLocuId(r);
+        String id = getId(r);
         if (id.compareTo("") == 0) // match not found
             return id;              // don't update Restaurant
 
         r.locuId = id;
-        updateFromMatchedLocuId(r, id);
+        updateFromMatchedId(r, id);
 
         return id;
     }
@@ -60,18 +60,18 @@ public class LocuExtension {
      * </ul>
      * <p>The Restaurant will be updated in place to reflect the additional information. Returns
      * the unique Locu ID if a match was found, or an empty String ("") if a match was not found,
-     * as in {@link #getLocuId(Restaurant)}
+     * as in {@link #getId(Restaurant)}
      * @param r a Restaurant object
      * @return a String containing the unique Locu ID of the match, or "" if a match was not
      *         found
      */
     public String updateIfHasMenu(Restaurant r) {
-        String id = getLocuIdIfHasMenu(r);
+        String id = getIdIfHasMenu(r);
         if (id.compareTo("") == 0) // match not found
             return id;              // don't update Restaurant
 
         r.locuId = id;
-        updateFromMatchedLocuId(r, id);
+        updateFromMatchedId(r, id);
 
         return id;
     }
@@ -84,7 +84,7 @@ public class LocuExtension {
      * @return a Locu ID if match was found or if it is already stored in the Restaurant,
      *         "" if ID information is otherwise unavailable
      */
-    public String getLocuId(Restaurant r) {
+    public String getId(Restaurant r) {
 
         String rName = r.name;
         int indexNameFirstSpace = rName.indexOf(' ');
@@ -145,7 +145,7 @@ public class LocuExtension {
      * @return a Locu ID if match was found or if it is already stored in the Restaurant,
      *         "" if ID information is otherwise unavailable
      */
-    public String getLocuIdIfHasMenu(Restaurant r) {
+    public String getIdIfHasMenu(Restaurant r) {
 
         String rName = r.name;
         int indexNameFirstSpace = rName.indexOf(' ');
@@ -208,7 +208,7 @@ public class LocuExtension {
      * @param r   {@link Restaurant}
      * @param id  a Locu venue ID
      */
-    public void updateFromMatchedLocuId(Restaurant r, String id) {
+    public void updateFromMatchedId(Restaurant r, String id) {
         String url = "http://api.locu.com/v1_0/venue/" + id + "/?api_key=" + key.getKey();
         OAuthRequest request = new OAuthRequest(Verb.GET, url);
         Log.i(TAG, "Sending Locu request: " + request.getUrl());
@@ -232,7 +232,7 @@ public class LocuExtension {
                     case "objects":
                         JSONArray inObjects = in.getJSONArray("objects");
                         JSONObject inObjectsVenue = inObjects.getJSONObject(0);
-                        updateFromMatchedLocuIdHelper(inObjectsVenue, r);
+                        updateFromMatchedIdHelper(inObjectsVenue, r);
                     default:
                         break;
                 } // end switch
@@ -243,14 +243,14 @@ public class LocuExtension {
         }
 
         // default: JSONObject is null; don't update Restaurant
-    } // end updateFromMatchedLocuId()
+    } // end updateFromMatchedId()
 
     /**
-     * Helper for updateFromMatchedLocuId()
+     * Helper for updateFromMatchedId()
      * @param in single object in "objects" field of Locu venue detail as JSONObject
      * @param r  a Restaurant
      */
-    private void updateFromMatchedLocuIdHelper(JSONObject in, Restaurant r) {
+    private void updateFromMatchedIdHelper(JSONObject in, Restaurant r) {
         if (in.has("menus")) {
             JSONArray inMenus = null;
             Menus menus = null;
@@ -342,10 +342,10 @@ public class LocuExtension {
             }
         }
 
-    } // end updateFromMatchedLocuIdHelper()
+    } // end updateFromMatchedIdHelper()
 
     /**
-     * Helper for updateFromMatchedLocuIdHelper()
+     * Helper for updateFromMatchedIdHelper()
      * @param in     single menu in "menus" field of Locu venue detail as JSONObject
      */
     private Menu updateMenuHelper(JSONObject in) {
