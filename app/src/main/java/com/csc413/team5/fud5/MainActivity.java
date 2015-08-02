@@ -113,8 +113,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         String location = ((EditText) findViewById(R.id.txtLocation)).getText().toString();
         // appending a minimum search term of food; anything else that the user may enter is
         // optional
-        String searchTerm = "food, " + ((EditText) findViewById(R.id.txtSearchTerm)).getText()
-                .toString();
+
+        String searchTerm;
+        // if empty search term
+        if (((EditText) findViewById(R.id.txtSearchTerm)).getText()
+                .toString().equals("")) {
+            // append food
+            searchTerm = "food, " + ((EditText) findViewById(R.id.txtSearchTerm)).getText()
+                    .toString();
+        } else {
+            searchTerm = ((EditText) findViewById(R.id.txtSearchTerm)).getText()
+                    .toString();
+        }
+
+        ToastUtil.showShortToast(this, searchTerm);
 
         // Check for empty location field (location services are likely off). Show tooltip with
         // help text
