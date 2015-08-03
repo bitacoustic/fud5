@@ -106,6 +106,21 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
+        android:text="Time Travel"
+        android:id="@+id/orangeButton"
+        android:clickable="true"
+        android:background="#FFA500"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:focusable="false"
+        android:onClick="btnOrange"
+        android:stateListAnimator="@null"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
         android:text="@string/yellow"
         android:id="@+id/yellowButton"
         android:clickable="true"

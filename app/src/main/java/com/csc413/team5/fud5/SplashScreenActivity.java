@@ -21,6 +21,9 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import static android.view.WindowManager.LayoutParams;
+import android.view.View;
+import android.widget.ImageView;
+
 
 public class SplashScreenActivity extends Activity
         implements AskToUseLocationDialogFragment.NoticeDialogListener {
@@ -165,5 +168,8 @@ public class SplashScreenActivity extends Activity
         Log.i(TAG, "Splash finished, sending to main activity");
         startActivity(intent);
         overridePendingTransition(0,0);
+    }
+    public void tapLogo(View v) {
+        ((ImageView)findViewById(R.id.imgLogo)).setImageResource(R.drawable.fud5logo_lobster);
     }
 }

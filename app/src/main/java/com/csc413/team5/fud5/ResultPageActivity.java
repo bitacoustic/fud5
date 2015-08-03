@@ -113,6 +113,12 @@ public class ResultPageActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    // user presses the "Rick Roll!" button
+    public void btnOrange(View v) {
+        ToastUtil.showShortToast(this, "Destination set to 1987.");
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=dQw4w9WgXcQ")));
+    }
+
     // user presses the "Maybe later..." button
     public void btnYellow(View v) {
         // if restaurant is not already in yellow list, add it
