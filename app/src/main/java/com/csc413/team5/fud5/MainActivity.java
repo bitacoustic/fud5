@@ -126,8 +126,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     .toString();
         }
 
-        ToastUtil.showShortToast(this, searchTerm);
-
         // Check for empty location field (location services are likely off). Show tooltip with
         // help text
         if (location.compareTo("") == 0) {

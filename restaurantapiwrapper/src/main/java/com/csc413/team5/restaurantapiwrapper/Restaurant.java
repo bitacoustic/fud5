@@ -27,7 +27,7 @@ public class Restaurant implements Serializable {
     protected String id;
     protected boolean isClosed;
 
-    protected String name;
+    protected String name;  // database
 
     protected Address address;
     protected String addressDisplay;
@@ -75,10 +75,11 @@ public class Restaurant implements Serializable {
     protected OpenHours hours;
     protected boolean hasHours;
 
-    //for randomization
+    // for randomization
     int weight;
 
-
+    // OpenWeatherMap
+    protected String weather;
 
     /* Constructors */
 
@@ -120,6 +121,7 @@ public class Restaurant implements Serializable {
         twitterId = "";
         hours = new OpenHours();
         hasHours = false;
+        weather = "";
     }
 
 
@@ -592,12 +594,21 @@ public class Restaurant implements Serializable {
         return hasHours;
     }
 
-
-    // TEST to get current version of db code to work
+    /**
+     * Sets the restaurant's name to be used for database
+     */
     public void setRestaurantName(String name) {
         this.name = name;
     }
 
+    /**
+     * Returns the current weather around the Restaurant
+     * @return a String that describes the current weather around the Restaurant
+     */
+    // weather
+    public String getWeather() {
+        return weather;
+    }
 
     /**
      * @return a String representation of a Restaurant object
@@ -638,6 +649,7 @@ public class Restaurant implements Serializable {
                 ",\n twitterId='" + twitterId + '\'' +
                 ",\n hours=" + hours +
                 ",\n hasHours=" + hasHours +
+                ",\n weather=" + weather +
                 '}';
     }
 

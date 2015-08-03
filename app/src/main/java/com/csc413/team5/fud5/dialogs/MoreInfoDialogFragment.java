@@ -219,6 +219,14 @@ public class MoreInfoDialogFragment extends DialogFragment {
             linearLayout.addView(locuLogo);
         }
 
+        // if weather information exists, display it
+        if (!mRestaurant.getWeather().equals("")) {
+            appendOutputText(mContext.getString(R.string.fragment_more_info_title_weather),
+                    Color.BLACK, 15, 10);
+            String currentWeather = mRestaurant.getWeather();
+            appendOutputText(currentWeather);
+        }
+
         return v;
     }
 

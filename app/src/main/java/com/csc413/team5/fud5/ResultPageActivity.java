@@ -39,6 +39,8 @@ import com.csc413.team5.restaurantapiwrapper.MenuAndHoursExtension;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
 import com.csc413.team5.restaurantapiwrapper.RestaurantApiClient;
 import com.csc413.team5.restaurantapiwrapper.RestaurantList;
+import com.csc413.team5.restaurantapiwrapper.WeatherApiKey;
+import com.csc413.team5.restaurantapiwrapper.WeatherExtension;
 import com.csc413.team5.restaurantapiwrapper.YelpApiKey;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -66,6 +68,7 @@ public class ResultPageActivity extends AppCompatActivity
     // API query
     YelpApiKey mYelpKey;
     LocuApiKey mLocuKey;
+    WeatherApiKey mOpenWeatherMapApiKey;
     GetResultTask getResultTask;
     RestaurantList mResultList;
     Restaurant mReadResult, mCurrentResult;
@@ -205,6 +208,7 @@ public class ResultPageActivity extends AppCompatActivity
                 getApplicationContext().getResources().getString(R.string.yelp_token_secret) );
         mLocuKey = new LocuApiKey(getApplicationContext().getResources()
                 .getString(R.string.locu_key));
+        mOpenWeatherMapApiKey = new WeatherApiKey(getApplicationContext().getResources().getString(R.string.open_weather_map_key));
 
         // initialize activity-scope variables
         mResultList = null;
@@ -684,11 +688,15 @@ public class ResultPageActivity extends AppCompatActivity
         protected Restaurant doInBackground(Restaurant... params) {
             Restaurant r = params[0];
 
+            // Query Locu
             if (!mAlreadyQueriedLocuThisResult) {
                 Log.i(TAG, "Attempting to find open hours for " + r.getBusinessName());
                 new MenuAndHoursExtension(mLocuKey).updateIfHasMenu(r);
                 mAlreadyQueriedLocuThisResult = true;
             }
+
+            // Query OpenWeatherMap
+            new WeatherExtension(mOpenWeatherMapApiKey).updateRestaurantWeather(r);
 
             return r;
         }
