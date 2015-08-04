@@ -15,6 +15,7 @@ import com.csc413.team5.fud5.R;
 import com.csc413.team5.fud5.utils.Constants;
 import com.csc413.team5.fud5.utils.ServiceUtil;
 import com.csc413.team5.fud5.utils.ToastUtil;
+import com.csc413.team5.restaurantapiwrapper.DistanceUnit;
 import com.csc413.team5.restaurantapiwrapper.Restaurant;
 import com.csc413.team5.restaurantapiwrapper.RestaurantApiClient;
 import com.csc413.team5.restaurantapiwrapper.RestaurantList;
@@ -125,6 +126,15 @@ public class SelectorDemoResultsActivity extends AppCompatActivity {
 
             mLinearLayoutResults.removeView(loading);
 
+            appendOutputHeading("Search parameters");
+            appendOutputText("Location: " + location);
+            appendOutputText("Search term(s): " + searchTerm);
+            appendOutputText("Max radius: " + maxRadius + " m ("
+                    + RestaurantApiClient.convertDistanceUnits((double)maxRadius,
+                    DistanceUnit.METERS, DistanceUnit.MILES) + " miles)");
+            appendOutputText("Min rating: " + minRating + " stars");
+
+
             if (mResultList == null) {
                 appendOutputText("No results");
                 return;
@@ -133,9 +143,11 @@ public class SelectorDemoResultsActivity extends AppCompatActivity {
             appendOutputHeading("Step 0: Yelp query result");
             displayList(mResultList);
 
-            appendOutputHeading("Step 1: Remove red-listed restaurants from results");
+            appendOutputHeading("Step 1: Remove from results any red-listed restaurants or " +
+                    "restaurants below the user-specified minimum rating");
             for (int i = 0; i < mResultList.getSize(); ) {
-                if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.RED_LIST)) {
+                if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.RED_LIST)
+                        || mResultList.getRestaurant(i).getRating() < minRating) {
                     Restaurant removed = mResultList.removeRestaurant(i);
                     if (removed == null) // check if restaurant was removed successfully
                         i++;
