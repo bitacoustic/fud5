@@ -18,6 +18,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -48,6 +49,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.Locale;
 import java.util.Random;
 
@@ -73,6 +75,7 @@ public class ResultPageActivity extends AppCompatActivity
     Bitmap nextImage;
 
     TextView mTitle;
+    Button btnYellow, btnRed;
 
     // Dialogs and popups
     DisplayMenuTask displayMenuTask;
@@ -90,6 +93,10 @@ public class ResultPageActivity extends AppCompatActivity
 
     // user presses the "Let's go!" button
     public void btnGreen(View v) {
+        // hide the yellow and red buttons as user has committed to the current restaurant
+        btnYellow.setVisibility(View.INVISIBLE);
+        btnRed.setVisibility(View.INVISIBLE);
+
         // if the restaurant is not already in green list, add it
         if (!db.isRestaurantInList(mCurrentResult, Constants.GREEN_LIST)) {
             db.insertRestaurantToList(mCurrentResult, Constants.GREEN_LIST);
@@ -112,8 +119,6 @@ public class ResultPageActivity extends AppCompatActivity
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         // open a Google Maps URL with the user's preferred application
         startActivity(intent);
-        // upon return, user will be in main activity
-        finish();
     }
 
     // user presses the "Maybe later..." button
@@ -179,6 +184,9 @@ public class ResultPageActivity extends AppCompatActivity
         // in progress)
         mPopupLoadingInProgress.setOutsideTouchable(false);
         mPopupLoadingInProgress.setFocusable(true);
+
+        btnYellow = (Button) findViewById(R.id.yellowButton);
+        btnRed = (Button) findViewById(R.id.redButton);
 
         // make the Yelp logo unobtrusively small
         ImageView yelpAttributionLogo = (ImageView) findViewById(R.id.imageViewResultPageYelpLogo);
@@ -613,19 +621,22 @@ public class ResultPageActivity extends AppCompatActivity
                 // Selection
                 for (int i = 0; i < mResultList.getSize(); i++) {
                     randomNum = rand.nextInt((100 - 1) + 1);
-
-                    // apply weight if current is yellow-listed restaurant
-                    if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.YELLOW_LIST)) {
-                        Log.i(TAG, mResultList.getRestaurant(i).getBusinessName() + " is in Yellow List. " +
-                                "\nOld random number " + randomNum);
-                        randomNum = randomNum * 0.6;
-                    }
+                    Restaurant r = mResultList.getRestaurant(i);
 
                     // apply weight if current is green-listed restaurant
-                    if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.GREEN_LIST)) {
-                        Log.i(TAG, mResultList.getRestaurant(i).getBusinessName() + " is in Green List. Applying weight." +
-                                "\nOld random number " + randomNum);
+                    if (db.isRestaurantInList(r, Constants.GREEN_LIST)) {
                         randomNum = randomNum * 1.15;
+                    }
+                    // apply weight if current is yellow-listed restaurant
+                    else if (db.isRestaurantInList(r, Constants.YELLOW_LIST)) {
+                        Timestamp timestamp = Timestamp.valueOf(db.getRestaurantTimeStampFromList(r,
+                                Constants.YELLOW_LIST));
+                        long timeElapsed = System.currentTimeMillis() - timestamp.getTime();
+                        // weight is linear with timestamp; if the restaurant was just added to the
+                        // yellow list it receives a weight multiplier of 0.6; if it was added a
+                        // week ago (the cutoff time at which it's removed from the list) it is
+                        // essentially unweighted
+                        randomNum = (randomNum * 0.6) + (timeElapsed * 6.6137566E-9);
                     }
 
                     mResultList.getRestaurant(i).setRandomValue((int) randomNum);

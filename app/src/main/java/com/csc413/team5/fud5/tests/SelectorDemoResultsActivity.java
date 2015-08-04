@@ -20,6 +20,7 @@ import com.csc413.team5.restaurantapiwrapper.RestaurantApiClient;
 import com.csc413.team5.restaurantapiwrapper.RestaurantList;
 import com.csc413.team5.restaurantapiwrapper.YelpApiKey;
 
+import java.sql.Timestamp;
 import java.util.Random;
 
 public class SelectorDemoResultsActivity extends AppCompatActivity {
@@ -30,6 +31,7 @@ public class SelectorDemoResultsActivity extends AppCompatActivity {
     dbHelper db;
 
     LinearLayout mLinearLayoutResults;
+    TextView loading;
 
     String location, searchTerm;
     int maxRadius;
@@ -51,6 +53,10 @@ public class SelectorDemoResultsActivity extends AppCompatActivity {
         db = new dbHelper(this, null, null, 1);
 
         mLinearLayoutResults = (LinearLayout) findViewById(R.id.linearLayoutRSDResults);
+        loading = new TextView(this);
+        loading.setTextSize(16);
+        loading.setText("Getting results & rendering output ...");
+        mLinearLayoutResults.addView(loading);
 
         Intent i = getIntent();
         location = i.getStringExtra("location");
@@ -117,6 +123,8 @@ public class SelectorDemoResultsActivity extends AppCompatActivity {
             Random rand = new Random();
             double randomNum;
 
+            mLinearLayoutResults.removeView(loading);
+
             if (mResultList == null) {
                 appendOutputText("No results");
                 return;
@@ -141,25 +149,47 @@ public class SelectorDemoResultsActivity extends AppCompatActivity {
             appendOutputText("Yellow-listed restaurants are demoted linearly with timestamp");
             appendOutputText("Green-listed restaurants are promoted by a constant factor");
             for (int i = 0; i < mResultList.getSize(); i++) {
-                randomNum = rand.nextInt((100 - 1) + 1);
-
-                // apply weight if current is yellow-listed restaurant
-                if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.YELLOW_LIST)) {
-                    Log.i(TAG, mResultList.getRestaurant(i).getBusinessName() + " is in Yellow List. " +
-                            "\nOld random number " + randomNum);
-                    randomNum = randomNum * 0.6;
-                }
+                double oldnum;
+                oldnum = randomNum = rand.nextInt((100 - 1) + 1);
+                Restaurant r = mResultList.getRestaurant(i);
 
                 // apply weight if current is green-listed restaurant
                 if (db.isRestaurantInList(mResultList.getRestaurant(i), Constants.GREEN_LIST)) {
-                    Log.i(TAG, mResultList.getRestaurant(i).getBusinessName() + " is in Green List. Applying weight." +
-                            "\nOld random number " + randomNum);
                     randomNum = randomNum * 1.15;
+                }
+                // apply weight if current is yellow-listed restaurant
+                else if (db.isRestaurantInList(r, Constants.YELLOW_LIST)) {
+                    Timestamp timestamp = Timestamp.valueOf(db.getRestaurantTimeStampFromList(r,
+                            Constants.YELLOW_LIST));
+                    long timeElapsed = System.currentTimeMillis() - timestamp.getTime();
+                    // weight is linear with timestamp; if the restaurant was just added to the
+                    // yellow list it receives a weight multiplier of 0.6; if it was added a week
+                    // ago (the cutoff time at which it's removed from the list) it is
+                    // essentially unweighted
+                    randomNum = (randomNum * 0.6) + (timeElapsed * 6.6137566E-9);
                 }
 
                 mResultList.getRestaurant(i).setRandomValue((int) randomNum);
+
+                // show change in weight
+                StringBuilder result = new StringBuilder("[" + i + "] " + r.getBusinessName() );
+
+                if (db.isRestaurantInList(r, Constants.RED_LIST)) {
+                    appendOutputText(result.toString(), Color.parseColor("#73001B"), 14, 0);
+                } else if (db.isRestaurantInList(r, Constants.GREEN_LIST)) {
+                    result.append(" (weight: " + (int)oldnum + "->" + (int)randomNum  + ")");
+                    appendOutputText(result.toString(), Color.parseColor("#197300"), 14, 0);
+                } else if (db.isRestaurantInList(r, Constants.YELLOW_LIST)) {
+                    result.append(" (weight: " + (int)oldnum + "->" + (int)randomNum + ", " +
+                            "timestamp: "
+                            + db.getRestaurantTimeStampFromList(r, Constants.YELLOW_LIST)
+                            + ")");
+                    appendOutputText(result.toString(), Color.parseColor("#736B00"), 14, 0);
+                } else {
+                    result.append(" (weight: " + (int)randomNum + ")");
+                    appendOutputText(result.toString(), Color.DKGRAY, 14, 0);
+                }
             }
-            displayList(mResultList);
 
             appendOutputHeading("Step 3: Restaurants are removed from the list and displayed to " +
                     "the user by weight in non-increasing order");
