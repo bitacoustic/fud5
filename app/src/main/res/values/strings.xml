@@ -201,5 +201,6 @@
     <string name="fragment_green_followup_red_buton">don\'t suggest again</string>
     <string name="fragment_green_followup_prompt">Your feedback helps us give better recommendations.</string>
     <string name="fragment_green_followup_title">What did you think about</string>
+    <string name="activity_settings_ignored_restaurants_title">Ignored Restaurants</string>
 
 </resources>

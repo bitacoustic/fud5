@@ -18,7 +18,8 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayoutSettings">
 
             <Button
                 android:layout_width="fill_parent"
@@ -44,61 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/activity_application_settings_manage_services_text"
-                android:id="@+id/textView5"
-                android:layout_marginBottom="10dp"
-                android:textSize="20sp"
-                android:layout_marginTop="10dp"/>
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/activity_application_settings_location_services_button_text"
-                android:id="@+id/buttonManageLocationServices"
-                android:background="@color/purple"
-                android:textColor="@color/gold"
-                android:layout_marginBottom="10dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="&quot;Let&apos;s Go&quot; Followup Interval"
-                android:id="@+id/textView9"
-                android:textSize="20dp"
-                android:layout_marginTop="10dp"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <SeekBar
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/seekBarSettingsFollowupInterval"
-                    android:layout_gravity="center_horizontal"
-                    android:max="24"
-                    android:progress="12"
-                    android:indeterminate="false"
-                    android:layout_toStartOf="@+id/textViewSettingsFollowupIntervalText"/>
-
-                <TextView
-                    android:layout_width="75dp"
-                    android:layout_height="wrap_content"
-                    android:text="12 hours"
-                    android:id="@+id/textViewSettingsFollowupIntervalText"
-                    android:textSize="16dp"
-                    android:layout_gravity="right"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentEnd="true"/>
-
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Ignored Restaurants"
+                android:text="@string/activity_settings_ignored_restaurants_title"
                 android:id="@+id/textView"
                 android:layout_marginBottom="10dp"
                 android:textSize="20sp"
@@ -237,6 +184,25 @@
                 android:textColor="@color/gold"
                 android:layout_marginBottom="10dp"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/activity_application_settings_manage_services_text"
+                android:id="@+id/textView5"
+                android:layout_marginBottom="10dp"
+                android:textSize="20sp"
+                android:layout_marginTop="10dp"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_application_settings_location_services_button_text"
+                android:id="@+id/buttonManageLocationServices"
+                android:background="@color/purple"
+                android:textColor="@color/gold"
+                android:layout_marginBottom="10dp"/>
+
             <!-- Dev Playground -->
 
             <TextView
@@ -255,6 +221,42 @@
                 android:text="Restaurant Selector Demo"
                 android:id="@+id/settings_selector_demo_button"
                 android:onClick="showSelectorDemo"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="&quot;Let&apos;s Go&quot; Followup Interval"
+                android:id="@+id/textView9"
+                android:textSize="16dp"
+                android:layout_marginTop="10dp"
+                android:textColor="#777" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/seekBarSettingsFollowupInterval"
+                    android:layout_gravity="center_horizontal"
+                    android:max="24"
+                    android:progress="12"
+                    android:indeterminate="false"
+                    android:layout_toStartOf="@+id/textViewSettingsFollowupIntervalText" />
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:text="12 hours"
+                    android:id="@+id/textViewSettingsFollowupIntervalText"
+                    android:textSize="16dp"
+                    android:layout_gravity="right"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
 
             <Button
                 android:layout_width="fill_parent"
