@@ -26,8 +26,7 @@ import com.csc413.team5.fud5.settings.ModifyRedListDialogFragment;
 import com.csc413.team5.fud5.tests.ImageTestActivity;
 import com.csc413.team5.fud5.tests.LocuMenuTestActivity;
 import com.csc413.team5.fud5.tests.MapsTestActivity;
-import com.csc413.team5.fud5.tests.RestaurantSelectorTestActivity;
-import com.csc413.team5.fud5.tests.RestaurantTestActivity;
+import com.csc413.team5.fud5.tests.SelectorDemoActivity;
 import com.csc413.team5.fud5.tests.SharedPreferencesTestActivity;
 import com.csc413.team5.fud5.utils.AppSettingsHelper;
 import com.csc413.team5.fud5.utils.Constants;
@@ -376,13 +375,6 @@ public class SettingsActivity extends AppCompatActivity
         ToastUtil.showShortToast(this, "Testing database...");
     }
 
-    public void showYelpTest(View view){
-        Intent intent = new Intent(this, RestaurantTestActivity.class);
-        startActivity(intent);
-
-        ToastUtil.showShortToast(this, "Testing Yelp integration...");
-    }
-
     public void showImageTest(View view){
         Intent intent = new Intent(this, ImageTestActivity.class);
         startActivity(intent);
@@ -404,17 +396,15 @@ public class SettingsActivity extends AppCompatActivity
         ToastUtil.showShortToast(this, "Testing Google Maps integration...");
     }
 
-    public void showSelectorTest(View view) {
-        Intent intent = new Intent(this, RestaurantSelectorTestActivity.class);
-        startActivity(intent);
-
-        ToastUtil.showShortToast(this, "Testing selector...");
-    }
-
     public void showSharedPreferencesTest(View view) {
         Intent intent = new Intent(this, SharedPreferencesTestActivity.class);
         startActivity(intent);
 
         ToastUtil.showShortToast(this, "Testing shared preferences...");
+    }
+
+    public void showSelectorDemo(View view) {
+        Intent intent = new Intent(this, SelectorDemoActivity.class);
+        startActivity(intent);
     }
 }

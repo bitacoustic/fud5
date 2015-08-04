@@ -74,15 +74,6 @@
                 android:value=".SettingsActivity" />
         </activity>
         <activity
-            android:name=".tests.RestaurantTestActivity"
-            android:label="@string/title_restaurant_test_activity"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="nosensor">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity
             android:name=".tests.ImageTestActivity"
             android:label="Image Test"
             android:parentActivityName=".MainActivity" >
@@ -109,13 +100,6 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".tests.RestaurantSelectorTestActivity"
-            android:label="@string/title_activity_restaurant_selector_test">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".SettingsActivity" />
-        </activity>
-        <activity
             android:name=".tests.SharedPreferencesTestActivity"
             android:label="@string/title_activity_shared_preferences_test"
             android:parentActivityName=".SettingsActivity"
@@ -123,6 +107,24 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SettingsActivity" />
+        </activity>
+        <activity
+            android:name=".tests.SelectorDemoActivity"
+            android:label="@string/title_activity_restaurant_selector_demo"
+            android:parentActivityName=".SettingsActivity"
+            android:screenOrientation="nosensor">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SettingsActivity" />
+        </activity>
+        <activity
+            android:name=".tests.SelectorDemoResultsActivity"
+            android:label="@string/title_activity_restaurant_selector_demo"
+            android:parentActivityName=".tests.SelectorDemoActivity"
+            android:screenOrientation="nosensor">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".tests.SelectorDemoActivity" />
         </activity>
         <!-- END TEST ACTIVITIES -->
 

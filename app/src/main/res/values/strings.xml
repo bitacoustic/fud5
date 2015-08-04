@@ -45,10 +45,10 @@
     <string name="settings_ui_button_eula">End User License Agreement</string>
     <string name="settings_ui_button_app_info">About this app</string>
     <string name="settings_ui_button_db_test">Database Test</string>
-    <string name="settings_ui_button_yelp_test">Yelp Test</string>
+    <string name="settings_ui_button_yelp_test">Yelp Test (deprecated)</string>
     <string name="settings_ui_button_locu_test">Locu Test</string>
     <string name="settings_ui_button_google_map_test">Google Map Test</string>
-    <string name="settings_ui_button_selector_test">Restaurant Selector Test</string>
+    <string name="settings_ui_button_selector_test">Restaurant Selector Test (deprecated) </string>
     <string name="settings_ui_button_modify_red_list">View/Remove Ignored Restaurants</string>
     <string name="title_activity_application_settings">App Settings</string>
     <string name="activity_application_settings_user_settings_checkbox">User Settings</string>
@@ -195,5 +195,6 @@
     <string name="toast_network_unavailable">Network is unavailable</string>
     <string name="fragment_more_info_hours_title">Hours</string>
     <string name="fragment_more_info_website_title">Website</string>
+    <string name="title_activity_restaurant_selector_demo">Restaurant Selector Demo</string>
 
 </resources>

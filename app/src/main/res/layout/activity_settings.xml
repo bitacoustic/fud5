@@ -252,6 +252,13 @@
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:text="Restaurant Selector Demo"
+                android:id="@+id/settings_selector_demo_button"
+                android:onClick="showSelectorDemo"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/settings_ui_button_food_settings"
                 android:id="@+id/food_preferences"
                 android:onClick="showFoodSettings" />
@@ -262,13 +269,6 @@
                 android:text="@string/settings_ui_button_db_test"
                 android:id="@+id/test_db"
                 android:onClick="showDbTest"/>
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_ui_button_yelp_test"
-                android:id="@+id/test_yelp"
-                android:onClick="showYelpTest"/>
 
             <Button
                 android:layout_width="fill_parent"
@@ -290,13 +290,6 @@
                 android:text="@string/settings_ui_button_google_map_test"
                 android:id="@+id/test_map"
                 android:onClick="showMapTest"/>
-
-            <Button
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_ui_button_selector_test"
-                android:id="@+id/test_selector"
-                android:onClick="showSelectorTest"/>
 
             <Button
                 android:layout_width="fill_parent"

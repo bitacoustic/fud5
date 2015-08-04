@@ -120,6 +120,7 @@ public class Restaurant implements Serializable {
         twitterId = "";
         hours = new OpenHours();
         hasHours = false;
+        weight = -1;
     }
 
 

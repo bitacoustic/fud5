@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:id="@+id/textViewRSD1"
+        android:textSize="18dp"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextRSDLocation"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search term(s) (optional)"
+        android:id="@+id/textViewRSD2"
+        android:textSize="18dp"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextRSDSearchTerm"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Maximum Radius (miles)"
+        android:id="@+id/textViewRSD3"
+        android:textSize="18dp"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextRSDMaxRadius"
+        android:layout_marginBottom="10dp"
+        android:inputType="numberDecimal"
+        android:text="2.5"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Minimum Rating"
+        android:id="@+id/textViewRSD4"
+        android:textSize="18dp"
+        />
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:id="@+id/ratingBarRSD"
+        android:stepSize="0.5"
+        android:rating="3"
+        android:progressDrawable="@drawable/ratingbar"
+        android:layout_below="@+id/textView8"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FUD PLZ"
+        android:id="@+id/buttonRSDFuzPlz"
+        android:layout_gravity="center_horizontal"
+        android:textSize="18dp"
+        android:layout_marginTop="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:id="@+id/textViewRSDDebug"
+        android:layout_gravity="center_horizontal"
+        android:textSize="18dp"/>
+
+</LinearLayout>
