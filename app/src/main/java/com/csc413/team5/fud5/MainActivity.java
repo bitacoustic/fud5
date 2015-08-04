@@ -444,10 +444,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
      */
     @Override
     public void OnGreenFollowupClickedYellow(DialogFragment dialog) {
-        ToastUtil.showLongToast(this, "Okay, we'll ask you about "
-                + AppSettingsHelper.getLastGreenRestaurantID() + " later.");
-        AppSettingsHelper.setLastGreenRestaurantTimestampToNow();
-        Log.i(TAG, "Reset timer on last green restaurant, will reprompt later");
+        ToastUtil.showLongToast(this, "Thanks for the feedback about "
+                + AppSettingsHelper.getLastGreenRestaurantID() + ".");
+        Restaurant r = new Restaurant();
+        r.setRestaurantName(AppSettingsHelper.getLastGreenRestaurantID());
+        if (db.isRestaurantInList(r, Constants.GREEN_LIST))
+            db.deleteRestaurantFromList(r, Constants.GREEN_LIST);
+        Log.i(TAG, "Removed " + r.getBusinessName() + " from green list");
+        if (!db.isRestaurantInList(r, Constants.YELLOW_LIST))
+            db.insertRestaurantToList(r, Constants.YELLOW_LIST);
+        Log.i(TAG, "Added " + r.getBusinessName() + " to yellow list");
+        AppSettingsHelper.clearLastGreenRestaurant();
+        Log.i(TAG, "Moved the restaurant from green to yellow list");
         greenFollowupDialog.dismiss();
     }
 

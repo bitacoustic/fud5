@@ -30,12 +30,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/textViewGreenFollowupTitle"
             android:textColor="@color/gold"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textAlignment="gravity"
             android:textStyle="bold"
             android:gravity="left"
             android:background="@color/purple"
-            android:text="What did you think about "
+            android:text="@string/fragment_green_followup_title"
             android:paddingLeft="10dp"
             android:layout_toEndOf="@+id/imageViewNoResults"/>
     </RelativeLayout>
@@ -66,7 +66,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Your feedback helps us give better recommendations."
+                android:text="@string/fragment_green_followup_prompt"
                 android:id="@+id/textViewGreenFollowupBody"
                 android:paddingBottom="10dp"
                 android:paddingLeft="0dp"
@@ -81,7 +81,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="I liked it"
+        android:text="@string/fragment_green_followup_green_button"
         android:id="@+id/buttonGreenFollowupGreen"
         android:layout_gravity="center_horizontal"
         android:background="@color/green"
@@ -92,7 +92,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ask me again later"
+        android:text="@string/fragment_green_followup_yellow_button"
         android:id="@+id/buttonGreenFollowupYellow"
         android:layout_gravity="center_horizontal"
         android:background="@color/gold"
@@ -105,7 +105,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="don&apos;t suggest again"
+        android:text="@string/fragment_green_followup_red_buton"
         android:id="@+id/buttonGreenFollowupRed"
         android:background="@color/red"
         android:nestedScrollingEnabled="false"

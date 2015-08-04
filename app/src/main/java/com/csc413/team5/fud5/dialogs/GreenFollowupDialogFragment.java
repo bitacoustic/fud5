@@ -79,7 +79,7 @@ public class GreenFollowupDialogFragment extends DialogFragment {
         View v = inflater.inflate(R.layout.fragment_green_followup, container, false);
 
         TextView dialogTitle = (TextView) v.findViewById(R.id.textViewGreenFollowupTitle);
-        dialogTitle.append(instance.mId + "?");
+        dialogTitle.append(" " + instance.mId + "?");
 
         mBtnGreen = (Button) v.findViewById(R.id.buttonGreenFollowupGreen);
         mBtnGreen.setOnClickListener(new View.OnClickListener() {
