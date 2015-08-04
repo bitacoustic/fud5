@@ -110,7 +110,10 @@ public class ResultPageActivity extends AppCompatActivity
 
         String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?daddr=%f,%f", destLat, destLong);
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        // open a Google Maps URL with the user's preferred application
         startActivity(intent);
+        // upon return, user will be in main activity
+        finish();
     }
 
     // user presses the "Maybe later..." button
