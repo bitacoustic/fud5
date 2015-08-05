@@ -466,6 +466,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         r.setRestaurantName(AppSettingsHelper.getLastGreenRestaurantID());
         if (db.isRestaurantInList(r, Constants.GREEN_LIST))
             db.deleteRestaurantFromList(r, Constants.GREEN_LIST);
+        if (db.isRestaurantInList(r, Constants.YELLOW_LIST))
+            db.deleteRestaurantFromList(r, Constants.YELLOW_LIST);
         Log.i(TAG, "Removed " + r.getBusinessName() + " from green list");
         if (!db.isRestaurantInList(r, Constants.RED_LIST))
             db.insertRestaurantToList(r, Constants.RED_LIST);
