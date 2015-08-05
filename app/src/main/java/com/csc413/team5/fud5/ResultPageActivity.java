@@ -99,7 +99,7 @@ public class ResultPageActivity extends AppCompatActivity
     // user presses the "Let's go!" button
     public void btnGreen(View v) {
         if(!greenPressed) { //Normal green button behavior
-            // hide the yellow and red buttons as user has committed to the current restaurant
+            // Change the green and yellow buttons as user has committed to the current restaurant
             greenPressed = true;
             btnGreen.setText("Get directions from Google Maps");
             btnGreen.setBackgroundColor(Color.parseColor("#3E8FF4")); //The blue from the Google Map logo
