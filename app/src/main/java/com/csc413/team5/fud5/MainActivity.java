@@ -431,7 +431,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
      */
     @Override
     public void OnGreenFollowupClickedGreen(DialogFragment dialog) {
-        ToastUtil.showLongToast(this, "Thanks for the feedback! You liked " + AppSettingsHelper
+        ToastUtil.showLongToast(this, "Thanks for the feedback! We're glad you enjoyed " + AppSettingsHelper
                 .getLastGreenRestaurantID() + ".");
         AppSettingsHelper.clearLastGreenRestaurant();
         Log.i(TAG, "Liked last green-listed restaurant; it remains in green list");

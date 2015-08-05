@@ -131,7 +131,6 @@ public class ResultPageActivity extends AppCompatActivity
         Location destLoc = mCurrentResult.getAddressMapable();
         double destLat = destLoc.getLatitude();
         double destLong = destLoc.getLongitude();
-        ToastUtil.showShortToast(this, "Opening Maps!");
         String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?daddr=%f,%f", destLat, destLong);
         Intent launchMaps = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         startActivity(launchMaps);
@@ -142,7 +141,6 @@ public class ResultPageActivity extends AppCompatActivity
         Location destLoc = mCurrentResult.getAddressMapable();
         double destLat = destLoc.getLatitude();
         double destLong = destLoc.getLongitude();
-        ToastUtil.showShortToast(this, "Opening Über!");
         PackageManager pm = this.getPackageManager();
         try {
             pm.getPackageInfo("com.ubercab", PackageManager.GET_ACTIVITIES);
