@@ -117,16 +117,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         // appending a minimum search term of food; anything else that the user may enter is
         // optional
 
-        String searchTerm;
-        // if empty search term
-        if (((EditText) findViewById(R.id.txtSearchTerm)).getText()
-                .toString().equals("")) {
-            // set to "food"
+        String searchTerm = ((EditText) findViewById(R.id.txtSearchTerm)).getText().toString();
+        if (searchTerm.equals("")) // if empty search term, set to "food"
             searchTerm = "food";
-        } else {
-            searchTerm = ((EditText) findViewById(R.id.txtSearchTerm)).getText()
-                    .toString();
-        }
 
         //ToastUtil.showShortToast(this, searchTerm);
 
@@ -433,8 +426,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
      */
     @Override
     public void OnGreenFollowupClickedGreen(DialogFragment dialog) {
-        ToastUtil.showLongToast(this, "Thanks for the feedback! We're glad you enjoyed " + AppSettingsHelper
-                .getLastGreenRestaurantID() + ".");
+        ToastUtil.showLongToast(this,
+                getString(R.string.activity_main_green_followup_clicked_green)
+                        + AppSettingsHelper.getLastGreenRestaurantID() + ".");
         AppSettingsHelper.clearLastGreenRestaurant();
         Log.i(TAG, "Liked last green-listed restaurant; it remains in green list");
         greenFollowupDialog.dismiss();
@@ -446,7 +440,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
      */
     @Override
     public void OnGreenFollowupClickedYellow(DialogFragment dialog) {
-        ToastUtil.showLongToast(this, "Thanks for the feedback about "
+        ToastUtil.showLongToast(this,
+                getString(R.string.activity_main_green_followup_clicked_yellow)
                 + AppSettingsHelper.getLastGreenRestaurantID() + ".");
         Restaurant r = new Restaurant();
         r.setRestaurantName(AppSettingsHelper.getLastGreenRestaurantID());
@@ -457,7 +452,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             db.insertRestaurantToList(r, Constants.YELLOW_LIST);
         Log.i(TAG, "Added " + r.getBusinessName() + " to yellow list");
         AppSettingsHelper.clearLastGreenRestaurant();
-        Log.i(TAG, "Moved the restaurant from green to yellow list");
         greenFollowupDialog.dismiss();
     }
 
@@ -469,7 +463,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void OnGreenFollowupClickedRed(DialogFragment dialog) {
         // remove the restaurant from the green list and add it to the red list instead
         Restaurant r = new Restaurant();
-        ToastUtil.showLongToast(this, "Thanks for the feedback! We won't show you " +
+        ToastUtil.showLongToast(this, getString(R.string.activity_main_green_followup_clicked_red) +
                 AppSettingsHelper.getLastGreenRestaurantID() + " again.");
         r.setRestaurantName(AppSettingsHelper.getLastGreenRestaurantID());
         if (db.isRestaurantInList(r, Constants.GREEN_LIST))

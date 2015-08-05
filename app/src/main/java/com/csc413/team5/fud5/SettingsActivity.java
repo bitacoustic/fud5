@@ -41,6 +41,8 @@ public class SettingsActivity extends AppCompatActivity
     private static final String TAG = "SettingsActivity";
     Context mContext;
 
+    DialogFragment infoDialog, eulaDialog;
+
     protected Button mBtnReset;
     protected Button mBtnLocationServices;
 
@@ -69,29 +71,25 @@ public class SettingsActivity extends AppCompatActivity
     /* ************************ */
 
     public void showAppInfo(View v) {
-        DialogFragment infoDialog = AppInfoDialog.getInstance();
-        infoDialog.show(getFragmentManager(), "App Info");
-
-        //ToastUtil.showShortToast(this, "Showing app info...");
+        if (!infoDialog.isVisible())
+            infoDialog.show(getFragmentManager(), "App Info");
     }
 
     public void showEULA(View v) {
-        DialogFragment eulaDialog = EulaDialogFragment.newInstance();
-        eulaDialog.show(getFragmentManager(), "EULA");
-
-        //ToastUtil.showShortToast(this, "Showing EULA...");
+        if (!eulaDialog.isVisible())
+            eulaDialog.show(getFragmentManager(), "EULA");
     }
 
-    public void resetRedList(View view){
-        dbHelper db;
-        db = new dbHelper(this, null, null, 1);
-
-        db.wipeRestaurantList(3);
-        Log.i(TAG, "Red list was cleared");
-
-        ToastUtil.showShortToast(this, getString(R.string
-                .activity_user_preferences_toast_removed_all_ignored_restaurants));
-    }
+//    public void resetRedList(View view){
+//        dbHelper db;
+//        db = new dbHelper(this, null, null, 1);
+//
+//        db.wipeRestaurantList(3);
+//        Log.i(TAG, "Red list was cleared");
+//
+//        ToastUtil.showShortToast(this, getString(R.string
+//                .activity_user_preferences_toast_removed_all_ignored_restaurants));
+//    }
 
     public void modifyRedList(View view) {
         DialogFragment modifyRedListDialog = ModifyRedListDialogFragment.newInstance();
@@ -117,6 +115,9 @@ public class SettingsActivity extends AppCompatActivity
         AppSettingsHelper.init(this);
 
         db = new dbHelper(this, null, null, 1);
+
+        infoDialog = AppInfoDialog.getInstance();
+        eulaDialog = EulaDialogFragment.getInstance();
 
         mCheckBoxUserSettings = (CheckBox) findViewById(R.id.checkBoxAppSettingsUser);
         mCheckBoxUserSettings.setOnClickListener(new View.OnClickListener() {
@@ -262,6 +263,7 @@ public class SettingsActivity extends AppCompatActivity
             }
         });
 
+        // green followup interval seekbar (range in hours is integer in 0-24)
         mSeekBarFollowupInterval = (SeekBar) findViewById(R.id.seekBarSettingsFollowupInterval);
         mSeekBarFollowupProgress = AppSettingsHelper.getGreenFollowupInterval();
         mSeekBarFollowupInterval.setProgress(mSeekBarFollowupProgress);
@@ -308,7 +310,7 @@ public class SettingsActivity extends AppCompatActivity
             * */
 
             final float minStar = 3.50f;
-            final float searchRadius = 1.0f;
+//            final float searchRadius = 1.0f;
             final String searchTerm = "Tacos";
 
             // default search term
@@ -337,7 +339,7 @@ public class SettingsActivity extends AppCompatActivity
             db.wipeRestaurantList(Constants.GREEN_LIST);
             Log.i(TAG, "wiped green list (1)");
             db.wipeRestaurantList(Constants.YELLOW_LIST);
-            Log.i(TAG, "wiped yelw list (2)");
+            Log.i(TAG, "wiped yellow list (2)");
             db.wipeRestaurantList(Constants.RED_LIST);
             Log.i(TAG, "wiped red list (3)");
             ToastUtil.showShortToast(this,
@@ -364,43 +366,31 @@ public class SettingsActivity extends AppCompatActivity
     public void showFoodSettings(View v) {
         Intent intent = new Intent(this, FoodPreferencesActivity.class);
         startActivity(intent);
-
-        ToastUtil.showShortToast(this, "Showing Food Settings");
     }
 
     public void showDbTest(View view){
         Intent intent = new Intent(this, AppDbTestActivity.class);
         startActivity(intent);
-
-        ToastUtil.showShortToast(this, "Testing database...");
     }
 
     public void showImageTest(View view){
         Intent intent = new Intent(this, ImageTestActivity.class);
         startActivity(intent);
-
-        ToastUtil.showShortToast(this, "Testing Images...");
     }
 
     public void showLocuTest(View view){
         Intent intent = new Intent(this, LocuMenuTestActivity.class);
         startActivity(intent);
-
-        ToastUtil.showShortToast(this, "Testing Locu integration...");
     }
 
     public void showMapTest(View view){
         Intent intent = new Intent(this, MapsTestActivity.class);
         startActivity(intent);
-
-        ToastUtil.showShortToast(this, "Testing Google Maps integration...");
     }
 
     public void showSharedPreferencesTest(View view) {
         Intent intent = new Intent(this, SharedPreferencesTestActivity.class);
         startActivity(intent);
-
-        ToastUtil.showShortToast(this, "Testing shared preferences...");
     }
 
     public void showSelectorDemo(View view) {

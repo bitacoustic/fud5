@@ -15,7 +15,8 @@ import com.csc413.team5.fud5.R;
 import com.csc413.team5.fud5.utils.Constants;
 
 /**
- * Dialog which displays when a search produces no results.
+ * Dialog which displays when a search produces no results, or user reached last restaurant in
+ * the results list (no more results).
  */
 public class NoResultsDialogFragment extends DialogFragment {
     private static NoResultsDialogFragment instance = null;

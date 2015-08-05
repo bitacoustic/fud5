@@ -30,6 +30,8 @@ import com.csc413.team5.fud5.R;
  */
 public class EulaDialogFragment extends DialogFragment {
     public static final String PREFS_FILE = "UserSettings";
+    public static final EulaDialogFragment instance = null;
+
     private SharedPreferences userSettings;
     private SharedPreferences.Editor userSettingsEditor;
 
@@ -38,8 +40,22 @@ public class EulaDialogFragment extends DialogFragment {
 
     TextView mTxtEulaBody;
 
-    public static EulaDialogFragment newInstance() {
-        return new EulaDialogFragment();
+    /**
+     * Dialog follows the singleton pattern. Empty constructor doesn't call super() and
+     * consequently defeats instantiation.
+     */
+    public EulaDialogFragment() {
+    }
+
+    /**
+     * Dialog follows the singleton pattern. Ensure that there is only one instance of the dialog.
+     * @return
+     */
+    public static EulaDialogFragment getInstance() {
+        if (instance == null)
+            return new EulaDialogFragment();
+        else
+            return instance;
     }
 
     /**

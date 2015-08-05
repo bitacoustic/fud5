@@ -106,7 +106,7 @@ public class SplashScreenActivity extends Activity
      */
     public void checkEulaAndLocation() {
         if (!AppSettingsHelper.hasAgreedToEula()) {
-            DialogFragment eulaDialog = EulaDialogFragment.newInstance();
+            DialogFragment eulaDialog = EulaDialogFragment.getInstance();
             eulaDialog.setCancelable(false);
             eulaDialog.show(getFragmentManager(), "EULA");
         }
