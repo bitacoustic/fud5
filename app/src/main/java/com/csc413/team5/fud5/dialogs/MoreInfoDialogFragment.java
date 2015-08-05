@@ -171,7 +171,7 @@ public class MoreInfoDialogFragment extends DialogFragment {
 //        }
 
         // if Locu information exists, display it and the attribution logo
-        if (mRestaurant.hasHours() || mRestaurant.getLocuWebsiteUrl() != null) {
+        if (mRestaurant.hasHours() || mRestaurant.getWebsiteUrl() != null) {
             // add divider line
             ImageView divider = new ImageView(v.getContext());
             LinearLayout.LayoutParams paramsDivider = new LinearLayout.LayoutParams(
@@ -193,17 +193,17 @@ public class MoreInfoDialogFragment extends DialogFragment {
             }
 
             // website
-            if (mRestaurant.getLocuWebsiteUrl() != null) {
+            if (mRestaurant.getWebsiteUrl() != null) {
                 appendOutputText(mContext.getString(R.string.fragment_more_info_website_title)
                         , Color.BLACK, 15, 10);
-                TextView website = appendOutputText(mRestaurant.getLocuWebsiteUrl().toString(),
+                TextView website = appendOutputText(mRestaurant.getWebsiteUrl().toString(),
                         Color.BLUE, 13, 0);
                 website.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
                 website.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent displayWebsite = new Intent(Intent.ACTION_VIEW);
-                        displayWebsite.setData(mRestaurant.getLocuWebsiteUrl());
+                        displayWebsite.setData(mRestaurant.getWebsiteUrl());
                         startActivity(displayWebsite);
                     }
                 });

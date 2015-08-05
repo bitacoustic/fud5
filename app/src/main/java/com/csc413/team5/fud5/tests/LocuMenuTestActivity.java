@@ -162,7 +162,7 @@ public class LocuMenuTestActivity extends Activity
             // show the corresponding dialog for displaying the menu or telling user that
             // a menu was not found
 
-            if (mRestaurant.hasLocuMenus()) {
+            if (mRestaurant.hasMenus()) {
                 mTxtDebug.setText("Loading menu...");
                 // create an instance of DisplayRestaurantMenusFragment with the restaurant
                 // result of doInBackground() as an argument

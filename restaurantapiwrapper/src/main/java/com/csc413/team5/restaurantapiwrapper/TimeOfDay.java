@@ -94,10 +94,19 @@ public class TimeOfDay implements Serializable {
         return string12;
     }
 
+    /**
+     * Returns representation of this time of day as a String in 24-hour format, e.g.
+     * "13:35".
+     * @return representation of this time of day as a String in 24-hour format
+     */
     public String to24HrString() {
         return string24;
     }
 
+    /**
+     * Returns representation of this time of day as a double, e.g. 1:35PM = 13.58333333...
+     * @return representation of this time of day as a double
+     */
     public double toDouble() {
         return time;
     }
@@ -184,7 +193,11 @@ public class TimeOfDay implements Serializable {
         return hour + minute;
     }
 
-
+    /**
+     * Returns a representation of this TimeOfDay as a String listing the time in double,
+     * 12 hour, and 24 hour formats.
+     * @return a representation of this TimeOfDay as a String
+     */
     @Override
     public String toString() {
         return "TimeOfDay{" +

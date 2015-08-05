@@ -504,7 +504,7 @@ public class Restaurant implements Serializable {
      * was used on the Restaurant and a menu was available, otherwise null.
      * @return a {@link Menus} object or null if this information is unavailable
      */
-    public Menus getLocuMenus() {
+    public Menus getMenus() {
         return locuMenus;
     }
 
@@ -512,7 +512,7 @@ public class Restaurant implements Serializable {
      * Returns whether the Restaurant contains Locu {@link Menus} information.
      * @return true if the Restaurant contains Locu {@link Menus} information, otherwise false
      */
-    public boolean hasLocuMenus() {
+    public boolean hasMenus() {
         return (locuMenus != null);
     }
 
@@ -563,7 +563,7 @@ public class Restaurant implements Serializable {
      * Returns the website URL obtained from Locu, or null if unavailable
      * @return the website URL obtained from Locu, or null if unavailable
      */
-    public Uri getLocuWebsiteUrl() {
+    public Uri getWebsiteUrl() {
         return locuWebsiteUrl;
     }
 
@@ -571,7 +571,7 @@ public class Restaurant implements Serializable {
      * Returns true if Restaurant has website URL obtained from Locu, otherwise false
      * @return true if Restaurant has website URL obtained from Locu, otherwise false
      */
-    public boolean hasLocuWebsiteUrl() {
+    public boolean hasWebsiteUrl() {
         return (locuWebsiteUrl != null);
     }
 
@@ -642,11 +642,20 @@ public class Restaurant implements Serializable {
                 '}';
     }
 
-    public void setRandomValue(int random){
-        weight = random;
+    /**
+     * Set the weight of the Restaurant, which determines a sort order if the Restaurant is in a
+     * {@link: RestaurantList}.
+     * @param weight an integer representing the sort order
+     */
+    public void setWeight(int weight){
+        this.weight = weight;
     }
 
-    public int getRandomValue(){
+    /**
+     * Get the weight of the current Restaurant.
+     * @return an integer representing the weight of the current Restaurant
+     */
+    public int getWeight(){
         return weight;
     }
 

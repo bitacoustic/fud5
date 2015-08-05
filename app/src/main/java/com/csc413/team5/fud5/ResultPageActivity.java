@@ -391,8 +391,8 @@ public class ResultPageActivity extends AppCompatActivity
             //Grab restaurant with largest random value.
             int largest = 0;
             for(int i=0; i<mResultList.getSize(); i++){
-               if(mResultList.getRestaurant(i).getRandomValue() > largest){
-                   largest = mResultList.getRestaurant(i).getRandomValue();
+               if(mResultList.getRestaurant(i).getWeight() > largest){
+                   largest = mResultList.getRestaurant(i).getWeight();
                    mReadResult = mResultList.getRestaurant(i);
                }
             }
@@ -473,8 +473,8 @@ public class ResultPageActivity extends AppCompatActivity
         //changed code here to make sure image updates with random selection
         int largest =0;
         for(int i=0; i<mResultList.getSize(); i++){
-            if(mResultList.getRestaurant(i).getRandomValue() > largest){
-                largest = mResultList.getRestaurant(i).getRandomValue();
+            if(mResultList.getRestaurant(i).getWeight() > largest){
+                largest = mResultList.getRestaurant(i).getWeight();
                 mReadResult = mResultList.getRestaurant(i);
             }
         }
@@ -639,10 +639,10 @@ public class ResultPageActivity extends AppCompatActivity
                         randomNum = (randomNum * 0.6) + (timeElapsed * 6.6137566E-9);
                     }
 
-                    mResultList.getRestaurant(i).setRandomValue((int) randomNum);
+                    mResultList.getRestaurant(i).setWeight((int) randomNum);
                     //helps debug
                     Log.i(TAG, "Restaurant: " + mResultList.getRestaurant(i).getBusinessName()
-                            + " - Value: " + mResultList.getRestaurant(i).getRandomValue());
+                            + " - Value: " + mResultList.getRestaurant(i).getWeight());
                 }
 
                 displayNextResult(findViewById(R.id.imgRestaurant));
@@ -676,7 +676,7 @@ public class ResultPageActivity extends AppCompatActivity
             if (mPopupLoadingInProgress != null && mPopupLoadingInProgress.isShowing())
                 mPopupLoadingInProgress.dismiss();
 
-            if (restaurant.hasLocuMenus()) {
+            if (restaurant.hasMenus()) {
                 Log.i(TAG, "Found menu for " + restaurant.getBusinessName());
                 mDisplayRestaurantMenus = DisplayRestaurantMenusFragment
                         .getInstance(restaurant);

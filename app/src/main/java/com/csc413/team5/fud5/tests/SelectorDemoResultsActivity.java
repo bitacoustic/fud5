@@ -181,7 +181,7 @@ public class SelectorDemoResultsActivity extends AppCompatActivity {
                     randomNum = (randomNum * 0.6) + (timeElapsed * 6.6137566E-9);
                 }
 
-                mResultList.getRestaurant(i).setRandomValue((int) randomNum);
+                mResultList.getRestaurant(i).setWeight((int) randomNum);
 
                 // show change in weight
                 StringBuilder result = new StringBuilder("[" + i + "] " + r.getBusinessName() );
@@ -210,7 +210,7 @@ public class SelectorDemoResultsActivity extends AppCompatActivity {
                 int largestIndex = 0;
 
                 for (int j = 0, largest = 0; j < mResultList.getSize(); j++) {
-                    int randomValue = mResultList.getRestaurant(j).getRandomValue();
+                    int randomValue = mResultList.getRestaurant(j).getWeight();
                     if (randomValue > largest) {
                         largest = randomValue;
                         largestIndex = j;
@@ -270,7 +270,7 @@ public class SelectorDemoResultsActivity extends AppCompatActivity {
 
     public TextView appendOutputWithRestaurant(Restaurant r, int index) {
         StringBuilder result = new StringBuilder("[" + index + "] " + r.getBusinessName()
-                + " (weight: " + (r.getRandomValue() > 0 ? r.getRandomValue() : "n/a"));
+                + " (weight: " + (r.getWeight() > 0 ? r.getWeight() : "n/a"));
 
         if (db.isRestaurantInList(r, Constants.RED_LIST)) {
             result.append(")");

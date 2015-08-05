@@ -123,7 +123,7 @@ public class DisplayRestaurantMenusFragment extends DialogFragment {
         imgPoweredByLocuParams.setMargins(0, 0, 0, 0);
         imgPoweredByLocu.setLayoutParams(imgPoweredByLocuParams);
 
-        Menus menus = mRestaurant.getLocuMenus();
+        Menus menus = mRestaurant.getMenus();
 
         LinearLayout linearLayoutMenu = (LinearLayout) v.findViewById(R.id
                 .linearLayoutRMenusContent);
