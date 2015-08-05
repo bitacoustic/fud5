@@ -767,13 +767,3 @@ public class ResultPageActivity extends AppCompatActivity
     }
 
 }
-
-
-//
-//        setContentView(R.layout.activity_result_page);
-//        Typeface buttonFont = Typeface.createFromAsset(getAssets(), "Chunkfive.otf");
-//        Button greenButton = (Button) findViewById(R.id.greenButton);
-//        greenButton.setTypeface(buttonFont);
-//        //TextView myTextView = (TextView)findViewById(R.id.greenButton);
-//       // myTextView.setTypeface(buttonFont);
-//
