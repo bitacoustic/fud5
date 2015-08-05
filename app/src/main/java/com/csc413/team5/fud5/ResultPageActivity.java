@@ -101,7 +101,7 @@ public class ResultPageActivity extends AppCompatActivity
             greenPressed = true;
             btnGreen.setText("Get directions from Google Maps");
             btnGreen.setBackgroundColor(Color.parseColor("#3E8FF4")); //The blue from the Google Map logo
-            btnYellow.setText("Get a lift from Uber");
+            btnYellow.setText("Get a lift from Über");
             btnYellow.setBackgroundColor(Color.parseColor("#3F3C4A")); //The dark gray from the Uber logo
             btnRed.setVisibility(View.GONE); //Gone = other buttons can resize
 
