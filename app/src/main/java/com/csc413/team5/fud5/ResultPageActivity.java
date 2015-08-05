@@ -17,13 +17,11 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -106,70 +104,28 @@ public class ResultPageActivity extends AppCompatActivity
             btnYellow.setText("Get a lift from Uber");
             btnYellow.setBackgroundColor(Color.parseColor("#3F3C4A")); //The dark gray from the Uber logo
             btnRed.setVisibility(View.GONE); //Gone = other buttons can resize
-        }else { //When button is changed into Get Directions
+
+            // if the restaurant is not already in green list, add it
+            if (!db.isRestaurantInList(mCurrentResult, Constants.GREEN_LIST)) {
+                db.insertRestaurantToList(mCurrentResult, Constants.GREEN_LIST);
+                Log.i(TAG, "Added " + mCurrentResult.getBusinessName() + " to green list");
+
+                // save a reference to this restaurant in order to later ask the user for feedback:
+                //   - liked the restaurant: confirm addition to green list
+                //   - didn't like the restaurant: remove from green list and add to red instaed
+                AppSettingsHelper.setLastGreenRestaurant(mCurrentResult);
+            } else { // otherwise, don't add it & don't ask user for feedback later
+                Log.i(TAG, mCurrentResult.getBusinessName() + " was already in green list");
+            }
+        } else { //When button is changed into Get Directions
             Location destLoc = mCurrentResult.getAddressMapable();
             double destLat = destLoc.getLatitude();
             double destLong = destLoc.getLongitude();
             String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?daddr=%f,%f", destLat, destLong);
             Intent launchMaps = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             startActivity(launchMaps);
-//
-//            // if the restaurant is not already in green list, add it
-//            if (!db.isRestaurantInList(mCurrentResult, Constants.GREEN_LIST)) {
-//                db.insertRestaurantToList(mCurrentResult, Constants.GREEN_LIST);
-//                Log.i(TAG, "Added " + mCurrentResult.getBusinessName() + " to green list");
-//
-//                // save a reference to this restaurant in order to later ask the user for feedback:
-//                //   - liked the restaurant: confirm addition to green list
-//                //   - didn't like the restaurant: remove from green list and add to red instaed
-//                AppSettingsHelper.setLastGreenRestaurant(mCurrentResult);
-//            } else { // otherwise, don't add it & don't ask user for feedback later
-//                Log.i(TAG, mCurrentResult.getBusinessName() + " was already in green list");
-//            }
-//            //Store lat/long info for calls to maps/uber
-//            Location destLoc = mCurrentResult.getAddressMapable();
-//            double destLat = destLoc.getLatitude();
-//            double destLong = destLoc.getLongitude();
-//
-//            //Create PopupMenu instance
-//            PopupMenu greenPopUp = new PopupMenu(this, v);
-//
-//            //Inflate Popup with menu_green_button_popup.xml
-//            MenuInflater inflater = greenPopUp.getMenuInflater();
-//            inflater.inflate(R.menu.menu_green_button_popup, greenPopUp.getMenu());
-//            greenPopUp.show();
         }
     }
-
-//    //User chooses to open Google Maps
-//    public void onMapLinkClick(MenuItem item) {
-//        Location destLoc = mCurrentResult.getAddressMapable();
-//        double destLat = destLoc.getLatitude();
-//        double destLong = destLoc.getLongitude();
-//        String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?daddr=%f,%f", destLat, destLong);
-//        Intent launchMaps = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-//        startActivity(launchMaps);
-//    }
-//
-//    //User chooses to open Über
-//    public void onUberLinkClick(MenuItem item) {
-//        Location destLoc = mCurrentResult.getAddressMapable();
-//        double destLat = destLoc.getLatitude();
-//        double destLong = destLoc.getLongitude();
-//        PackageManager pm = this.getPackageManager();
-//        try {
-//            pm.getPackageInfo("com.ubercab", PackageManager.GET_ACTIVITIES);
-//            String uri = String.format(
-//                    "uber://?action=setPickup&pickup=my_location&dropoff[latitude]=%f&dropoff[longitude]=%f", destLat, destLong);
-//            Intent launchUberApp = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-//            startActivity(launchUberApp);
-//        } catch (PackageManager.NameNotFoundException e) {
-//            String uri = String.format(
-//                    "https://m.uber.com/?dropoff[latitude]=%f&dropoff[longitude]=%f", destLat, destLong);
-//            Intent launchUberSite = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-//            startActivity(launchUberSite);
-//        }
-//    }
 
     // user presses the "Maybe later..." button
     public void btnYellow(View v) {
