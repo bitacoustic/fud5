@@ -3,6 +3,7 @@ package com.csc413.team5.fud5;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -16,11 +17,13 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -109,16 +112,50 @@ public class ResultPageActivity extends AppCompatActivity
         } else { // otherwise, don't add it & don't ask user for feedback later
             Log.i(TAG, mCurrentResult.getBusinessName() + " was already in green list");
         }
-
-        // launch Google Maps to provide navigation
+        //Store lat/long info for calls to maps/uber
         Location destLoc = mCurrentResult.getAddressMapable();
         double destLat = destLoc.getLatitude();
         double destLong = destLoc.getLongitude();
 
+        //Create PopupMenu instance
+        PopupMenu greenPopUp = new PopupMenu(this, v);
+
+        //Inflate Popup with menu_green_button_popup.xml
+        MenuInflater inflater = greenPopUp.getMenuInflater();
+        inflater.inflate(R.menu.menu_green_button_popup, greenPopUp.getMenu());
+        greenPopUp.show();
+    }
+
+    //User chooses to open Google Maps
+    public void onMapLinkClick(MenuItem item) {
+        Location destLoc = mCurrentResult.getAddressMapable();
+        double destLat = destLoc.getLatitude();
+        double destLong = destLoc.getLongitude();
+        ToastUtil.showShortToast(this, "Opening Maps!");
         String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?daddr=%f,%f", destLat, destLong);
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-        // open a Google Maps URL with the user's preferred application
-        startActivity(intent);
+        Intent launchMaps = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(launchMaps);
+    }
+
+    //User chooses to open Über
+    public void onUberLinkClick(MenuItem item) {
+        Location destLoc = mCurrentResult.getAddressMapable();
+        double destLat = destLoc.getLatitude();
+        double destLong = destLoc.getLongitude();
+        ToastUtil.showShortToast(this, "Opening Über!");
+        PackageManager pm = this.getPackageManager();
+        try {
+            pm.getPackageInfo("com.ubercab", PackageManager.GET_ACTIVITIES);
+            String uri = String.format(
+                    "uber://?action=setPickup&pickup=my_location&dropoff[latitude]=%f&dropoff[longitude]=%f", destLat, destLong);
+            Intent launchUberApp = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            startActivity(launchUberApp);
+        } catch (PackageManager.NameNotFoundException e) {
+            String uri = String.format(
+                    "https://m.uber.com/?dropoff[latitude]=%f&dropoff[longitude]=%f", destLat, destLong);
+            Intent launchUberSite = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            startActivity(launchUberSite);
+        }
     }
 
     // user presses the "Maybe later..." button

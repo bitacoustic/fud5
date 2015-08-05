@@ -33,6 +33,8 @@
     <string name="popup_loading_text">Looking for info…</string>
     <string name="activity_result_page_title_preload_text"> </string>
     <string name="activity_result_page_toast_was_added_to_red_list">" was added to your ignored restaurants list."</string>
+    <string name="mapLink">Open Google Maps</string>
+    <string name="uberLink">Open Über</string>
 
     <!-- Settings -->
     <string name="title_activity_user_preferences">Settings</string>

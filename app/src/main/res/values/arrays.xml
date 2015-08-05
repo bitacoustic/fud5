@@ -24,4 +24,8 @@
         <item>I suggest...</item>
         <item>I recommend...</item>
     </string-array>
+    <string-array name="maps_uber_choice">
+        <item>Maps</item>
+        <item>Uber</item>
+    </string-array>
 </resources>
