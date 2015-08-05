@@ -106,7 +106,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         // default search term
         AppSettingsHelper.setDefaultSearchTermInput(searchTermInput.getText().toString());
         // search radius
-        AppSettingsHelper.setDefaultRadiusValue(Float.parseFloat(radiusSpinner.getSelectedItem().toString().substring(0, 3)));
+        AppSettingsHelper.setDefaultRadiusValue((
+                (Spinner) findViewById(R.id.spnRadius)).getSelectedItem()
+                .toString().split(" ")[0]);
+//        AppSettingsHelper.setDefaultRadiusValue(Float.parseFloat(radiusSpinner.getSelectedItem().toString().substring(0, 3)));
         // star rating
         AppSettingsHelper.setDefaultStarRating(starRating.getRating());
 
@@ -118,9 +121,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         // if empty search term
         if (((EditText) findViewById(R.id.txtSearchTerm)).getText()
                 .toString().equals("")) {
-            // append food
-            searchTerm = "food, " + ((EditText) findViewById(R.id.txtSearchTerm)).getText()
-                    .toString();
+            // set to "food"
+            searchTerm = "food";
         } else {
             searchTerm = ((EditText) findViewById(R.id.txtSearchTerm)).getText()
                     .toString();
@@ -222,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         /* Set default field values */
 
         // radius spinner
-        String spinnerValue = String.valueOf(AppSettingsHelper.getDefaultRadiusValue()).concat(" mi");
+        String spinnerValue = AppSettingsHelper.getDefaultRadiusValue() + " mi";
         ArrayAdapter radiusSpinnerAdapter = (ArrayAdapter) radiusSpinner.getAdapter();
         int spinnerDefaultPosition = radiusSpinnerAdapter.getPosition(spinnerValue);
         radiusSpinner.setSelection(spinnerDefaultPosition);

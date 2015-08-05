@@ -80,7 +80,9 @@ public class FoodPreferencesActivity extends AppCompatActivity {
         // default search term
         AppSettingsHelper.setDefaultSearchTermInput(searchTermInput.getText().toString());
         // search radius
-        AppSettingsHelper.setDefaultRadiusValue(Float.parseFloat(radiusSpinner.getSelectedItem().toString().substring(0,3)));
+        AppSettingsHelper.setDefaultRadiusValue((
+                (Spinner) findViewById(R.id.spnRadius)).getSelectedItem()
+                .toString().split(" ")[0]);
         // star rating
         AppSettingsHelper.setDefaultStarRating(starRating.getRating());
         // set eula to true since user must've agreed to Eula already to use the app

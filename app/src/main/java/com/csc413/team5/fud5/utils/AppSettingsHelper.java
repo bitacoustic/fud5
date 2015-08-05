@@ -25,7 +25,7 @@ public class AppSettingsHelper {
     }
 
     public static String getDefaultRadiusValue() {
-        return String.valueOf(userSettings.getFloat(Constants.DEFAULT_RADIUS_KEY, 3.0f)).concat(" mi");
+        return userSettings.getString(Constants.DEFAULT_RADIUS_KEY, "0.5 ");
     }
 
     public static float getStarRating() {
@@ -36,8 +36,8 @@ public class AppSettingsHelper {
         userSettingsEditor.putString(Constants.DEFAULT_SEARCH_TERM_INPUT_KEY, searchTerm).apply();
     }
 
-    public static void setDefaultRadiusValue(Float radiusValue) {
-        userSettingsEditor.putFloat(Constants.DEFAULT_RADIUS_KEY, radiusValue).apply();
+    public static void setDefaultRadiusValue(String radiusValue) {
+        userSettingsEditor.putString(Constants.DEFAULT_RADIUS_KEY, radiusValue).apply();
     }
 
     public static void setDefaultStarRating(Float starRating) {

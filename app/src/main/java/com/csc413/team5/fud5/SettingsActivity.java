@@ -314,7 +314,7 @@ public class SettingsActivity extends AppCompatActivity
             // default search term
             AppSettingsHelper.setDefaultSearchTermInput(searchTerm);
             // search radius
-            AppSettingsHelper.setDefaultRadiusValue(searchRadius);
+            AppSettingsHelper.setDefaultRadiusValue("0.5 ");
             // star rating
             AppSettingsHelper.setDefaultStarRating(minStar);
             //
