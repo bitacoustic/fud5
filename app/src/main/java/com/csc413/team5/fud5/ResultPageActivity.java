@@ -164,6 +164,11 @@ public class ResultPageActivity extends AppCompatActivity
 
     // user presses the "Always ignore" button
     public void btnRed(View v) {
+        // if restaurant is currently in green and/or yellow lists, remove it
+        if (db.isRestaurantInList(mCurrentResult, Constants.GREEN_LIST))
+            db.deleteRestaurantFromList(mCurrentResult, Constants.GREEN_LIST);
+        if (db.isRestaurantInList(mCurrentResult, Constants.YELLOW_LIST))
+            db.deleteRestaurantFromList(mCurrentResult, Constants.YELLOW_LIST);
         // if restaurant isn't already in red list, add it
         if (!db.isRestaurantInList(mCurrentResult, Constants.RED_LIST)) {
             ToastUtil.showShortToast(this, mCurrentResult.getBusinessName()
