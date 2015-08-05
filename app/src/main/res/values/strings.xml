@@ -88,7 +88,7 @@
     <string name="settings_ui_button_push_notifications">Push notifications</string>
     <string name="activity_user_preferences_cleared_user_settings">Cleared User Settings</string>
     <string name="activity_user_preferences_cleared_restaurant_history">Cleared Restaurant History</string>
-    <string name="activity_user_preferences_nothing_was_reset">Nothing was reset</string>
+    <string name="activity_user_preferences_nothing_was_reset">No items were checked</string>
     <string name="activity_user_preferences_toast_removed_all_ignored_restaurants">Removed all ignored restaurants.</string>
     <string name="activity_user_preferences_cleared_ignored_restaurants">Cleared ignored restaurant history</string>
 

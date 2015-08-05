@@ -103,8 +103,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
      */
     public void btnFuDPlz(View v){
         // Save some preferences
-        // default search term
-        AppSettingsHelper.setDefaultSearchTermInput(searchTermInput.getText().toString());
         // search radius
         AppSettingsHelper.setDefaultRadiusValue((
                 (Spinner) findViewById(R.id.spnRadius)).getSelectedItem()
