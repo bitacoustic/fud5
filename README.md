@@ -6,9 +6,6 @@
 preferences. Learn from user's response to previous suggestions to progressively provide a
 qualitatively better result.
 
-## Getting started
-See wiki: https://github.com/sfsucsc413/t5/wiki
-
 ## Information
 ### Team members
 
@@ -19,15 +16,6 @@ See wiki: https://github.com/sfsucsc413/t5/wiki
 5. David Karapetian - dkarapet@mail.sfsu.edu
 6. Ivan Gonzalez - ivanglez43@gmail.com
 7. Jagatdeep Anand - jagatdeep.anand@gmail.com
-### Version
-0.0.1
-
-### Recent Changes
-  - Added README.md
-
-### TO-DO
-  - Create branches
-  - Legal notice: Google Maps API attribution requirements. See: https://developers.google.com/maps/documentation/android/intro
 
 ### Terms of use/License
   - *Yelp*: https://www.yelp.com/developers/api_terms 
@@ -36,6 +24,3 @@ See wiki: https://github.com/sfsucsc413/t5/wiki
   - *Android Studio/IntelliJ*: http://blog.jetbrains.com/idea/2013/05/intellij-idea-and-android-studio-faq/#comment-4939
   - *Gradle*: https://gradle.org/license/
   - *SQLite*: https://www.sqlite.org/copyright.html
-
-### References
-  - *MD Markdown syntax guide*: https://confluence.atlassian.com/display/STASH/Markdown+syntax+guide
