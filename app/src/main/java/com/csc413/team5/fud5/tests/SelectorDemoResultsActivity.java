@@ -178,7 +178,8 @@ public class SelectorDemoResultsActivity extends AppCompatActivity {
                     // yellow list it receives a weight multiplier of 0.6; if it was added a week
                     // ago (the cutoff time at which it's removed from the list) it is
                     // essentially unweighted
-                    randomNum = (randomNum * 0.6) + (timeElapsed * 6.6137566E-9);
+                    final long ONE_WEEK_IN_MILI = 604800000;
+                    randomNum *= (0.6 + 0.4 * timeElapsed/ONE_WEEK_IN_MILI);
                 }
 
                 mResultList.getRestaurant(i).setWeight((int) randomNum);
